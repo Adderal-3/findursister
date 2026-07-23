@@ -1,0 +1,986 @@
+[
+  {
+    "id": "camel",
+    "sourceLayer": 593,
+    "file": "/items/ancient/camel.webp",
+    "bytes": 19782,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.707
+  },
+  {
+    "id": "chili_pepper",
+    "sourceLayer": 594,
+    "file": "/items/ancient/chili_pepper.webp",
+    "bytes": 27210,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8398
+  },
+  {
+    "id": "golden_pipa",
+    "sourceLayer": 595,
+    "file": "/items/ancient/golden_pipa.webp",
+    "bytes": 18938,
+    "visibleWidth": 0.6562,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "grapes",
+    "sourceLayer": 596,
+    "file": "/items/ancient/grapes.webp",
+    "bytes": 14500,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6289
+  },
+  {
+    "id": "mooncake",
+    "sourceLayer": 597,
+    "file": "/items/ancient/mooncake.webp",
+    "bytes": 15080,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6562
+  },
+  {
+    "id": "horse",
+    "sourceLayer": 598,
+    "file": "/items/ancient/horse.webp",
+    "bytes": 15810,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.75
+  },
+  {
+    "id": "bird_ocarina",
+    "sourceLayer": 599,
+    "file": "/items/ancient/bird_ocarina.webp",
+    "bytes": 18574,
+    "visibleWidth": 0.8438,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "peach",
+    "sourceLayer": 600,
+    "file": "/items/ancient/peach.webp",
+    "bytes": 10006,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5586
+  },
+  {
+    "id": "sedan_chair",
+    "sourceLayer": 601,
+    "file": "/items/ancient/sedan_chair.webp",
+    "bytes": 11452,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4766
+  },
+  {
+    "id": "konghou",
+    "sourceLayer": 602,
+    "file": "/items/ancient/konghou.webp",
+    "bytes": 20562,
+    "visibleWidth": 0.8359,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "golden_ewer",
+    "sourceLayer": 603,
+    "file": "/items/ancient/golden_ewer.webp",
+    "bytes": 17290,
+    "visibleWidth": 0.5391,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "cat",
+    "sourceLayer": 604,
+    "file": "/items/ancient/cat.webp",
+    "bytes": 13054,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6523
+  },
+  {
+    "id": "red_sky_lantern",
+    "sourceLayer": 605,
+    "file": "/items/ancient/red_sky_lantern.webp",
+    "bytes": 10612,
+    "visibleWidth": 0.625,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "white_porcelain_vase",
+    "sourceLayer": 606,
+    "file": "/items/ancient/white_porcelain_vase.webp",
+    "bytes": 12264,
+    "visibleWidth": 0.4531,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "lychee",
+    "sourceLayer": 608,
+    "file": "/items/ancient/lychee.webp",
+    "bytes": 16078,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6016
+  },
+  {
+    "id": "painted_jar",
+    "sourceLayer": 609,
+    "file": "/items/ancient/painted_jar.webp",
+    "bytes": 17614,
+    "visibleWidth": 0.7773,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "black_pitcher",
+    "sourceLayer": 610,
+    "file": "/items/ancient/black_pitcher.webp",
+    "bytes": 14930,
+    "visibleWidth": 0.6914,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "campfire",
+    "sourceLayer": 611,
+    "file": "/items/ancient/campfire.webp",
+    "bytes": 14670,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6758
+  },
+  {
+    "id": "bronze_gong",
+    "sourceLayer": 612,
+    "file": "/items/ancient/bronze_gong.webp",
+    "bytes": 16038,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8047
+  },
+  {
+    "id": "fish_hook",
+    "sourceLayer": 614,
+    "file": "/items/ancient/fish_hook.webp",
+    "bytes": 8504,
+    "visibleWidth": 0.5859,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "torch",
+    "sourceLayer": 615,
+    "file": "/items/ancient/torch.webp",
+    "bytes": 11370,
+    "visibleWidth": 0.5898,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "arrow",
+    "sourceLayer": 616,
+    "file": "/items/ancient/arrow.webp",
+    "bytes": 6656,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6211
+  },
+  {
+    "id": "needle",
+    "sourceLayer": 617,
+    "file": "/items/ancient/needle.webp",
+    "bytes": 5914,
+    "visibleWidth": 0.5898,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "flying_fish",
+    "sourceLayer": 618,
+    "file": "/items/ancient/flying_fish.webp",
+    "bytes": 12924,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6406
+  },
+  {
+    "id": "candied_hawthorn",
+    "sourceLayer": 619,
+    "file": "/items/ancient/candied_hawthorn.webp",
+    "bytes": 11202,
+    "visibleWidth": 0.6797,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "lotus_ewer",
+    "sourceLayer": 620,
+    "file": "/items/ancient/lotus_ewer.webp",
+    "bytes": 15772,
+    "visibleWidth": 0.6523,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "spike_trap",
+    "sourceLayer": 621,
+    "file": "/items/ancient/spike_trap.webp",
+    "bytes": 9426,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.832
+  },
+  {
+    "id": "osmanthus_cake",
+    "sourceLayer": 622,
+    "file": "/items/ancient/osmanthus_cake.webp",
+    "bytes": 10318,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4219
+  },
+  {
+    "id": "deer",
+    "sourceLayer": 623,
+    "file": "/items/ancient/deer.webp",
+    "bytes": 15216,
+    "visibleWidth": 0.6719,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "beast_fang",
+    "sourceLayer": 625,
+    "file": "/items/ancient/beast_fang.webp",
+    "bytes": 10216,
+    "visibleWidth": 0.7266,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "waist_drum",
+    "sourceLayer": 626,
+    "file": "/items/ancient/waist_drum.webp",
+    "bytes": 20416,
+    "visibleWidth": 0.7617,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "jade_hairpin",
+    "sourceLayer": 627,
+    "file": "/items/ancient/jade_hairpin.webp",
+    "bytes": 15140,
+    "visibleWidth": 0.7578,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "black_bottle",
+    "sourceLayer": 628,
+    "file": "/items/ancient/black_bottle.webp",
+    "bytes": 11632,
+    "visibleWidth": 0.5938,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "nine_tailed_fox",
+    "sourceLayer": 629,
+    "file": "/items/ancient/nine_tailed_fox.webp",
+    "bytes": 21222,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6328
+  },
+  {
+    "id": "ornate_dagger",
+    "sourceLayer": 630,
+    "file": "/items/ancient/ornate_dagger.webp",
+    "bytes": 14640,
+    "visibleWidth": 0.832,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "firefly",
+    "sourceLayer": 631,
+    "file": "/items/ancient/firefly.webp",
+    "bytes": 15492,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6523
+  },
+  {
+    "id": "shuriken",
+    "sourceLayer": 632,
+    "file": "/items/ancient/shuriken.webp",
+    "bytes": 15386,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7148
+  },
+  {
+    "id": "oil_lamp",
+    "sourceLayer": 633,
+    "file": "/items/ancient/oil_lamp.webp",
+    "bytes": 11104,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5039
+  },
+  {
+    "id": "red_dates",
+    "sourceLayer": 634,
+    "file": "/items/ancient/red_dates.webp",
+    "bytes": 11938,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5039
+  },
+  {
+    "id": "inscribed_music_stand",
+    "sourceLayer": 635,
+    "file": "/items/ancient/inscribed_music_stand.webp",
+    "bytes": 16282,
+    "visibleWidth": 0.6211,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "dandelion",
+    "sourceLayer": 638,
+    "file": "/items/ancient/dandelion.webp",
+    "bytes": 18702,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7148
+  },
+  {
+    "id": "vinegar_jar",
+    "sourceLayer": 639,
+    "file": "/items/ancient/vinegar_jar.webp",
+    "bytes": 18932,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8477
+  },
+  {
+    "id": "lucky_raccoon",
+    "sourceLayer": 640,
+    "file": "/items/ancient/lucky_raccoon.webp",
+    "bytes": 16994,
+    "visibleWidth": 0.6797,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "rattle_drum",
+    "sourceLayer": 641,
+    "file": "/items/ancient/rattle_drum.webp",
+    "bytes": 16028,
+    "visibleWidth": 0.8398,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "wooden_pipa",
+    "sourceLayer": 642,
+    "file": "/items/ancient/wooden_pipa.webp",
+    "bytes": 14306,
+    "visibleWidth": 0.6758,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "swallow",
+    "sourceLayer": 643,
+    "file": "/items/ancient/swallow.webp",
+    "bytes": 15954,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8398
+  },
+  {
+    "id": "painted_vase",
+    "sourceLayer": 644,
+    "file": "/items/ancient/painted_vase.webp",
+    "bytes": 17696,
+    "visibleWidth": 0.6836,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "phoenix",
+    "sourceLayer": 645,
+    "file": "/items/ancient/phoenix.webp",
+    "bytes": 18152,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7812
+  },
+  {
+    "id": "dragonfly",
+    "sourceLayer": 646,
+    "file": "/items/ancient/dragonfly.webp",
+    "bytes": 14988,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7148
+  },
+  {
+    "id": "fire_wheels",
+    "sourceLayer": 648,
+    "file": "/items/ancient/fire_wheels.webp",
+    "bytes": 17078,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4375
+  },
+  {
+    "id": "chrysanthemum",
+    "sourceLayer": 649,
+    "file": "/items/ancient/chrysanthemum.webp",
+    "bytes": 33648,
+    "visibleWidth": 0.8086,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "tangyuan",
+    "sourceLayer": 650,
+    "file": "/items/ancient/tangyuan.webp",
+    "bytes": 13432,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5586
+  },
+  {
+    "id": "hulusi",
+    "sourceLayer": 651,
+    "file": "/items/ancient/hulusi.webp",
+    "bytes": 14930,
+    "visibleWidth": 0.8125,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "inscribed_papers",
+    "sourceLayer": 652,
+    "file": "/items/ancient/inscribed_papers.webp",
+    "bytes": 15822,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7617
+  },
+  {
+    "id": "icicle",
+    "sourceLayer": 653,
+    "file": "/items/ancient/icicle.webp",
+    "bytes": 7540,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4492
+  },
+  {
+    "id": "golden_bowl",
+    "sourceLayer": 654,
+    "file": "/items/ancient/golden_bowl.webp",
+    "bytes": 12450,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4883
+  },
+  {
+    "id": "ancient_book",
+    "sourceLayer": 655,
+    "file": "/items/ancient/ancient_book.webp",
+    "bytes": 17698,
+    "visibleWidth": 0.8281,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "watermelon",
+    "sourceLayer": 660,
+    "file": "/items/ancient/watermelon.webp",
+    "bytes": 15514,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8516
+  },
+  {
+    "id": "guqin",
+    "sourceLayer": 661,
+    "file": "/items/ancient/guqin.webp",
+    "bytes": 18998,
+    "visibleWidth": 0.8281,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "orange_sky_lantern",
+    "sourceLayer": 662,
+    "file": "/items/ancient/orange_sky_lantern.webp",
+    "bytes": 13848,
+    "visibleWidth": 0.7461,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "penguin",
+    "sourceLayer": 663,
+    "file": "/items/ancient/penguin.webp",
+    "bytes": 11982,
+    "visibleWidth": 0.8086,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "incense_burner",
+    "sourceLayer": 664,
+    "file": "/items/ancient/incense_burner.webp",
+    "bytes": 19434,
+    "visibleWidth": 0.7539,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "cotton",
+    "sourceLayer": 665,
+    "file": "/items/ancient/cotton.webp",
+    "bytes": 22900,
+    "visibleWidth": 0.8516,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "eggplant",
+    "sourceLayer": 667,
+    "file": "/items/ancient/eggplant.webp",
+    "bytes": 19682,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7891
+  },
+  {
+    "id": "crossed_swords",
+    "sourceLayer": 668,
+    "file": "/items/ancient/crossed_swords.webp",
+    "bytes": 22414,
+    "visibleWidth": 0.8711,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "hand_drum",
+    "sourceLayer": 669,
+    "file": "/items/ancient/hand_drum.webp",
+    "bytes": 12146,
+    "visibleWidth": 0.5508,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "floral_hairpin",
+    "sourceLayer": 670,
+    "file": "/items/ancient/floral_hairpin.webp",
+    "bytes": 12050,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8125
+  },
+  {
+    "id": "patterned_vase",
+    "sourceLayer": 672,
+    "file": "/items/ancient/patterned_vase.webp",
+    "bytes": 13552,
+    "visibleWidth": 0.4688,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "jewelry_box",
+    "sourceLayer": 673,
+    "file": "/items/ancient/jewelry_box.webp",
+    "bytes": 17406,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8086
+  },
+  {
+    "id": "medicine_bottle",
+    "sourceLayer": 676,
+    "file": "/items/ancient/medicine_bottle.webp",
+    "bytes": 12422,
+    "visibleWidth": 0.6523,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "carriage",
+    "sourceLayer": 677,
+    "file": "/items/ancient/carriage.webp",
+    "bytes": 12088,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5586
+  },
+  {
+    "id": "butterfly",
+    "sourceLayer": 678,
+    "file": "/items/ancient/butterfly.webp",
+    "bytes": 15990,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7422
+  },
+  {
+    "id": "sword",
+    "sourceLayer": 682,
+    "file": "/items/ancient/sword.webp",
+    "bytes": 8208,
+    "visibleWidth": 0.8594,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "clay_jar",
+    "sourceLayer": 683,
+    "file": "/items/ancient/clay_jar.webp",
+    "bytes": 13654,
+    "visibleWidth": 0.6328,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "candle",
+    "sourceLayer": 684,
+    "file": "/items/ancient/candle.webp",
+    "bytes": 10128,
+    "visibleWidth": 0.3789,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "treasure_ship",
+    "sourceLayer": 685,
+    "file": "/items/ancient/treasure_ship.webp",
+    "bytes": 21176,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6875
+  },
+  {
+    "id": "lidded_bowl",
+    "sourceLayer": 686,
+    "file": "/items/ancient/lidded_bowl.webp",
+    "bytes": 15586,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8672
+  },
+  {
+    "id": "dog",
+    "sourceLayer": 687,
+    "file": "/items/ancient/dog.webp",
+    "bytes": 13862,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7422
+  },
+  {
+    "id": "rabbit",
+    "sourceLayer": 688,
+    "file": "/items/ancient/rabbit.webp",
+    "bytes": 12058,
+    "visibleWidth": 0.6953,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "blue_book",
+    "sourceLayer": 690,
+    "file": "/items/ancient/blue_book.webp",
+    "bytes": 17404,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8516
+  },
+  {
+    "id": "zongzi",
+    "sourceLayer": 691,
+    "file": "/items/ancient/zongzi.webp",
+    "bytes": 16390,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7188
+  },
+  {
+    "id": "kite",
+    "sourceLayer": 692,
+    "file": "/items/ancient/kite.webp",
+    "bytes": 17152,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8047
+  },
+  {
+    "id": "partitioned_cauldron",
+    "sourceLayer": 693,
+    "file": "/items/ancient/partitioned_cauldron.webp",
+    "bytes": 18880,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8203
+  },
+  {
+    "id": "peony",
+    "sourceLayer": 694,
+    "file": "/items/ancient/peony.webp",
+    "bytes": 22346,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7812
+  },
+  {
+    "id": "cabinet",
+    "sourceLayer": 695,
+    "file": "/items/ancient/cabinet.webp",
+    "bytes": 20092,
+    "visibleWidth": 0.7695,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "feather",
+    "sourceLayer": 697,
+    "file": "/items/ancient/feather.webp",
+    "bytes": 13566,
+    "visibleWidth": 0.8086,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "paper_crane",
+    "sourceLayer": 698,
+    "file": "/items/ancient/paper_crane.webp",
+    "bytes": 13346,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8008
+  },
+  {
+    "id": "apple",
+    "sourceLayer": 845,
+    "file": "/items/ancient/apple.webp",
+    "bytes": 14998,
+    "visibleWidth": 0.7852,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "banana",
+    "sourceLayer": 846,
+    "file": "/items/ancient/banana.webp",
+    "bytes": 13362,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.793
+  },
+  {
+    "id": "orange",
+    "sourceLayer": 847,
+    "file": "/items/ancient/orange.webp",
+    "bytes": 18482,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.832
+  },
+  {
+    "id": "strawberry",
+    "sourceLayer": 848,
+    "file": "/items/ancient/strawberry.webp",
+    "bytes": 16574,
+    "visibleWidth": 0.7812,
+    "visibleHeight": 0.8711
+  },
+  {
+    "id": "mango",
+    "sourceLayer": 849,
+    "file": "/items/ancient/mango.webp",
+    "bytes": 14870,
+    "visibleWidth": 0.8398,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "pear",
+    "sourceLayer": 850,
+    "file": "/items/ancient/pear.webp",
+    "bytes": 12970,
+    "visibleWidth": 0.6719,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "pineapple",
+    "sourceLayer": 851,
+    "file": "/items/ancient/pineapple.webp",
+    "bytes": 17366,
+    "visibleWidth": 0.4883,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "kiwi",
+    "sourceLayer": 852,
+    "file": "/items/ancient/kiwi.webp",
+    "bytes": 14912,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7227
+  },
+  {
+    "id": "lemon",
+    "sourceLayer": 853,
+    "file": "/items/ancient/lemon.webp",
+    "bytes": 15052,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7344
+  },
+  {
+    "id": "melon",
+    "sourceLayer": 854,
+    "file": "/items/ancient/melon.webp",
+    "bytes": 18662,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8008
+  },
+  {
+    "id": "dragon_fruit",
+    "sourceLayer": 855,
+    "file": "/items/ancient/dragon_fruit.webp",
+    "bytes": 17002,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7852
+  },
+  {
+    "id": "coriander",
+    "sourceLayer": 877,
+    "file": "/items/ancient/coriander.webp",
+    "bytes": 20926,
+    "visibleWidth": 0.6992,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "scallion",
+    "sourceLayer": 878,
+    "file": "/items/ancient/scallion.webp",
+    "bytes": 14218,
+    "visibleWidth": 0.832,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "bitter_melon",
+    "sourceLayer": 879,
+    "file": "/items/ancient/bitter_melon.webp",
+    "bytes": 16032,
+    "visibleWidth": 0.8281,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "broccoli",
+    "sourceLayer": 880,
+    "file": "/items/ancient/broccoli.webp",
+    "bytes": 17408,
+    "visibleWidth": 0.8203,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "edamame",
+    "sourceLayer": 881,
+    "file": "/items/ancient/edamame.webp",
+    "bytes": 16612,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6914
+  },
+  {
+    "id": "celery",
+    "sourceLayer": 882,
+    "file": "/items/ancient/celery.webp",
+    "bytes": 18012,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8672
+  },
+  {
+    "id": "silver_armor",
+    "sourceLayer": 896,
+    "file": "/items/ancient/silver_armor.webp",
+    "bytes": 20470,
+    "visibleWidth": 0.6914,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "red_tunic",
+    "sourceLayer": 897,
+    "file": "/items/ancient/red_tunic.webp",
+    "bytes": 18744,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7266
+  },
+  {
+    "id": "tasseled_shawl",
+    "sourceLayer": 898,
+    "file": "/items/ancient/tasseled_shawl.webp",
+    "bytes": 22276,
+    "visibleWidth": 0.8672,
+    "visibleHeight": 0.8711
+  },
+  {
+    "id": "phoenix_crown",
+    "sourceLayer": 899,
+    "file": "/items/ancient/phoenix_crown.webp",
+    "bytes": 31524,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8281
+  },
+  {
+    "id": "embroidered_trousers",
+    "sourceLayer": 902,
+    "file": "/items/ancient/embroidered_trousers.webp",
+    "bytes": 16356,
+    "visibleWidth": 0.6289,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "jade_earrings",
+    "sourceLayer": 903,
+    "file": "/items/ancient/jade_earrings.webp",
+    "bytes": 16850,
+    "visibleWidth": 0.5547,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "fox_mask",
+    "sourceLayer": 904,
+    "file": "/items/ancient/fox_mask.webp",
+    "bytes": 21408,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.8164
+  },
+  {
+    "id": "gauze_veil",
+    "sourceLayer": 905,
+    "file": "/items/ancient/gauze_veil.webp",
+    "bytes": 13726,
+    "visibleWidth": 0.6406,
+    "visibleHeight": 0.875
+  },
+  {
+    "id": "bamboo_hat",
+    "sourceLayer": 906,
+    "file": "/items/ancient/bamboo_hat.webp",
+    "bytes": 14004,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7422
+  },
+  {
+    "id": "wooden_arch_bridge",
+    "sourceLayer": 909,
+    "file": "/items/ancient/wooden_arch_bridge.webp",
+    "bytes": 15262,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6133
+  },
+  {
+    "id": "covered_bridge",
+    "sourceLayer": 910,
+    "file": "/items/ancient/covered_bridge.webp",
+    "bytes": 21384,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.7422
+  },
+  {
+    "id": "floating_dock",
+    "sourceLayer": 911,
+    "file": "/items/ancient/floating_dock.webp",
+    "bytes": 16852,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5938
+  },
+  {
+    "id": "lotus_boardwalk",
+    "sourceLayer": 912,
+    "file": "/items/ancient/lotus_boardwalk.webp",
+    "bytes": 21426,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6328
+  },
+  {
+    "id": "stone_water_bridge",
+    "sourceLayer": 913,
+    "file": "/items/ancient/stone_water_bridge.webp",
+    "bytes": 15086,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5508
+  },
+  {
+    "id": "stone_slab_bridge",
+    "sourceLayer": 914,
+    "file": "/items/ancient/stone_slab_bridge.webp",
+    "bytes": 12136,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.5508
+  },
+  {
+    "id": "rope_bridge",
+    "sourceLayer": 915,
+    "file": "/items/ancient/rope_bridge.webp",
+    "bytes": 18650,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6719
+  },
+  {
+    "id": "red_arch_bridge",
+    "sourceLayer": 916,
+    "file": "/items/ancient/red_arch_bridge.webp",
+    "bytes": 19190,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6445
+  },
+  {
+    "id": "jeweled_belt",
+    "sourceLayer": "05385bce59553c2ece4b8a.png",
+    "file": "/items/ancient/jeweled_belt.webp",
+    "bytes": 19580,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.4375
+  },
+  {
+    "id": "plain_stone_arch_bridge",
+    "sourceLayer": "图片-2.png",
+    "file": "/items/ancient/plain_stone_arch_bridge.webp",
+    "bytes": 14378,
+    "visibleWidth": 0.875,
+    "visibleHeight": 0.6094
+  }
+]
