@@ -1,4 +1,6 @@
-import { dsConfig, dsPlatformEnabled, dsTaskPanelEnabled } from './config';
+import {
+  dsConfig, dsPlatformEnabled, dsRoleBindingEnabled, dsTaskPanelEnabled,
+} from './config';
 
 /* [DS:JSSDK:START] */
 export const userInfo: Record<string, unknown> = {};
@@ -232,22 +234,48 @@ export function applyNavTheme(theme: 'white' | 'black'): void {
 /* [DS:NAV-BAR:END] */
 
 /* ========== DS:ACT-SDK BEGIN ========== */
+let actSdkConfigured = false;
 let taskModuleMounted = false;
+let roleModuleUnmount: (() => void) | null = null;
 
-export function initTaskModule(): void {
-  if (!dsTaskPanelEnabled || !window.DsActSdk || taskModuleMounted) return;
+function configureActSdk(): boolean {
+  if (!window.DsActSdk || !dsConfig.actId) return false;
+  if (actSdkConfigured) return true;
   const production: { actId: string; appKey: string; frontId?: string } = {
     actId: dsConfig.actId,
     appKey: dsConfig.appKey,
   };
   if (dsConfig.frontId) production.frontId = dsConfig.frontId;
   window.DsActSdk.configure({ production });
+  actSdkConfigured = true;
+  return true;
+}
+
+export function initTaskModule(): void {
+  if (!dsTaskPanelEnabled || taskModuleMounted || !configureActSdk() || !window.DsActSdk) return;
   window.DsActSdk.TaskModule.evoke({
     container: '#ds-task-root',
     title: '全部任务',
     showRole: dsConfig.task.showRole,
   });
   taskModuleMounted = true;
+}
+
+/** 菜单挂载后接入角色选择；离开菜单时卸载，返回菜单可重新挂载。 */
+export function mountRoleModule(): () => void {
+  if (!dsRoleBindingEnabled || roleModuleUnmount || !configureActSdk() || !window.DsActSdk) {
+    return () => undefined;
+  }
+  const handle = window.DsActSdk.Role.evoke({
+    container: '#ds-role-root',
+    placeholder: '请选择角色',
+    onClick: () => trackEvent({ event: 'role_binding_open' }),
+  });
+  roleModuleUnmount = () => {
+    handle.unmount();
+    roleModuleUnmount = null;
+  };
+  return roleModuleUnmount;
 }
 
 export function openTaskPanel(): void {

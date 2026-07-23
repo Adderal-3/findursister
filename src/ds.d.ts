@@ -64,8 +64,52 @@ declare global {
       TaskModule: {
         evoke(options: { container: string; title?: string; showRole?: boolean }): void;
       };
+      Role: {
+        evoke(options: {
+          container: string;
+          placeholder?: string;
+          onClick?: () => void;
+        }): { unmount(): void };
+      };
       dsActStore: { set(key: unknown, value: boolean): void };
       taskListPopupState: unknown;
+    };
+    MiniGameDataSdk?: {
+      RequestManager: {
+        setGameId(options: { devMiniGameId: string; proMiniGameId: string }): void;
+        obfuscatedBatchWriteData(options: {
+          items: Array<{ recordKey: string; value: number | string | boolean }>;
+        }): Promise<{
+          items: Array<{ recordKey: string; success: boolean; errorMsg?: string }>;
+        }>;
+        getBillboardRank(options: {
+          devBillboardId: string;
+          proBillboardId: string;
+          page?: number;
+          pageSize?: number;
+        }): Promise<{
+          total: number;
+          records: Array<{
+            rank: number;
+            uid: string;
+            nick: string;
+            icon: string;
+            num: number;
+            ts: number;
+          }>;
+        }>;
+        getUserRank(options: {
+          devBillboardId: string;
+          proBillboardId: string;
+        }): Promise<{
+          rank: number;
+          total: number;
+          uid: string;
+          nick: string;
+          icon: string;
+          num: number;
+        }>;
+      };
     };
   }
 }

@@ -13,6 +13,8 @@ dist-ssr
 deploy.zip
 .skill-cache.json
 .tmp/
+.codex-temp/chrome-headless-profile*/
+.codex-temp/design-qa/menu-ds-buttons*.png
 *.pem
 *.crt
 *.key

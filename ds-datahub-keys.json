@@ -1,0 +1,28 @@
+[
+  {
+    "key": "levels_total_score",
+    "name": "百关总分",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
+  },
+  {
+    "key": "level_max",
+    "name": "最高解锁关卡",
+    "type": "NUMBER",
+    "defaultValue": 1,
+    "missionEnabled": true
+  },
+  {
+    "key": "endless_best",
+    "name": "无尽最高分",
+    "type": "NUMBER",
+    "defaultValue": 0
+  },
+  {
+    "key": "last_save",
+    "name": "最后同步时间",
+    "type": "NUMBER",
+    "defaultValue": 0
+  }
+]

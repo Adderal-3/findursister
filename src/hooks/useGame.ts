@@ -23,6 +23,7 @@ import {
   STAMINA_MAX,
 } from '../game/stamina';
 import { trackEvent } from '../platform/ds/runtime';
+import { syncProgressToDs } from '../platform/ds/leaderboard';
 
 function loadNum(key: string): number {
   const value = Number(gameStorage.get(key));
@@ -212,12 +213,11 @@ export function useGame() {
   }, []);
 
   const commitEndlessBest = useCallback((finalScore: number) => {
-    setBest((current) => {
-      const endless = Math.max(current.endless, finalScore);
-      gameStorage.set(SAVE_KEYS.bestEndless, String(endless));
-      return { ...current, endless };
-    });
-  }, []);
+    const endless = Math.max(best.endless, finalScore);
+    gameStorage.set(SAVE_KEYS.bestEndless, String(endless));
+    setBest((current) => ({ ...current, endless }));
+    void syncProgressToDs({ endlessBest: endless });
+  }, [best.endless]);
 
   const commitLevelClear = useCallback((clearedLevel: number, levelScore: number) => {
     const config = levelConfig(clearedLevel);
@@ -227,14 +227,13 @@ export function useGame() {
     const total = Object.values(nextScores).reduce((sum, value) => sum + value, 0);
     setIsNewLevelBest(levelScore > previous);
     setLevelScores(nextScores);
-    setBest((current) => {
-      const maxLevel = Math.min(LEVEL_COUNT, Math.max(current.maxLevel, clearedLevel + 1));
-      gameStorage.set(SAVE_KEYS.maxLevel, String(maxLevel));
-      return { ...current, levels: total, maxLevel };
-    });
+    const maxLevel = Math.min(LEVEL_COUNT, Math.max(best.maxLevel, clearedLevel + 1));
+    setBest((current) => ({ ...current, levels: total, maxLevel }));
+    gameStorage.set(SAVE_KEYS.maxLevel, String(maxLevel));
+    void syncProgressToDs({ levelsTotalScore: total, maxLevel });
     gameStorage.set(SAVE_KEYS.levelScores, JSON.stringify(nextScores));
     gameStorage.set(SAVE_KEYS.bestLevels, String(total));
-  }, [levelScores]);
+  }, [best.maxLevel, levelScores]);
 
   const startGame = useCallback((nextMode: GameMode, startLevel = 1) => {
     const cost = nextMode === 'levels' ? STAMINA_LEVEL_COST : STAMINA_ENDLESS_COST;
