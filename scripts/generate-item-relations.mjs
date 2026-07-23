@@ -92,7 +92,7 @@ const html = `<!doctype html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>百物寻踪 · 123件物品属性关系表</title>
+  <title>忙忙碌碌寻宝藏 · 123件物品属性关系表</title>
   <style>
     :root { color-scheme: light; --ink:#194f4b; --muted:#66847f; --line:#c9ddd6; --jade:#2f837a; --paper:#f2f7ef; --gold:#b66f41; }
     * { box-sizing:border-box; }
@@ -133,7 +133,7 @@ const html = `<!doctype html>
 </head>
 <body>
   <header>
-    <h1>百物寻踪 · 物品属性关系表</h1>
+    <h1>忙忙碌碌寻宝藏 · 物品属性关系表</h1>
     <p>123 件素材、5 类属性域，以及每件物品可命中的组合任务</p>
   </header>
   <main class="shell">

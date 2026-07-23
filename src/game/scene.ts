@@ -1,5 +1,5 @@
 // ============================================================
-// 百物寻踪 —— 属性关卡场景生成器
+// 忙忙碌碌寻宝藏 —— 属性关卡场景生成器
 // ============================================================
 
 import type { ItemDef, PlacedItem, TagId, TargetTask, TaskRule } from './types';
@@ -7,10 +7,10 @@ import { getItemTags, ITEMS } from './items';
 import { ITEM_GEOMETRY } from './itemGeometry';
 import type { LevelType } from './levels';
 
-/** 场景只在水平方向延展；1.9 屏让整局物件更紧凑，同时稳定容纳后期三目标关。 */
-export const SCENE_SCALE = { w: 1.9, h: 1 } as const;
+/** 场景只在水平方向延展；1.6 屏减少无意义拖动，让一局物件更集中。 */
+export const SCENE_SCALE = { w: 1.6, h: 1 } as const;
 /** 单件物体的基准边长相对视口短边的比例，生成器与渲染器共用。 */
-export const SCENE_ITEM_FRACTION = 0.17;
+export const SCENE_ITEM_FRACTION = 0.19;
 
 const BASE_X_PERCENT = (SCENE_ITEM_FRACTION / SCENE_SCALE.w) * 100;
 const BASE_Y_PERCENT = SCENE_ITEM_FRACTION * 100;
@@ -172,18 +172,21 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
 
   // 先放大物体，再填小物体，是常见的二维装箱做法；可减少后段无处可放的概率。
   const landmarkCount = spawnList.filter((entry) => entry.def.role === 'landmark').length;
-  const densityScale = Math.max(0.68, Math.min(1, Math.sqrt(31 / spawnList.length)));
+  // 少物件关直接放大，高密度后期关再按数量平滑收缩，避免开局“又小又散”。
+  const densityScale = Math.max(0.42, Math.min(1.08, Math.sqrt(20 / spawnList.length)));
   let landmarkIndex = 0;
   const prepared: PreparedItem[] = spawnList
     .map((entry) => {
       const isLandmark = entry.def.role === 'landmark';
+      // 细长物（针、钩、簪、箭等）的透明画布占比虽大，但真实笔画很细，需要额外可见性补偿。
+      const visibilityBoost = entry.def.visualTags?.includes('slender') ? 1.16 : 1;
       const scale = (isLandmark
         ? rand(1, 1.2)
         : entry.isTarget && spec.levelType === 'boss'
-          ? rand(0.88, 1.08)
+          ? rand(0.96, 1.14)
         : entry.isTarget
-          ? rand(0.98, 1.28)
-          : rand(0.8, 1.3)) * (isLandmark ? 1 : densityScale);
+          ? rand(1.05, 1.34)
+          : rand(0.9, 1.3)) * (isLandmark ? 1 : densityScale * visibilityBoost);
       const rot = isLandmark ? 0 : rand(-25, 25);
       const size = footprint(entry.def, scale, rot);
       return {
@@ -215,7 +218,11 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
 
   for (const entry of prepared) {
     let scale = entry.scale;
-    const minimumScale = entry.landmarkIndex != null ? 0.88 : entry.isTarget ? 0.64 : 0.48;
+    const minimumScale = entry.landmarkIndex != null
+      ? 0.88
+      : entry.isTarget
+        ? (entry.def.visualTags?.includes('slender') ? 0.76 : 0.68)
+        : (entry.def.visualTags?.includes('slender') ? 0.48 : 0.4);
     let position: { x: number; y: number; rect: PackedRect } | null = null;
 
     // 地标优先落在场景下半部的固定槽位，保持水平且不参与随机聚类。

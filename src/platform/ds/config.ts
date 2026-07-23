@@ -22,7 +22,7 @@ export const dsConfig = {
       || 'https://img.166.net/gameyw-misc/opd/squash/20260630/101947-goc2wybfsi.png',
   },
   navigation: {
-    title: import.meta.env.VITE_DS_NAV_TITLE?.trim() || '百物寻踪',
+    title: import.meta.env.VITE_DS_NAV_TITLE?.trim() || '忙忙碌碌寻宝藏',
     hideTitle: envFlag(import.meta.env.VITE_DS_NAV_HIDE_TITLE, false),
     theme: navTheme(import.meta.env.VITE_DS_NAV_THEME),
   },

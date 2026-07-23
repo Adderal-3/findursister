@@ -266,7 +266,7 @@ export function StartScreen({ game }: { game: Game }) {
         <div className="absolute inset-x-4 top-[22%] flex justify-center sm:top-[20%]">
           <div className="qingya-level-plaque flex h-[4.7rem] w-full max-w-sm items-center justify-center px-9">
             <h1 className="font-display text-3xl font-black tracking-[0.18em] text-[#fff9dc] drop-shadow-sm sm:text-4xl">
-              百物寻踪
+              忙忙碌碌寻宝藏
             </h1>
           </div>
         </div>

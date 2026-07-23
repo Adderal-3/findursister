@@ -344,7 +344,7 @@ export function GameField({ game }: { game: Game }) {
 
   const taskLabel = game.targets.length > 1
     ? `${game.targets.length} 项寻找目标`
-    : game.targets[0]?.label ?? '百物寻踪';
+    : game.targets[0]?.label ?? '忙忙碌碌寻宝藏';
   const urgent = game.timeLeft <= 10;
   const levelType = game.mode === 'levels' ? game.levelInfo.type : null;
 
