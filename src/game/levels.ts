@@ -1,8 +1,8 @@
 // ============================================================
-// 百物寻踪 —— 100 关属性挑战数值
+// 百物寻踪 —— 200 关属性挑战数值
 // ============================================================
 
-import levelsCsv from '../../数值表_src/levels_100.csv?raw';
+import levelsCsv from '../../数值表_src/levels_200.csv?raw';
 import type { CategoryId } from './types';
 
 export type LevelType = 'standard' | 'cluster' | 'mist' | 'night' | 'speed' | 'boss';
@@ -80,14 +80,23 @@ export function chapterTitle(chapter: number): string {
     ?? CHAPTER_NAMES[0];
 }
 
-if (LEVEL_COUNT !== 100) {
-  throw new Error(`关卡表应包含 100 关，实际读取到 ${LEVEL_COUNT} 关`);
+if (LEVEL_COUNT !== 200) {
+  throw new Error(`关卡表应包含 200 关，实际读取到 ${LEVEL_COUNT} 关`);
 }
+
+/**
+ * 临时：先把所有关卡砍成单一玩法（standard），看整体效果。
+ * 后续要恢复迷踪/夜巡/章末等差异化机制时，改成 false 即可，数值表里的 type 原样保留。
+ */
+const UNIFY_LEVEL_TYPE = true;
 
 export function levelConfig(n: number): LevelConfig {
   const index = Math.min(Math.max(Math.trunc(n), 1), LEVEL_COUNT) - 1;
   const config = LEVELS[index];
   if (!config) throw new Error(`找不到第 ${n} 关配置`);
+  if (UNIFY_LEVEL_TYPE && config.type !== 'standard') {
+    return { ...config, type: 'standard' };
+  }
   return config;
 }
 
@@ -120,6 +129,21 @@ export function comboMultiplier(combo: number): number {
 
 export function scoreForFind(combo: number, timeLeft: number): number {
   return Math.max(1, Math.round(timeLeft * comboMultiplier(combo) * 10) / 10);
+}
+
+/** 每关在总榜中的权重一致，避免后期多目标关仅因目标更多就碾压前期关。 */
+export function levelScoreToRankingPoints(score: number, config: LevelConfig): number {
+  if (!Number.isFinite(score) || score <= 0 || config.starBase <= 0) return 0;
+  const normalized = Math.min(1.2, score / config.starBase);
+  return Math.round(normalized * 1000);
+}
+
+export function leaderboardBaseScore(levelScores: Record<number, number>): number {
+  return Object.entries(levelScores).reduce((sum, [levelKey, score]) => {
+    const level = Number(levelKey);
+    if (!Number.isInteger(level) || level < 1 || level > LEVEL_COUNT) return sum;
+    return sum + levelScoreToRankingPoints(score, levelConfig(level));
+  }, 0);
 }
 
 export function waveConfig(wave: number): WaveConfig {

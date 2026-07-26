@@ -9,7 +9,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
-UI_DIR = ROOT / "public" / "ui" / "qingya"
+UI_DIR = ROOT / "src" / "assets" / "ui" / "qingya"
 ASSETS = {
     "round-button.png": "round-button-warm-v1.png",
     "level-plaque.png": "level-plaque-warm-v1.png",

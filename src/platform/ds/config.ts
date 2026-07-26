@@ -32,6 +32,7 @@ export const dsConfig = {
   data: {
     devMiniGameId: import.meta.env.VITE_DS_DEV_MINI_GAME_ID?.trim() ?? '',
     proMiniGameId: import.meta.env.VITE_DS_PRO_MINI_GAME_ID?.trim() ?? '',
+    // 日榜与总榜共用同一榜单 ID；日榜靠 loadDsLeaderboard 传东八区日期查快照。
     devBillboardId: import.meta.env.VITE_DS_DEV_BILLBOARD_ID?.trim() ?? '',
     proBillboardId: import.meta.env.VITE_DS_PRO_BILLBOARD_ID?.trim() ?? '',
   },
@@ -49,10 +50,8 @@ export const dsTaskPanelEnabled = Boolean(dsPlatformEnabled && dsConfig.actId);
 /** 角色绑定与任务共用活动配置。 */
 export const dsRoleBindingEnabled = dsTaskPanelEnabled;
 
-/** 排行榜必须同时具备测试/正式小游戏与榜单 ID。 */
+/** 先具备测试/正式小游戏 ID；日榜与总榜 ID 在读取对应榜单时分别校验。 */
 export const dsLeaderboardEnabled = Boolean(
   dsConfig.data.devMiniGameId
   && dsConfig.data.proMiniGameId
-  && dsConfig.data.devBillboardId
-  && dsConfig.data.proBillboardId,
 );

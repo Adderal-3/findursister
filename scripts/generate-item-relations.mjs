@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const itemsSource = fs.readFileSync(path.join(root, 'src', 'game', 'items.ts'), 'utf8');
 const tasksSource = fs.readFileSync(path.join(root, 'src', 'game', 'tasks.ts'), 'utf8');
-const outputPath = path.join(root, 'public', 'item-relations.html');
+const outputPath = path.join(root, 'tools', 'item-relations.html');
 
 const domainLabels = {
   tags: '基础分类',
@@ -49,7 +49,7 @@ const items = itemsSource
     return {
       id,
       name,
-      img: `./items/ancient/${id}.webp`,
+      img: `../src/assets/items/ancient/${id}.webp`,
       role: line.match(/role: '([^']+)'/)?.[1] ?? 'item',
       distractorOnly: /distractorOnly: true/.test(line),
       domains,
@@ -191,5 +191,6 @@ const html = `<!doctype html>
 </html>
 `;
 
+fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, html, 'utf8');
 console.log(`generated ${items.length} items and ${tasks.length} tasks -> ${outputPath}`);

@@ -4,6 +4,8 @@
 
 let ctx: AudioContext | null = null;
 let muted = false;
+let bgm: HTMLAudioElement | null = null;
+const BGM_SRC = import.meta.env.VITE_GAME_BGM_URL?.trim() ?? '';
 
 function ac(): AudioContext {
   if (!ctx) {
@@ -18,14 +20,34 @@ function ac(): AudioContext {
 
 export function setMuted(m: boolean) {
   muted = m;
+  if (bgm) {
+    bgm.muted = m;
+    if (!m) void bgm.play().catch(() => undefined);
+  }
 }
 export function isMuted() {
   return muted;
 }
 
+/** 配置 VITE_GAME_BGM_URL 后自动循环；未配置时保持静默，不产生 404 请求。 */
+export function startBgm() {
+  if (!BGM_SRC) return;
+  if (!bgm) {
+    bgm = new Audio(BGM_SRC);
+    bgm.loop = true;
+    bgm.preload = 'auto';
+    bgm.volume = 0.32;
+  }
+  bgm.muted = muted;
+  if (!muted) void bgm.play().catch(() => undefined);
+}
+
 /** 在首次用户交互时调用，解锁移动端音频 */
 export function unlockAudio() {
-  try { ac(); } catch { /* ignore */ }
+  try {
+    ac();
+    startBgm();
+  } catch { /* ignore */ }
 }
 
 function vibrate(pattern: number | number[]) {

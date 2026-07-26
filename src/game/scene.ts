@@ -7,8 +7,11 @@ import { getItemTags, ITEMS } from './items';
 import { ITEM_GEOMETRY } from './itemGeometry';
 import type { LevelType } from './levels';
 
-/** 场景只在水平方向延展；1.6 屏减少无意义拖动，让一局物件更集中。 */
-export const SCENE_SCALE = { w: 1.6, h: 1 } as const;
+/**
+ * 场景在水平方向延展 1.5 屏：给物件留出横向空间，避免一屏内互相压叠，
+ * 同时恢复左右拖动探索。纵向锁定一屏。
+ */
+export const SCENE_SCALE = { w: 1.5, h: 1 } as const;
 /** 单件物体的基准边长相对视口短边的比例，生成器与渲染器共用。 */
 export const SCENE_ITEM_FRACTION = 0.19;
 
@@ -16,13 +19,14 @@ const BASE_X_PERCENT = (SCENE_ITEM_FRACTION / SCENE_SCALE.w) * 100;
 const BASE_Y_PERCENT = SCENE_ITEM_FRACTION * 100;
 const EDGE_SAFE_X = 1.4;
 const EDGE_SAFE_Y = 1.3;
-const HUD_SAFE_TOP = 20;
-const ACTION_SAFE_BOTTOM = 8;
+/** 顶部关卡牌 + 任务条占位，物件不得侵入，否则会被 HUD 遮挡。 */
+const HUD_SAFE_TOP = 22;
+/** 底部三枚圆钮 + 文字标签占位，避免物件躲到按钮后面。 */
+const ACTION_SAFE_BOTTOM = 13;
 const GAP_X = 0.04;
 const GAP_Y = 0.06;
-/** 使用完整可见轮廓包围盒装箱，物品可以密集相邻，但主体不再互相压叠。 */
+/** 使用完整可见轮廓包围盒装箱，保证单屏移动画布里的主体不会互相压叠。 */
 const PACKING_FOOTPRINT_FACTOR = 1;
-const VIEWPORT_WIDTH_PERCENT = 100 / SCENE_SCALE.w;
 
 let uidCounter = 1;
 
@@ -85,12 +89,6 @@ function collides(candidate: PackedRect, placed: PackedRect[]): boolean {
   ));
 }
 
-/** 按完整素材画布避开两屏拼接位置，初始视野不会露出半个透明 PNG。 */
-function crossesViewportSeam(x: number, scale: number): boolean {
-  const safeHalfWidth = (BASE_X_PERCENT * scale) / 2 + 1.5;
-  return Math.abs(x - VIEWPORT_WIDTH_PERCENT) < safeHalfWidth;
-}
-
 /** 先遍历完整池再重复，避免目标数量较大时总刷出同一件物品。 */
 function pickInRounds<T>(pool: T[], count: number): T[] {
   const output: T[] = [];
@@ -104,6 +102,8 @@ export interface SceneSpec {
   rules: TaskRule[];
   distractors: number;
   levelType?: LevelType;
+  /** 隐藏发现追赶：候选充足时，每组优先混入至少一件尚未发现的目标。 */
+  preferredTargetIds?: Set<string>;
 }
 
 export interface GeneratedScene {
@@ -136,7 +136,19 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
       Math.max(1, Math.trunc(rule.targetCount)),
       targetPool.length,
     );
-    const selected = shuffle(targetPool).slice(0, targetCount);
+    const preferredPool = spec.preferredTargetIds
+      ? targetPool.filter((item) => spec.preferredTargetIds?.has(item.id))
+      : [];
+    const preferredCount = Math.min(
+      preferredPool.length,
+      targetCount,
+      Math.max(1, Math.ceil(targetCount * 0.4)),
+    );
+    const preferred = shuffle(preferredPool).slice(0, preferredCount);
+    const preferredIds = new Set(preferred.map((item) => item.id));
+    const remaining = shuffle(targetPool.filter((item) => !preferredIds.has(item.id)))
+      .slice(0, targetCount - preferred.length);
+    const selected = shuffle([...preferred, ...remaining]);
     for (const def of selected) {
       selectedTargetIds.add(def.id);
       targetEntries.set(def.id, { def, targetTaskIds: [rule.id] });
@@ -231,7 +243,7 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
       const x = ((entry.landmarkIndex + 0.75) / (entry.landmarkCount + 0.5)) * 100;
       const y = entry.landmarkIndex % 2 === 0 ? 76 : 84;
       const rect = paddedRect(x, y, size.width, size.height);
-      if (!collides(rect, packedRects) && !crossesViewportSeam(x, scale)) {
+      if (!collides(rect, packedRects)) {
         position = { x, y, rect };
       }
     }
@@ -266,7 +278,7 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
         x = Math.max(minX, Math.min(maxX, x));
         y = Math.max(minY, Math.min(maxY, y));
         const rect = paddedRect(x, y, size.width, size.height);
-        if (!collides(rect, packedRects) && !crossesViewportSeam(x, scale)) {
+        if (!collides(rect, packedRects)) {
           position = { x, y, rect };
         }
         if (position) break;
@@ -287,7 +299,7 @@ export function generateScene(spec: SceneSpec): GeneratedScene {
           const x = Math.min(maxX, Math.max(minX, minX + column * gridStep + rand(-0.32, 0.32)));
           const y = Math.min(maxY, Math.max(minY, minY + row * gridStep + rand(-0.32, 0.32)));
           const rect = paddedRect(x, y, size.width, size.height);
-          if (!collides(rect, packedRects) && !crossesViewportSeam(x, scale)) {
+          if (!collides(rect, packedRects)) {
             position = { x, y, rect };
             break;
           }

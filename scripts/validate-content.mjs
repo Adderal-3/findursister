@@ -4,16 +4,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const manifestPath = path.join(root, 'public', 'items', 'ancient', 'manifest.json');
+const assetRoot = path.join(root, 'src', 'assets');
+const manifestPath = path.join(assetRoot, 'items', 'ancient', 'manifest.json');
 const itemsPath = path.join(root, 'src', 'game', 'items.ts');
 const tasksPath = path.join(root, 'src', 'game', 'tasks.ts');
 const scenePath = path.join(root, 'src', 'game', 'scene.ts');
-const levelsPath = path.join(root, '数值表_src', 'levels_100.csv');
+const partnersPath = path.join(root, 'src', 'game', 'partners.ts');
+const levelsPath = path.join(root, '数值表_src', 'levels_200.csv');
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const itemsSource = fs.readFileSync(itemsPath, 'utf8');
 const tasksSource = fs.readFileSync(tasksPath, 'utf8');
 const sceneSource = fs.readFileSync(scenePath, 'utf8');
+const partnersSource = fs.readFileSync(partnersPath, 'utf8');
 const levelLines = fs.readFileSync(levelsPath, 'utf8').trim().split(/\r?\n/);
 
 const tagDomains = {
@@ -151,7 +154,7 @@ const warmUiAssets = {
   'mission-frame-warm-v1.png': [1600, 307],
 };
 for (const [name, [expectedWidth, expectedHeight]] of Object.entries(warmUiAssets)) {
-  const file = path.join(root, 'public', 'ui', 'qingya', name);
+  const file = path.join(assetRoot, 'ui', 'qingya', name);
   assert(fs.existsSync(file), `missing warm UI asset: ${name}`);
   const { width, height } = pngSize(file);
   assert(
@@ -159,6 +162,69 @@ for (const [name, [expectedWidth, expectedHeight]] of Object.entries(warmUiAsset
     `${name} should be ${expectedWidth}x${expectedHeight}, got ${width}x${height}`,
   );
 }
+
+const homeUiAssets = {
+  'home-logo-v1.png': [1200, 269],
+  'home-primary-button-v1.png': [1185, 380],
+  'home-round-button-v1.png': [509, 512],
+  'home-stamina-badge-v1.png': [794, 340],
+  'home-task-tag-v1.png': [201, 720],
+};
+for (const [name, [expectedWidth, expectedHeight]] of Object.entries(homeUiAssets)) {
+  const file = path.join(assetRoot, 'ui', 'home', name);
+  assert(fs.existsSync(file), `missing home UI asset: ${name}`);
+  const { width, height } = pngSize(file);
+  assert(
+    width === expectedWidth && height === expectedHeight,
+    `${name} should be ${expectedWidth}x${expectedHeight}, got ${width}x${height}`,
+  );
+}
+
+const homeBackground = path.join(assetRoot, 'backgrounds', 'home-courtyard-spring-v1.webp');
+assert(fs.existsSync(homeBackground), 'missing home courtyard background');
+const homeBackgroundBytes = fs.readFileSync(homeBackground);
+assert(homeBackgroundBytes.length > 100 * 1024, 'home courtyard background looks incomplete');
+assert(
+  homeBackgroundBytes.subarray(0, 4).toString() === 'RIFF'
+    && homeBackgroundBytes.subarray(8, 12).toString() === 'WEBP',
+  'home courtyard background must be a valid WebP file',
+);
+
+const partnerAssets = {
+  afu: ['叶问舟', 'ship_npc_head_icon_yewenzhou-1x.png.png'],
+  xixi: ['燕无归', 'ship_npc_head_icon_yanwugui-1x.png.png'],
+  gugu: ['叶雪青', 'ship_npc_head_icon_yexueqing-1x.png.png'],
+  yuanyuan: ['方承意', 'ship_npc_head_icon_fangchengyi-1x.png.png'],
+  paopao: ['阿初', 'ship_npc_head_icon_achu-1x.png.png'],
+  xingxing: ['花将离', 'ship_npc_head_icon_huajiangli-1x.png.png'],
+  mimi: ['无情', 'ship_npc_head_icon_wuqing-1x.png.png'],
+  meimei: ['姬蜜儿', 'ship_npc_head_icon_jimier-1x.png.png'],
+};
+const partnerIds = Object.keys(partnerAssets);
+for (const [id, [displayName, sourceName]] of Object.entries(partnerAssets)) {
+  const file = path.join(assetRoot, 'partners', `${id}.png`);
+  const sourceFile = path.join(root, 'huoban', sourceName);
+  assert(fs.existsSync(file), `missing partner portrait: ${id}`);
+  assert(fs.existsSync(sourceFile), `missing original partner portrait: ${sourceName}`);
+  const { width, height } = pngSize(file);
+  assert(width === 128 && height === 128, `${id} portrait should be 128x128, got ${width}x${height}`);
+  assert(
+    crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')
+      === crypto.createHash('sha256').update(fs.readFileSync(sourceFile)).digest('hex'),
+    `partner portrait is not the original ${sourceName}: ${id}`,
+  );
+  assert(partnersSource.includes(`id: '${id}'`), `missing partner definition: ${id}`);
+  assert(partnersSource.includes(`name: '${displayName}'`), `partner display name is stale: ${id}`);
+  assert(
+    partnersSource.includes(`../assets/partners/${id}.png`),
+    `partner portrait import is stale: ${id}`,
+  );
+}
+assert(
+  [...partnersSource.matchAll(/^\s+id: '([^']+)',$/gm)].length === partnerIds.length,
+  `expected ${partnerIds.length} partner definitions`,
+);
+
 const packingFactor = Number(
   sceneSource.match(/PACKING_FOOTPRINT_FACTOR\s*=\s*([\d.]+)/)?.[1],
 );
@@ -169,7 +235,7 @@ assert(
 
 const spriteHashes = new Map();
 for (const entry of manifest) {
-  const file = path.join(root, 'public', entry.file.replace(/^\//, ''));
+  const file = path.join(assetRoot, entry.file.replace(/^[/\\]/, ''));
   assert(fs.existsSync(file), `missing sprite: ${entry.file}`);
   const bytes = fs.readFileSync(file);
   assert(bytes.length === entry.bytes, `manifest byte count is stale: ${entry.file}`);
@@ -198,7 +264,7 @@ for (const task of tasks) {
   assert(distractorCount > 0, `${task.id} has no distractor pool`);
 }
 
-assert(levelLines.length === 101, `expected header + 100 levels, got ${levelLines.length}`);
+assert(levelLines.length === 201, `expected header + 200 levels, got ${levelLines.length}`);
 const header = levelLines[0].split(',');
 const categoryIndex = header.indexOf('category');
 const taskIdsIndex = header.indexOf('taskIds');
@@ -257,14 +323,14 @@ for (const line of levelLines.slice(1)) {
   levelCategoryCounts[category] += 1;
 }
 for (const category of tagDomains.tags) {
-  assert(levelCategoryCounts[category] === 10, `${category} should appear in 10 legacy levels`);
+  assert(levelCategoryCounts[category] === 20, `${category} should appear in 20 levels`);
 }
-assert(combinationLevelCount >= 40, `expected at least 40 combination levels, got ${combinationLevelCount}`);
-assert(multiTargetLevelCount >= 90, `expected at least 90 multi-target levels, got ${multiTargetLevelCount}`);
+assert(combinationLevelCount >= 140, `expected at least 140 combination goals, got ${combinationLevelCount}`);
+assert(multiTargetLevelCount >= 190, `expected at least 190 multi-target levels, got ${multiTargetLevelCount}`);
 
 const totalBytes = manifest.reduce((sum, entry) => sum + entry.bytes, 0);
 console.log(
   `content ok: ${items.length} unique items, ${tasks.length} task rules, `
-  + `100 levels (${multiTargetLevelCount} multi-target, ${combinationLevelCount} compound goals), `
-  + `${(totalBytes / 1024 / 1024).toFixed(2)} MiB`,
+  + `200 levels (${multiTargetLevelCount} multi-target, ${combinationLevelCount} compound goals), `
+  + `${partnerIds.length} partners, ${(totalBytes / 1024 / 1024).toFixed(2)} MiB`,
 );

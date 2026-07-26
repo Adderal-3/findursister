@@ -1,4 +1,4 @@
-"""Build production-ready sprites from the legacy and expansion archives.
+"""Build production-ready sprites from the latest Figma export archive.
 
 The source archive contains large transparent canvases and repeated exports for
 objects that belong to more than one category. This script keeps one semantic
@@ -18,110 +18,105 @@ from PIL import Image
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-LEGACY_SOURCE_ZIP = PROJECT_ROOT / "逆水寒07小游戏素材-页面 1.zip"
-EXPANSION_SOURCE_ZIP = PROJECT_ROOT / "download (11).zip"
-OUTPUT_DIR = PROJECT_ROOT / "public" / "items" / "ancient"
+SOURCE_ZIP = PROJECT_ROOT / "逆水寒07小游戏素材-0724.zip"
+OUTPUT_DIR = PROJECT_ROOT / "src" / "assets" / "items" / "ancient"
 GEOMETRY_TS = PROJECT_ROOT / "src" / "game" / "itemGeometry.ts"
 
 CANVAS_SIZE = 256
 CONTENT_SIZE = 224
 
-# Representative Figma layer id -> stable semantic filename. Repeated layer
-# exports are intentionally omitted; category membership lives in items.ts.
+# Representative Figma layer id -> stable semantic filename. The 0724 export
+# contains 212 numbered PNGs but only 137 unique pictures. Repeated category
+# exports, category headings, and 14 additional export variants are intentionally
+# omitted; category membership lives in items.ts.
 ASSETS: dict[int, str] = {
-    593: "camel",
-    594: "chili_pepper",
-    595: "golden_pipa",
-    596: "grapes",
-    597: "mooncake",
-    598: "horse",
-    599: "bird_ocarina",
-    600: "peach",
-    601: "sedan_chair",
-    602: "konghou",
-    603: "golden_ewer",
-    604: "cat",
-    605: "red_sky_lantern",
-    606: "white_porcelain_vase",
-    608: "lychee",
-    609: "painted_jar",
-    610: "black_pitcher",
-    611: "campfire",
-    612: "bronze_gong",
-    614: "fish_hook",
-    615: "torch",
-    616: "arrow",
-    617: "needle",
-    618: "flying_fish",
-    619: "candied_hawthorn",
-    620: "lotus_ewer",
-    621: "spike_trap",
-    622: "osmanthus_cake",
-    623: "deer",
-    625: "beast_fang",
-    626: "waist_drum",
-    627: "jade_hairpin",
-    628: "black_bottle",
-    629: "nine_tailed_fox",
-    630: "ornate_dagger",
-    631: "firefly",
-    632: "shuriken",
-    633: "oil_lamp",
-    634: "red_dates",
-    635: "inscribed_music_stand",
-    638: "dandelion",
-    639: "vinegar_jar",
-    640: "lucky_raccoon",
-    641: "rattle_drum",
-    642: "wooden_pipa",
-    643: "swallow",
-    644: "painted_vase",
-    645: "phoenix",
-    646: "dragonfly",
-    648: "fire_wheels",
-    649: "chrysanthemum",
-    650: "tangyuan",
-    651: "hulusi",
-    652: "inscribed_papers",
-    653: "icicle",
-    654: "golden_bowl",
-    655: "ancient_book",
-    660: "watermelon",
-    661: "guqin",
-    662: "orange_sky_lantern",
-    663: "penguin",
-    664: "incense_burner",
-    665: "cotton",
-    667: "eggplant",
-    668: "crossed_swords",
-    669: "hand_drum",
-    670: "floral_hairpin",
-    672: "patterned_vase",
-    673: "jewelry_box",
-    676: "medicine_bottle",
-    677: "carriage",
-    678: "butterfly",
-    682: "sword",
-    683: "clay_jar",
-    684: "candle",
-    685: "treasure_ship",
-    686: "lidded_bowl",
-    687: "dog",
-    688: "rabbit",
-    690: "blue_book",
-    691: "zongzi",
-    692: "kite",
-    693: "partitioned_cauldron",
-    694: "peony",
-    695: "cabinet",
-    697: "feather",
-    698: "paper_crane",
-}
-
-# Expansion source number -> stable semantic filename. The archive contains
-# 213 exports; only these 34 numbered files plus two special named files are
-# new semantic objects. Alternate sizes and near-duplicates stay excluded.
-EXPANSION_ASSETS: dict[int, str] = {
+    703: "camel",
+    704: "chili_pepper",
+    705: "golden_pipa",
+    706: "grapes",
+    707: "mooncake",
+    708: "horse",
+    710: "peach",
+    711: "sedan_chair",
+    712: "konghou",
+    713: "golden_ewer",
+    714: "cat",
+    715: "red_sky_lantern",
+    716: "white_porcelain_vase",
+    718: "lychee",
+    719: "painted_jar",
+    720: "black_pitcher",
+    721: "campfire",
+    722: "bronze_gong",
+    724: "fish_hook",
+    725: "torch",
+    726: "arrow",
+    727: "needle",
+    728: "flying_fish",
+    729: "candied_hawthorn",
+    730: "lotus_ewer",
+    731: "spike_trap",
+    732: "osmanthus_cake",
+    733: "deer",
+    735: "beast_fang",
+    736: "waist_drum",
+    737: "jade_hairpin",
+    738: "black_bottle",
+    739: "nine_tailed_fox",
+    740: "ornate_dagger",
+    741: "firefly",
+    742: "shuriken",
+    743: "oil_lamp",
+    744: "red_dates",
+    745: "inscribed_music_stand",
+    746: "watermelon",
+    748: "dandelion",
+    749: "vinegar_jar",
+    750: "lucky_raccoon",
+    751: "rattle_drum",
+    752: "wooden_pipa",
+    753: "swallow",
+    754: "painted_vase",
+    755: "phoenix",
+    756: "dragonfly",
+    758: "fire_wheels",
+    759: "chrysanthemum",
+    760: "tangyuan",
+    761: "hulusi",
+    762: "inscribed_papers",
+    763: "icicle",
+    764: "golden_bowl",
+    765: "ancient_book",
+    771: "guqin",
+    772: "orange_sky_lantern",
+    773: "penguin",
+    774: "incense_burner",
+    775: "cotton",
+    776: "bird_ocarina",
+    777: "eggplant",
+    778: "crossed_swords",
+    779: "hand_drum",
+    780: "floral_hairpin",
+    782: "patterned_vase",
+    783: "jewelry_box",
+    786: "medicine_bottle",
+    787: "carriage",
+    788: "butterfly",
+    792: "sword",
+    793: "clay_jar",
+    794: "candle",
+    795: "treasure_ship",
+    796: "lidded_bowl",
+    797: "dog",
+    798: "rabbit",
+    800: "blue_book",
+    801: "zongzi",
+    802: "kite",
+    803: "partitioned_cauldron",
+    804: "peony",
+    805: "cabinet",
+    807: "feather",
+    808: "paper_crane",
     845: "apple",
     846: "banana",
     847: "orange",
@@ -139,6 +134,7 @@ EXPANSION_ASSETS: dict[int, str] = {
     880: "broccoli",
     881: "edamame",
     882: "celery",
+    895: "jeweled_belt",
     896: "silver_armor",
     897: "red_tunic",
     898: "tasseled_shawl",
@@ -148,6 +144,7 @@ EXPANSION_ASSETS: dict[int, str] = {
     904: "fox_mask",
     905: "gauze_veil",
     906: "bamboo_hat",
+    908: "plain_stone_arch_bridge",
     909: "wooden_arch_bridge",
     910: "covered_bridge",
     911: "floating_dock",
@@ -158,28 +155,14 @@ EXPANSION_ASSETS: dict[int, str] = {
     916: "red_arch_bridge",
 }
 
-# The zip filename encoding is inconsistent across extractors, so the two
-# non-numbered files are selected by their stable CRC values.
-EXPANSION_SPECIAL_ASSETS: dict[int, tuple[str, str]] = {
-    3919082161: ("jeweled_belt", "05385bce59553c2ece4b8a.png"),
-    1289849019: ("plain_stone_arch_bridge", "图片-2.png"),
-}
-
 
 def source_id(filename: str) -> int | None:
-    match = re.search(r"\s(\d+)-", filename)
+    match = re.search(r"\s(\d+)-1x\.png\.png$", filename)
     return int(match.group(1)) if match else None
 
 
-def expansion_source_id(filename: str) -> int | None:
-    match = re.search(r"\s(\d+)\.png$", filename)
-    return int(match.group(1)) if match else None
-
-
-def build_sprite(image: Image.Image, *, crop_top: int = 0) -> Image.Image:
+def build_sprite(image: Image.Image) -> Image.Image:
     rgba = image.convert("RGBA")
-    if crop_top:
-        rgba = rgba.crop((0, crop_top, rgba.width, rgba.height))
     bounds = rgba.getchannel("A").getbbox()
     if bounds is None:
         raise ValueError("sprite has no visible pixels")
@@ -194,61 +177,26 @@ def build_sprite(image: Image.Image, *, crop_top: int = 0) -> Image.Image:
 
 
 def main() -> None:
-    for source_zip in (LEGACY_SOURCE_ZIP, EXPANSION_SOURCE_ZIP):
-        if not source_zip.exists():
-            raise FileNotFoundError(f"missing source archive: {source_zip}")
+    if not SOURCE_ZIP.exists():
+        raise FileNotFoundError(f"missing source archive: {SOURCE_ZIP}")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     manifest: list[dict[str, object]] = []
 
-    with (
-        zipfile.ZipFile(LEGACY_SOURCE_ZIP) as legacy_archive,
-        zipfile.ZipFile(EXPANSION_SOURCE_ZIP) as expansion_archive,
-    ):
-        legacy_entries = {
+    with zipfile.ZipFile(SOURCE_ZIP) as archive:
+        entries = {
             item_id: info
-            for info in legacy_archive.infolist()
+            for info in archive.infolist()
             if (item_id := source_id(info.filename)) is not None
         }
-        expansion_entries = {
-            item_id: info
-            for info in expansion_archive.infolist()
-            if (item_id := expansion_source_id(info.filename)) is not None
-        }
-        special_entries = {info.CRC: info for info in expansion_archive.infolist()}
+        missing = sorted(set(ASSETS) - set(entries))
+        if missing:
+            raise ValueError(f"source archive is missing layer entries: {missing}")
 
-        missing_legacy = sorted(set(ASSETS) - set(legacy_entries))
-        missing_expansion = sorted(set(EXPANSION_ASSETS) - set(expansion_entries))
-        missing_special = sorted(set(EXPANSION_SPECIAL_ASSETS) - set(special_entries))
-        if missing_legacy or missing_expansion or missing_special:
-            raise ValueError(
-                "source archives are missing entries: "
-                f"legacy={missing_legacy}, expansion={missing_expansion}, special={missing_special}"
-            )
-
-        selected: list[tuple[zipfile.ZipFile, zipfile.ZipInfo, str, int | str, int]] = []
-        selected.extend(
-            (legacy_archive, legacy_entries[layer_id], item_id, layer_id, 0)
-            for layer_id, item_id in ASSETS.items()
-        )
-        selected.extend(
-            (expansion_archive, expansion_entries[layer_id], item_id, layer_id, 0)
-            for layer_id, item_id in EXPANSION_ASSETS.items()
-        )
-        selected.extend(
-            (
-                expansion_archive,
-                special_entries[crc],
-                item_id,
-                source_name,
-                40 if item_id == "jeweled_belt" else 0,
-            )
-            for crc, (item_id, source_name) in EXPANSION_SPECIAL_ASSETS.items()
-        )
-
-        for archive, info, item_id, source_ref, crop_top in selected:
+        for layer_id, item_id in ASSETS.items():
+            info = entries[layer_id]
             with Image.open(io.BytesIO(archive.read(info))) as image:
-                sprite = build_sprite(image, crop_top=crop_top)
+                sprite = build_sprite(image)
                 output = OUTPUT_DIR / f"{item_id}.webp"
                 sprite.save(output, "WEBP", quality=90, method=4)
                 visible_bounds = sprite.getchannel("A").getbbox()
@@ -258,8 +206,8 @@ def main() -> None:
             manifest.append(
                 {
                     "id": item_id,
-                    "sourceLayer": source_ref,
-                    "file": f"/items/ancient/{item_id}.webp",
+                    "sourceLayer": layer_id,
+                    "file": f"items/ancient/{item_id}.webp",
                     "bytes": output.stat().st_size,
                     "visibleWidth": round((right - left) / CANVAS_SIZE, 4),
                     "visibleHeight": round((bottom - top) / CANVAS_SIZE, 4),

@@ -9,6 +9,7 @@
     "assets": "python scripts/process_materials.py",
     "ui:warm": "python scripts/recolor_ui_warm.py",
     "catalog": "node scripts/generate-item-relations.mjs",
+    "catalog:review": "node scripts/generate-classification-review.mjs",
     "levels": "python scripts/upgrade_levels.py",
     "verify:content": "node scripts/validate-content.mjs",
     "check": "npm run verify:content && npm run lint && npm run build",

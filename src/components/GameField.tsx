@@ -5,8 +5,10 @@ import { getItem } from '../game/items';
 import { ITEM_GEOMETRY } from '../game/itemGeometry';
 import { SCENE_ITEM_FRACTION, SCENE_SCALE } from '../game/scene';
 import { LEVEL_TYPE_LABELS } from '../game/levels';
+import { unlockAudio } from '../game/sound';
 import type { Game } from '../hooks/useGame';
 import type { PlacedItem } from '../game/types';
+import bgQingyaWarm from '../assets/backgrounds/qingya-courtyard-warm-v3.webp';
 
 /** 点按 / 拖动判定阈值（像素）：按下后位移超过它就视为拖动，不触发任何点击判定 */
 const DRAG_THRESHOLD_PX = 8;
@@ -28,6 +30,8 @@ function loadAlphaHitMask(itemId: string) {
   pendingHitMasks.add(itemId);
   const image = new Image();
   image.decoding = 'async';
+  // 上线后素材走 CDN 跨域，不加这句 canvas 会被污染，getImageData 抛 SecurityError。
+  image.crossOrigin = 'anonymous';
   image.onload = () => {
     const canvas = document.createElement('canvas');
     canvas.width = HIT_MASK_SIZE;
@@ -120,18 +124,7 @@ const FieldItem = memo(function FieldItem({
             alt={def.name}
             draggable={false}
             className="block object-contain"
-            style={{
-              width: size,
-              height: size,
-              // 四向 1px 投影形成贴合透明 PNG 的细描边，比矩形边框更准确。
-              filter: [
-                'drop-shadow(1px 0 0 rgba(63, 46, 31, .52))',
-                'drop-shadow(-1px 0 0 rgba(63, 46, 31, .52))',
-                'drop-shadow(0 1px 0 rgba(63, 46, 31, .52))',
-                'drop-shadow(0 -1px 0 rgba(63, 46, 31, .52))',
-                'drop-shadow(0 5px 4px rgba(61, 45, 28, .22))',
-              ].join(' '),
-            }}
+            style={{ width: size, height: size }}
           />
         ) : (
           <span
@@ -149,30 +142,42 @@ const FieldItem = memo(function FieldItem({
 /** 寻物主场景（可拖动探索的虚拟大场景） */
 export function GameField({ game }: { game: Game }) {
   const fieldRef = useRef<HTMLDivElement>(null);
+  /** 内层可平移的虚拟大场景容器；拖动时直接改它的 transform，不触发 React 重渲染。 */
+  const sceneRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState({ w: 800, h: 500 }); // 可视区尺寸
-  const [pan, setPan] = useState({ x: 0, y: 0 });       // 镜头平移量（始终 ≤ 0）
   const [dragging, setDragging] = useState(false);
 
-  const panRef = useRef(pan);
+  /** 镜头平移量（始终 ≤ 0）。唯一真源是 ref；只在事件和 effect 中读取，避免拖动 60+ 次/秒的 setState。 */
+  const panRef = useRef({ x: 0, y: 0 });
   /** 一次按压的拖动过程快照（用 ref 避免闭包旧值） */
   const dragRef = useRef({ active: false, dragging: false, startX: 0, startY: 0, panX: 0, panY: 0 });
   /** 提示联动镜头的补间动画 */
   const panAnimRef = useRef<{ stop: () => void } | null>(null);
 
-  // 同步更新 state 与 ref（拖动 / 补间动画里要读到最新值）
-  const setPanSync = useCallback((p: { x: number; y: number }) => {
+  /**
+   * 平移镜头：只写 ref + 直接改 DOM transform，绕开 React 渲染。
+   * 拖动 / 补间的每一帧都走这里，因此 50+ 个物件不再每帧重新协调。
+   */
+  const paintPan = useCallback((p: { x: number; y: number }) => {
     panRef.current = p;
-    setPan(p);
+    const el = sceneRef.current;
+    if (el) el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
   }, []);
 
   useEffect(() => {
     const el = fieldRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setView({ w: el.clientWidth, h: el.clientHeight }));
+    const updateSize = () => {
+      const nextView = { w: el.clientWidth, h: el.clientHeight };
+      setView(nextView);
+      const nextWorldWidth = nextView.w * SCENE_SCALE.w;
+      paintPan({ x: (nextView.w - nextWorldWidth) / 2, y: 0 });
+    };
+    const ro = new ResizeObserver(updateSize);
     ro.observe(el);
-    setView({ w: el.clientWidth, h: el.clientHeight });
+    updateSize();
     return () => ro.disconnect();
-  }, []);
+  }, [paintPan]);
 
   // 每轮提前生成当前场景素材的透明像素蒙版，轻点时即可同步精确命中。
   useEffect(() => {
@@ -195,8 +200,8 @@ export function GameField({ game }: { game: Game }) {
 
   // 视口尺寸变化时重新钳制当前镜头
   useEffect(() => {
-    setPanSync(clampPan(panRef.current.x));
-  }, [clampPan, setPanSync]);
+    paintPan(clampPan(panRef.current.x));
+  }, [clampPan, paintPan]);
 
   // 提示联动镜头：提示物品在视野外时，平滑平移过去让它进入视野
   useEffect(() => {
@@ -218,20 +223,20 @@ export function GameField({ game }: { game: Game }) {
       duration: 0.55,
       ease: 'easeInOut',
       onUpdate: (t) =>
-        setPanSync({
+        paintPan({
           x: from.x + (target.x - from.x) * t,
           y: from.y + (target.y - from.y) * t,
         }),
     });
-  }, [game.hintUid, game.items, view, worldW, worldH, clampPan, setPanSync]);
+  }, [game.hintUid, game.items, view, worldW, worldH, clampPan, paintPan]);
 
   // 卸载时停掉镜头补间
   useEffect(() => () => panAnimRef.current?.stop(), []);
 
   // 与装箱器使用同一基准；短屏会整体缩放，但不改变物体间的有机疏密。
   const baseSize = Math.max(
-    44,
-    Math.min(132, view.w * SCENE_ITEM_FRACTION, view.h * SCENE_ITEM_FRACTION),
+    50,
+    Math.min(146, view.w * SCENE_ITEM_FRACTION, view.h * SCENE_ITEM_FRACTION),
   );
 
   /**
@@ -283,8 +288,11 @@ export function GameField({ game }: { game: Game }) {
         }
       }
       if (hit) {
+        // PointerUp 同步解锁音频，确保移动端第一次命中也能立即播放正确音效。
+        unlockAudio();
         game.handleItemClick(hit.uid);
       } else {
+        unlockAudio();
         // 点到空背景：换成虚拟大场景的百分比坐标报误点
         game.handleFieldMiss((wx / worldW) * 100, (wy / worldH) * 100);
       }
@@ -317,9 +325,10 @@ export function GameField({ game }: { game: Game }) {
         d.dragging = true;
         setDragging(true);
       }
-      if (d.dragging) setPanSync(clampPan(d.panX + dx));
+      // 直接写 DOM，不走 setState，拖动全程零 React 重渲染。
+      if (d.dragging) paintPan(clampPan(d.panX + dx));
     },
-    [clampPan, setPanSync],
+    [clampPan, paintPan],
   );
 
   const endDrag = useCallback(
@@ -364,16 +373,17 @@ export function GameField({ game }: { game: Game }) {
         className={`relative h-full w-full touch-none overflow-hidden select-none ${
           dragging ? 'cursor-grabbing' : 'cursor-grab'
         }`}
-        style={{ backgroundImage: 'url(/backgrounds/qingya-courtyard-warm-v3.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{ backgroundImage: `url(${bgQingyaWarm})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
         {/* 虚拟大场景：放大的内层平移容器，物品 / 飘字 / 粒子都挂在这里（% 坐标不变） */}
+        {/* 平移只写这一层的 transform（走 sceneRef 直接改 DOM），拖动时不触发 React 重渲染。 */}
         <div
+          ref={sceneRef}
           className="pointer-events-none absolute top-0 left-0"
           style={{
             width: `${SCENE_SCALE.w * 100}%`,
             height: `${SCENE_SCALE.h * 100}%`,
-            transform: `translate3d(${pan.x}px, ${pan.y}px, 0)`,
-            backgroundImage: 'url(/backgrounds/qingya-courtyard-warm-v3.webp)',
+            backgroundImage: `url(${bgQingyaWarm})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -442,11 +452,11 @@ export function GameField({ game }: { game: Game }) {
 
         {levelType === 'mist' && (
           <div
-            className="pointer-events-none absolute inset-0 z-[30] opacity-55"
+            className="pointer-events-none absolute inset-0 z-[30] opacity-35"
             style={{
               backgroundImage: [
-                'radial-gradient(circle at 18% 30%, rgba(255,255,255,.08), rgba(244,239,222,.55) 42%, transparent 68%)',
-                'radial-gradient(circle at 82% 72%, rgba(255,255,255,.12), rgba(232,226,207,.48) 38%, transparent 70%)',
+                'radial-gradient(circle at 18% 30%, rgba(255,255,255,.06), rgba(244,239,222,.4) 42%, transparent 70%)',
+                'radial-gradient(circle at 82% 72%, rgba(255,255,255,.08), rgba(232,226,207,.34) 38%, transparent 72%)',
               ].join(','),
             }}
           />
@@ -455,13 +465,13 @@ export function GameField({ game }: { game: Game }) {
           <div
             className="pointer-events-none absolute inset-0 z-[30]"
             style={{
-              background: 'radial-gradient(circle at 50% 48%, rgba(24,32,52,.05) 0 22%, rgba(22,28,48,.38) 72%, rgba(14,18,34,.58) 100%)',
-              mixBlendMode: 'multiply',
+              // 只在四周压暗形成夜色氛围，中心保持明亮可辨物，避免整屏发灰。
+              background: 'radial-gradient(circle at 50% 46%, transparent 0 46%, rgba(30,40,64,.16) 78%, rgba(20,28,50,.3) 100%)',
             }}
           />
         )}
         {levelType === 'boss' && (
-          <div className="pointer-events-none absolute inset-0 z-[30] shadow-[inset_0_0_70px_rgba(116,49,31,.28)] ring-2 ring-inset ring-[#9e593d]/25" />
+          <div className="pointer-events-none absolute inset-0 z-[30] shadow-[inset_0_0_60px_rgba(116,49,31,.2)] ring-2 ring-inset ring-[#9e593d]/20" />
         )}
 
         {/* 点错红闪（固定在视口，不随场景平移） */}

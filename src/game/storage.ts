@@ -10,9 +10,21 @@ export const SAVE_KEYS = {
   bestEndless: 'znm.best.endless.v3',
   maxLevel: 'znm.best.maxLevel.v3',
   levelScores: 'znm.best.levelScores.v3',
+  levelStars: 'znm.best.levelStars',
   collection: 'znm.collection.items.v1',
   stamina: 'znm.stamina.v1',
-  tutorial: 'znm.tutorial.seen.v1',
+  // v2 将原来的三关分段教学合并为一次性总览，旧用户也只需重新看这一次。
+  tutorial: 'znm.tutorial.seen.v2',
+  partnerRecruited: 'znm.partner.recruited',
+  partnerRecruitedAt: 'znm.partner.recruitedAt',
+  partnerOnlineSec: 'znm.prog.onlineSec',
+  partnerDailyPlaySec: 'znm.prog.dailyPlaySec',
+  partnerDailyPlayDate: 'znm.prog.dailyPlayDate',
+  partnerTotalFound: 'znm.prog.totalFound',
+  partnerBestBaseScore: 'znm.prog.bestBaseScore',
+  partnerBestCombo: 'znm.prog.bestCombo',
+  muted: 'znm.settings.muted.v1',
+  dailyLevelScores: 'znm.ranking.dailyLevelScores.v1',
 } as const;
 
 export const gameStorage = {

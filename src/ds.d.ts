@@ -85,6 +85,8 @@ declare global {
         getBillboardRank(options: {
           devBillboardId: string;
           proBillboardId: string;
+          /** 日榜快照日期（东八区 YYYY-MM-DD）；不传查总榜。SDK 透传给后端。 */
+          date?: string;
           page?: number;
           pageSize?: number;
         }): Promise<{
@@ -101,6 +103,8 @@ declare global {
         getUserRank(options: {
           devBillboardId: string;
           proBillboardId: string;
+          /** 日榜快照日期（东八区 YYYY-MM-DD）；不传查总榜。 */
+          date?: string;
         }): Promise<{
           rank: number;
           total: number;

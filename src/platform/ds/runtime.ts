@@ -7,7 +7,13 @@ export const userInfo: Record<string, unknown> = {};
 export const godlikeInfo: Record<string, unknown> = {};
 
 export function isWechatMiniProgram(): boolean {
-  return navigator.userAgent.toLowerCase().includes('miniprogram');
+  if (navigator.userAgent.toLowerCase().includes('miniprogram')) return true;
+  // 本地预览开关：?mp=1 强制按小程序布局渲染，方便在浏览器里核对适配效果。
+  try {
+    return new URLSearchParams(window.location.search).get('mp') === '1';
+  } catch {
+    return false;
+  }
 }
 
 async function dsInit(): Promise<void> {
@@ -251,14 +257,20 @@ function configureActSdk(): boolean {
   return true;
 }
 
-export function initTaskModule(): void {
-  if (!dsTaskPanelEnabled || taskModuleMounted || !configureActSdk() || !window.DsActSdk) return;
+/** 挂载任务弹窗；成功返回 true。SDK / 容器未就绪时返回 false，由调用方决定是否重试。 */
+export function initTaskModule(): boolean {
+  if (!dsTaskPanelEnabled) return false;
+  if (taskModuleMounted) return true;
+  if (!configureActSdk() || !window.DsActSdk) return false;
+  // 容器由 React 渲染，evoke 前必须已在 DOM 中，否则 SDK 找不到挂载点静默失败。
+  if (!document.querySelector('#ds-task-root')) return false;
   window.DsActSdk.TaskModule.evoke({
     container: '#ds-task-root',
     title: '全部任务',
     showRole: dsConfig.task.showRole,
   });
   taskModuleMounted = true;
+  return true;
 }
 
 /** 菜单挂载后接入角色选择；离开菜单时卸载，返回菜单可重新挂载。 */
@@ -278,10 +290,21 @@ export function mountRoleModule(): () => void {
   return roleModuleUnmount;
 }
 
-export function openTaskPanel(): void {
-  if (!dsTaskPanelEnabled || !window.DsActSdk) return;
+/** 打开任务面板。返回 null 表示成功，否则返回可展示给用户的失败原因。 */
+export function openTaskPanel(): string | null {
+  if (!dsTaskPanelEnabled) {
+    return !dsPlatformEnabled ? '当前非大神环境，任务仅在大神 App / 小程序内可用' : '任务活动未配置（actId 缺失）';
+  }
+  if (!window.DsActSdk) {
+    return '任务 SDK 未加载（DsActSdk 不存在），当前环境可能不支持';
+  }
+  // 点击时兜底：初始化时 SDK 可能还没加载完导致 evoke 没跑成，这里再尝试挂载一次。
+  if (!initTaskModule()) {
+    return '任务面板挂载失败（容器缺失或 SDK 未就绪）';
+  }
   window.DsActSdk.dsActStore.set(window.DsActSdk.taskListPopupState, true);
   trackEvent({ event: 'task_panel_open' });
+  return null;
 }
 /* ========== DS:ACT-SDK END ========== */
 
@@ -289,11 +312,19 @@ export function openTaskPanel(): void {
 let initPromise: Promise<void> | null = null;
 
 async function initApp(): Promise<void> {
+  // 小程序布局类已在 DsPlatformBridge 里应用（含 ?mp=1 本地预览开关）。
   initUlink();
   await initLogin();
   initShare();
   initNavBar();
-  initTaskModule();
+  // ds-act-sdk 是 CDN 异步加载，首次可能还没就绪；轮询重试直到挂载成功（上限 ~10s）。
+  if (dsTaskPanelEnabled && !initTaskModule()) {
+    let tries = 0;
+    const retry = window.setInterval(() => {
+      tries += 1;
+      if (initTaskModule() || tries >= 20) window.clearInterval(retry);
+    }, 500);
+  }
   trackEvent({ event: 'page_ready' });
 }
 

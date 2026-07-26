@@ -12,18 +12,25 @@ import {
 } from '../game/tasks';
 import {
   ENDLESS_FIND_BONUS_SEC, ENDLESS_HINTS, ENDLESS_START_SEC, ENDLESS_TIME_CAP,
-  LEVEL_COUNT, levelConfig, scoreForFind, starsForScore, waveConfig, WRONG_PENALTY_SEC,
+  leaderboardBaseScore, LEVEL_COUNT, levelConfig, levelScoreToRankingPoints,
+  scoreForFind, starsForScore, waveConfig, WRONG_PENALTY_SEC,
 } from '../game/levels';
 import { COLLECTIBLE_ITEMS } from '../game/items';
-import { haptics, sfx } from '../game/sound';
+import { haptics, setMuted as setSoundMuted, sfx } from '../game/sound';
 import { gameStorage, SAVE_KEYS } from '../game/storage';
 import {
   advanceOnlineStamina, loadStamina, saveStamina, secondsToNextStamina,
   settleOfflineStamina, spendStamina, STAMINA_ENDLESS_COST, STAMINA_LEVEL_COST,
   STAMINA_MAX,
 } from '../game/stamina';
-import { trackEvent } from '../platform/ds/runtime';
+import { openTaskPanel, trackEvent } from '../platform/ds/runtime';
+import { dsTaskPanelEnabled } from '../platform/ds/config';
 import { syncProgressToDs } from '../platform/ds/leaderboard';
+import {
+  advancePartnerClock, checkPartnerRecruitments, loadPartnerClock,
+  recordPartnerSettlement, savePartnerClock, type PartnerId,
+} from '../game/partners';
+import { accessibleMaxLevel, totalStars as countTotalStars } from '../game/progression';
 
 function loadNum(key: string): number {
   const value = Number(gameStorage.get(key));
@@ -56,10 +63,73 @@ function loadCollection(): string[] {
   }
 }
 
+interface DailyLevelScoreState {
+  date: string;
+  scores: Record<number, number>;
+}
+
+function localDateKey(now = new Date()): string {
+  return [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('-');
+}
+
+function loadDailyLevelScores(): DailyLevelScoreState {
+  const today = localDateKey();
+  try {
+    const value: unknown = JSON.parse(gameStorage.get(SAVE_KEYS.dailyLevelScores) ?? '{}');
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return { date: today, scores: {} };
+    const record = value as { date?: unknown; scores?: unknown };
+    if (record.date !== today || !record.scores || typeof record.scores !== 'object' || Array.isArray(record.scores)) {
+      return { date: today, scores: {} };
+    }
+    const scores = Object.fromEntries(
+      Object.entries(record.scores)
+        .map(([key, score]) => [Number(key), Number(score)] as const)
+        .filter(([level, score]) => Number.isInteger(level) && level >= 1
+          && level <= LEVEL_COUNT && Number.isFinite(score) && score > 0),
+    );
+    return { date: today, scores };
+  } catch {
+    return { date: today, scores: {} };
+  }
+}
+
+function loadLevelStars(scores: Record<number, number>): Record<number, number> {
+  let stored: Record<number, number> = {};
+  try {
+    const value: unknown = JSON.parse(gameStorage.get(SAVE_KEYS.levelStars) ?? '{}');
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      stored = Object.fromEntries(
+        Object.entries(value)
+          .map(([key, stars]) => [Number(key), Number(stars)] as const)
+          .filter(([level, stars]) => Number.isInteger(level) && level >= 1
+            && level <= LEVEL_COUNT && [1, 2, 3].includes(stars)),
+      );
+    }
+  } catch {
+    stored = {};
+  }
+
+  for (const [levelKey, score] of Object.entries(scores)) {
+    const level = Number(levelKey);
+    const derived = starsForScore(score, levelConfig(level));
+    stored[level] = Math.max(stored[level] ?? 0, derived);
+  }
+  return stored;
+}
+
 let effectId = 1;
+const TIME_BOOST_SECONDS = 15;
 
 export function useGame() {
   const initialScores = useRef(loadLevelScores()).current;
+  const initialStars = useRef(loadLevelStars(initialScores)).current;
+  const initialCollection = useRef(loadCollection()).current;
+  const initialDailyScores = useRef(loadDailyLevelScores()).current;
+  const initialPartnerCheck = useRef(checkPartnerRecruitments(initialCollection, initialStars)).current;
   const [phase, setPhase] = useState<GamePhase>('menu');
   const [mode, setMode] = useState<GameMode>('levels');
   const [level, setLevel] = useState(1);
@@ -83,12 +153,30 @@ export function useGame() {
   const [lastGain, setLastGain] = useState({ find: 0, bonus: 0 });
   const [lastStars, setLastStars] = useState<1 | 2 | 3>(1);
   const [isNewLevelBest, setIsNewLevelBest] = useState(false);
+  const [lastLevelPreviousBest, setLastLevelPreviousBest] = useState(0);
+  const [lastLeaderboardBaseDelta, setLastLeaderboardBaseDelta] = useState(0);
+  const [muted, setMutedState] = useState(() => gameStorage.get(SAVE_KEYS.muted) === '1');
+  const [timeBoostFreeAvailable, setTimeBoostFreeAvailable] = useState(true);
+  const [timeBoostTaskAvailable, setTimeBoostTaskAvailable] = useState(true);
+  const [timeBoostToast, setTimeBoostToast] = useState<string | null>(null);
+  const [timeBoostTaskPrompt, setTimeBoostTaskPrompt] = useState(false);
+  const [goalNotice, setGoalNotice] = useState<{
+    id: number;
+    completedLabel: string;
+    nextLabel: string;
+  } | null>(null);
   const [levelScores, setLevelScores] = useState<Record<number, number>>(initialScores);
-  const [collection, setCollection] = useState<string[]>(loadCollection);
+  const [dailyLevelScores, setDailyLevelScores] = useState<DailyLevelScoreState>(initialDailyScores);
+  const [levelStars, setLevelStars] = useState<Record<number, number>>(initialStars);
+  const [, setCollection] = useState<string[]>(initialCollection);
+  const [partners, setPartners] = useState(initialPartnerCheck.partners);
+  const [partnerNoticeQueue, setPartnerNoticeQueue] = useState<PartnerId[]>(
+    initialPartnerCheck.newlyRecruited,
+  );
   const [staminaState, setStaminaState] = useState(loadStamina);
   const [staminaNotice, setStaminaNotice] = useState<{ cost: number; mode: GameMode } | null>(null);
   const [best, setBest] = useState({
-    levels: Object.values(initialScores).reduce((sum, value) => sum + value, 0),
+    levels: leaderboardBaseScore(initialScores),
     endless: loadNum(SAVE_KEYS.bestEndless),
     maxLevel: Math.min(LEVEL_COUNT, Math.max(1, loadNum(SAVE_KEYS.maxLevel))),
   });
@@ -98,13 +186,67 @@ export function useGame() {
   const lastTaskIdRef = useRef<string | null>(null);
   const scoreAtStartRef = useRef(0);
   const prevCeilRef = useRef(0);
+  /** 精确到毫秒的倒计时，避免 state 每 100ms 更新一次导致全树重渲染。 */
+  const timeLeftPreciseRef = useRef(0);
   const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const goalNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeBoostToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const staminaRef = useRef(staminaState);
+  const collectionRef = useRef(initialCollection);
+  const levelStarsRef = useRef(initialStars);
+  const partnerClockRef = useRef(loadPartnerClock());
+  const roundFoundRef = useRef(0);
+  const roundBestComboRef = useRef(0);
+  const endlessFoundRef = useRef(0);
+  const endlessBestComboRef = useRef(0);
+
+  const refreshPartners = useCallback((
+    nextCollection = collectionRef.current,
+    nextStars = levelStarsRef.current,
+  ) => {
+    const result = checkPartnerRecruitments(nextCollection, nextStars);
+    setPartners(result.partners);
+    if (result.newlyRecruited.length) {
+      setPartnerNoticeQueue((current) => [
+        ...current,
+        ...result.newlyRecruited.filter((id) => !current.includes(id)),
+      ]);
+    }
+    return result;
+  }, []);
+  const starTotal = countTotalStars(levelStars);
+  const unlockedMaxLevel = accessibleMaxLevel(best.maxLevel, starTotal);
+  const recruitedCount = partners.filter((partner) => partner.recruited).length;
+  const partnerBonusRate = recruitedCount * 0.0125;
+  const rankingScore = Math.round(best.levels * (1 + partnerBonusRate));
+  const currentDailyScores = dailyLevelScores.date === localDateKey()
+    ? dailyLevelScores.scores
+    : {};
+  const dailyRankingScore = leaderboardBaseScore(currentDailyScores);
+  const dailyLevelCount = Object.keys(currentDailyScores).length;
+  const roundScore = mode === 'levels'
+    ? Math.max(0, score - scoreAtStartRef.current)
+    : score;
 
   const commitStamina = useCallback((next: typeof staminaState) => {
     staminaRef.current = next;
     setStaminaState(next);
     saveStamina(next);
+  }, []);
+
+  const toggleMuted = useCallback(() => {
+    setMutedState((current) => {
+      const next = !current;
+      setSoundMuted(next);
+      gameStorage.set(SAVE_KEYS.muted, next ? '1' : '0');
+      return next;
+    });
+  }, []);
+
+  const showTimeBoostToast = useCallback((message: string) => {
+    setTimeBoostToast(message);
+    if (timeBoostToastTimerRef.current) clearTimeout(timeBoostToastTimerRef.current);
+    timeBoostToastTimerRef.current = setTimeout(() => setTimeBoostToast(null), 1700);
   }, []);
 
   const trySpendStamina = useCallback((cost: number, nextMode: GameMode) => {
@@ -140,6 +282,23 @@ export function useGame() {
     setScore(value);
   }, []);
 
+  /**
+   * 设置倒计时：精确值存在 ref 里，state 只保留整数秒。
+   * 这样 100ms 心跳里 state 每秒最多变一次，全树重渲染从 10 次/秒降到 1 次/秒。
+   */
+  const setTimeSync = useCallback((value: number) => {
+    const clamped = Math.max(0, value);
+    timeLeftPreciseRef.current = clamped;
+    const ceil = Math.ceil(clamped);
+    prevCeilRef.current = ceil;
+    setTimeLeft(clamped);
+  }, []);
+
+  /** 在当前精确剩余时间上做增减（加时 / 扣时），并按上限钳制。 */
+  const adjustTime = useCallback((delta: number, cap = Infinity) => {
+    setTimeSync(Math.min(cap, timeLeftPreciseRef.current + delta));
+  }, [setTimeSync]);
+
   const addFloat = useCallback((x: number, y: number, text: string, kind: FloatText['kind']) => {
     const id = effectId++;
     setFloats((current) => [...current, { id, x, y, text, kind }]);
@@ -156,14 +315,28 @@ export function useGame() {
     setCollection((current) => {
       if (current.includes(itemId)) return current;
       const next = [...current, itemId];
+      collectionRef.current = next;
       gameStorage.set(SAVE_KEYS.collection, JSON.stringify(next));
+      refreshPartners(next, levelStarsRef.current);
       return next;
     });
-  }, []);
+  }, [refreshPartners]);
 
   const setupRound = useCallback((nextMode: GameMode, roundNumber: number, keepScore: number) => {
     // 上一关的点错震动不能带入新场景，否则 GameField 重新挂载时会再次播放。
     setShake(0);
+    setGoalNotice(null);
+    setTimeBoostToast(null);
+    setTimeBoostTaskPrompt(false);
+    setTimeBoostFreeAvailable(true);
+    setTimeBoostTaskAvailable(true);
+    roundFoundRef.current = 0;
+    roundBestComboRef.current = 0;
+    const preferredTargetIds = new Set(
+      COLLECTIBLE_ITEMS
+        .filter((item) => !collectionRef.current.includes(item.id))
+        .map((item) => item.id),
+    );
     if (nextMode === 'levels') {
       const config = levelConfig(roundNumber);
       const rules = config.goals.length
@@ -178,14 +351,14 @@ export function useGame() {
         rules,
         distractors: config.distractors,
         levelType: config.type,
+        preferredTargetIds,
       });
       setActiveGoalIndex(0);
       setItems(scene.items);
       setTargets(scene.targets);
-      setTimeLeft(config.timeLimit);
+      setTimeSync(config.timeLimit);
       setTimeLimit(config.timeLimit);
       setHintsLeft(config.hints);
-      prevCeilRef.current = config.timeLimit;
     } else {
       const config = waveConfig(roundNumber);
       const rule = endlessTaskRule(roundNumber, config.targetCount, lastTaskIdRef.current);
@@ -196,21 +369,24 @@ export function useGame() {
       setCategory(nextCategory);
       lastCategoryRef.current = nextCategory;
       lastTaskIdRef.current = rule.id;
-      const scene = generateScene({ rules: [rule], distractors: config.distractors });
+      const scene = generateScene({
+        rules: [rule],
+        distractors: config.distractors,
+        preferredTargetIds,
+      });
       setActiveGoalIndex(0);
       setItems(scene.items);
       setTargets(scene.targets);
       if (roundNumber === 1) {
-        setTimeLeft(ENDLESS_START_SEC);
+        setTimeSync(ENDLESS_START_SEC);
         setTimeLimit(ENDLESS_START_SEC);
         setHintsLeft(ENDLESS_HINTS);
-        prevCeilRef.current = ENDLESS_START_SEC;
       }
     }
     scoreAtStartRef.current = keepScore;
     setHintUid(null);
     setRound((current) => current + 1);
-  }, []);
+  }, [setTimeSync]);
 
   const commitEndlessBest = useCallback((finalScore: number) => {
     const endless = Math.max(best.endless, finalScore);
@@ -221,31 +397,65 @@ export function useGame() {
 
   const commitLevelClear = useCallback((clearedLevel: number, levelScore: number) => {
     const config = levelConfig(clearedLevel);
-    setLastStars(starsForScore(levelScore, config));
+    const earnedStars = starsForScore(levelScore, config);
+    setLastStars(earnedStars);
     const previous = levelScores[clearedLevel] ?? 0;
     const nextScores = { ...levelScores, [clearedLevel]: Math.max(previous, levelScore) };
-    const total = Object.values(nextScores).reduce((sum, value) => sum + value, 0);
+    const nextStars = {
+      ...levelStarsRef.current,
+      [clearedLevel]: Math.max(levelStarsRef.current[clearedLevel] ?? 0, earnedStars),
+    };
+    const total = leaderboardBaseScore(nextScores);
+    const previousRankingPoints = levelScoreToRankingPoints(previous, config);
+    const nextRankingPoints = levelScoreToRankingPoints(Math.max(previous, levelScore), config);
     setIsNewLevelBest(levelScore > previous);
+    setLastLevelPreviousBest(previous);
+    setLastLeaderboardBaseDelta(Math.max(0, nextRankingPoints - previousRankingPoints));
     setLevelScores(nextScores);
+    levelStarsRef.current = nextStars;
+    setLevelStars(nextStars);
+    setDailyLevelScores((current) => {
+      const today = localDateKey();
+      const currentScores = current.date === today ? current.scores : {};
+      const nextDaily = {
+        date: today,
+        scores: {
+          ...currentScores,
+          [clearedLevel]: Math.max(currentScores[clearedLevel] ?? 0, levelScore),
+        },
+      };
+      gameStorage.set(SAVE_KEYS.dailyLevelScores, JSON.stringify(nextDaily));
+      return nextDaily;
+    });
     const maxLevel = Math.min(LEVEL_COUNT, Math.max(best.maxLevel, clearedLevel + 1));
     setBest((current) => ({ ...current, levels: total, maxLevel }));
+    recordPartnerSettlement({
+      found: roundFoundRef.current,
+      baseScore: levelScore,
+      bestCombo: roundBestComboRef.current,
+    });
+    refreshPartners(collectionRef.current, nextStars);
     gameStorage.set(SAVE_KEYS.maxLevel, String(maxLevel));
-    void syncProgressToDs({ levelsTotalScore: total, maxLevel });
     gameStorage.set(SAVE_KEYS.levelScores, JSON.stringify(nextScores));
+    gameStorage.set(SAVE_KEYS.levelStars, JSON.stringify(nextStars));
     gameStorage.set(SAVE_KEYS.bestLevels, String(total));
-  }, [best.maxLevel, levelScores]);
+  }, [best.maxLevel, levelScores, refreshPartners]);
 
   const startGame = useCallback((nextMode: GameMode, startLevel = 1) => {
     const cost = nextMode === 'levels' ? STAMINA_LEVEL_COST : STAMINA_ENDLESS_COST;
     if (!trySpendStamina(cost, nextMode)) return;
     setMode(nextMode);
     const initialLevel = nextMode === 'levels'
-      ? Math.min(Math.max(Math.trunc(startLevel), 1), best.maxLevel)
+      ? Math.min(Math.max(Math.trunc(startLevel), 1), unlockedMaxLevel)
       : 1;
     setLevel(initialLevel);
     setScoreSync(0);
     setCombo(0);
     setStats({ found: 0, wrong: 0 });
+    setLastLevelPreviousBest(0);
+    setLastLeaderboardBaseDelta(0);
+    endlessFoundRef.current = 0;
+    endlessBestComboRef.current = 0;
     setLastGain({ find: 0, bonus: 0 });
     setupRound(nextMode, initialLevel, 0);
     setPaused(false);
@@ -253,10 +463,14 @@ export function useGame() {
     setPhase('playing');
     trackEvent({ event: nextMode === 'levels' ? 'level_start' : 'endless_start', mode: nextMode, level: initialLevel });
     sfx.click();
-  }, [best.maxLevel, setScoreSync, setupRound, trySpendStamina]);
+  }, [setScoreSync, setupRound, trySpendStamina, unlockedMaxLevel]);
 
   const nextLevel = useCallback(() => {
     if (level >= LEVEL_COUNT) {
+      setPhase('menu');
+      return;
+    }
+    if (level + 1 > unlockedMaxLevel) {
       setPhase('menu');
       return;
     }
@@ -272,7 +486,7 @@ export function useGame() {
     setQuitConfirm(false);
     setPhase('playing');
     sfx.click();
-  }, [level, mode, setupRound, trySpendStamina]);
+  }, [level, mode, setupRound, trySpendStamina, unlockedMaxLevel]);
 
   const retry = useCallback(() => {
     if (phase === 'gameOver') {
@@ -288,6 +502,8 @@ export function useGame() {
       setScoreSync(0);
       setCombo(0);
       setStats({ found: 0, wrong: 0 });
+      endlessFoundRef.current = 0;
+      endlessBestComboRef.current = 0;
       setupRound(mode, 1, 0);
     }
     setPaused(false);
@@ -314,7 +530,15 @@ export function useGame() {
   }, []);
 
   const finishGame = useCallback((currentMode: GameMode) => {
-    if (currentMode === 'endless') commitEndlessBest(scoreRef.current);
+    if (currentMode === 'endless') {
+      commitEndlessBest(scoreRef.current);
+      recordPartnerSettlement({
+        found: endlessFoundRef.current,
+        baseScore: 0,
+        bestCombo: endlessBestComboRef.current,
+      });
+      refreshPartners();
+    }
     trackEvent({
       event: currentMode === 'endless' ? 'endless_end' : 'level_fail',
       mode: currentMode,
@@ -325,10 +549,10 @@ export function useGame() {
     });
     setPhase('gameOver');
     sfx.gameOver();
-  }, [category, commitEndlessBest, level, targets]);
+  }, [category, commitEndlessBest, level, refreshPartners, targets]);
 
   const applyWrong = useCallback((x: number, y: number) => {
-    setTimeLeft((current) => Math.max(0, current - WRONG_PENALTY_SEC));
+    adjustTime(-WRONG_PENALTY_SEC);
     setCombo(0);
     setStats((current) => ({ ...current, wrong: current.wrong + 1 }));
     addFloat(x, y, `-${WRONG_PENALTY_SEC}秒`, 'penalty');
@@ -339,7 +563,7 @@ export function useGame() {
     });
     sfx.wrong();
     haptics.wrong();
-  }, [addFloat, category, level, mode, targets]);
+  }, [addFloat, adjustTime, category, level, mode, targets]);
 
   const handleItemClick = useCallback((uid: number) => {
     if (phase !== 'playing' || paused) return;
@@ -358,9 +582,9 @@ export function useGame() {
       currentTargets.some((target) => target.taskId === taskId && target.remaining > 0)
     ));
     if (item.isTarget && matchedTaskIds.length > 0) {
-      const isNewDiscovery = !collection.includes(item.itemId);
+      const isNewDiscovery = !collectionRef.current.includes(item.itemId);
       const nextCombo = combo + 1;
-      const gain = scoreForFind(nextCombo, timeLeft);
+      const gain = scoreForFind(nextCombo, timeLeftPreciseRef.current);
       const totalAfter = scoreRef.current + gain;
       const nextTargets = targets.map((target) => ({
         ...target,
@@ -370,6 +594,12 @@ export function useGame() {
       }));
 
       setCombo(nextCombo);
+      roundFoundRef.current += 1;
+      roundBestComboRef.current = Math.max(roundBestComboRef.current, nextCombo);
+      if (mode === 'endless') {
+        endlessFoundRef.current += 1;
+        endlessBestComboRef.current = Math.max(endlessBestComboRef.current, nextCombo);
+      }
       setScoreSync(totalAfter);
       setLastGain((current) => ({ ...current, find: current.find + gain }));
       setStats((current) => ({ ...current, found: current.found + 1 }));
@@ -380,18 +610,19 @@ export function useGame() {
       discoverItem(item.itemId);
       if (hintUid === uid) setHintUid(null);
       addFloat(item.x, item.y, `+${gain}`, 'score');
-      if (isNewDiscovery) addFloat(item.x, item.y - 12, '新图鉴 · 已点亮', 'bonus');
+      if (isNewDiscovery) addFloat(item.x, item.y - 12, '首次发现', 'bonus');
       if (nextCombo >= 2) addFloat(item.x, item.y - 7, `${nextCombo}连击!`, 'combo');
       addBurst(item.x, item.y, '✦');
       trackEvent({
         event: 'item_hit', mode, level, category, item_id: item.itemId,
-        task_id: matchedTaskIds.join('|'), combo: nextCombo, gain, time_left: Math.ceil(timeLeft),
+        task_id: matchedTaskIds.join('|'), combo: nextCombo, gain,
+        time_left: Math.ceil(timeLeftPreciseRef.current),
       });
       sfx.correct(nextCombo);
       haptics.correct(nextCombo);
 
       if (mode === 'endless') {
-        setTimeLeft((current) => Math.min(ENDLESS_TIME_CAP, current + ENDLESS_FIND_BONUS_SEC));
+        adjustTime(ENDLESS_FIND_BONUS_SEC, ENDLESS_TIME_CAP);
       }
 
       const currentGoalDone = mode === 'levels'
@@ -405,8 +636,16 @@ export function useGame() {
           if (nextGoal) {
             const nextRule = getTaskRule(nextGoal.taskId, nextGoal.targetCount);
             const nextCategory = primaryCategoryForTask(nextRule, config.category);
+            const completedLabel = nextTargets[activeGoalIndex]?.label ?? '本项目标';
 
             // 同一批物件内逐个揭晓目标；计时、分数、连击、镜头与场景都连续保留。
+            setGoalNotice({
+              id: effectId++,
+              completedLabel,
+              nextLabel: nextRule.label,
+            });
+            if (goalNoticeTimerRef.current) clearTimeout(goalNoticeTimerRef.current);
+            goalNoticeTimerRef.current = setTimeout(() => setGoalNotice(null), 1700);
             setActiveGoalIndex(nextGoalIndex);
             setCategory(nextCategory);
             lastCategoryRef.current = nextCategory;
@@ -441,9 +680,9 @@ export function useGame() {
     } else {
       applyWrong(item.x, item.y);
     }
-  }, [activeGoalIndex, addBurst, addFloat, applyWrong, category, collection, combo,
+  }, [activeGoalIndex, addBurst, addFloat, adjustTime, applyWrong, category, combo,
     commitLevelClear, discoverItem, hintUid, items, level, mode, paused, phase, setScoreSync,
-    setupRound, targets, timeLeft]);
+    setupRound, targets]);
 
   const handleFieldMiss = useCallback((x: number, y: number) => {
     if (phase !== 'playing' || paused) return;
@@ -477,6 +716,51 @@ export function useGame() {
     hintTimerRef.current = setTimeout(() => setHintUid(null), 2600);
   }, [activeGoalIndex, category, hintsLeft, items, level, mode, paused, phase, targets]);
 
+  const requestTimeBoost = useCallback(() => {
+    if (phase !== 'playing' || paused) return;
+    if (timeBoostFreeAvailable) {
+      adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_SECONDS);
+      setTimeBoostFreeAvailable(false);
+      showTimeBoostToast('首次加时已到账 · +15 秒');
+      trackEvent({ event: 'time_boost_free', mode, level, seconds: TIME_BOOST_SECONDS });
+      sfx.hint();
+      haptics.hint();
+      return;
+    }
+    if (!timeBoostTaskAvailable) {
+      showTimeBoostToast('本关两次加时均已使用');
+      return;
+    }
+
+    setPaused(true);
+    setTimeBoostTaskPrompt(true);
+    trackEvent({ event: 'time_boost_task_request', mode, level });
+    if (dsTaskPanelEnabled) openTaskPanel();
+  }, [adjustTime, level, mode, paused, phase, showTimeBoostToast, timeBoostFreeAvailable,
+    timeBoostTaskAvailable, timeLimit]);
+
+  /** 明日接任务完成回调时只需调用这个入口，计时、暂停与埋点会统一收口。 */
+  const grantRewardedTimeBoost = useCallback(() => {
+    if (!timeBoostTaskAvailable) return;
+    adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_SECONDS * 2);
+    setTimeBoostTaskAvailable(false);
+    setTimeBoostTaskPrompt(false);
+    setPaused(false);
+    showTimeBoostToast('任务奖励已到账 · +15 秒');
+    trackEvent({ event: 'time_boost_task_reward', mode, level, seconds: TIME_BOOST_SECONDS });
+    sfx.hint();
+    haptics.hint();
+  }, [adjustTime, level, mode, showTimeBoostToast, timeBoostTaskAvailable, timeLimit]);
+
+  const dismissTimeBoostTaskPrompt = useCallback(() => {
+    setTimeBoostTaskPrompt(false);
+    setPaused(false);
+  }, []);
+
+  const reopenTimeBoostTask = useCallback(() => {
+    if (dsTaskPanelEnabled) openTaskPanel();
+  }, []);
+
   useEffect(() => {
     if (phase !== 'playing' || paused) return;
     let last = performance.now();
@@ -484,15 +768,15 @@ export function useGame() {
       const now = performance.now();
       const delta = (now - last) / 1000;
       last = now;
-      setTimeLeft((current) => {
-        const next = Math.max(0, current - delta);
-        const ceil = Math.ceil(next);
-        if (ceil !== prevCeilRef.current) {
-          prevCeilRef.current = ceil;
-          if (ceil <= 10 && ceil > 0) sfx.tick();
-        }
-        return next;
-      });
+      const next = Math.max(0, timeLeftPreciseRef.current - delta);
+      timeLeftPreciseRef.current = next;
+      const ceil = Math.ceil(next);
+      if (ceil !== prevCeilRef.current) {
+        // 整秒变化时才更新 state，将全树重渲染从 10 次/秒降至最多 1 次/秒。
+        prevCeilRef.current = ceil;
+        setTimeLeft(next);
+        if (ceil <= 10 && ceil > 0) sfx.tick();
+      }
     }, 100);
     return () => clearInterval(timer);
   }, [paused, phase]);
@@ -551,18 +835,92 @@ export function useGame() {
     };
   }, [commitStamina]);
 
+  useEffect(() => {
+    let lastTick = Date.now();
+    let syncCountdown = 0; // 每 60s（12 × 5s 心跳）上报一次 totalPlayTime
+
+    const accrue = (countVisibleTime: boolean) => {
+      const now = Date.now();
+      const elapsedSec = countVisibleTime ? Math.max(0, (now - lastTick) / 1000) : 0;
+      lastTick = now;
+      if (elapsedSec <= 0) return;
+      partnerClockRef.current = advancePartnerClock(
+        partnerClockRef.current,
+        elapsedSec,
+        phase === 'playing' && !paused,
+        now,
+      );
+      savePartnerClock(partnerClockRef.current);
+      refreshPartners();
+      // totalPlayTime 节流上报：每分钟或页面隐藏时推送一次，
+      // 后台 minigame_common_task_max 取最大值，不存在竞争问题。
+      syncCountdown -= 1;
+      if (syncCountdown <= 0) {
+        syncCountdown = 12;
+        void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+      }
+    };
+
+    const timer = window.setInterval(() => accrue(!document.hidden), 5000);
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        accrue(true);
+        // 页面隐藏时立即推送，避免切走后时长未及时上报
+        void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+      } else {
+        lastTick = Date.now();
+      }
+    };
+    const onPageHide = () => {
+      accrue(true);
+      void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener('pagehide', onPageHide);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('pagehide', onPageHide);
+      accrue(!document.hidden);
+      void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+    };
+  }, [paused, phase, refreshPartners]);
+
   useEffect(() => () => {
     if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+    if (goalNoticeTimerRef.current) clearTimeout(goalNoticeTimerRef.current);
+    if (timeBoostToastTimerRef.current) clearTimeout(timeBoostToastTimerRef.current);
   }, []);
+
+  useEffect(() => {
+    setSoundMuted(muted);
+  }, [muted]);
+
+  useEffect(() => {
+    void syncProgressToDs({
+      levelsTotalScore: rankingScore,
+      levelsBaseScore: best.levels,
+      partnerCount: recruitedCount,
+      totalItemsFound: loadNum(SAVE_KEYS.partnerTotalFound),
+    });
+  }, [best.levels, rankingScore, recruitedCount]);
 
   const displayedTargets = mode === 'levels'
     ? targets.slice(activeGoalIndex, activeGoalIndex + 1)
     : targets;
+  const partnerNotice = partnerNoticeQueue[0] ?? null;
 
   return {
-    phase, mode, level, category, score, timeLeft, timeLimit, items, targets: displayedTargets,
+    phase, mode, level, category, score, roundScore, timeLeft, timeLimit, items,
+    targets: displayedTargets, allTargets: targets, activeGoalIndex, goalNotice,
     combo, hintsLeft, paused, quitConfirm, floats, bursts, hintUid, shake, round,
-    stats, lastGain, lastStars, isNewLevelBest, levelScores, best, collection,
+    stats, lastGain, lastStars, isNewLevelBest, lastLevelPreviousBest,
+    lastLeaderboardBaseDelta, levelScores, levelStars, starTotal,
+    unlockedMaxLevel, best, partners, partnerNotice, partnerBonusRate,
+    rankingScore, dailyRankingScore, dailyLevelCount, muted,
+    timeBoostFreeAvailable, timeBoostToast, timeBoostTaskPrompt,
+    timeBoostTaskAvailable: dsTaskPanelEnabled && timeBoostTaskAvailable,
+    timeBoostTaskConfigured: dsTaskPanelEnabled,
     stamina: {
       value: staminaState.value,
       max: STAMINA_MAX,
@@ -571,10 +929,12 @@ export function useGame() {
       nextRecoverySec: secondsToNextStamina(staminaState),
     },
     staminaNotice,
-    collectionTotal: COLLECTIBLE_ITEMS.length, levelInfo: levelConfig(level), levelCount: LEVEL_COUNT,
+    levelInfo: levelConfig(level), levelCount: LEVEL_COUNT,
     startGame, nextLevel, retry, quitToMenu, requestQuit, cancelQuit,
-    handleItemClick, handleFieldMiss, useHint, setPaused,
+    handleItemClick, handleFieldMiss, useHint, requestTimeBoost, grantRewardedTimeBoost,
+    dismissTimeBoostTaskPrompt, reopenTimeBoostTask, toggleMuted, setPaused,
     dismissStaminaNotice: () => setStaminaNotice(null),
+    dismissPartnerNotice: () => setPartnerNoticeQueue((current) => current.slice(1)),
   };
 }
 

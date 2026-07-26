@@ -1,31 +1,44 @@
-Using Node.js 20, Tailwind CSS v3.4.19, and Vite v7.2.4
+# 项目技术信息
 
-Tailwind CSS has been set up with the shadcn theme
+- Node.js：20+
+- React：19
+- TypeScript：5
+- Vite：7
+- Tailwind CSS：3.4
+- 动效：framer-motion
+- 图标：lucide-react
 
-Setup complete: /mnt/agents/output/app
+## 当前结构
 
-Components (40+):
-  accordion, alert-dialog, alert, aspect-ratio, avatar, badge, breadcrumb,
-  button-group, button, calendar, card, carousel, chart, checkbox, collapsible,
-  command, context-menu, dialog, drawer, dropdown-menu, empty, field, form,
-  hover-card, input-group, input-otp, input, item, kbd, label, menubar,
-  navigation-menu, pagination, popover, progress, radio-group, resizable,
-  scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
-  spinner, switch, table, tabs, textarea, toggle-group, toggle, tooltip
+```text
+src/components/                         主界面、伙伴、对称 HUD、任务轨道、结算与弹窗
+src/game/                               物品、任务、200 关、场景、音频、伙伴和存档
+src/hooks/useGame.ts                    游戏状态、加时、每日成绩与总榜计分
+src/platform/ds/                        大神任务、日榜/总榜与安全降级
+src/assets/items/ancient/               123 件正式寻物素材
+src/assets/partners/                    8 位伙伴头像
+src/assets/ui/                          主界面和局内 UI 位图
+src/assets/backgrounds/                 主界面和局内背景
+tools/item-classification-review.html   分类复核工作台（生成文件）
+tools/item-relations.html               只读属性关系表（生成文件）
+数值表_src/levels_200.csv               当前权威关卡表
+scripts/                                素材处理、200 关生成、分类表生成和内容校验
+```
 
-Usage:
-  import { Button } from '@/components/ui/button'
-  import { Card, CardHeader, CardTitle } from '@/components/ui/card'
+## 常用命令
 
-Structure:
-  src/sections/        Page sections
-  src/hooks/           Custom hooks
-  src/types/           Type definitions
-  src/App.css          Styles specific to the Webapp
-  src/App.tsx          Root React component
-  src/index.css        Global styles
-  src/main.tsx         Entry point for rendering the Webapp
-  index.html           Entry point for the Webapp
-  tailwind.config.js   Configures Tailwind's theme, plugins, etc.
-  vite.config.ts       Main build and dev server settings for Vite
-  postcss.config.js    Config file for CSS post-processing tools
+```bash
+npm install
+npm run dev
+npm run catalog:review
+npm run check
+```
+
+`npm run check` 会校验内容、运行 ESLint、执行 TypeScript 与 Vite 生产构建。最近验证与尚未完成的真机项见 `design-qa.md`。
+
+## 重要口径
+
+- `数值表_src/levels_200.csv` 是当前关卡权威数据。
+- 根目录 `数值表.xlsx` 是旧 100 关历史工作簿，尚未安全重建。
+- 分类复核 HTML 只用于收集调整意见；生产分类仍维护在 `src/game/items.ts` 与 `src/game/tasks.ts`。
+- 真正的任务奖励、日榜自然日、跨设备总榜与防作弊必须由可信平台服务完成。

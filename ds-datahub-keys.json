@@ -1,10 +1,29 @@
 [
   {
     "key": "levels_total_score",
-    "name": "百关总分",
+    "name": "排行榜最终分",
     "type": "NUMBER",
     "defaultValue": 0,
     "missionEnabled": true
+  },
+  {
+    "key": "levels_base_score",
+    "name": "各关历史最高标准分合计",
+    "type": "NUMBER",
+    "defaultValue": 0
+  },
+  {
+    "key": "levels_daily_score",
+    "name": "当日每关最高标准分合计",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
+  },
+  {
+    "key": "partner_bonus_bps",
+    "name": "伙伴加成基点",
+    "type": "NUMBER",
+    "defaultValue": 0
   },
   {
     "key": "level_max",

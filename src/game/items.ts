@@ -4,6 +4,19 @@
 
 import type { CategoryId, ItemDef, TagId } from './types';
 
+// 由 Vite 打包接管：eager 导入 src/assets/items/ancient 下全部 webp，
+// 生成 { 文件名: 带 hash 的最终 URL } 映射，确保大神平台构建管线正确处理。
+const ITEM_ASSETS = import.meta.glob<string>(
+  '../assets/items/ancient/*.webp',
+  { eager: true, query: '?url', import: 'default' },
+);
+
+function itemAssetUrl(id: string): string {
+  const url = ITEM_ASSETS[`../assets/items/ancient/${id}.webp`];
+  if (!url) throw new Error(`缺少物品素材：${id}.webp`);
+  return url;
+}
+
 export interface CategoryInfo {
   name: string;
   prompt: string;
@@ -72,7 +85,7 @@ export const CATEGORY_ORDER: CategoryId[] = [
   'sharp', 'sweet_food', 'plant', 'vehicle', 'animal',
 ];
 
-const asset = (id: string) => `/items/ancient/${id}.webp`;
+const asset = (id: string) => itemAssetUrl(id);
 
 export const ITEMS: ItemDef[] = [
   { id: 'camel', name: '骆驼', emoji: '🐫', img: asset('camel'), tags: ['vehicle', 'animal'], traitTags: ['rideable', 'four_legged'] },

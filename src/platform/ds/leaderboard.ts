@@ -14,7 +14,21 @@ export interface DsLeaderboardSnapshot {
   self: DsLeaderboardRecord | null;
 }
 
+export type LeaderboardScope = 'daily' | 'total';
+
 let requestManagerInitialized = false;
+
+/**
+ * 东八区今日日期 YYYY-MM-DD。
+ * 后台日榜"按东八区日期隔离"，玩家设备时区不一定是 +8，因此强制换算。
+ */
+function beijingDateKey(now = Date.now()): string {
+  const beijing = new Date(now + 8 * 60 * 60 * 1000);
+  const year = beijing.getUTCFullYear();
+  const month = String(beijing.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(beijing.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 function requestManager() {
   if (!dsPlatformEnabled || !dsLeaderboardEnabled || !window.MiniGameDataSdk) return null;
@@ -29,18 +43,49 @@ function requestManager() {
   return manager;
 }
 
-/** 读取大神榜单；未配置后台 ID 或请求失败时返回 null，由界面降级为本机记录。 */
-export async function loadDsLeaderboard(pageSize = 10): Promise<DsLeaderboardSnapshot | null> {
+/** 榜单读取失败时抛出，带可展示给用户的原因，界面据此显示真实错误而非兜底。 */
+export class DsLeaderboardError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DsLeaderboardError';
+  }
+}
+
+/**
+ * 读取大神榜单。失败时抛 DsLeaderboardError（不再静默兜底），
+ * 由界面显示真实错误信息，便于确认线上接口是否真的通。
+ */
+export async function loadDsLeaderboard(
+  scope: LeaderboardScope = 'total',
+  pageSize = 10,
+): Promise<DsLeaderboardSnapshot> {
+  if (!dsPlatformEnabled) {
+    throw new DsLeaderboardError('当前非大神环境，榜单仅在大神 App / 小程序内可用');
+  }
+  if (!dsLeaderboardEnabled) {
+    throw new DsLeaderboardError('小游戏 ID（miniGameId）未配置');
+  }
+  if (!window.MiniGameDataSdk) {
+    throw new DsLeaderboardError('数据 SDK 未加载（MiniGameDataSdk 不存在）');
+  }
   const manager = requestManager();
-  if (!manager) return null;
+  if (!manager) {
+    throw new DsLeaderboardError('榜单请求管理器初始化失败');
+  }
+  const ids = {
+    devBillboardId: dsConfig.data.devBillboardId,
+    proBillboardId: dsConfig.data.proBillboardId,
+  };
+  if (!ids.devBillboardId || !ids.proBillboardId) {
+    throw new DsLeaderboardError('榜单 ID（billboardId）未配置');
+  }
+  // 日榜与总榜是同一个榜单（score_rank）：后台"日榜=是"按东八区日期自动生成快照。
+  // 总榜不传 date；日榜传当天日期，走后端日榜快照接口。
+  const dailyParams = scope === 'daily' ? { date: beijingDateKey() } : {};
   try {
-    const ids = {
-      devBillboardId: dsConfig.data.devBillboardId,
-      proBillboardId: dsConfig.data.proBillboardId,
-    };
     const [ranking, self] = await Promise.all([
-      manager.getBillboardRank({ ...ids, page: 1, pageSize }),
-      manager.getUserRank(ids),
+      manager.getBillboardRank({ ...ids, ...dailyParams, page: 1, pageSize }),
+      manager.getUserRank({ ...ids, ...dailyParams }),
     ]);
     return {
       total: ranking.total,
@@ -61,31 +106,57 @@ export async function loadDsLeaderboard(pageSize = 10): Promise<DsLeaderboardSna
     };
   } catch (error) {
     console.error('[DS] leaderboard load failed', error);
-    return null;
+    const detail = error instanceof Error ? error.message : String(error);
+    throw new DsLeaderboardError(`榜单请求失败：${detail}`);
   }
 }
 
 interface ProgressPayload {
+  /** 排行榜最终分：各关历史最高标准榜分之和 ×（1 + 伙伴加成）。榜单 score_rank 绑定此字段。 */
   levelsTotalScore?: number;
-  maxLevel?: number;
+  /** 未套伙伴系数的各关历史最高标准榜分之和，用于后台对账。 */
+  levelsBaseScore?: number;
+  /** 无尽模式最高分。 */
   endlessBest?: number;
+  /** 累计游玩时长（秒）；喂后台 totalPlayTime 数值任务（minigame_common_task_max 取最大值判定）。 */
+  totalPlayTime?: number;
+  /** 当前拥有伙伴数。 */
+  partnerCount?: number;
+  /** 累计找到物品总数（含重复）。 */
+  totalItemsFound?: number;
 }
 
-/** 关卡结算时批量同步，单次最多 4 个字段，满足 SDK ≤20 条限制。 */
+/**
+ * 关卡结算 / 伙伴变化 / 时长累计时批量同步。
+ * recordKey 必须与 CMS「Key 配置」里的字段名完全一致（驼峰），否则写入失败、榜单空榜。
+ * 只写后台已注册的字段，避免未注册 key 造成整批写入告警。
+ */
 export async function syncProgressToDs(payload: ProgressPayload): Promise<void> {
   const manager = requestManager();
   if (!manager) return;
   const items: Array<{ recordKey: string; value: number }> = [];
   if (payload.levelsTotalScore != null) {
-    items.push({ recordKey: 'levels_total_score', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
+    items.push({ recordKey: 'levelsTotalScore', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
   }
-  if (payload.maxLevel != null) {
-    items.push({ recordKey: 'level_max', value: Math.max(1, Math.round(payload.maxLevel)) });
+  if (payload.levelsBaseScore != null) {
+    items.push({
+      recordKey: 'levelsBaseScore',
+      value: Math.max(0, Math.round(payload.levelsBaseScore * 10) / 10),
+    });
   }
   if (payload.endlessBest != null) {
-    items.push({ recordKey: 'endless_best', value: Math.max(0, Math.round(payload.endlessBest)) });
+    items.push({ recordKey: 'endlessBest', value: Math.max(0, Math.round(payload.endlessBest)) });
   }
-  items.push({ recordKey: 'last_save', value: Date.now() });
+  if (payload.totalPlayTime != null) {
+    items.push({ recordKey: 'totalPlayTime', value: Math.max(0, Math.round(payload.totalPlayTime)) });
+  }
+  if (payload.partnerCount != null) {
+    items.push({ recordKey: 'partnerCount', value: Math.max(0, Math.round(payload.partnerCount)) });
+  }
+  if (payload.totalItemsFound != null) {
+    items.push({ recordKey: 'totalItemsFound', value: Math.max(0, Math.round(payload.totalItemsFound)) });
+  }
+  if (!items.length) return;
   try {
     const result = await manager.obfuscatedBatchWriteData({ items });
     const failures = result.items.filter((item) => !item.success);

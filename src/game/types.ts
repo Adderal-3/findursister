@@ -83,7 +83,7 @@ export interface ItemDef {
   visualTags?: VisualTag[];
   /** 大型地标固定摆放、保持水平；未填写时视为普通物品。 */
   role?: ItemRole;
-  /** 只作为干扰项出现，不会被抽成目标，也不进入百物图鉴。 */
+  /** 只作为干扰项出现，不会被抽成目标，也不进入隐藏首次发现记录。 */
   distractorOnly?: boolean;
 }
 

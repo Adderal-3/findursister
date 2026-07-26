@@ -1,41 +1,37 @@
 # Design QA
 
-- Source visual truth: `C:\Users\Admin\AppData\Local\Temp\codex-clipboard-1842d939-2fe6-427f-b900-a181f20719d2.png`
-- Implementation evidence: `D:\小游戏\find0721\find0721\find\findursister\.codex-temp\design-qa\menu-ds-buttons-390x844-v4.png`
-- Target viewport: 390 × 844 CSS px
-- State: main menu, local preview mode. DS task and role APIs intentionally use their safe local fallback because production ACT and leaderboard IDs are not configured.
-- Scope: the screenshot is a layout reference for the menu controls, not a request to replace the existing ancient-style background or art direction.
+> 最近验证：2026-07-24
+> 基线截图：`审核证据/01-局内改造前.png`、`审核证据/02-伙伴弹窗改造前.png`、`审核证据/03-移动端主页裁切问题.png`、`审核证据/04-移动端局内边缘裁切问题.png`
 
-## Full-view comparison
+## 本轮审计结论
 
-- The stamina card is now isolated at the upper-left, matching the reference hierarchy.
-- Role binding is centered near the top and does not compete with the title plaque.
-- The three game controls form a bottom cluster: smaller leaderboard on the left, oversized primary start button in the center, and smaller endless mode on the right.
-- Task is a separate circular control above the right side of the cluster, following the reference rather than becoming a fourth peer game-mode button.
-- Existing warm paper, carved wood, and ink-game visual tokens are preserved while the control hierarchy follows the supplied screenshot.
+| 问题 | 本轮处理 | 验证状态 |
+|---|---|---|
+| 顶部不平衡、关卡牌偏位 | HUD 改为左右对称、关卡牌独立居中 | 代码与构建通过，待真机截图复验 |
+| 目标不知道做到哪一步 | 全目标轨道 + 完成/当前/后续状态 + 下一项提示 | 代码与构建通过 |
+| 没有加时入口 | 首次免费 +15 秒；二次进入任务视频占位 | 本地流程完成，真实任务回调待接 |
+| 首次正确点击无音效 | 首次用户交互先解锁 AudioContext，再播放命中音效 | 代码通过，待 Safari/安卓真机 |
+| 没有静音 | 局内常驻静音，状态持久化；预留 BGM URL | 代码通过 |
+| 局内物件小、场景空 | 移动端单屏画布、物件放大、完整轮廓装箱 | 代码与内容校验通过，待真机调参 |
+| 移动端 Logo 只显示右半部分 | 把居中定位移到静态外层，避免 Motion transform 覆盖 `translateX` | 代码与构建通过 |
+| 局内左右出现大量半截物件 | 移除 1.28 屏横向世界，全部物件在单屏安全边界内装箱 | 600 局压力测试无目标缺失 |
+| 三个教学关逐关弹窗 | 首次进入一次展示全部规则，并一次性记录已读 | 代码与构建通过 |
+| 伙伴弹窗局部糊 | 去除背景模糊，主按钮改清晰 CSS 边框 | 代码与构建通过 |
+| 锁定伙伴提前泄露 | 锁定态不显示姓名/头像，只显示获得方式与进度 | 代码通过 |
+| 标题偏小 | 主界面 Logo 放大并上移 | 代码通过 |
+| 榜单解释挤占榜单 | 榜单只保留日榜/总榜，公式迁至说明 | 代码通过 |
 
-## Focused control QA
+## 自动验证
 
-- All controls use the same real circular raster backplate asset; blue, rose, and gold tonal treatments distinguish function without introducing mismatched button geometry.
-- Primary and secondary controls have distinct size tiers and remain inside the 12 px mobile gutter at 390 px.
-- Controls have accessible labels and real click handlers.
-- The start and endless buttons retain stamina precheck behavior.
-- The leaderboard opens a working modal and falls back to local records when DS leaderboard IDs are absent.
-- The task button remains visible but disabled in local preview until a real ACT ID is supplied.
-- Entry elements no longer begin at zero opacity, preventing buttons from disappearing in screenshots or during initial rendering.
+- 内容校验目标：123 件唯一物品、30 条任务规则、200 关、8 位伙伴。
+- ESLint、TypeScript 与 Vite 生产构建统一由 `npm run check` 执行。
+- 本文不声称已经获得“改造后”浏览器截图：当前环境未提供可用的登录态浏览器控制，最终视觉结论需真机或浏览器复验。
 
-## Verification
+## 发布前视觉门槛
 
-- Content validation passed: 123 unique items, 100 levels, 97 multi-target levels, 72 compound goals.
-- ESLint passed.
-- TypeScript production build passed.
-- Vite production build passed.
-- `git diff --check` passed.
+- 390×844 与 360×640 检查顶部居中、任务轨道换行、加时/静音触控区和底部安全区。
+- iPhone Safari 验证首次音效、BGM 启动、静音持久化和后台切回。
+- 低端安卓检查 100+ 物件场景拖动帧率与误触率。
+- 大神 App 内 WebView 验证任务面板覆盖层不会让倒计时继续。
 
-## Known deployment dependency
-
-- Live DS task and role binding cannot be production-verified without `VITE_DS_ACT_ID`.
-- Live remote leaderboard cannot be production-verified without dev/pro mini-game IDs and dev/pro billboard IDs.
-- These are external configuration dependencies rather than local UI defects; safe local fallbacks are active.
-
-final result: passed
+final result: local implementation passes automated gates; production visual acceptance remains conditional on device and platform integration checks.
