@@ -255,26 +255,6 @@ export function StartScreen({ game }: { game: Game }) {
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,250,232,.1)_50%,rgba(250,238,208,.48))]" />
 
-      <div className="absolute left-3 z-20 [top:calc(var(--safe-top)+.3rem+15px)]">
-        <motion.div
-          initial={{ y: -8, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="home-stamina-card flex min-h-12 min-w-[7.2rem] items-center gap-2 px-3 py-2"
-          aria-label={`眼力值 ${game.stamina.value} / ${game.stamina.max}`}
-        >
-          <span className="home-icon-disc flex h-8 w-8 items-center justify-center text-[#3f776e]">
-            <Eye className="h-4 w-4" strokeWidth={2.5} />
-          </span>
-          <span>
-            <span className="block text-sm font-black tabular-nums text-[#5b3f32]">
-              {game.stamina.value}<span className="text-[9px] text-[#8f725e]"> / {game.stamina.max}</span>
-            </span>
-            <span className="block text-[8px] font-black text-[#9b765c]">{recoveryLabel === '已满' ? '眼力已满' : `${recoveryLabel} +1`}</span>
-          </span>
-        </motion.div>
-
-      </div>
-
       {dsRoleBindingEnabled && (
         <div className="absolute left-1/2 z-20 min-w-36 -translate-x-1/2 [top:calc(var(--safe-top)+3.9rem)]">
           <div id="ds-role-root" className="home-player-badge px-3 py-2 text-center text-xs font-black text-[#67442f]" />
@@ -287,7 +267,7 @@ export function StartScreen({ game }: { game: Game }) {
         className="relative z-10 mx-auto min-h-dvh w-full max-w-md"
       >
         {/* 定位放在外层，避免 Framer Motion 的 transform 覆盖 translateX(-50%)，导致移动端 Logo 从屏幕中线开始并被裁掉。 */}
-        <div className="pointer-events-none absolute inset-x-4 top-[calc(10.5%+25px)] flex justify-center">
+        <div className="pointer-events-none absolute inset-x-4 top-[calc(10.5%+25px)] flex flex-col items-center">
           <motion.img
             initial={{ y: -10, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
@@ -296,6 +276,25 @@ export function StartScreen({ game }: { game: Game }) {
             alt="忙忙碌碌寻宝藏"
             className="h-auto w-full max-w-[25rem] object-contain drop-shadow-[0_8px_10px_rgba(255,255,255,.85)]"
           />
+          <motion.div
+            initial={{ y: -6, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.14 }}
+            className="home-stamina-card pointer-events-auto mt-1 flex min-h-12 min-w-[7.2rem] items-center gap-2 px-3 py-2"
+            aria-label={`眼力值 ${game.stamina.value} / ${game.stamina.max}`}
+          >
+            <span className="home-icon-disc flex h-8 w-8 items-center justify-center text-[#3f776e]">
+              <Eye className="h-4 w-4" strokeWidth={2.5} />
+            </span>
+            <span>
+              <span className="block text-sm font-black tabular-nums text-[#5b3f32]">
+                {game.stamina.value}<span className="text-[9px] text-[#8f725e]"> / {game.stamina.max}</span>
+              </span>
+              <span className="block text-[8px] font-black text-[#9b765c]">
+                {recoveryLabel === '已满' ? '眼力已满' : `${recoveryLabel} +1`}
+              </span>
+            </span>
+          </motion.div>
         </div>
 
         <motion.button

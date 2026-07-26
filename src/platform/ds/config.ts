@@ -1,3 +1,4 @@
+/* [DS:CONFIG:START] */
 function envFlag(value: string | undefined, fallback: boolean): boolean {
   if (value === undefined || value === '') return fallback;
   return value.toLowerCase() === 'true';
@@ -44,14 +45,18 @@ const localPreview = typeof window !== 'undefined'
 /** 本地预览不强制登录；发布地址自动启用大神平台能力。 */
 export const dsPlatformEnabled = Boolean(dsConfig.appKey && dsConfig.squareId && !localPreview);
 
-/** 任务面板必须同时有 appKey 与活动 ID，避免占位参数误请求生产接口。 */
-export const dsTaskPanelEnabled = Boolean(dsPlatformEnabled && dsConfig.actId);
+/**
+ * 任务模块由 TaskModule.evoke 自带的 Provider 处理登录态与活动信息。
+ * 只要配置完整即可挂载，因此本地也能预览入口和真实任务弹窗。
+ */
+export const dsTaskPanelEnabled = Boolean(dsConfig.appKey && dsConfig.actId);
 
-/** 角色绑定与任务共用活动配置。 */
-export const dsRoleBindingEnabled = dsTaskPanelEnabled;
+/** 首页独立角色条仍只在真实平台环境展示；任务弹窗内的角色入口由 showRole 控制。 */
+export const dsRoleBindingEnabled = Boolean(dsPlatformEnabled && dsConfig.actId);
 
 /** 先具备测试/正式小游戏 ID；日榜与总榜 ID 在读取对应榜单时分别校验。 */
 export const dsLeaderboardEnabled = Boolean(
   dsConfig.data.devMiniGameId
   && dsConfig.data.proMiniGameId
 );
+/* [DS:CONFIG:END] */

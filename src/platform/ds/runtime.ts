@@ -2,10 +2,7 @@ import {
   dsConfig, dsPlatformEnabled, dsRoleBindingEnabled, dsTaskPanelEnabled,
 } from './config';
 
-/* [DS:JSSDK:START] */
-export const userInfo: Record<string, unknown> = {};
-export const godlikeInfo: Record<string, unknown> = {};
-
+/* [DS:MINIAPP-DETECT:START] */
 export function isWechatMiniProgram(): boolean {
   if (navigator.userAgent.toLowerCase().includes('miniprogram')) return true;
   // 本地预览开关：?mp=1 强制按小程序布局渲染，方便在浏览器里核对适配效果。
@@ -15,6 +12,11 @@ export function isWechatMiniProgram(): boolean {
     return false;
   }
 }
+/* [DS:MINIAPP-DETECT:END] */
+
+/* [DS:JSSDK:START] */
+export const userInfo: Record<string, unknown> = {};
+export const godlikeInfo: Record<string, unknown> = {};
 
 async function dsInit(): Promise<void> {
   if (!window.ds?.isGodlike) return;
@@ -124,7 +126,9 @@ export function openSquareUrl(squareId = dsConfig.squareId): void {
     },
   });
 }
+/* [DS:ULINK:END] */
 
+/* [DS:CLICK-PRECHECK:START] */
 export function withPrecheck<T extends unknown[]>(
   callback: (...args: T) => void,
 ): (...args: T) => Promise<void> {
@@ -168,7 +172,7 @@ export function withPrecheck<T extends unknown[]>(
     callback(...args);
   };
 }
-/* [DS:ULINK:END] */
+/* [DS:CLICK-PRECHECK:END] */
 
 /* [DS:SHARE:START] */
 export function initShare(): void {
@@ -239,7 +243,7 @@ export function applyNavTheme(theme: 'white' | 'black'): void {
 }
 /* [DS:NAV-BAR:END] */
 
-/* ========== DS:ACT-SDK BEGIN ========== */
+/* [DS:ACT-SDK:START] */
 let actSdkConfigured = false;
 let taskModuleMounted = false;
 let roleModuleUnmount: (() => void) | null = null;
@@ -293,7 +297,8 @@ export function mountRoleModule(): () => void {
 /** 打开任务面板。返回 null 表示成功，否则返回可展示给用户的失败原因。 */
 export function openTaskPanel(): string | null {
   if (!dsTaskPanelEnabled) {
-    return !dsPlatformEnabled ? '当前非大神环境，任务仅在大神 App / 小程序内可用' : '任务活动未配置（actId 缺失）';
+    if (!dsConfig.appKey) return '任务活动未配置（appKey 缺失）';
+    return '任务活动未配置（actId 缺失）';
   }
   if (!window.DsActSdk) {
     return '任务 SDK 未加载（DsActSdk 不存在），当前环境可能不支持';
@@ -306,7 +311,7 @@ export function openTaskPanel(): string | null {
   trackEvent({ event: 'task_panel_open' });
   return null;
 }
-/* ========== DS:ACT-SDK END ========== */
+/* [DS:ACT-SDK:END] */
 
 /* [DS:EXPORTS:START] */
 let initPromise: Promise<void> | null = null;
