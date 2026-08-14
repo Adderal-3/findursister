@@ -1,0 +1,3484 @@
+{
+  "source": "json.txt + 逆水寒07小游戏素材-页面 1 + 百物寻踪_素材分类与属性分析_v1.docx",
+  "generated": "2026-08-14",
+  "stats": {
+    "containers": 211,
+    "categories": 16,
+    "uniqueImageRefs": 21,
+    "namedByDocx": 0
+  },
+  "categories": [
+    {
+      "name": "乐器",
+      "count": 10,
+      "items": [
+        {
+          "container": "容器 705",
+          "num": 705,
+          "nodeId": "4:01649",
+          "imageId": "4:01650",
+          "itemName": null,
+          "imageFile": "容器 705-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 712",
+          "num": 712,
+          "nodeId": "4:01664",
+          "imageId": "4:01665",
+          "itemName": null,
+          "imageFile": "容器 712-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -66,
+            "offY": 0
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 722",
+          "num": 722,
+          "nodeId": "4:01697",
+          "imageId": "4:01698",
+          "itemName": null,
+          "imageFile": "容器 722-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 736",
+          "num": 736,
+          "nodeId": "4:01735",
+          "imageId": "4:01736",
+          "itemName": null,
+          "imageFile": "容器 736-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 751",
+          "num": 751,
+          "nodeId": "4:01779",
+          "imageId": "4:01780",
+          "itemName": null,
+          "imageFile": "容器 751-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/5f68d1d4830dd4ff87f30d4b376c9cf0.png",
+          "crop": {
+            "w": 626,
+            "h": 507,
+            "offX": -80,
+            "offY": 0
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 752",
+          "num": 752,
+          "nodeId": "4:01781",
+          "imageId": "4:01782",
+          "itemName": null,
+          "imageFile": "容器 752-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/5f68d1d4830dd4ff87f30d4b376c9cf0.png",
+          "crop": {
+            "w": 626,
+            "h": 507,
+            "offX": -80,
+            "offY": 0
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 761",
+          "num": 761,
+          "nodeId": "4:01800",
+          "imageId": "4:01801",
+          "itemName": null,
+          "imageFile": "容器 761-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 771",
+          "num": 771,
+          "nodeId": "4:01825",
+          "imageId": "4:01826",
+          "itemName": null,
+          "imageFile": "容器 771-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -47,
+            "offY": 0
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 776",
+          "num": 776,
+          "nodeId": "4:01840",
+          "imageId": "4:01841",
+          "itemName": null,
+          "imageFile": "容器 776-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/b19d014c50c81543ea02549c65993504.png",
+          "crop": {
+            "w": 544,
+            "h": 634,
+            "offX": -22,
+            "offY": -67
+          },
+          "rowY": 3372
+        },
+        {
+          "container": "容器 779",
+          "num": 779,
+          "nodeId": "4:01846",
+          "imageId": "4:01847",
+          "itemName": null,
+          "imageFile": "容器 779-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -47,
+            "offY": 0
+          },
+          "rowY": 3372
+        }
+      ]
+    },
+    {
+      "name": "有字的物品",
+      "count": 6,
+      "items": [
+        {
+          "container": "容器 749",
+          "num": 749,
+          "nodeId": "4:01775",
+          "imageId": "4:01776",
+          "itemName": null,
+          "imageFile": "容器 749-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/5f68d1d4830dd4ff87f30d4b376c9cf0.png",
+          "crop": {
+            "w": 626,
+            "h": 507,
+            "offX": -80,
+            "offY": 0
+          },
+          "rowY": 4265
+        },
+        {
+          "container": "容器 765",
+          "num": 765,
+          "nodeId": "4:01809",
+          "imageId": "4:01810",
+          "itemName": null,
+          "imageFile": "容器 765-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 500,
+            "h": 449,
+            "offX": -5,
+            "offY": 51
+          },
+          "rowY": 4265
+        },
+        {
+          "container": "容器 800",
+          "num": 800,
+          "nodeId": "4:01894",
+          "imageId": "4:01895",
+          "itemName": null,
+          "imageFile": "容器 800-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/b19d014c50c81543ea02549c65993504.png",
+          "crop": {
+            "w": 544,
+            "h": 634,
+            "offX": -22,
+            "offY": -41
+          },
+          "rowY": 4265
+        },
+        {
+          "container": "容器 745",
+          "num": 745,
+          "nodeId": "4:01758",
+          "imageId": "4:01759",
+          "itemName": null,
+          "imageFile": "容器 745-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -47,
+            "offY": 0
+          },
+          "rowY": 4284
+        },
+        {
+          "container": "容器 762",
+          "num": 762,
+          "nodeId": "4:01802",
+          "imageId": "4:01803",
+          "itemName": null,
+          "imageFile": "容器 762-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -84,
+            "offY": -70
+          },
+          "rowY": 4284
+        },
+        {
+          "container": "容器 786",
+          "num": 786,
+          "nodeId": "4:01863",
+          "imageId": "4:01864",
+          "itemName": null,
+          "imageFile": "容器 786-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 4284
+        }
+      ]
+    },
+    {
+      "name": "容器",
+      "count": 20,
+      "items": [
+        {
+          "container": "容器 809",
+          "num": 809,
+          "nodeId": "4:01958",
+          "imageId": "4:01959",
+          "itemName": null,
+          "imageFile": "容器 809-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/5f68d1d4830dd4ff87f30d4b376c9cf0.png",
+          "crop": {
+            "w": 626,
+            "h": 507,
+            "offX": -80,
+            "offY": 0
+          },
+          "rowY": 5177
+        },
+        {
+          "container": "容器 713",
+          "num": 713,
+          "nodeId": "4:01666",
+          "imageId": "4:01668",
+          "itemName": null,
+          "imageFile": "容器 713-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -47,
+            "offY": 0
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 716",
+          "num": 716,
+          "nodeId": "4:01682",
+          "imageId": "4:01684",
+          "itemName": null,
+          "imageFile": "容器 716-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 500,
+            "h": 477,
+            "offX": 0,
+            "offY": 12
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 719",
+          "num": 719,
+          "nodeId": "4:01689",
+          "imageId": "4:01691",
+          "itemName": null,
+          "imageFile": "容器 719-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 500,
+            "h": 477,
+            "offX": 0,
+            "offY": 12
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 720",
+          "num": 720,
+          "nodeId": "4:01692",
+          "imageId": "4:01694",
+          "itemName": null,
+          "imageFile": "容器 720-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 730",
+          "num": 730,
+          "nodeId": "4:01718",
+          "imageId": "4:01720",
+          "itemName": null,
+          "imageFile": "容器 730-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 738",
+          "num": 738,
+          "nodeId": "4:01739",
+          "imageId": "4:01741",
+          "itemName": null,
+          "imageFile": "容器 738-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/b19d014c50c81543ea02549c65993504.png",
+          "crop": {
+            "w": 544,
+            "h": 634,
+            "offX": -22,
+            "offY": -67
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 747",
+          "num": 747,
+          "nodeId": "4:01766",
+          "imageId": "4:01768",
+          "itemName": null,
+          "imageFile": "容器 747-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 500,
+            "offX": -47,
+            "offY": 54
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 754",
+          "num": 754,
+          "nodeId": "4:01785",
+          "imageId": "4:01787",
+          "itemName": null,
+          "imageFile": "容器 754-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/912a7ebd733d9fca55b494db6d756d5b.png",
+          "crop": {
+            "w": 446,
+            "h": 430,
+            "offX": 27,
+            "offY": 35
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 764",
+          "num": 764,
+          "nodeId": "4:01806",
+          "imageId": "4:01808",
+          "itemName": null,
+          "imageFile": "容器 764-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 594,
+            "h": 497,
+            "offX": -47,
+            "offY": 0
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 774",
+          "num": 774,
+          "nodeId": "4:01835",
+          "imageId": "4:01837",
+          "itemName": null,
+          "imageFile": "容器 774-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/b19d014c50c81543ea02549c65993504.png",
+          "crop": {
+            "w": 544,
+            "h": 634,
+            "offX": -22,
+            "offY": -67
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 782",
+          "num": 782,
+          "nodeId": "4:01852",
+          "imageId": "4:01854",
+          "itemName": null,
+          "imageFile": "容器 782-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/912a7ebd733d9fca55b494db6d756d5b.png",
+          "crop": {
+            "w": 446,
+            "h": 430,
+            "offX": 27,
+            "offY": 35
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 783",
+          "num": 783,
+          "nodeId": "4:01855",
+          "imageId": "4:01857",
+          "itemName": null,
+          "imageFile": "容器 783-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 785",
+          "num": 785,
+          "nodeId": "4:01860",
+          "imageId": "4:01862",
+          "itemName": null,
+          "imageFile": "容器 785-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 567,
+            "h": 537,
+            "offX": -33,
+            "offY": -18
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 789",
+          "num": 789,
+          "nodeId": "4:01869",
+          "imageId": "4:01871",
+          "itemName": null,
+          "imageFile": "容器 789-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 548,
+            "h": 498,
+            "offX": 0,
+            "offY": 85
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 793",
+          "num": 793,
+          "nodeId": "4:01878",
+          "imageId": "4:01880",
+          "itemName": null,
+          "imageFile": "容器 793-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 796",
+          "num": 796,
+          "nodeId": "4:01885",
+          "imageId": "4:01887",
+          "itemName": null,
+          "imageFile": "容器 796-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/535a4facd7c585bf8e0ef8d985d711a7.png",
+          "crop": {
+            "w": 519,
+            "h": 486,
+            "offX": -19,
+            "offY": 0
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 803",
+          "num": 803,
+          "nodeId": "4:01904",
+          "imageId": "4:01906",
+          "itemName": null,
+          "imageFile": "容器 803-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 557,
+            "h": 531,
+            "offX": -28,
+            "offY": 17
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 805",
+          "num": 805,
+          "nodeId": "4:01909",
+          "imageId": "4:01911",
+          "itemName": null,
+          "imageFile": "容器 805-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1651d1ca40b1058fdd6a732811841810.png",
+          "crop": {
+            "w": 669,
+            "h": 560,
+            "offX": -66,
+            "offY": 31
+          },
+          "rowY": 5196
+        },
+        {
+          "container": "容器 810",
+          "num": 810,
+          "nodeId": "4:01960",
+          "imageId": "4:01961",
+          "itemName": null,
+          "imageFile": "容器 810-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 5196
+        }
+      ]
+    },
+    {
+      "name": "会飞的",
+      "count": 10,
+      "items": [
+        {
+          "container": "容器 715",
+          "num": 715,
+          "nodeId": "4:01676",
+          "imageId": "4:01677",
+          "itemName": null,
+          "imageFile": "容器 715-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 544,
+            "h": 516,
+            "offX": -22,
+            "offY": -47
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 748",
+          "num": 748,
+          "nodeId": "4:01769",
+          "imageId": "4:01770",
+          "itemName": null,
+          "imageFile": "容器 748-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 540,
+            "h": 464,
+            "offX": -20,
+            "offY": 36
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 753",
+          "num": 753,
+          "nodeId": "4:01783",
+          "imageId": "4:01784",
+          "itemName": null,
+          "imageFile": "容器 753-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -39
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 755",
+          "num": 755,
+          "nodeId": "4:01788",
+          "imageId": "4:01789",
+          "itemName": null,
+          "imageFile": "容器 755-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 500,
+            "h": 477,
+            "offX": 0,
+            "offY": 12
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 756",
+          "num": 756,
+          "nodeId": "4:01790",
+          "imageId": "4:01791",
+          "itemName": null,
+          "imageFile": "容器 756-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -25
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 766",
+          "num": 766,
+          "nodeId": "4:01811",
+          "imageId": "4:01812",
+          "itemName": null,
+          "imageFile": "容器 766-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 679,
+            "h": 644,
+            "offX": -89,
+            "offY": -72
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 772",
+          "num": 772,
+          "nodeId": "4:01831",
+          "imageId": "4:01832",
+          "itemName": null,
+          "imageFile": "容器 772-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -39
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 788",
+          "num": 788,
+          "nodeId": "4:01867",
+          "imageId": "4:01868",
+          "itemName": null,
+          "imageFile": "容器 788-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -25
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 802",
+          "num": 802,
+          "nodeId": "4:01898",
+          "imageId": "4:01899",
+          "itemName": null,
+          "imageFile": "容器 802-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 535,
+            "h": 507,
+            "offX": -35,
+            "offY": 0
+          },
+          "rowY": 6063
+        },
+        {
+          "container": "容器 808",
+          "num": 808,
+          "nodeId": "4:01916",
+          "imageId": "4:01917",
+          "itemName": null,
+          "imageFile": "容器 808-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 676,
+            "h": 641,
+            "offX": -69,
+            "offY": -53
+          },
+          "rowY": 6063
+        }
+      ]
+    },
+    {
+      "name": "会发光的",
+      "count": 8,
+      "items": [
+        {
+          "container": "容器 721",
+          "num": 721,
+          "nodeId": "4:01695",
+          "imageId": "4:01696",
+          "itemName": null,
+          "imageFile": "容器 721-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 530,
+            "h": 503,
+            "offX": -15,
+            "offY": -17
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 725",
+          "num": 725,
+          "nodeId": "4:01708",
+          "imageId": "4:01709",
+          "itemName": null,
+          "imageFile": "容器 725-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 587,
+            "h": 557,
+            "offX": -87,
+            "offY": 0
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 741",
+          "num": 741,
+          "nodeId": "4:01746",
+          "imageId": "4:01747",
+          "itemName": null,
+          "imageFile": "容器 741-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 679,
+            "h": 644,
+            "offX": -89,
+            "offY": -72
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 743",
+          "num": 743,
+          "nodeId": "4:01750",
+          "imageId": "4:01751",
+          "itemName": null,
+          "imageFile": "容器 743-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 567,
+            "h": 537,
+            "offX": -33,
+            "offY": -18
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 794",
+          "num": 794,
+          "nodeId": "4:01881",
+          "imageId": "4:01882",
+          "itemName": null,
+          "imageFile": "容器 794-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/6afafbf054ee02a757718a34019c28db.png",
+          "crop": {
+            "w": 468,
+            "h": 552,
+            "offX": 0,
+            "offY": -14
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 799",
+          "num": 799,
+          "nodeId": "4:01892",
+          "imageId": "4:01893",
+          "itemName": null,
+          "imageFile": "容器 799-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -39
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 806",
+          "num": 806,
+          "nodeId": "4:01912",
+          "imageId": "4:01913",
+          "itemName": null,
+          "imageFile": "容器 806-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 544,
+            "h": 516,
+            "offX": -22,
+            "offY": -47
+          },
+          "rowY": 6874
+        },
+        {
+          "container": "容器 917",
+          "num": 917,
+          "nodeId": "8:9859",
+          "imageId": "8:9860",
+          "itemName": null,
+          "imageFile": "容器 917-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 538,
+            "h": 395,
+            "offX": 0,
+            "offY": 69
+          },
+          "rowY": 6874
+        }
+      ]
+    },
+    {
+      "name": "尖锐的",
+      "count": 12,
+      "items": [
+        {
+          "container": "容器 724",
+          "num": 724,
+          "nodeId": "4:01706",
+          "imageId": "4:01707",
+          "itemName": null,
+          "imageFile": "容器 724-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -30,
+            "offY": 0
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 726",
+          "num": 726,
+          "nodeId": "4:01710",
+          "imageId": "4:01711",
+          "itemName": null,
+          "imageFile": "容器 726-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -35,
+            "offY": 55
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 727",
+          "num": 727,
+          "nodeId": "4:01712",
+          "imageId": "4:01713",
+          "itemName": null,
+          "imageFile": "容器 727-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 19
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 731",
+          "num": 731,
+          "nodeId": "4:01721",
+          "imageId": "4:01722",
+          "itemName": null,
+          "imageFile": "容器 731-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 45
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 735",
+          "num": 735,
+          "nodeId": "4:01733",
+          "imageId": "4:01734",
+          "itemName": null,
+          "imageFile": "容器 735-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 684,
+            "h": 650,
+            "offX": -92,
+            "offY": 0
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 737",
+          "num": 737,
+          "nodeId": "4:01737",
+          "imageId": "4:01738",
+          "itemName": null,
+          "imageFile": "容器 737-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 740",
+          "num": 740,
+          "nodeId": "4:01744",
+          "imageId": "4:01745",
+          "itemName": null,
+          "imageFile": "容器 740-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/68de89335d911fea601b4f7ebfd13972.png",
+          "crop": {
+            "w": 500,
+            "h": 477,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 742",
+          "num": 742,
+          "nodeId": "4:01748",
+          "imageId": "4:01749",
+          "itemName": null,
+          "imageFile": "容器 742-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 717,
+            "h": 681,
+            "offX": -108,
+            "offY": -21
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 763",
+          "num": 763,
+          "nodeId": "4:01804",
+          "imageId": "4:01805",
+          "itemName": null,
+          "imageFile": "容器 763-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 42
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 778",
+          "num": 778,
+          "nodeId": "4:01844",
+          "imageId": "4:01845",
+          "itemName": null,
+          "imageFile": "容器 778-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/912a7ebd733d9fca55b494db6d756d5b.png",
+          "crop": {
+            "w": 446,
+            "h": 430,
+            "offX": 27,
+            "offY": 35
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 780",
+          "num": 780,
+          "nodeId": "4:01848",
+          "imageId": "4:01849",
+          "itemName": null,
+          "imageFile": "容器 780-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -27,
+            "offY": 19
+          },
+          "rowY": 7685
+        },
+        {
+          "container": "容器 792",
+          "num": 792,
+          "nodeId": "4:01876",
+          "imageId": "4:01877",
+          "itemName": null,
+          "imageFile": "容器 792-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -25,
+            "offY": 0
+          },
+          "rowY": 7685
+        }
+      ]
+    },
+    {
+      "name": "甜的食物",
+      "count": 23,
+      "items": [
+        {
+          "container": "容器 856",
+          "num": 856,
+          "nodeId": "8:3472",
+          "imageId": "8:3473",
+          "itemName": null,
+          "imageFile": "容器 856-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 857",
+          "num": 857,
+          "nodeId": "8:3474",
+          "imageId": "8:3475",
+          "itemName": null,
+          "imageFile": "容器 857-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 858",
+          "num": 858,
+          "nodeId": "8:3476",
+          "imageId": "8:3477",
+          "itemName": null,
+          "imageFile": "容器 858-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 473,
+            "h": 484,
+            "offX": 27,
+            "offY": 16
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 859",
+          "num": 859,
+          "nodeId": "8:3478",
+          "imageId": "8:3479",
+          "itemName": null,
+          "imageFile": "容器 859-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 860",
+          "num": 860,
+          "nodeId": "8:3480",
+          "imageId": "8:3481",
+          "itemName": null,
+          "imageFile": "容器 860-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 862",
+          "num": 862,
+          "nodeId": "8:3484",
+          "imageId": "8:3485",
+          "itemName": null,
+          "imageFile": "容器 862-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": -19,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 863",
+          "num": 863,
+          "nodeId": "8:3487",
+          "imageId": "8:3488",
+          "itemName": null,
+          "imageFile": "容器 863-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 472,
+            "h": 512,
+            "offX": 28,
+            "offY": -12
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 864",
+          "num": 864,
+          "nodeId": "8:3489",
+          "imageId": "8:3490",
+          "itemName": null,
+          "imageFile": "容器 864-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 480,
+            "h": 521,
+            "offX": 10,
+            "offY": -10
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 865",
+          "num": 865,
+          "nodeId": "8:3491",
+          "imageId": "8:3492",
+          "itemName": null,
+          "imageFile": "容器 865-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8502
+        },
+        {
+          "container": "容器 706",
+          "num": 706,
+          "nodeId": "4:01651",
+          "imageId": "4:01652",
+          "itemName": null,
+          "imageFile": "容器 706-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 450,
+            "offX": -47,
+            "offY": 19
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 707",
+          "num": 707,
+          "nodeId": "4:01653",
+          "imageId": "4:01654",
+          "itemName": null,
+          "imageFile": "容器 707-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 412,
+            "offX": -47,
+            "offY": 44
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 710",
+          "num": 710,
+          "nodeId": "4:01660",
+          "imageId": "4:01661",
+          "itemName": null,
+          "imageFile": "容器 710-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 717",
+          "num": 717,
+          "nodeId": "4:01685",
+          "imageId": "4:01686",
+          "itemName": null,
+          "imageFile": "容器 717-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 718",
+          "num": 718,
+          "nodeId": "4:01687",
+          "imageId": "4:01688",
+          "itemName": null,
+          "imageFile": "容器 718-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 729",
+          "num": 729,
+          "nodeId": "4:01716",
+          "imageId": "4:01717",
+          "itemName": null,
+          "imageFile": "容器 729-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 732",
+          "num": 732,
+          "nodeId": "4:01723",
+          "imageId": "4:01724",
+          "itemName": null,
+          "imageFile": "容器 732-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 571,
+            "h": 361,
+            "offX": -47,
+            "offY": 70
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 744",
+          "num": 744,
+          "nodeId": "4:01756",
+          "imageId": "4:01757",
+          "itemName": null,
+          "imageFile": "容器 744-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 500,
+            "offX": -47,
+            "offY": 54
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 746",
+          "num": 746,
+          "nodeId": "4:01760",
+          "imageId": "4:01761",
+          "itemName": null,
+          "imageFile": "容器 746-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 760",
+          "num": 760,
+          "nodeId": "4:01798",
+          "imageId": "4:01799",
+          "itemName": null,
+          "imageFile": "容器 760-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 548,
+            "h": 498,
+            "offX": 0,
+            "offY": 85
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 770",
+          "num": 770,
+          "nodeId": "4:01819",
+          "imageId": "4:01820",
+          "itemName": null,
+          "imageFile": "容器 770-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 791",
+          "num": 791,
+          "nodeId": "4:01874",
+          "imageId": "4:01875",
+          "itemName": null,
+          "imageFile": "容器 791-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 801",
+          "num": 801,
+          "nodeId": "4:01896",
+          "imageId": "4:01897",
+          "itemName": null,
+          "imageFile": "容器 801-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/535a4facd7c585bf8e0ef8d985d711a7.png",
+          "crop": {
+            "w": 519,
+            "h": 486,
+            "offX": -19,
+            "offY": 0
+          },
+          "rowY": 8524
+        },
+        {
+          "container": "容器 866",
+          "num": 866,
+          "nodeId": "8:3493",
+          "imageId": "8:3495",
+          "itemName": null,
+          "imageFile": "容器 866-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 8524
+        }
+      ]
+    },
+    {
+      "name": "植物",
+      "count": 17,
+      "items": [
+        {
+          "container": "容器 704",
+          "num": 704,
+          "nodeId": "4:01647",
+          "imageId": "4:01648",
+          "itemName": null,
+          "imageFile": "容器 704-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 450,
+            "h": 409,
+            "offX": 25,
+            "offY": 46
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 734",
+          "num": 734,
+          "nodeId": "4:01731",
+          "imageId": "4:01732",
+          "itemName": null,
+          "imageFile": "容器 734-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 759",
+          "num": 759,
+          "nodeId": "4:01796",
+          "imageId": "4:01797",
+          "itemName": null,
+          "imageFile": "容器 759-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 500,
+            "h": 475,
+            "offX": -17,
+            "offY": 25
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 767",
+          "num": 767,
+          "nodeId": "4:01813",
+          "imageId": "4:01814",
+          "itemName": null,
+          "imageFile": "容器 767-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 500,
+            "offX": -47,
+            "offY": 54
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 768",
+          "num": 768,
+          "nodeId": "4:01815",
+          "imageId": "4:01816",
+          "itemName": null,
+          "imageFile": "容器 768-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 775",
+          "num": 775,
+          "nodeId": "4:01838",
+          "imageId": "4:01839",
+          "itemName": null,
+          "imageFile": "容器 775-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 500,
+            "h": 474,
+            "offX": 0,
+            "offY": 13
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 777",
+          "num": 777,
+          "nodeId": "4:01842",
+          "imageId": "4:01843",
+          "itemName": null,
+          "imageFile": "容器 777-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 547,
+            "h": 519,
+            "offX": -23,
+            "offY": 36
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 784",
+          "num": 784,
+          "nodeId": "4:01858",
+          "imageId": "4:01859",
+          "itemName": null,
+          "imageFile": "容器 784-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 790",
+          "num": 790,
+          "nodeId": "4:01872",
+          "imageId": "4:01873",
+          "itemName": null,
+          "imageFile": "容器 790-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 450,
+            "offX": -47,
+            "offY": 19
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 804",
+          "num": 804,
+          "nodeId": "4:01907",
+          "imageId": "4:01908",
+          "itemName": null,
+          "imageFile": "容器 804-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 468,
+            "h": 444,
+            "offX": 16,
+            "offY": 55
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 838",
+          "num": 838,
+          "nodeId": "8:250",
+          "imageId": "8:251",
+          "itemName": null,
+          "imageFile": "容器 838-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 540,
+            "h": 464,
+            "offX": -20,
+            "offY": 36
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 877",
+          "num": 877,
+          "nodeId": "8:3518",
+          "imageId": "8:177",
+          "itemName": "香菜",
+          "imageFile": "容器 877-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 16,
+            "offY": 0
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 878",
+          "num": 878,
+          "nodeId": "8:3842",
+          "imageId": "8:3843",
+          "itemName": "青葱",
+          "imageFile": "容器 878-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 879",
+          "num": 879,
+          "nodeId": "8:3844",
+          "imageId": "8:3845",
+          "itemName": "苦瓜",
+          "imageFile": "容器 879-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 880",
+          "num": 880,
+          "nodeId": "8:3846",
+          "imageId": "8:3847",
+          "itemName": "西兰花",
+          "imageFile": "容器 880-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 556,
+            "h": 573,
+            "offX": -28,
+            "offY": -36
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 881",
+          "num": 881,
+          "nodeId": "8:3848",
+          "imageId": "8:3849",
+          "itemName": "毛豆",
+          "imageFile": "容器 881-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 9363
+        },
+        {
+          "container": "容器 882",
+          "num": 882,
+          "nodeId": "8:4318",
+          "imageId": "8:4319",
+          "itemName": "芹菜",
+          "imageFile": "容器 882-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 9363
+        }
+      ]
+    },
+    {
+      "name": "坐骑/交通工具",
+      "count": 8,
+      "items": [
+        {
+          "container": "容器 711",
+          "num": 711,
+          "nodeId": "4:01662",
+          "imageId": "4:01663",
+          "itemName": null,
+          "imageFile": "容器 711-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 470,
+            "h": 290,
+            "offX": 15,
+            "offY": 84
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 723",
+          "num": 723,
+          "nodeId": "4:01699",
+          "imageId": "4:01700",
+          "itemName": null,
+          "imageFile": "容器 723-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 437,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 728",
+          "num": 728,
+          "nodeId": "4:01714",
+          "imageId": "4:01715",
+          "itemName": null,
+          "imageFile": "容器 728-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 521,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 739",
+          "num": 739,
+          "nodeId": "4:01742",
+          "imageId": "4:01743",
+          "itemName": null,
+          "imageFile": "容器 739-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 547,
+            "h": 393,
+            "offX": -23,
+            "offY": 54
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 758",
+          "num": 758,
+          "nodeId": "4:01794",
+          "imageId": "4:01795",
+          "itemName": null,
+          "imageFile": "容器 758-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 538,
+            "h": 395,
+            "offX": 0,
+            "offY": 69
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 769",
+          "num": 769,
+          "nodeId": "4:01817",
+          "imageId": "4:01818",
+          "itemName": null,
+          "imageFile": "容器 769-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 416,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 787",
+          "num": 787,
+          "nodeId": "4:01865",
+          "imageId": "4:01866",
+          "itemName": null,
+          "imageFile": "容器 787-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 500,
+            "h": 288,
+            "offX": 0,
+            "offY": 123
+          },
+          "rowY": 10142
+        },
+        {
+          "container": "容器 795",
+          "num": 795,
+          "nodeId": "4:01883",
+          "imageId": "4:01884",
+          "itemName": null,
+          "imageFile": "容器 795-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 513,
+            "h": 370,
+            "offX": 36,
+            "offY": 69
+          },
+          "rowY": 10142
+        }
+      ]
+    },
+    {
+      "name": "动物",
+      "count": 14,
+      "items": [
+        {
+          "container": "容器 703",
+          "num": 703,
+          "nodeId": "4:01645",
+          "imageId": "4:01646",
+          "itemName": null,
+          "imageFile": "容器 703-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 416,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 708",
+          "num": 708,
+          "nodeId": "4:01655",
+          "imageId": "4:01656",
+          "itemName": null,
+          "imageFile": "容器 708-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 437,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 714",
+          "num": 714,
+          "nodeId": "4:01669",
+          "imageId": "4:01670",
+          "itemName": null,
+          "imageFile": "容器 714-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 536,
+            "h": 493,
+            "offX": -18,
+            "offY": 7
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 733",
+          "num": 733,
+          "nodeId": "4:01725",
+          "imageId": "4:01726",
+          "itemName": null,
+          "imageFile": "容器 733-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 576,
+            "h": 530,
+            "offX": 26,
+            "offY": 0
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 750",
+          "num": 750,
+          "nodeId": "4:01777",
+          "imageId": "4:01778",
+          "itemName": null,
+          "imageFile": "容器 750-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 500,
+            "h": 460,
+            "offX": 0,
+            "offY": 20
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 757",
+          "num": 757,
+          "nodeId": "4:01792",
+          "imageId": "4:01793",
+          "itemName": null,
+          "imageFile": "容器 757-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 595,
+            "h": 521,
+            "offX": -47,
+            "offY": 32
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 773",
+          "num": 773,
+          "nodeId": "4:01833",
+          "imageId": "4:01834",
+          "itemName": null,
+          "imageFile": "容器 773-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 541,
+            "h": 498,
+            "offX": -20,
+            "offY": 17
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 781",
+          "num": 781,
+          "nodeId": "4:01850",
+          "imageId": "4:01851",
+          "itemName": null,
+          "imageFile": "容器 781-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 547,
+            "h": 393,
+            "offX": -23,
+            "offY": 54
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 797",
+          "num": 797,
+          "nodeId": "4:01888",
+          "imageId": "4:01889",
+          "itemName": null,
+          "imageFile": "容器 797-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 617,
+            "h": 568,
+            "offX": -58,
+            "offY": -16
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 798",
+          "num": 798,
+          "nodeId": "4:01890",
+          "imageId": "4:01891",
+          "itemName": null,
+          "imageFile": "容器 798-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/aa568bc8119f0c1706d5e3e19a67fa22.png",
+          "crop": {
+            "w": 559,
+            "h": 514,
+            "offX": -29,
+            "offY": 0
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 811",
+          "num": 811,
+          "nodeId": "4:01962",
+          "imageId": "4:01963",
+          "itemName": null,
+          "imageFile": "容器 811-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 679,
+            "h": 644,
+            "offX": -89,
+            "offY": -72
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 812",
+          "num": 812,
+          "nodeId": "4:01964",
+          "imageId": "4:01965",
+          "itemName": null,
+          "imageFile": "容器 812-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -25
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 813",
+          "num": 813,
+          "nodeId": "4:01966",
+          "imageId": "4:01967",
+          "itemName": null,
+          "imageFile": "容器 813-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -25
+          },
+          "rowY": 10981
+        },
+        {
+          "container": "容器 814",
+          "num": 814,
+          "nodeId": "4:01968",
+          "imageId": "4:01969",
+          "itemName": null,
+          "imageFile": "容器 814-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -39
+          },
+          "rowY": 10981
+        }
+      ]
+    },
+    {
+      "name": "有火焰",
+      "count": 7,
+      "items": [
+        {
+          "container": "容器 815",
+          "num": 815,
+          "nodeId": "8:018",
+          "imageId": "8:019",
+          "itemName": null,
+          "imageFile": "容器 815-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 544,
+            "h": 516,
+            "offX": -22,
+            "offY": -47
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 816",
+          "num": 816,
+          "nodeId": "8:020",
+          "imageId": "8:021",
+          "itemName": null,
+          "imageFile": "容器 816-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 530,
+            "h": 503,
+            "offX": -15,
+            "offY": -17
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 817",
+          "num": 817,
+          "nodeId": "8:022",
+          "imageId": "8:023",
+          "itemName": null,
+          "imageFile": "容器 817-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/6afafbf054ee02a757718a34019c28db.png",
+          "crop": {
+            "w": 468,
+            "h": 552,
+            "offX": 0,
+            "offY": -14
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 818",
+          "num": 818,
+          "nodeId": "8:024",
+          "imageId": "8:025",
+          "itemName": null,
+          "imageFile": "容器 818-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 587,
+            "h": 557,
+            "offX": -87,
+            "offY": 0
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 819",
+          "num": 819,
+          "nodeId": "8:026",
+          "imageId": "8:027",
+          "itemName": null,
+          "imageFile": "容器 819-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/125da7acc25a3e4af4172b8398219e69.png",
+          "crop": {
+            "w": 580,
+            "h": 550,
+            "offX": -40,
+            "offY": -39
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 820",
+          "num": 820,
+          "nodeId": "8:028",
+          "imageId": "8:029",
+          "itemName": null,
+          "imageFile": "容器 820-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/62faf9fba9c84dbd2e19156e82390c18.png",
+          "crop": {
+            "w": 567,
+            "h": 537,
+            "offX": -33,
+            "offY": -18
+          },
+          "rowY": 11725
+        },
+        {
+          "container": "容器 821",
+          "num": 821,
+          "nodeId": "8:030",
+          "imageId": "8:031",
+          "itemName": null,
+          "imageFile": "容器 821-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e93eca09f8e13b10eddce3dcf6f7eb82.png",
+          "crop": {
+            "w": 538,
+            "h": 395,
+            "offX": 0,
+            "offY": 69
+          },
+          "rowY": 11725
+        }
+      ]
+    },
+    {
+      "name": "食物",
+      "count": 32,
+      "items": [
+        {
+          "container": "容器 889",
+          "num": 889,
+          "nodeId": "8:4752",
+          "imageId": "8:4753",
+          "itemName": null,
+          "imageFile": "容器 889-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 556,
+            "h": 573,
+            "offX": -28,
+            "offY": -36
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 890",
+          "num": 890,
+          "nodeId": "8:4754",
+          "imageId": "8:4755",
+          "itemName": null,
+          "imageFile": "容器 890-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 891",
+          "num": 891,
+          "nodeId": "8:4756",
+          "imageId": "8:4757",
+          "itemName": null,
+          "imageFile": "容器 891-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 16,
+            "offY": 0
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 892",
+          "num": 892,
+          "nodeId": "8:4758",
+          "imageId": "8:4759",
+          "itemName": null,
+          "imageFile": "容器 892-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 893",
+          "num": 893,
+          "nodeId": "8:4760",
+          "imageId": "8:4761",
+          "itemName": null,
+          "imageFile": "容器 893-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 894",
+          "num": 894,
+          "nodeId": "8:4762",
+          "imageId": "8:4763",
+          "itemName": null,
+          "imageFile": "容器 894-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 12469
+        },
+        {
+          "container": "容器 867",
+          "num": 867,
+          "nodeId": "8:3496",
+          "imageId": "8:3497",
+          "itemName": null,
+          "imageFile": "容器 867-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 473,
+            "h": 484,
+            "offX": 27,
+            "offY": 16
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 868",
+          "num": 868,
+          "nodeId": "8:3498",
+          "imageId": "8:3499",
+          "itemName": null,
+          "imageFile": "容器 868-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 472,
+            "h": 512,
+            "offX": 28,
+            "offY": -12
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 869",
+          "num": 869,
+          "nodeId": "8:3500",
+          "imageId": "8:3501",
+          "itemName": null,
+          "imageFile": "容器 869-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 870",
+          "num": 870,
+          "nodeId": "8:3502",
+          "imageId": "8:3503",
+          "itemName": null,
+          "imageFile": "容器 870-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 871",
+          "num": 871,
+          "nodeId": "8:3505",
+          "imageId": "8:3506",
+          "itemName": null,
+          "imageFile": "容器 871-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": -19,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 872",
+          "num": 872,
+          "nodeId": "8:3507",
+          "imageId": "8:3508",
+          "itemName": null,
+          "imageFile": "容器 872-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 873",
+          "num": 873,
+          "nodeId": "8:3509",
+          "imageId": "8:3510",
+          "itemName": null,
+          "imageFile": "容器 873-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 874",
+          "num": 874,
+          "nodeId": "8:3511",
+          "imageId": "8:3512",
+          "itemName": null,
+          "imageFile": "容器 874-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 480,
+            "h": 521,
+            "offX": 10,
+            "offY": -10
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 875",
+          "num": 875,
+          "nodeId": "8:3513",
+          "imageId": "8:3514",
+          "itemName": null,
+          "imageFile": "容器 875-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 876",
+          "num": 876,
+          "nodeId": "8:3515",
+          "imageId": "8:3516",
+          "itemName": null,
+          "imageFile": "容器 876-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 471,
+            "h": 511,
+            "offX": 15,
+            "offY": 0
+          },
+          "rowY": 12488
+        },
+        {
+          "container": "容器 822",
+          "num": 822,
+          "nodeId": "8:088",
+          "imageId": "8:089",
+          "itemName": null,
+          "imageFile": "容器 822-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 450,
+            "offX": -47,
+            "offY": 19
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 823",
+          "num": 823,
+          "nodeId": "8:090",
+          "imageId": "8:091",
+          "itemName": null,
+          "imageFile": "容器 823-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 824",
+          "num": 824,
+          "nodeId": "8:092",
+          "imageId": "8:093",
+          "itemName": null,
+          "imageFile": "容器 824-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 825",
+          "num": 825,
+          "nodeId": "8:094",
+          "imageId": "8:095",
+          "itemName": null,
+          "imageFile": "容器 825-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 500,
+            "offX": -47,
+            "offY": 54
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 826",
+          "num": 826,
+          "nodeId": "8:096",
+          "imageId": "8:097",
+          "itemName": null,
+          "imageFile": "容器 826-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 827",
+          "num": 827,
+          "nodeId": "8:098",
+          "imageId": "8:099",
+          "itemName": null,
+          "imageFile": "容器 827-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 571,
+            "h": 361,
+            "offX": -47,
+            "offY": 70
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 828",
+          "num": 828,
+          "nodeId": "8:100",
+          "imageId": "8:101",
+          "itemName": null,
+          "imageFile": "容器 828-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 548,
+            "h": 498,
+            "offX": 0,
+            "offY": 85
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 829",
+          "num": 829,
+          "nodeId": "8:102",
+          "imageId": "8:103",
+          "itemName": null,
+          "imageFile": "容器 829-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/535a4facd7c585bf8e0ef8d985d711a7.png",
+          "crop": {
+            "w": 519,
+            "h": 486,
+            "offX": -19,
+            "offY": 0
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 830",
+          "num": 830,
+          "nodeId": "8:104",
+          "imageId": "8:105",
+          "itemName": null,
+          "imageFile": "容器 830-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 412,
+            "offX": -47,
+            "offY": 44
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 831",
+          "num": 831,
+          "nodeId": "8:106",
+          "imageId": "8:107",
+          "itemName": null,
+          "imageFile": "容器 831-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 832",
+          "num": 832,
+          "nodeId": "8:108",
+          "imageId": "8:109",
+          "itemName": null,
+          "imageFile": "容器 832-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 833",
+          "num": 833,
+          "nodeId": "8:110",
+          "imageId": "8:111",
+          "itemName": null,
+          "imageFile": "容器 833-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 834",
+          "num": 834,
+          "nodeId": "8:112",
+          "imageId": "8:113",
+          "itemName": null,
+          "imageFile": "容器 834-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 835",
+          "num": 835,
+          "nodeId": "8:143",
+          "imageId": "8:144",
+          "itemName": null,
+          "imageFile": "容器 835-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/5f68d1d4830dd4ff87f30d4b376c9cf0.png",
+          "crop": {
+            "w": 626,
+            "h": 507,
+            "offX": -80,
+            "offY": 0
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 836",
+          "num": 836,
+          "nodeId": "8:145",
+          "imageId": "8:146",
+          "itemName": null,
+          "imageFile": "容器 836-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 450,
+            "h": 409,
+            "offX": 25,
+            "offY": 46
+          },
+          "rowY": 12500
+        },
+        {
+          "container": "容器 837",
+          "num": 837,
+          "nodeId": "8:147",
+          "imageId": "8:148",
+          "itemName": null,
+          "imageFile": "容器 837-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 547,
+            "h": 519,
+            "offX": -23,
+            "offY": 36
+          },
+          "rowY": 12500
+        }
+      ]
+    },
+    {
+      "name": "水果",
+      "count": 15,
+      "items": [
+        {
+          "container": "容器 839",
+          "num": 839,
+          "nodeId": "8:339",
+          "imageId": "8:340",
+          "itemName": null,
+          "imageFile": "容器 839-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 582,
+            "h": 391,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 840",
+          "num": 840,
+          "nodeId": "8:341",
+          "imageId": "8:342",
+          "itemName": null,
+          "imageFile": "容器 840-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 49
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 841",
+          "num": 841,
+          "nodeId": "8:343",
+          "imageId": "8:344",
+          "itemName": null,
+          "imageFile": "容器 841-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -47,
+            "offY": 52
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 842",
+          "num": 842,
+          "nodeId": "8:345",
+          "imageId": "8:346",
+          "itemName": null,
+          "imageFile": "容器 842-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/11f14c4e52746ab95c805c15732ae2e5.png",
+          "crop": {
+            "w": 595,
+            "h": 450,
+            "offX": -47,
+            "offY": 19
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 845",
+          "num": 845,
+          "nodeId": "8:352",
+          "imageId": "8:174",
+          "itemName": "苹果",
+          "imageFile": "容器 845-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 846",
+          "num": 846,
+          "nodeId": "8:916",
+          "imageId": "8:917",
+          "itemName": "香蕉",
+          "imageFile": "容器 846-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 847",
+          "num": 847,
+          "nodeId": "8:918",
+          "imageId": "8:919",
+          "itemName": "橙子",
+          "imageFile": "容器 847-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 848",
+          "num": 848,
+          "nodeId": "8:920",
+          "imageId": "8:921",
+          "itemName": "草莓",
+          "imageFile": "容器 848-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 849",
+          "num": 849,
+          "nodeId": "8:922",
+          "imageId": "8:923",
+          "itemName": "芒果",
+          "imageFile": "容器 849-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 850",
+          "num": 850,
+          "nodeId": "8:924",
+          "imageId": "8:925",
+          "itemName": "梨",
+          "imageFile": "容器 850-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 851",
+          "num": 851,
+          "nodeId": "8:926",
+          "imageId": "8:927",
+          "itemName": "菠萝",
+          "imageFile": "容器 851-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 480,
+            "h": 521,
+            "offX": 10,
+            "offY": -10
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 852",
+          "num": 852,
+          "nodeId": "8:928",
+          "imageId": "8:929",
+          "itemName": "猕猴桃",
+          "imageFile": "容器 852-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 519,
+            "h": 563,
+            "offX": 0,
+            "offY": -41
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 853",
+          "num": 853,
+          "nodeId": "8:1056",
+          "imageId": "8:1057",
+          "itemName": "柠檬",
+          "imageFile": "容器 853-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 471,
+            "h": 511,
+            "offX": 15,
+            "offY": 0
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 854",
+          "num": 854,
+          "nodeId": "8:1058",
+          "imageId": "8:1059",
+          "itemName": "甜瓜",
+          "imageFile": "容器 854-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 472,
+            "h": 512,
+            "offX": 28,
+            "offY": -12
+          },
+          "rowY": 13381
+        },
+        {
+          "container": "容器 855",
+          "num": 855,
+          "nodeId": "8:1060",
+          "imageId": "8:1061",
+          "itemName": "火龙果",
+          "imageFile": "容器 855-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ef9250615da8789c3dd9c9b86cdf36a0.png",
+          "crop": {
+            "w": 473,
+            "h": 484,
+            "offX": 27,
+            "offY": 16
+          },
+          "rowY": 13381
+        }
+      ]
+    },
+    {
+      "name": "蔬菜",
+      "count": 8,
+      "items": [
+        {
+          "container": "容器 843",
+          "num": 843,
+          "nodeId": "8:347",
+          "imageId": "8:348",
+          "itemName": null,
+          "imageFile": "容器 843-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 450,
+            "h": 409,
+            "offX": 25,
+            "offY": 46
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 844",
+          "num": 844,
+          "nodeId": "8:349",
+          "imageId": "8:350",
+          "itemName": null,
+          "imageFile": "容器 844-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/e565ccfaaef96b67003cc27bc29fc203.png",
+          "crop": {
+            "w": 547,
+            "h": 519,
+            "offX": -23,
+            "offY": 36
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 883",
+          "num": 883,
+          "nodeId": "8:4740",
+          "imageId": "8:4741",
+          "itemName": null,
+          "imageFile": "容器 883-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 556,
+            "h": 573,
+            "offX": -28,
+            "offY": -36
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 884",
+          "num": 884,
+          "nodeId": "8:4742",
+          "imageId": "8:4743",
+          "itemName": null,
+          "imageFile": "容器 884-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 885",
+          "num": 885,
+          "nodeId": "8:4744",
+          "imageId": "8:4745",
+          "itemName": null,
+          "imageFile": "容器 885-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 16,
+            "offY": 0
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 886",
+          "num": 886,
+          "nodeId": "8:4746",
+          "imageId": "8:4747",
+          "itemName": null,
+          "imageFile": "容器 886-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 887",
+          "num": 887,
+          "nodeId": "8:4748",
+          "imageId": "8:4749",
+          "itemName": null,
+          "imageFile": "容器 887-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 14057
+        },
+        {
+          "container": "容器 888",
+          "num": 888,
+          "nodeId": "8:4750",
+          "imageId": "8:4751",
+          "itemName": null,
+          "imageFile": "容器 888-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/343bbb0e4caa1c8aebf39f3450db6788.png",
+          "crop": {
+            "w": 484,
+            "h": 499,
+            "offX": 0,
+            "offY": 0
+          },
+          "rowY": 14057
+        }
+      ]
+    },
+    {
+      "name": "穿戴的服饰/配饰",
+      "count": 12,
+      "items": [
+        {
+          "container": "容器 896",
+          "num": 896,
+          "nodeId": "8:4768",
+          "imageId": "8:4769",
+          "itemName": "银纹铠甲",
+          "imageFile": "容器 896-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/912a7ebd733d9fca55b494db6d756d5b.png",
+          "crop": {
+            "w": 446,
+            "h": 430,
+            "offX": 27,
+            "offY": 35
+          },
+          "rowY": 14854
+        },
+        {
+          "container": "容器 898",
+          "num": 898,
+          "nodeId": "8:4772",
+          "imageId": "8:4773",
+          "itemName": "流苏披肩",
+          "imageFile": "容器 898-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 14854
+        },
+        {
+          "container": "容器 900",
+          "num": 900,
+          "nodeId": "8:4861",
+          "imageId": "8:4862",
+          "itemName": null,
+          "imageFile": "容器 900-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/29c75b02c2b7ffc41bfe2edff3486432.png",
+          "crop": {
+            "w": 500,
+            "h": 459,
+            "offX": 0,
+            "offY": 21
+          },
+          "rowY": 14854
+        },
+        {
+          "container": "容器 895",
+          "num": 895,
+          "nodeId": "8:4764",
+          "imageId": "8:4767",
+          "itemName": null,
+          "imageFile": "容器 895-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 897",
+          "num": 897,
+          "nodeId": "8:4770",
+          "imageId": "8:4771",
+          "itemName": "赤纹上衣",
+          "imageFile": "容器 897-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 899",
+          "num": 899,
+          "nodeId": "8:4774",
+          "imageId": "8:4775",
+          "itemName": "凤纹头冠",
+          "imageFile": "容器 899-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/1cd7ab7acba315a5b8b3cf2b8e6a35f0.png",
+          "crop": {
+            "w": 642,
+            "h": 570,
+            "offX": -71,
+            "offY": -52
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 901",
+          "num": 901,
+          "nodeId": "8:4863",
+          "imageId": "8:4864",
+          "itemName": null,
+          "imageFile": "容器 901-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/07db975d6f6e3ede5ef377928f81976e.png",
+          "crop": {
+            "w": 595,
+            "h": 565,
+            "offX": -27,
+            "offY": 19
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 902",
+          "num": 902,
+          "nodeId": "8:4868",
+          "imageId": "8:180",
+          "itemName": "绣花裤装",
+          "imageFile": "容器 902-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ee464a88f01b8f966ba43c8bfed854e4.png",
+          "crop": {
+            "w": 485,
+            "h": 552,
+            "offX": 15,
+            "offY": -26
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 903",
+          "num": 903,
+          "nodeId": "8:5118",
+          "imageId": "8:5119",
+          "itemName": "玉坠耳环",
+          "imageFile": "容器 903-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ee464a88f01b8f966ba43c8bfed854e4.png",
+          "crop": {
+            "w": 485,
+            "h": 552,
+            "offX": 15,
+            "offY": -26
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 904",
+          "num": 904,
+          "nodeId": "8:5120",
+          "imageId": "8:5121",
+          "itemName": "狐狸面具",
+          "imageFile": "容器 904-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ee464a88f01b8f966ba43c8bfed854e4.png",
+          "crop": {
+            "w": 485,
+            "h": 552,
+            "offX": 15,
+            "offY": -26
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 905",
+          "num": 905,
+          "nodeId": "8:5122",
+          "imageId": "8:186",
+          "itemName": "轻纱面帘",
+          "imageFile": "容器 905-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/507fe0a7951268c84d75b25388e3152e.png",
+          "crop": {
+            "w": 370,
+            "h": 531,
+            "offX": 65,
+            "offY": -15
+          },
+          "rowY": 14858
+        },
+        {
+          "container": "容器 906",
+          "num": 906,
+          "nodeId": "8:5124",
+          "imageId": "8:5125",
+          "itemName": "竹编斗笠",
+          "imageFile": "容器 906-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/ee464a88f01b8f966ba43c8bfed854e4.png",
+          "crop": {
+            "w": 500,
+            "h": 427,
+            "offX": 0,
+            "offY": 37
+          },
+          "rowY": 14858
+        }
+      ]
+    },
+    {
+      "name": "桥",
+      "count": 9,
+      "items": [
+        {
+          "container": "容器 908",
+          "num": 908,
+          "nodeId": "8:6093",
+          "imageId": "8:183",
+          "itemName": null,
+          "imageFile": "容器 908-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 414,
+            "offX": -15,
+            "offY": 43
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 909",
+          "num": 909,
+          "nodeId": "8:6569",
+          "imageId": "8:6570",
+          "itemName": "木拱桥",
+          "imageFile": "容器 909-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 414,
+            "offX": -15,
+            "offY": 43
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 910",
+          "num": 910,
+          "nodeId": "8:6571",
+          "imageId": "8:6572",
+          "itemName": "风雨廊桥",
+          "imageFile": "容器 910-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 414,
+            "offX": -15,
+            "offY": 43
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 911",
+          "num": 911,
+          "nodeId": "8:6573",
+          "imageId": "8:6574",
+          "itemName": "浮木码头",
+          "imageFile": "容器 911-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 414,
+            "offX": -15,
+            "offY": 43
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 912",
+          "num": 912,
+          "nodeId": "8:6575",
+          "imageId": "8:6576",
+          "itemName": "荷塘栈道",
+          "imageFile": "容器 912-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 414,
+            "offX": -15,
+            "offY": 43
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 913",
+          "num": 913,
+          "nodeId": "8:6577",
+          "imageId": "8:6578",
+          "itemName": "石拱水桥",
+          "imageFile": "容器 913-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 530,
+            "h": 371,
+            "offX": -15,
+            "offY": 86
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 914",
+          "num": 914,
+          "nodeId": "8:6579",
+          "imageId": "8:6580",
+          "itemName": "石板桥",
+          "imageFile": "容器 914-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 576,
+            "h": 422,
+            "offX": -38,
+            "offY": 39
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 915",
+          "num": 915,
+          "nodeId": "8:6581",
+          "imageId": "8:6582",
+          "itemName": "吊索桥",
+          "imageFile": "容器 915-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 451,
+            "h": 385,
+            "offX": 15,
+            "offY": 72
+          },
+          "rowY": 15745
+        },
+        {
+          "container": "容器 916",
+          "num": 916,
+          "nodeId": "8:6583",
+          "imageId": "8:6584",
+          "itemName": "朱漆拱桥",
+          "imageFile": "容器 916-1x.png.png",
+          "imageRef": "151865574110054/151865575158631/955753b4c45bc3f01e89837f803192f1.png",
+          "crop": {
+            "w": 465,
+            "h": 446,
+            "offX": 18,
+            "offY": 54
+          },
+          "rowY": 15745
+        }
+      ]
+    }
+  ]
+}

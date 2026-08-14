@@ -1,0 +1,3887 @@
+{
+  "name": "逆水寒07小游戏素材",
+  "generated": "2026-08-14",
+  "source": {
+    "designJson": "json.txt",
+    "imagesDir": "逆水寒07小游戏素材-页面 1"
+  },
+  "stats": {
+    "categories": 16,
+    "items": 141,
+    "exportedImages": 140,
+    "missingImages": 1,
+    "sourceNodes": 213
+  },
+  "categories": [
+    {
+      "id": "yueqi",
+      "name": "乐器",
+      "icon": "icons/乐器.png",
+      "itemCount": 10,
+      "items": [
+        "item_001",
+        "item_002",
+        "item_003",
+        "item_004",
+        "item_005",
+        "item_006",
+        "item_007",
+        "item_008",
+        "item_009",
+        "item_010"
+      ]
+    },
+    {
+      "id": "youzi_wupin",
+      "name": "有字的物品",
+      "icon": "icons/有字的物品.png",
+      "itemCount": 6,
+      "items": [
+        "item_011",
+        "item_012",
+        "item_013",
+        "item_014",
+        "item_015",
+        "item_016"
+      ]
+    },
+    {
+      "id": "rongqi",
+      "name": "容器",
+      "icon": "icons/容器.png",
+      "itemCount": 21,
+      "items": [
+        "item_017",
+        "item_018",
+        "item_019",
+        "item_020",
+        "item_021",
+        "item_022",
+        "item_023",
+        "item_024",
+        "item_025",
+        "item_026",
+        "item_027",
+        "item_028",
+        "item_029",
+        "item_030",
+        "item_031",
+        "item_032",
+        "item_033",
+        "item_034",
+        "item_015",
+        "item_035",
+        "item_036"
+      ]
+    },
+    {
+      "id": "huifeide",
+      "name": "会飞的",
+      "icon": "icons/会飞的.png",
+      "itemCount": 10,
+      "items": [
+        "item_037",
+        "item_038",
+        "item_039",
+        "item_040",
+        "item_041",
+        "item_042",
+        "item_043",
+        "item_044",
+        "item_045",
+        "item_046"
+      ]
+    },
+    {
+      "id": "huifaguangde",
+      "name": "会发光的",
+      "icon": "icons/会发光的.png",
+      "itemCount": 8,
+      "items": [
+        "item_044",
+        "item_047",
+        "item_048",
+        "item_049",
+        "item_050",
+        "item_051",
+        "item_052",
+        "item_053"
+      ]
+    },
+    {
+      "id": "jianruide",
+      "name": "尖锐的",
+      "icon": "icons/尖锐的.png",
+      "itemCount": 12,
+      "items": [
+        "item_054",
+        "item_055",
+        "item_056",
+        "item_057",
+        "item_058",
+        "item_059",
+        "item_060",
+        "item_061",
+        "item_062",
+        "item_063",
+        "item_064",
+        "item_065"
+      ]
+    },
+    {
+      "id": "tianshi",
+      "name": "甜的食物",
+      "icon": "icons/甜的食物.png",
+      "itemCount": 20,
+      "items": [
+        "item_066",
+        "item_067",
+        "item_068",
+        "item_069",
+        "item_070",
+        "item_071",
+        "item_031",
+        "item_072",
+        "item_030",
+        "item_073",
+        "item_074",
+        "item_075",
+        "item_076",
+        "item_077",
+        "item_078",
+        "item_079",
+        "item_080",
+        "item_081",
+        "item_082",
+        "item_083"
+      ]
+    },
+    {
+      "id": "zhiwu",
+      "name": "植物",
+      "icon": "icons/植物.png",
+      "itemCount": 17,
+      "items": [
+        "item_067",
+        "item_084",
+        "item_085",
+        "item_086",
+        "item_087",
+        "item_088",
+        "item_072",
+        "item_089",
+        "item_090",
+        "item_031",
+        "item_091",
+        "item_092",
+        "item_093",
+        "item_094",
+        "item_095",
+        "item_096",
+        "item_097"
+      ]
+    },
+    {
+      "id": "zuoqi",
+      "name": "坐骑/交通工具",
+      "icon": "icons/坐骑_交通工具.png",
+      "itemCount": 8,
+      "items": [
+        "item_098",
+        "item_099",
+        "item_100",
+        "item_101",
+        "item_102",
+        "item_103",
+        "item_053",
+        "item_104"
+      ]
+    },
+    {
+      "id": "dongwu",
+      "name": "动物",
+      "icon": "icons/动物.png",
+      "itemCount": 14,
+      "items": [
+        "item_098",
+        "item_105",
+        "item_103",
+        "item_104",
+        "item_106",
+        "item_107",
+        "item_108",
+        "item_109",
+        "item_110",
+        "item_111",
+        "item_037",
+        "item_038",
+        "item_042",
+        "item_044"
+      ]
+    },
+    {
+      "id": "youhuoyan",
+      "name": "有火焰",
+      "icon": "icons/有火焰.png",
+      "itemCount": 7,
+      "items": [
+        "item_047",
+        "item_048",
+        "item_049",
+        "item_050",
+        "item_051",
+        "item_052",
+        "item_112"
+      ]
+    },
+    {
+      "id": "shiwu",
+      "name": "食物",
+      "icon": "icons/食物.png",
+      "itemCount": 30,
+      "items": [
+        "item_066",
+        "item_067",
+        "item_068",
+        "item_069",
+        "item_113",
+        "item_071",
+        "item_031",
+        "item_072",
+        "item_030",
+        "item_114",
+        "item_035",
+        "item_085",
+        "item_089",
+        "item_115",
+        "item_075",
+        "item_076",
+        "item_077",
+        "item_116",
+        "item_079",
+        "item_117",
+        "item_081",
+        "item_118",
+        "item_082",
+        "item_083",
+        "item_092",
+        "item_093",
+        "item_119",
+        "item_095",
+        "item_096",
+        "item_097"
+      ]
+    },
+    {
+      "id": "shuiguo",
+      "name": "水果",
+      "icon": "icons/水果.png",
+      "itemCount": 15,
+      "items": [
+        "item_120",
+        "item_068",
+        "item_071",
+        "item_072",
+        "item_074",
+        "item_121",
+        "item_076",
+        "item_077",
+        "item_116",
+        "item_079",
+        "item_117",
+        "item_081",
+        "item_118",
+        "item_082",
+        "item_083"
+      ]
+    },
+    {
+      "id": "shucai",
+      "name": "蔬菜",
+      "icon": "icons/蔬菜.png",
+      "itemCount": 8,
+      "items": [
+        "item_085",
+        "item_089",
+        "item_092",
+        "item_093",
+        "item_119",
+        "item_095",
+        "item_096",
+        "item_122"
+      ]
+    },
+    {
+      "id": "fushi_peishi",
+      "name": "穿戴的服饰/配饰",
+      "icon": "icons/穿戴的服饰_配饰.png",
+      "itemCount": 12,
+      "items": [
+        "item_123",
+        "item_124",
+        "item_125",
+        "item_126",
+        "item_127",
+        "item_061",
+        "item_065",
+        "item_128",
+        "item_129",
+        "item_130",
+        "item_131",
+        "item_132"
+      ]
+    },
+    {
+      "id": "qiao",
+      "name": "桥",
+      "icon": "icons/桥.png",
+      "itemCount": 9,
+      "items": [
+        "item_133",
+        "item_134",
+        "item_135",
+        "item_136",
+        "item_137",
+        "item_138",
+        "item_139",
+        "item_140",
+        "item_141"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "item_001",
+      "file": "items/item_001.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 776",
+          "id": "4:01840",
+          "category": "乐器",
+          "x": 26536,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_002",
+      "file": "items/item_002.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 771",
+          "id": "4:01825",
+          "category": "乐器",
+          "x": 27075,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_003",
+      "file": "items/item_003.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 712",
+          "id": "4:01664",
+          "category": "乐器",
+          "x": 27615,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_004",
+      "file": "items/item_004.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 779",
+          "id": "4:01846",
+          "category": "乐器",
+          "x": 28155,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_005",
+      "file": "items/item_005.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 705",
+          "id": "4:01649",
+          "category": "乐器",
+          "x": 28695,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_006",
+      "file": "items/item_006.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 761",
+          "id": "4:01800",
+          "category": "乐器",
+          "x": 29234,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_007",
+      "file": "items/item_007.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 722",
+          "id": "4:01697",
+          "category": "乐器",
+          "x": 29776,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_008",
+      "file": "items/item_008.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 736",
+          "id": "4:01735",
+          "category": "乐器",
+          "x": 30315,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_009",
+      "file": "items/item_009.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 752",
+          "id": "4:01781",
+          "category": "乐器",
+          "x": 30876,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_010",
+      "file": "items/item_010.png",
+      "primaryCategory": "乐器",
+      "categories": [
+        "乐器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 751",
+          "id": "4:01779",
+          "category": "乐器",
+          "x": 31416,
+          "y": 3372
+        }
+      ]
+    },
+    {
+      "id": "item_011",
+      "file": "items/item_011.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 800",
+          "id": "4:01894",
+          "category": "有字的物品",
+          "x": 26536,
+          "y": 4265
+        }
+      ]
+    },
+    {
+      "id": "item_012",
+      "file": "items/item_012.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 765",
+          "id": "4:01809",
+          "category": "有字的物品",
+          "x": 27075,
+          "y": 4265
+        }
+      ]
+    },
+    {
+      "id": "item_013",
+      "file": "items/item_013.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 745",
+          "id": "4:01758",
+          "category": "有字的物品",
+          "x": 27615,
+          "y": 4284
+        }
+      ]
+    },
+    {
+      "id": "item_014",
+      "file": "items/item_014.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 762",
+          "id": "4:01802",
+          "category": "有字的物品",
+          "x": 28156,
+          "y": 4284
+        }
+      ]
+    },
+    {
+      "id": "item_015",
+      "file": "items/item_015.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品",
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 786",
+          "id": "4:01863",
+          "category": "有字的物品",
+          "x": 28697,
+          "y": 4284
+        },
+        {
+          "name": "容器 810",
+          "id": "4:01960",
+          "category": "容器",
+          "x": 36218,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_016",
+      "file": "items/item_016.png",
+      "primaryCategory": "有字的物品",
+      "categories": [
+        "有字的物品"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 749",
+          "id": "4:01775",
+          "category": "有字的物品",
+          "x": 29256,
+          "y": 4265
+        }
+      ]
+    },
+    {
+      "id": "item_017",
+      "file": "items/item_017.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 782",
+          "id": "4:01852",
+          "category": "容器",
+          "x": 26536,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_018",
+      "file": "items/item_018.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 754",
+          "id": "4:01785",
+          "category": "容器",
+          "x": 27076,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_019",
+      "file": "items/item_019.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 719",
+          "id": "4:01689",
+          "category": "容器",
+          "x": 27596,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_020",
+      "file": "items/item_020.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 803",
+          "id": "4:01904",
+          "category": "容器",
+          "x": 28136,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_021",
+      "file": "items/item_021.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 716",
+          "id": "4:01682",
+          "category": "容器",
+          "x": 28676,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_022",
+      "file": "items/item_022.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 796",
+          "id": "4:01885",
+          "category": "容器",
+          "x": 29216,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_023",
+      "file": "items/item_023.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 774",
+          "id": "4:01835",
+          "category": "容器",
+          "x": 29736,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_024",
+      "file": "items/item_024.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 738",
+          "id": "4:01739",
+          "category": "容器",
+          "x": 30276,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_025",
+      "file": "items/item_025.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 805",
+          "id": "4:01909",
+          "category": "容器",
+          "x": 30816,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_026",
+      "file": "items/item_026.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 713",
+          "id": "4:01666",
+          "category": "容器",
+          "x": 31356,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_027",
+      "file": "items/item_027.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 764",
+          "id": "4:01806",
+          "category": "容器",
+          "x": 31896,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_028",
+      "file": "items/item_028.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 730",
+          "id": "4:01718",
+          "category": "容器",
+          "x": 32436,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_029",
+      "file": "items/item_029.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 785",
+          "id": "4:01860",
+          "category": "容器",
+          "x": 32976,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_030",
+      "file": "items/item_030.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器",
+        "甜的食物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 789",
+          "id": "4:01869",
+          "category": "容器",
+          "x": 33515,
+          "y": 5196
+        },
+        {
+          "name": "容器 760",
+          "id": "4:01798",
+          "category": "甜的食物",
+          "x": 30856,
+          "y": 8524
+        },
+        {
+          "name": "容器 828",
+          "id": "8:100",
+          "category": "食物",
+          "x": 30776,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_031",
+      "file": "items/item_031.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器",
+        "甜的食物",
+        "植物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 747",
+          "id": "4:01766",
+          "category": "容器",
+          "x": 34055,
+          "y": 5196
+        },
+        {
+          "name": "容器 744",
+          "id": "4:01756",
+          "category": "甜的食物",
+          "x": 29776,
+          "y": 8524
+        },
+        {
+          "name": "容器 767",
+          "id": "4:01813",
+          "category": "植物",
+          "x": 31395,
+          "y": 9363
+        },
+        {
+          "name": "容器 825",
+          "id": "8:094",
+          "category": "食物",
+          "x": 29696,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_032",
+      "file": "items/item_032.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 783",
+          "id": "4:01855",
+          "category": "容器",
+          "x": 34599,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_033",
+      "file": "items/item_033.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 793",
+          "id": "4:01878",
+          "category": "容器",
+          "x": 35139,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_034",
+      "file": "items/item_034.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 720",
+          "id": "4:01692",
+          "category": "容器",
+          "x": 35679,
+          "y": 5196
+        }
+      ]
+    },
+    {
+      "id": "item_035",
+      "file": "items/item_035.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 809",
+          "id": "4:01958",
+          "category": "容器",
+          "x": 36777,
+          "y": 5177
+        },
+        {
+          "name": "容器 835",
+          "id": "8:143",
+          "category": "食物",
+          "x": 31815,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_036",
+      "file": "items/item_036.png",
+      "primaryCategory": "容器",
+      "categories": [
+        "容器"
+      ],
+      "size": {
+        "w": 484,
+        "h": 499
+      },
+      "sourceNodes": [
+        {
+          "name": "图片",
+          "id": "16:004",
+          "category": "容器",
+          "x": 37277,
+          "y": 5178
+        }
+      ]
+    },
+    {
+      "id": "item_037",
+      "file": "items/item_037.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 753",
+          "id": "4:01783",
+          "category": "会飞的",
+          "x": 26536,
+          "y": 6063
+        },
+        {
+          "name": "容器 814",
+          "id": "4:01968",
+          "category": "动物",
+          "x": 31917,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_038",
+      "file": "items/item_038.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 788",
+          "id": "4:01867",
+          "category": "会飞的",
+          "x": 27076,
+          "y": 6063
+        },
+        {
+          "name": "容器 813",
+          "id": "4:01966",
+          "category": "动物",
+          "x": 32457,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_039",
+      "file": "items/item_039.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 802",
+          "id": "4:01898",
+          "category": "会飞的",
+          "x": 27616,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_040",
+      "file": "items/item_040.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 808",
+          "id": "4:01916",
+          "category": "会飞的",
+          "x": 28156,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_041",
+      "file": "items/item_041.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 772",
+          "id": "4:01831",
+          "category": "会飞的",
+          "x": 28696,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_042",
+      "file": "items/item_042.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 756",
+          "id": "4:01790",
+          "category": "会飞的",
+          "x": 29236,
+          "y": 6063
+        },
+        {
+          "name": "容器 812",
+          "id": "4:01964",
+          "category": "动物",
+          "x": 32978,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_043",
+      "file": "items/item_043.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 748",
+          "id": "4:01769",
+          "category": "会飞的",
+          "x": 29776,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_044",
+      "file": "items/item_044.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的",
+        "会发光的",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 766",
+          "id": "4:01811",
+          "category": "会飞的",
+          "x": 30316,
+          "y": 6063
+        },
+        {
+          "name": "容器 741",
+          "id": "4:01746",
+          "category": "会发光的",
+          "x": 26536,
+          "y": 6874
+        },
+        {
+          "name": "容器 811",
+          "id": "4:01962",
+          "category": "动物",
+          "x": 33499,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_045",
+      "file": "items/item_045.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 715",
+          "id": "4:01676",
+          "category": "会飞的",
+          "x": 30856,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_046",
+      "file": "items/item_046.png",
+      "primaryCategory": "会飞的",
+      "categories": [
+        "会飞的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 755",
+          "id": "4:01788",
+          "category": "会飞的",
+          "x": 31396,
+          "y": 6063
+        }
+      ]
+    },
+    {
+      "id": "item_047",
+      "file": "items/item_047.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 806",
+          "id": "4:01912",
+          "category": "会发光的",
+          "x": 27076,
+          "y": 6874
+        },
+        {
+          "name": "容器 815",
+          "id": "8:018",
+          "category": "有火焰",
+          "x": 26456,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_048",
+      "file": "items/item_048.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 799",
+          "id": "4:01892",
+          "category": "会发光的",
+          "x": 27616,
+          "y": 6874
+        },
+        {
+          "name": "容器 819",
+          "id": "8:026",
+          "category": "有火焰",
+          "x": 26996,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_049",
+      "file": "items/item_049.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 725",
+          "id": "4:01708",
+          "category": "会发光的",
+          "x": 28156,
+          "y": 6874
+        },
+        {
+          "name": "容器 818",
+          "id": "8:024",
+          "category": "有火焰",
+          "x": 27536,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_050",
+      "file": "items/item_050.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 743",
+          "id": "4:01750",
+          "category": "会发光的",
+          "x": 28696,
+          "y": 6874
+        },
+        {
+          "name": "容器 820",
+          "id": "8:028",
+          "category": "有火焰",
+          "x": 28076,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_051",
+      "file": "items/item_051.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 721",
+          "id": "4:01695",
+          "category": "会发光的",
+          "x": 29236,
+          "y": 6874
+        },
+        {
+          "name": "容器 816",
+          "id": "8:020",
+          "category": "有火焰",
+          "x": 28616,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_052",
+      "file": "items/item_052.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 794",
+          "id": "4:01881",
+          "category": "会发光的",
+          "x": 29776,
+          "y": 6874
+        },
+        {
+          "name": "容器 817",
+          "id": "8:022",
+          "category": "有火焰",
+          "x": 29156,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_053",
+      "file": "items/item_053.png",
+      "primaryCategory": "会发光的",
+      "categories": [
+        "会发光的",
+        "坐骑/交通工具"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 917",
+          "id": "8:9859",
+          "category": "会发光的",
+          "x": 30236,
+          "y": 6874
+        },
+        {
+          "name": "容器 758",
+          "id": "4:01794",
+          "category": "坐骑/交通工具",
+          "x": 29776,
+          "y": 10142
+        }
+      ]
+    },
+    {
+      "id": "item_054",
+      "file": "items/item_054.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 726",
+          "id": "4:01710",
+          "category": "尖锐的",
+          "x": 26536,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_055",
+      "file": "items/item_055.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 792",
+          "id": "4:01876",
+          "category": "尖锐的",
+          "x": 27076,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_056",
+      "file": "items/item_056.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 727",
+          "id": "4:01712",
+          "category": "尖锐的",
+          "x": 27616,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_057",
+      "file": "items/item_057.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 724",
+          "id": "4:01706",
+          "category": "尖锐的",
+          "x": 28156,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_058",
+      "file": "items/item_058.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 742",
+          "id": "4:01748",
+          "category": "尖锐的",
+          "x": 28696,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_059",
+      "file": "items/item_059.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 731",
+          "id": "4:01721",
+          "category": "尖锐的",
+          "x": 29236,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_060",
+      "file": "items/item_060.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 735",
+          "id": "4:01733",
+          "category": "尖锐的",
+          "x": 29776,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_061",
+      "file": "items/item_061.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的",
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 780",
+          "id": "4:01848",
+          "category": "尖锐的",
+          "x": 30316,
+          "y": 7685
+        },
+        {
+          "name": "容器 901",
+          "id": "8:4863",
+          "category": "穿戴的服饰/配饰",
+          "x": 29025,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_062",
+      "file": "items/item_062.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 763",
+          "id": "4:01804",
+          "category": "尖锐的",
+          "x": 30856,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_063",
+      "file": "items/item_063.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 778",
+          "id": "4:01844",
+          "category": "尖锐的",
+          "x": 31396,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_064",
+      "file": "items/item_064.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 740",
+          "id": "4:01744",
+          "category": "尖锐的",
+          "x": 31936,
+          "y": 7685
+        }
+      ]
+    },
+    {
+      "id": "item_065",
+      "file": "items/item_065.png",
+      "primaryCategory": "尖锐的",
+      "categories": [
+        "尖锐的",
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 737",
+          "id": "4:01737",
+          "category": "尖锐的",
+          "x": 32475,
+          "y": 7685
+        },
+        {
+          "name": "容器 900",
+          "id": "8:4861",
+          "category": "穿戴的服饰/配饰",
+          "x": 29565,
+          "y": 14854
+        }
+      ]
+    },
+    {
+      "id": "item_066",
+      "file": "items/item_066.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 729",
+          "id": "4:01716",
+          "category": "甜的食物",
+          "x": 26536,
+          "y": 8524
+        },
+        {
+          "name": "容器 833",
+          "id": "8:110",
+          "category": "食物",
+          "x": 26456,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_067",
+      "file": "items/item_067.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "植物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 706",
+          "id": "4:01651",
+          "category": "甜的食物",
+          "x": 27076,
+          "y": 8524
+        },
+        {
+          "name": "容器 790",
+          "id": "4:01872",
+          "category": "植物",
+          "x": 26535,
+          "y": 9363
+        },
+        {
+          "name": "容器 822",
+          "id": "8:088",
+          "category": "食物",
+          "x": 26996,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_068",
+      "file": "items/item_068.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 770",
+          "id": "4:01819",
+          "category": "甜的食物",
+          "x": 27616,
+          "y": 8524
+        },
+        {
+          "name": "容器 746",
+          "id": "4:01760",
+          "category": "甜的食物",
+          "x": 27616,
+          "y": 8524
+        },
+        {
+          "name": "容器 823",
+          "id": "8:090",
+          "category": "食物",
+          "x": 27536,
+          "y": 12500
+        },
+        {
+          "name": "容器 834",
+          "id": "8:112",
+          "category": "食物",
+          "x": 27536,
+          "y": 12500
+        },
+        {
+          "name": "容器 841",
+          "id": "8:343",
+          "category": "水果",
+          "x": 26985,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_069",
+      "file": "items/item_069.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 732",
+          "id": "4:01723",
+          "category": "甜的食物",
+          "x": 28156,
+          "y": 8524
+        },
+        {
+          "name": "容器 827",
+          "id": "8:098",
+          "category": "食物",
+          "x": 28076,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_070",
+      "file": "items/item_070.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 707",
+          "id": "4:01653",
+          "category": "甜的食物",
+          "x": 28696,
+          "y": 8524
+        }
+      ]
+    },
+    {
+      "id": "item_071",
+      "file": "items/item_071.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 791",
+          "id": "4:01874",
+          "category": "甜的食物",
+          "x": 29236,
+          "y": 8524
+        },
+        {
+          "name": "容器 718",
+          "id": "4:01687",
+          "category": "甜的食物",
+          "x": 29236,
+          "y": 8524
+        },
+        {
+          "name": "容器 824",
+          "id": "8:092",
+          "category": "食物",
+          "x": 29156,
+          "y": 12500
+        },
+        {
+          "name": "容器 832",
+          "id": "8:108",
+          "category": "食物",
+          "x": 29156,
+          "y": 12500
+        },
+        {
+          "name": "容器 839",
+          "id": "8:339",
+          "category": "水果",
+          "x": 27485,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_072",
+      "file": "items/item_072.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "植物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 717",
+          "id": "4:01685",
+          "category": "甜的食物",
+          "x": 30316,
+          "y": 8524
+        },
+        {
+          "name": "容器 710",
+          "id": "4:01660",
+          "category": "甜的食物",
+          "x": 30316,
+          "y": 8524
+        },
+        {
+          "name": "容器 768",
+          "id": "4:01815",
+          "category": "植物",
+          "x": 29775,
+          "y": 9363
+        },
+        {
+          "name": "容器 831",
+          "id": "8:106",
+          "category": "食物",
+          "x": 30236,
+          "y": 12500
+        },
+        {
+          "name": "容器 826",
+          "id": "8:096",
+          "category": "食物",
+          "x": 30236,
+          "y": 12500
+        },
+        {
+          "name": "容器 840",
+          "id": "8:341",
+          "category": "水果",
+          "x": 27985,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_073",
+      "file": "items/item_073.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 801",
+          "id": "4:01896",
+          "category": "甜的食物",
+          "x": 31395,
+          "y": 8524
+        }
+      ]
+    },
+    {
+      "id": "item_074",
+      "file": "items/item_074.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 866",
+          "id": "8:3493",
+          "category": "甜的食物",
+          "x": 31917,
+          "y": 8524
+        },
+        {
+          "name": "容器 845",
+          "id": "8:352",
+          "category": "水果",
+          "x": 28485,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_075",
+      "file": "items/item_075.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 862",
+          "id": "8:3484",
+          "category": "甜的食物",
+          "x": 32475,
+          "y": 8502
+        },
+        {
+          "name": "容器 871",
+          "id": "8:3505",
+          "category": "食物",
+          "x": 33873,
+          "y": 12488
+        }
+      ]
+    },
+    {
+      "id": "item_076",
+      "file": "items/item_076.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 857",
+          "id": "8:3474",
+          "category": "甜的食物",
+          "x": 32996,
+          "y": 8502
+        },
+        {
+          "name": "容器 870",
+          "id": "8:3502",
+          "category": "食物",
+          "x": 34394,
+          "y": 12488
+        },
+        {
+          "name": "容器 847",
+          "id": "8:918",
+          "category": "水果",
+          "x": 29565,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_077",
+      "file": "items/item_077.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 856",
+          "id": "8:3472",
+          "category": "甜的食物",
+          "x": 33536,
+          "y": 8502
+        },
+        {
+          "name": "容器 869",
+          "id": "8:3500",
+          "category": "食物",
+          "x": 34934,
+          "y": 12488
+        },
+        {
+          "name": "容器 848",
+          "id": "8:920",
+          "category": "水果",
+          "x": 30105,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_078",
+      "file": "items/item_078.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 859",
+          "id": "8:3478",
+          "category": "甜的食物",
+          "x": 34076,
+          "y": 8502
+        }
+      ]
+    },
+    {
+      "id": "item_079",
+      "file": "items/item_079.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 860",
+          "id": "8:3480",
+          "category": "甜的食物",
+          "x": 34616,
+          "y": 8502
+        },
+        {
+          "name": "容器 873",
+          "id": "8:3509",
+          "category": "食物",
+          "x": 36014,
+          "y": 12488
+        },
+        {
+          "name": "容器 850",
+          "id": "8:924",
+          "category": "水果",
+          "x": 31185,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_080",
+      "file": "items/item_080.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 864",
+          "id": "8:3489",
+          "category": "甜的食物",
+          "x": 35156,
+          "y": 8502
+        }
+      ]
+    },
+    {
+      "id": "item_081",
+      "file": "items/item_081.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 865",
+          "id": "8:3491",
+          "category": "甜的食物",
+          "x": 35696,
+          "y": 8502
+        },
+        {
+          "name": "容器 872",
+          "id": "8:3507",
+          "category": "食物",
+          "x": 37094,
+          "y": 12488
+        },
+        {
+          "name": "容器 852",
+          "id": "8:928",
+          "category": "水果",
+          "x": 32265,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_082",
+      "file": "items/item_082.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 863",
+          "id": "8:3487",
+          "category": "甜的食物",
+          "x": 36237,
+          "y": 8502
+        },
+        {
+          "name": "容器 868",
+          "id": "8:3498",
+          "category": "食物",
+          "x": 38174,
+          "y": 12488
+        },
+        {
+          "name": "容器 854",
+          "id": "8:1058",
+          "category": "水果",
+          "x": 33345,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_083",
+      "file": "items/item_083.png",
+      "primaryCategory": "甜的食物",
+      "categories": [
+        "甜的食物",
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 858",
+          "id": "8:3476",
+          "category": "甜的食物",
+          "x": 36777,
+          "y": 8502
+        },
+        {
+          "name": "容器 867",
+          "id": "8:3496",
+          "category": "食物",
+          "x": 38714,
+          "y": 12488
+        },
+        {
+          "name": "容器 855",
+          "id": "8:1060",
+          "category": "水果",
+          "x": 33885,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_084",
+      "file": "items/item_084.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 784",
+          "id": "4:01858",
+          "category": "植物",
+          "x": 27075,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_085",
+      "file": "items/item_085.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 704",
+          "id": "4:01647",
+          "category": "植物",
+          "x": 27615,
+          "y": 9363
+        },
+        {
+          "name": "容器 836",
+          "id": "8:145",
+          "category": "食物",
+          "x": 32315,
+          "y": 12500
+        },
+        {
+          "name": "容器 843",
+          "id": "8:347",
+          "category": "蔬菜",
+          "x": 26397,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_086",
+      "file": "items/item_086.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 804",
+          "id": "4:01907",
+          "category": "植物",
+          "x": 28155,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_087",
+      "file": "items/item_087.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 734",
+          "id": "4:01731",
+          "category": "植物",
+          "x": 28695,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_088",
+      "file": "items/item_088.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 759",
+          "id": "4:01796",
+          "category": "植物",
+          "x": 29235,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_089",
+      "file": "items/item_089.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 777",
+          "id": "4:01842",
+          "category": "植物",
+          "x": 30315,
+          "y": 9363
+        },
+        {
+          "name": "容器 837",
+          "id": "8:147",
+          "category": "食物",
+          "x": 32815,
+          "y": 12500
+        },
+        {
+          "name": "容器 844",
+          "id": "8:349",
+          "category": "蔬菜",
+          "x": 26897,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_090",
+      "file": "items/item_090.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 775",
+          "id": "4:01838",
+          "category": "植物",
+          "x": 30855,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_091",
+      "file": "items/item_091.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 838",
+          "id": "8:250",
+          "category": "植物",
+          "x": 31936,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_092",
+      "file": "items/item_092.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 877",
+          "id": "8:3518",
+          "category": "植物",
+          "x": 32436,
+          "y": 9363
+        },
+        {
+          "name": "容器 891",
+          "id": "8:4756",
+          "category": "食物",
+          "x": 39254,
+          "y": 12469
+        },
+        {
+          "name": "容器 885",
+          "id": "8:4744",
+          "category": "蔬菜",
+          "x": 27405,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_093",
+      "file": "items/item_093.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 878",
+          "id": "8:3842",
+          "category": "植物",
+          "x": 32976,
+          "y": 9363
+        },
+        {
+          "name": "容器 894",
+          "id": "8:4762",
+          "category": "食物",
+          "x": 39794,
+          "y": 12469
+        },
+        {
+          "name": "容器 888",
+          "id": "8:4750",
+          "category": "蔬菜",
+          "x": 27945,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_094",
+      "file": "items/item_094.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 879",
+          "id": "8:3844",
+          "category": "植物",
+          "x": 33516,
+          "y": 9363
+        }
+      ]
+    },
+    {
+      "id": "item_095",
+      "file": "items/item_095.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 880",
+          "id": "8:3846",
+          "category": "植物",
+          "x": 34056,
+          "y": 9363
+        },
+        {
+          "name": "容器 889",
+          "id": "8:4752",
+          "category": "食物",
+          "x": 40874,
+          "y": 12469
+        },
+        {
+          "name": "容器 883",
+          "id": "8:4740",
+          "category": "蔬菜",
+          "x": 29025,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_096",
+      "file": "items/item_096.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 881",
+          "id": "8:3848",
+          "category": "植物",
+          "x": 34596,
+          "y": 9363
+        },
+        {
+          "name": "容器 890",
+          "id": "8:4754",
+          "category": "食物",
+          "x": 41414,
+          "y": 12469
+        },
+        {
+          "name": "容器 884",
+          "id": "8:4742",
+          "category": "蔬菜",
+          "x": 29565,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_097",
+      "file": "items/item_097.png",
+      "primaryCategory": "植物",
+      "categories": [
+        "植物",
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 882",
+          "id": "8:4318",
+          "category": "植物",
+          "x": 35136,
+          "y": 9363
+        },
+        {
+          "name": "容器 892",
+          "id": "8:4758",
+          "category": "食物",
+          "x": 41954,
+          "y": 12469
+        }
+      ]
+    },
+    {
+      "id": "item_098",
+      "file": "items/item_098.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 723",
+          "id": "4:01699",
+          "category": "坐骑/交通工具",
+          "x": 26536,
+          "y": 10142
+        },
+        {
+          "name": "容器 708",
+          "id": "4:01655",
+          "category": "动物",
+          "x": 26538,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_099",
+      "file": "items/item_099.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 787",
+          "id": "4:01865",
+          "category": "坐骑/交通工具",
+          "x": 27076,
+          "y": 10142
+        }
+      ]
+    },
+    {
+      "id": "item_100",
+      "file": "items/item_100.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 769",
+          "id": "4:01817",
+          "category": "坐骑/交通工具",
+          "x": 27616,
+          "y": 10142
+        }
+      ]
+    },
+    {
+      "id": "item_101",
+      "file": "items/item_101.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 711",
+          "id": "4:01662",
+          "category": "坐骑/交通工具",
+          "x": 28156,
+          "y": 10142
+        }
+      ]
+    },
+    {
+      "id": "item_102",
+      "file": "items/item_102.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 795",
+          "id": "4:01883",
+          "category": "坐骑/交通工具",
+          "x": 28696,
+          "y": 10142
+        }
+      ]
+    },
+    {
+      "id": "item_103",
+      "file": "items/item_103.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 739",
+          "id": "4:01742",
+          "category": "坐骑/交通工具",
+          "x": 29236,
+          "y": 10142
+        },
+        {
+          "name": "容器 781",
+          "id": "4:01850",
+          "category": "动物",
+          "x": 27612,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_104",
+      "file": "items/item_104.png",
+      "primaryCategory": "坐骑/交通工具",
+      "categories": [
+        "坐骑/交通工具",
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 728",
+          "id": "4:01714",
+          "category": "坐骑/交通工具",
+          "x": 30316,
+          "y": 10142
+        },
+        {
+          "name": "容器 757",
+          "id": "4:01792",
+          "category": "动物",
+          "x": 28156,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_105",
+      "file": "items/item_105.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 703",
+          "id": "4:01645",
+          "category": "动物",
+          "x": 27075,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_106",
+      "file": "items/item_106.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 750",
+          "id": "4:01777",
+          "category": "动物",
+          "x": 28696,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_107",
+      "file": "items/item_107.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 797",
+          "id": "4:01888",
+          "category": "动物",
+          "x": 29236,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_108",
+      "file": "items/item_108.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 798",
+          "id": "4:01890",
+          "category": "动物",
+          "x": 29776,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_109",
+      "file": "items/item_109.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 773",
+          "id": "4:01833",
+          "category": "动物",
+          "x": 30316,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_110",
+      "file": "items/item_110.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 714",
+          "id": "4:01669",
+          "category": "动物",
+          "x": 30856,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_111",
+      "file": "items/item_111.png",
+      "primaryCategory": "动物",
+      "categories": [
+        "动物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 733",
+          "id": "4:01725",
+          "category": "动物",
+          "x": 31396,
+          "y": 10981
+        }
+      ]
+    },
+    {
+      "id": "item_112",
+      "file": "items/item_112.png",
+      "primaryCategory": "有火焰",
+      "categories": [
+        "有火焰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 821",
+          "id": "8:030",
+          "category": "有火焰",
+          "x": 29656,
+          "y": 11725
+        }
+      ]
+    },
+    {
+      "id": "item_113",
+      "file": "items/item_113.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 830",
+          "id": "8:104",
+          "category": "食物",
+          "x": 28616,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_114",
+      "file": "items/item_114.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 829",
+          "id": "8:102",
+          "category": "食物",
+          "x": 31315,
+          "y": 12500
+        }
+      ]
+    },
+    {
+      "id": "item_115",
+      "file": null,
+      "missing": true,
+      "note": "设计节点「图片」(8:3504, 519x563)未导出 PNG：与节点 16:004 重名,导出时被覆盖。请从设计工具重新导出补入。",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物"
+      ],
+      "size": {
+        "w": 519,
+        "h": 563
+      },
+      "sourceNodes": [
+        {
+          "name": "图片",
+          "id": "8:3504",
+          "category": "食物",
+          "x": 33315,
+          "y": 12469
+        }
+      ]
+    },
+    {
+      "id": "item_116",
+      "file": "items/item_116.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 875",
+          "id": "8:3513",
+          "category": "食物",
+          "x": 35474,
+          "y": 12488
+        },
+        {
+          "name": "容器 849",
+          "id": "8:922",
+          "category": "水果",
+          "x": 30645,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_117",
+      "file": "items/item_117.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 874",
+          "id": "8:3511",
+          "category": "食物",
+          "x": 36554,
+          "y": 12488
+        },
+        {
+          "name": "容器 851",
+          "id": "8:926",
+          "category": "水果",
+          "x": 31725,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_118",
+      "file": "items/item_118.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物",
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 876",
+          "id": "8:3515",
+          "category": "食物",
+          "x": 37634,
+          "y": 12488
+        },
+        {
+          "name": "容器 853",
+          "id": "8:1056",
+          "category": "水果",
+          "x": 32805,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_119",
+      "file": "items/item_119.png",
+      "primaryCategory": "食物",
+      "categories": [
+        "食物",
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 893",
+          "id": "8:4760",
+          "category": "食物",
+          "x": 40334,
+          "y": 12469
+        },
+        {
+          "name": "容器 887",
+          "id": "8:4748",
+          "category": "蔬菜",
+          "x": 28485,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_120",
+      "file": "items/item_120.png",
+      "primaryCategory": "水果",
+      "categories": [
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 842",
+          "id": "8:345",
+          "category": "水果",
+          "x": 26445,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_121",
+      "file": "items/item_121.png",
+      "primaryCategory": "水果",
+      "categories": [
+        "水果"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 846",
+          "id": "8:916",
+          "category": "水果",
+          "x": 29025,
+          "y": 13381
+        }
+      ]
+    },
+    {
+      "id": "item_122",
+      "file": "items/item_122.png",
+      "primaryCategory": "蔬菜",
+      "categories": [
+        "蔬菜"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 886",
+          "id": "8:4746",
+          "category": "蔬菜",
+          "x": 30105,
+          "y": 14057
+        }
+      ]
+    },
+    {
+      "id": "item_123",
+      "file": "items/item_123.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 895",
+          "id": "8:4764",
+          "category": "穿戴的服饰/配饰",
+          "x": 26429,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_124",
+      "file": "items/item_124.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 897",
+          "id": "8:4770",
+          "category": "穿戴的服饰/配饰",
+          "x": 26905,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_125",
+      "file": "items/item_125.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 898",
+          "id": "8:4772",
+          "category": "穿戴的服饰/配饰",
+          "x": 27405,
+          "y": 14854
+        }
+      ]
+    },
+    {
+      "id": "item_126",
+      "file": "items/item_126.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 896",
+          "id": "8:4768",
+          "category": "穿戴的服饰/配饰",
+          "x": 27945,
+          "y": 14854
+        }
+      ]
+    },
+    {
+      "id": "item_127",
+      "file": "items/item_127.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 899",
+          "id": "8:4774",
+          "category": "穿戴的服饰/配饰",
+          "x": 28485,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_128",
+      "file": "items/item_128.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 902",
+          "id": "8:4868",
+          "category": "穿戴的服饰/配饰",
+          "x": 30105,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_129",
+      "file": "items/item_129.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 903",
+          "id": "8:5118",
+          "category": "穿戴的服饰/配饰",
+          "x": 30645,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_130",
+      "file": "items/item_130.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 904",
+          "id": "8:5120",
+          "category": "穿戴的服饰/配饰",
+          "x": 31185,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_131",
+      "file": "items/item_131.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 905",
+          "id": "8:5122",
+          "category": "穿戴的服饰/配饰",
+          "x": 31725,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_132",
+      "file": "items/item_132.png",
+      "primaryCategory": "穿戴的服饰/配饰",
+      "categories": [
+        "穿戴的服饰/配饰"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 906",
+          "id": "8:5124",
+          "category": "穿戴的服饰/配饰",
+          "x": 32265,
+          "y": 14858
+        }
+      ]
+    },
+    {
+      "id": "item_133",
+      "file": "items/item_133.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 908",
+          "id": "8:6093",
+          "category": "桥",
+          "x": 26445,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_134",
+      "file": "items/item_134.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 909",
+          "id": "8:6569",
+          "category": "桥",
+          "x": 26985,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_135",
+      "file": "items/item_135.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 910",
+          "id": "8:6571",
+          "category": "桥",
+          "x": 27525,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_136",
+      "file": "items/item_136.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 911",
+          "id": "8:6573",
+          "category": "桥",
+          "x": 28065,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_137",
+      "file": "items/item_137.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 912",
+          "id": "8:6575",
+          "category": "桥",
+          "x": 28605,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_138",
+      "file": "items/item_138.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 913",
+          "id": "8:6577",
+          "category": "桥",
+          "x": 29145,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_139",
+      "file": "items/item_139.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 914",
+          "id": "8:6579",
+          "category": "桥",
+          "x": 29685,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_140",
+      "file": "items/item_140.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 915",
+          "id": "8:6581",
+          "category": "桥",
+          "x": 30225,
+          "y": 15745
+        }
+      ]
+    },
+    {
+      "id": "item_141",
+      "file": "items/item_141.png",
+      "primaryCategory": "桥",
+      "categories": [
+        "桥"
+      ],
+      "size": {
+        "w": 500,
+        "h": 500
+      },
+      "sourceNodes": [
+        {
+          "name": "容器 916",
+          "id": "8:6583",
+          "category": "桥",
+          "x": 30765,
+          "y": 15745
+        }
+      ]
+    }
+  ]
+}

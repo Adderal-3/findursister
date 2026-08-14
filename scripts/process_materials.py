@@ -1,9 +1,14 @@
-"""Build production-ready sprites from the latest Figma export archive.
+"""Build production-ready sprites from the latest Figma export.
 
-The source archive contains large transparent canvases and repeated exports for
-objects that belong to more than one category. This script keeps one semantic
-file per visible object, trims transparent margins, centres it on a 256px
-square canvas, and writes a compact WebP asset.
+The source export (逆水寒07小游戏素材-页面 1, refreshed 2026-08-14) contains large
+transparent canvases and repeated exports for objects that belong to more than one
+category. This script keeps one semantic file per visible object, trims transparent
+margins, centres it on a 256px square canvas, and writes a compact WebP asset.
+
+The 页面 1 export holds 211 numbered containers + 1 standalone image (140 unique
+pictures). Compared with the previous 0724 archive, 17 objects were redrawn in place
+(same container numbers, new art) and container 807 (feather) was removed from the
+design; feather is still shipped, sourced from the legacy 0724 archive.
 """
 
 from __future__ import annotations
@@ -18,17 +23,18 @@ from PIL import Image
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SOURCE_ZIP = PROJECT_ROOT / "逆水寒07小游戏素材-0724.zip"
+SOURCE_DIR = PROJECT_ROOT / "逆水寒07小游戏素材-页面 1"
+LEGACY_ZIP = PROJECT_ROOT / "逆水寒07小游戏素材-0724.zip"  # 仅兜底新导出中已删除的图层(807 羽毛)
 OUTPUT_DIR = PROJECT_ROOT / "src" / "assets" / "items" / "ancient"
 GEOMETRY_TS = PROJECT_ROOT / "src" / "game" / "itemGeometry.ts"
 
 CANVAS_SIZE = 256
 CONTENT_SIZE = 224
 
-# Representative Figma layer id -> stable semantic filename. The 0724 export
-# contains 212 numbered PNGs but only 137 unique pictures. Repeated category
-# exports, category headings, and 14 additional export variants are intentionally
-# omitted; category membership lives in items.ts.
+# Representative Figma layer id -> stable semantic filename. Repeated category
+# exports and category headings are intentionally omitted; category membership
+# lives in items.ts. Layer numbers follow the 页面 1 export; 807 (feather) no
+# longer exists there and falls back to the legacy archive.
 ASSETS: dict[int, str] = {
     703: "camel",
     704: "chili_pepper",
@@ -177,42 +183,48 @@ def build_sprite(image: Image.Image) -> Image.Image:
 
 
 def main() -> None:
-    if not SOURCE_ZIP.exists():
-        raise FileNotFoundError(f"missing source archive: {SOURCE_ZIP}")
+    if not SOURCE_DIR.is_dir():
+        raise FileNotFoundError(f"missing source directory: {SOURCE_DIR}")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    entries = {
+        item_id: path
+        for path in SOURCE_DIR.iterdir()
+        if path.is_file() and (item_id := source_id(path.name)) is not None
+    }
+
+    def read_entry(layer_id: int) -> bytes:
+        if layer_id in entries:
+            return entries[layer_id].read_bytes()
+        # 新导出中已删除的图层(目前仅 807 羽毛)从旧包兜底
+        with zipfile.ZipFile(LEGACY_ZIP) as archive:
+            return archive.read(f"容器 {layer_id}-1x.png.png")
+
+    missing = sorted(set(ASSETS) - set(entries))
+    if missing != [807]:
+        raise ValueError(f"unexpected layer entries missing from source: {missing}")
+
     manifest: list[dict[str, object]] = []
-
-    with zipfile.ZipFile(SOURCE_ZIP) as archive:
-        entries = {
-            item_id: info
-            for info in archive.infolist()
-            if (item_id := source_id(info.filename)) is not None
-        }
-        missing = sorted(set(ASSETS) - set(entries))
-        if missing:
-            raise ValueError(f"source archive is missing layer entries: {missing}")
-
-        for layer_id, item_id in ASSETS.items():
-            info = entries[layer_id]
-            with Image.open(io.BytesIO(archive.read(info))) as image:
-                sprite = build_sprite(image)
-                output = OUTPUT_DIR / f"{item_id}.webp"
-                sprite.save(output, "WEBP", quality=90, method=4)
-                visible_bounds = sprite.getchannel("A").getbbox()
-                if visible_bounds is None:
-                    raise ValueError(f"sprite has no visible bounds: {item_id}")
-                left, top, right, bottom = visible_bounds
-            manifest.append(
-                {
-                    "id": item_id,
-                    "sourceLayer": layer_id,
-                    "file": f"items/ancient/{item_id}.webp",
-                    "bytes": output.stat().st_size,
-                    "visibleWidth": round((right - left) / CANVAS_SIZE, 4),
-                    "visibleHeight": round((bottom - top) / CANVAS_SIZE, 4),
-                }
-            )
+    for layer_id, item_id in ASSETS.items():
+        with Image.open(io.BytesIO(read_entry(layer_id))) as image:
+            sprite = build_sprite(image)
+            output = OUTPUT_DIR / f"{item_id}.webp"
+            sprite.save(output, "WEBP", quality=90, method=4)
+            visible_bounds = sprite.getchannel("A").getbbox()
+            if visible_bounds is None:
+                raise ValueError(f"sprite has no visible bounds: {item_id}")
+            left, top, right, bottom = visible_bounds
+        manifest.append(
+            {
+                "id": item_id,
+                "sourceLayer": layer_id,
+                "file": f"items/ancient/{item_id}.webp",
+                "bytes": output.stat().st_size,
+                "visibleWidth": round((right - left) / CANVAS_SIZE, 4),
+                "visibleHeight": round((bottom - top) / CANVAS_SIZE, 4),
+            }
+        )
 
     (OUTPUT_DIR / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",

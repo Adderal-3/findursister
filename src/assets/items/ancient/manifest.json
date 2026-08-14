@@ -35,7 +35,7 @@
     "id": "mooncake",
     "sourceLayer": 707,
     "file": "items/ancient/mooncake.webp",
-    "bytes": 15076,
+    "bytes": 15084,
     "visibleWidth": 0.875,
     "visibleHeight": 0.6562
   },
@@ -611,7 +611,7 @@
     "id": "lidded_bowl",
     "sourceLayer": 796,
     "file": "items/ancient/lidded_bowl.webp",
-    "bytes": 15598,
+    "bytes": 15596,
     "visibleWidth": 0.875,
     "visibleHeight": 0.8672
   },
@@ -875,41 +875,41 @@
     "id": "embroidered_trousers",
     "sourceLayer": 902,
     "file": "items/ancient/embroidered_trousers.webp",
-    "bytes": 16356,
-    "visibleWidth": 0.6289,
-    "visibleHeight": 0.875
+    "bytes": 13864,
+    "visibleWidth": 0.6211,
+    "visibleHeight": 0.8711
   },
   {
     "id": "jade_earrings",
     "sourceLayer": 903,
     "file": "items/ancient/jade_earrings.webp",
-    "bytes": 16850,
-    "visibleWidth": 0.5547,
+    "bytes": 15388,
+    "visibleWidth": 0.5664,
     "visibleHeight": 0.875
   },
   {
     "id": "fox_mask",
     "sourceLayer": 904,
     "file": "items/ancient/fox_mask.webp",
-    "bytes": 21408,
-    "visibleWidth": 0.875,
-    "visibleHeight": 0.8164
+    "bytes": 18720,
+    "visibleWidth": 0.8633,
+    "visibleHeight": 0.8125
   },
   {
     "id": "gauze_veil",
     "sourceLayer": 905,
     "file": "items/ancient/gauze_veil.webp",
-    "bytes": 13726,
-    "visibleWidth": 0.6406,
+    "bytes": 10998,
+    "visibleWidth": 0.6445,
     "visibleHeight": 0.875
   },
   {
     "id": "bamboo_hat",
     "sourceLayer": 906,
     "file": "items/ancient/bamboo_hat.webp",
-    "bytes": 14004,
-    "visibleWidth": 0.875,
-    "visibleHeight": 0.7422
+    "bytes": 11994,
+    "visibleWidth": 0.8672,
+    "visibleHeight": 0.7344
   },
   {
     "id": "plain_stone_arch_bridge",
