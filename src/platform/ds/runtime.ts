@@ -243,7 +243,7 @@ export function applyNavTheme(theme: 'white' | 'black'): void {
 }
 /* [DS:NAV-BAR:END] */
 
-/* [DS:ACT-SDK:START] */
+/* ========== DS:ACT-SDK BEGIN ========== */
 let actSdkConfigured = false;
 let taskModuleMounted = false;
 let roleModuleUnmount: (() => void) | null = null;
@@ -311,7 +311,7 @@ export function openTaskPanel(): string | null {
   trackEvent({ event: 'task_panel_open' });
   return null;
 }
-/* [DS:ACT-SDK:END] */
+/* ========== DS:ACT-SDK END ========== */
 
 /* [DS:EXPORTS:START] */
 let initPromise: Promise<void> | null = null;

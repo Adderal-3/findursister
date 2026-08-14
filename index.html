@@ -126,36 +126,38 @@
         document.head.appendChild(script);
       })();
     </script>
+    <!-- mobile-share 块：!false 为 {IS_COCOS} 占位符替换结果（非 Cocos）；Cocos 项目须改为 !true 禁用 -->
     <script type="text/javascript">
       (function () {
-        if (/Godlike/i.test(window.navigator.userAgent)) return;
-        var script = document.createElement('script');
-        var callbacks = [];
-        var loadError = null;
-        script.type = 'text/javascript';
-        script.src = 'https://ds.res.netease.com/online/pkg/mobile-share/2.2.0/mobile-share.min.js';
-        script.crossOrigin = 'anonymous';
-        script.onload = function () {
-          callbacks.forEach(function (callback) { callback(null); });
-          callbacks = [];
-        };
-        script.onerror = function (error) { loadError = error; callbacks = []; };
-        window.onMobileShareReady = function (callback) {
-          if (window.MobileShare) callback(null);
-          else if (loadError) callback(loadError);
-          else callbacks.push(callback);
-        };
-        document.head.appendChild(script);
+        'use strict';
+        if (!false && !/Godlike/i.test(window.navigator.userAgent)) {
+          var script = document.createElement('script');
+          script.src = 'https://ds.res.netease.com/online/pkg/mobile-share/2.2.0/mobile-share.min.js';
+          script.crossOrigin = 'anonymous';
+          document.head.appendChild(script);
+          var callbackQueue = [], errorEvent = null;
+          script.onload = function () {
+            for (var i = 0; i < callbackQueue.length; i++) callbackQueue[i](null);
+            callbackQueue = [];
+          };
+          script.onerror = function (event) { errorEvent = event; callbackQueue = []; };
+          window.onMobileShareReady = function (callback) {
+            if (typeof callback !== 'function') callback = function () {};
+            if (window.MobileShare) callback(null);
+            else if (errorEvent) callback(errorEvent);
+            else callbackQueue.push(callback);
+          };
+        }
       })();
     </script>
     <!-- [DS:SDK-LOADER:END] -->
 
     <link rel="stylesheet" href="https://ds.res.netease.com/online/pkg/ds-navigation-mini-program-bar/0.0.5/index.css" />
     <script type="text/javascript" src="https://ds.res.netease.com/online/pkg/ds-navigation-mini-program-bar/0.0.5/index.js"></script>
-    <link rel="stylesheet" href="https://ds.res.netease.com/online/pkg/ds-act-sdk/0.1.5/ds-act-sdk.min.css" />
-    <script type="text/javascript" src="https://ds.res.netease.com/online/pkg/ds-act-sdk/0.1.5/ds-act-sdk.min.js"></script>
-    <!-- mini-game-data-sdk UMD 包（0.2.0 起不再引入 index.css） -->
-    <script type="text/javascript" src="https://ds.res.netease.com/online/pkg/mini-game-data-sdk/0.2.0/index.js"></script>
+    <link rel="stylesheet" href="https://ds.res.netease.com/online/pkg/ds-act-sdk/0.3.1/ds-act-sdk.min.css" />
+    <script type="text/javascript" src="https://ds.res.netease.com/online/pkg/ds-act-sdk/0.3.1/ds-act-sdk.min.js"></script>
+    <!-- mini-game-data-sdk UMD 包（0.2.0 起不再引入 index.css；审查门禁要求 ≥ 0.2.1） -->
+    <script type="text/javascript" src="https://ds.res.netease.com/online/pkg/mini-game-data-sdk/0.2.1/index.js"></script>
   </head>
   <body>
     <div id="root"></div>
