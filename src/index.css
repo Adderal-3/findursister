@@ -109,6 +109,13 @@
     --safe-top: max(88px, calc(env(safe-area-inset-top) + 52px));
   }
 
+  /* 大神 App 内：ds 导航栏悬浮于全屏 webview 顶部（setWebviewFullScreen），
+     其总高度由组件写入 --ds-total-mini-program-bar-height，需叠加到安全区顶部，
+     否则 HUD 顶行（返回/关卡牌/暂停）会被导航栏遮住。 */
+  html.is-godlike .qingya-shell {
+    --safe-top: max(10px, calc(var(--ds-total-mini-program-bar-height, 0px) + 10px));
+  }
+
   .qingya-round-button {
     background-image: url('./assets/ui/qingya/round-button-warm-v1.png');
     background-position: center;
