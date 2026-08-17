@@ -211,6 +211,9 @@ export function useGame() {
         ...current,
         ...result.newlyRecruited.filter((id) => !current.includes(id)),
       ]);
+      for (const id of result.newlyRecruited) {
+        trackEvent({ event: 'partner_recruit', partner: id });
+      }
     }
     return result;
   }, []);
@@ -485,6 +488,7 @@ export function useGame() {
     setPaused(false);
     setQuitConfirm(false);
     setPhase('playing');
+    trackEvent({ event: 'level_next', mode, level: next, score: scoreRef.current });
     sfx.click();
   }, [level, mode, setupRound, trySpendStamina, unlockedMaxLevel]);
 
@@ -509,15 +513,22 @@ export function useGame() {
     setPaused(false);
     setQuitConfirm(false);
     setPhase('playing');
+    trackEvent({
+      event: mode === 'levels' ? 'level_retry' : 'endless_retry',
+      mode,
+      level: mode === 'levels' ? level : 1,
+      score: scoreRef.current,
+    });
     sfx.click();
   }, [level, mode, phase, setScoreSync, setupRound, trySpendStamina]);
 
   const quitToMenu = useCallback(() => {
+    trackEvent({ event: 'game_quit', mode, level, phase });
     setPhase('menu');
     setPaused(false);
     setQuitConfirm(false);
     sfx.click();
-  }, []);
+  }, [level, mode, phase]);
 
   const requestQuit = useCallback(() => {
     setPaused(true);
@@ -611,6 +622,9 @@ export function useGame() {
       if (hintUid === uid) setHintUid(null);
       addFloat(item.x, item.y, `+${gain}`, 'score');
       if (isNewDiscovery) addFloat(item.x, item.y - 12, '首次发现', 'bonus');
+      if (isNewDiscovery) {
+        trackEvent({ event: 'first_discovery', mode, level, category, item_id: item.itemId });
+      }
       if (nextCombo >= 2) addFloat(item.x, item.y - 7, `${nextCombo}连击!`, 'combo');
       addBurst(item.x, item.y, '✦');
       trackEvent({
@@ -675,6 +689,7 @@ export function useGame() {
           setLevel(nextWave);
           addFloat(21, 26, `第 ${nextWave} 波!`, 'bonus');
           setupRound('endless', nextWave, totalAfter);
+          trackEvent({ event: 'wave_advance', mode, level: nextWave, score: totalAfter });
         }
       }
     } else {

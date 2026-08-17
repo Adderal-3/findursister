@@ -14,7 +14,7 @@ import { dsRoleBindingEnabled, dsTaskPanelEnabled } from '../platform/ds/config'
 import {
   loadDsLeaderboard, type DsLeaderboardSnapshot, type LeaderboardScope,
 } from '../platform/ds/leaderboard';
-import { mountRoleModule, openTaskPanel, withPrecheck } from '../platform/ds/runtime';
+import { mountRoleModule, openTaskPanel, trackEvent, withPrecheck } from '../platform/ds/runtime';
 import { HomePanelRouter } from './HomePanels';
 
 type HomePanel = 'partners' | 'levels' | null;
@@ -314,14 +314,22 @@ export function StartScreen({ game }: { game: Game }) {
         </motion.button>
 
         <nav className="absolute inset-x-[15px] bottom-[max(15px,var(--safe-bottom))] flex items-end justify-evenly gap-2">
-          <HomeRoundAction label="长卷" icon={Compass} onClick={() => setPanel('levels')} />
+          <HomeRoundAction
+            label="长卷"
+            icon={Compass}
+            onClick={() => { trackEvent({ event: 'panel_open', panel: 'levels' }); setPanel('levels'); }}
+          />
           <HomeRoundAction
             label="伙伴"
             icon={UsersRound}
             badge={`${game.partners.filter((partner) => partner.recruited).length}/8`}
-            onClick={() => setPanel('partners')}
+            onClick={() => { trackEvent({ event: 'panel_open', panel: 'partners' }); setPanel('partners'); }}
           />
-          <HomeRoundAction label="榜单" icon={Trophy} onClick={() => setShowRanking(true)} />
+          <HomeRoundAction
+            label="榜单"
+            icon={Trophy}
+            onClick={() => { trackEvent({ event: 'ranking_open' }); setShowRanking(true); }}
+          />
           <HomeRoundAction
             label="无尽"
             icon={InfinityIcon}
