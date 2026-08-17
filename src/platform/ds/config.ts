@@ -9,7 +9,7 @@ function navTheme(value: string | undefined): 'white' | 'black' {
 }
 
 export const dsConfig = {
-  appKey: import.meta.env.VITE_DS_APP_KEY?.trim() || 'L36',
+  appKey: import.meta.env.VITE_DS_APP_KEY?.trim() || 'l36',
   squareId: import.meta.env.VITE_DS_SQUARE_ID?.trim() || '60a61f832a3be16207f9651c',
   actId: import.meta.env.VITE_DS_ACT_ID?.trim() ?? '',
   frontId: import.meta.env.VITE_DS_FRONT_ID?.trim() ?? '',
