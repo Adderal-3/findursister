@@ -1,6 +1,7 @@
 import {
   dsConfig, dsPlatformEnabled, dsRoleBindingEnabled, dsTaskPanelEnabled,
 } from './config';
+import { setStorageIdentity } from '../../game/storage';
 
 /* [DS:MINIAPP-DETECT:START] */
 export function isWechatMiniProgram(): boolean {
@@ -34,6 +35,7 @@ async function dsInit(): Promise<void> {
   } catch (error) {
     console.error('[DS] getMyInfo failed', error);
   }
+  setStorageIdentity(userInfo.uid);
 }
 
 /** 小程序传角：从 URL 读取 appletSelectRole（AppletSelectRoleObj JSON），合并角色信息进 userInfo。 */
@@ -65,6 +67,7 @@ export async function initLogin(): Promise<void> {
   });
   const loginResult = await window.dsLogin.hasLoggedIn();
   if (loginResult?.user) Object.assign(userInfo, loginResult.user);
+  setStorageIdentity(userInfo.uid);
   if (isWechatMiniProgram() && !userInfo.uid) {
     window.wx?.miniProgram.navigateTo({ url: '/pages/login/index' });
   }
@@ -175,6 +178,7 @@ export function withPrecheck<T extends unknown[]>(
       const loggedIn = await window.dsLogin.hasLoggedIn();
       if (loggedIn) {
         Object.assign(userInfo, loggedIn.user);
+        setStorageIdentity(userInfo.uid);
         callback(...args);
       } else {
         window.dsLogin.show();
