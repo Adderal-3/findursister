@@ -36,5 +36,39 @@
     "name": "最后同步时间",
     "type": "NUMBER",
     "defaultValue": 0
+  },
+  {
+    "key": "user_time",
+    "name": "用户游玩总时长（秒）",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
+  },
+  {
+    "key": "user_daily_time",
+    "name": "用户每日游玩时长（秒，每日0点更新）",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
+  },
+  {
+    "key": "level_detail",
+    "name": "每关历史最高原始分明细（JSON：{关卡号:分数}）",
+    "type": "STRING",
+    "defaultValue": "{}"
+  },
+  {
+    "key": "function_addtime",
+    "name": "加时技能剩余次数（每个+30s）",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
+  },
+  {
+    "key": "function_tishi",
+    "name": "提示技能剩余次数",
+    "type": "NUMBER",
+    "defaultValue": 0,
+    "missionEnabled": true
   }
 ]

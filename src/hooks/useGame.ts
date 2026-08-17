@@ -26,6 +26,7 @@ import {
 import { openTaskPanel, trackEvent } from '../platform/ds/runtime';
 import { dsTaskPanelEnabled } from '../platform/ds/config';
 import { syncProgressToDs } from '../platform/ds/leaderboard';
+import { consumeSkill, getSkillPool, refreshSkillPool } from '../platform/ds/skills';
 import {
   advancePartnerClock, checkPartnerRecruitments, loadPartnerClock,
   recordPartnerSettlement, savePartnerClock, type PartnerId,
@@ -122,7 +123,10 @@ function loadLevelStars(scores: Record<number, number>): Record<number, number> 
 }
 
 let effectId = 1;
-const TIME_BOOST_SECONDS = 15;
+/** 加时统一 30 秒：每关首次免费 +30s；之后消耗加时技能（function_addtime，CMS 同步）+30s。 */
+const TIME_BOOST_SECONDS = 30;
+/** 单关加时上限：在限时时长基础上最多叠加 60 秒，防止技能堆叠破坏关卡节奏。 */
+const TIME_BOOST_CAP_SECONDS = 60;
 
 export function useGame() {
   const initialScores = useRef(loadLevelScores()).current;
@@ -160,6 +164,9 @@ export function useGame() {
   const [timeBoostTaskAvailable, setTimeBoostTaskAvailable] = useState(true);
   const [timeBoostToast, setTimeBoostToast] = useState<string | null>(null);
   const [timeBoostTaskPrompt, setTimeBoostTaskPrompt] = useState(false);
+  // 技能池镜像（function_addtime / function_tishi），真源在服务端（CMS / 任务面板发放）。
+  const [skillBoosts, setSkillBoosts] = useState(0);
+  const [skillHints, setSkillHints] = useState(0);
   const [goalNotice, setGoalNotice] = useState<{
     id: number;
     completedLabel: string;
@@ -235,6 +242,13 @@ export function useGame() {
     staminaRef.current = next;
     setStaminaState(next);
     saveStamina(next);
+  }, []);
+
+  /** 拉取服务端技能余额（任务面板/CMS 发放结果），镜像到本地 state。 */
+  const syncSkillPool = useCallback(async () => {
+    const pool = await refreshSkillPool();
+    setSkillBoosts(pool.addtime);
+    setSkillHints(pool.tishi);
   }, []);
 
   const toggleMuted = useCallback(() => {
@@ -442,6 +456,8 @@ export function useGame() {
     gameStorage.set(SAVE_KEYS.levelScores, JSON.stringify(nextScores));
     gameStorage.set(SAVE_KEYS.levelStars, JSON.stringify(nextStars));
     gameStorage.set(SAVE_KEYS.bestLevels, String(total));
+    // 每关历史最高原始分明细（level_detail），过关即同步，后台按用户维度留档。
+    void syncProgressToDs({ levelDetail: nextScores });
   }, [best.maxLevel, levelScores, refreshPartners]);
 
   const startGame = useCallback((nextMode: GameMode, startLevel = 1) => {
@@ -464,9 +480,11 @@ export function useGame() {
     setPaused(false);
     setQuitConfirm(false);
     setPhase('playing');
+    // 进局时同步技能余额（加时/提示技能在局内消耗）
+    void syncSkillPool();
     trackEvent({ event: nextMode === 'levels' ? 'level_start' : 'endless_start', mode: nextMode, level: initialLevel });
     sfx.click();
-  }, [setScoreSync, setupRound, trySpendStamina, unlockedMaxLevel]);
+  }, [setScoreSync, setupRound, trySpendStamina, unlockedMaxLevel, syncSkillPool]);
 
   const nextLevel = useCallback(() => {
     if (level >= LEVEL_COUNT) {
@@ -705,7 +723,9 @@ export function useGame() {
   }, [applyWrong, paused, phase]);
 
   const useHint = useCallback(() => {
-    if (phase !== 'playing' || paused || hintsLeft <= 0) return;
+    if (phase !== 'playing' || paused) return;
+    // 每关免费提示用完后，可消耗提示技能（function_tishi，CMS 全端同步）。
+    if (hintsLeft <= 0 && skillHints <= 0) return;
     const currentTaskIds = new Set(
       (mode === 'levels' ? targets.slice(activeGoalIndex, activeGoalIndex + 1) : targets)
         .filter((target) => target.remaining > 0)
@@ -719,31 +739,72 @@ export function useGame() {
     ));
     if (!candidates.length) return;
     const pick = candidates[Math.floor(Math.random() * candidates.length)];
-    setHintsLeft((current) => current - 1);
-    setHintUid(pick.uid);
-    trackEvent({
-      event: 'hint_use', mode, level, category, item_id: pick.itemId,
-      task_id: pick.targetTaskIds?.join('|') || targets[0]?.taskId, hints_left: hintsLeft - 1,
-    });
-    sfx.hint();
-    haptics.hint();
-    if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-    hintTimerRef.current = setTimeout(() => setHintUid(null), 2600);
-  }, [activeGoalIndex, category, hintsLeft, items, level, mode, paused, phase, targets]);
+    const pickTaskId = pick.targetTaskIds?.join('|') || targets[0]?.taskId;
+    const applyHint = () => {
+      setHintUid(pick.uid);
+      sfx.hint();
+      haptics.hint();
+      if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+      hintTimerRef.current = setTimeout(() => setHintUid(null), 2600);
+    };
+    if (hintsLeft > 0) {
+      setHintsLeft((current) => current - 1);
+      applyHint();
+      trackEvent({
+        event: 'hint_use', mode, level, category, item_id: pick.itemId,
+        task_id: pickTaskId, hints_left: hintsLeft - 1,
+      });
+      return;
+    }
+    void (async () => {
+      const ok = await consumeSkill('tishi');
+      setSkillHints(getSkillPool().tishi);
+      if (!ok) return;
+      applyHint();
+      trackEvent({
+        event: 'skill_hint_use', mode, level, category, item_id: pick.itemId,
+        task_id: pickTaskId, skill_left: getSkillPool().tishi,
+      });
+    })();
+  }, [activeGoalIndex, category, hintsLeft, items, level, mode, paused, phase, skillHints,
+    targets]);
 
   const requestTimeBoost = useCallback(() => {
     if (phase !== 'playing' || paused) return;
     if (timeBoostFreeAvailable) {
-      adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_SECONDS);
+      adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
       setTimeBoostFreeAvailable(false);
-      showTimeBoostToast('首次加时已到账 · +15 秒');
+      showTimeBoostToast(`首次加时已到账 · +${TIME_BOOST_SECONDS} 秒`);
       trackEvent({ event: 'time_boost_free', mode, level, seconds: TIME_BOOST_SECONDS });
       sfx.hint();
       haptics.hint();
       return;
     }
+    // 已达单关叠加上限时不再消耗技能。
+    if (timeLeftPreciseRef.current >= timeLimit + TIME_BOOST_CAP_SECONDS - 1) {
+      showTimeBoostToast('本关加时已达上限');
+      return;
+    }
+    // 加时技能（function_addtime）：大神任务 / 游戏内任务发放，CMS 全端同步。
+    if (skillBoosts > 0) {
+      void (async () => {
+        const ok = await consumeSkill('addtime');
+        setSkillBoosts(getSkillPool().addtime);
+        if (!ok) return;
+        adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
+        showTimeBoostToast(`加时技能生效 · +${TIME_BOOST_SECONDS} 秒`);
+        trackEvent({
+          event: 'skill_boost_use', mode, level,
+          seconds: TIME_BOOST_SECONDS, skill_left: getSkillPool().addtime,
+        });
+        sfx.hint();
+        haptics.hint();
+      })();
+      return;
+    }
+    // 局内没有加时技能时，走短视频/任务面板获取。
     if (!timeBoostTaskAvailable) {
-      showTimeBoostToast('本关两次加时均已使用');
+      showTimeBoostToast('本关加时机会已用完');
       return;
     }
 
@@ -751,17 +812,17 @@ export function useGame() {
     setTimeBoostTaskPrompt(true);
     trackEvent({ event: 'time_boost_task_request', mode, level });
     if (dsTaskPanelEnabled) openTaskPanel();
-  }, [adjustTime, level, mode, paused, phase, showTimeBoostToast, timeBoostFreeAvailable,
-    timeBoostTaskAvailable, timeLimit]);
+  }, [adjustTime, level, mode, paused, phase, showTimeBoostToast, skillBoosts,
+    timeBoostFreeAvailable, timeBoostTaskAvailable, timeLimit]);
 
   /** 明日接任务完成回调时只需调用这个入口，计时、暂停与埋点会统一收口。 */
   const grantRewardedTimeBoost = useCallback(() => {
     if (!timeBoostTaskAvailable) return;
-    adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_SECONDS * 2);
+    adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
     setTimeBoostTaskAvailable(false);
     setTimeBoostTaskPrompt(false);
     setPaused(false);
-    showTimeBoostToast('任务奖励已到账 · +15 秒');
+    showTimeBoostToast(`任务奖励已到账 · +${TIME_BOOST_SECONDS} 秒`);
     trackEvent({ event: 'time_boost_task_reward', mode, level, seconds: TIME_BOOST_SECONDS });
     sfx.hint();
     haptics.hint();
@@ -872,7 +933,10 @@ export function useGame() {
       syncCountdown -= 1;
       if (syncCountdown <= 0) {
         syncCountdown = 12;
-        void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+        void syncProgressToDs({
+          userTime: Math.round(partnerClockRef.current.onlineSec),
+          userDailyTime: Math.round(partnerClockRef.current.dailyPlaySec),
+        });
       }
     };
 
@@ -881,14 +945,20 @@ export function useGame() {
       if (document.hidden) {
         accrue(true);
         // 页面隐藏时立即推送，避免切走后时长未及时上报
-        void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+        void syncProgressToDs({
+          userTime: Math.round(partnerClockRef.current.onlineSec),
+          userDailyTime: Math.round(partnerClockRef.current.dailyPlaySec),
+        });
       } else {
         lastTick = Date.now();
       }
     };
     const onPageHide = () => {
       accrue(true);
-      void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+      void syncProgressToDs({
+        userTime: Math.round(partnerClockRef.current.onlineSec),
+        userDailyTime: Math.round(partnerClockRef.current.dailyPlaySec),
+      });
     };
     document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('pagehide', onPageHide);
@@ -897,7 +967,10 @@ export function useGame() {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('pagehide', onPageHide);
       accrue(!document.hidden);
-      void syncProgressToDs({ totalPlayTime: Math.round(partnerClockRef.current.onlineSec) });
+      void syncProgressToDs({
+        userTime: Math.round(partnerClockRef.current.onlineSec),
+        userDailyTime: Math.round(partnerClockRef.current.dailyPlaySec),
+      });
     };
   }, [paused, phase, refreshPartners]);
 
@@ -910,6 +983,16 @@ export function useGame() {
   useEffect(() => {
     setSoundMuted(muted);
   }, [muted]);
+
+  // 技能余额同步：启动时拉一次，回到前台再拉一次（任务面板发放的技能据此生效）。
+  useEffect(() => {
+    void syncSkillPool();
+    const onVisible = () => {
+      if (!document.hidden) void syncSkillPool();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, [syncSkillPool]);
 
   useEffect(() => {
     void syncProgressToDs({
@@ -936,6 +1019,7 @@ export function useGame() {
     timeBoostFreeAvailable, timeBoostToast, timeBoostTaskPrompt,
     timeBoostTaskAvailable: dsTaskPanelEnabled && timeBoostTaskAvailable,
     timeBoostTaskConfigured: dsTaskPanelEnabled,
+    skillBoosts, skillHints,
     stamina: {
       value: staminaState.value,
       max: STAMINA_MAX,

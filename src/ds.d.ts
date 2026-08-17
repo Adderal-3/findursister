@@ -96,6 +96,18 @@ declare global {
         }): Promise<{
           items: Array<{ recordKey: string; success: boolean; errorMsg?: string }>;
         }>;
+        batchReadData(options: {
+          keys: string[];
+          queryUid?: string;
+        }): Promise<{
+          records: Array<{
+            recordKey: string;
+            value: number | string | boolean;
+            valueType?: string;
+            updateTime?: number;
+            version?: number;
+          }>;
+        }>;
         getBillboardRank(options: {
           devBillboardId: string;
           proBillboardId: string;

@@ -43,6 +43,11 @@ function requestManager() {
   return manager;
 }
 
+/** 供技能池等模块复用同一个 RequestManager（setGameId 只初始化一次）。 */
+export function dsRequestManager() {
+  return requestManager();
+}
+
 /** 榜单读取失败时抛出，带可展示给用户的原因，界面据此显示真实错误而非兜底。 */
 export class DsLeaderboardError extends Error {
   constructor(message: string) {
@@ -118,8 +123,12 @@ interface ProgressPayload {
   levelsBaseScore?: number;
   /** 无尽模式最高分。 */
   endlessBest?: number;
-  /** 累计游玩时长（秒）；喂后台 totalPlayTime 数值任务（minigame_common_task_max 取最大值判定）。 */
-  totalPlayTime?: number;
+  /** 累计游玩总时长（秒），写入 user_time。 */
+  userTime?: number;
+  /** 当日游玩时长（秒，东八区日界重置），写入 user_daily_time（后台每日 0 点更新）。 */
+  userDailyTime?: number;
+  /** 每关历史最高原始分明细 { 关卡号: 分数 }，JSON 字符串写入 level_detail。 */
+  levelDetail?: Record<number, number>;
   /** 当前拥有伙伴数。 */
   partnerCount?: number;
   /** 累计找到物品总数（含重复）。 */
@@ -128,13 +137,13 @@ interface ProgressPayload {
 
 /**
  * 关卡结算 / 伙伴变化 / 时长累计时批量同步。
- * recordKey 必须与 CMS「Key 配置」里的字段名完全一致（驼峰），否则写入失败、榜单空榜。
+ * recordKey 必须与 CMS「Key 配置」里的字段名完全一致，否则写入失败、榜单空榜。
  * 只写后台已注册的字段，避免未注册 key 造成整批写入告警。
  */
 export async function syncProgressToDs(payload: ProgressPayload): Promise<void> {
   const manager = requestManager();
   if (!manager) return;
-  const items: Array<{ recordKey: string; value: number }> = [];
+  const items: Array<{ recordKey: string; value: number | string }> = [];
   if (payload.levelsTotalScore != null) {
     // 后台榜单 yanli_rank 绑定的排序字段是 user_score，必须与 CMS「Key 配置」一致。
     items.push({ recordKey: 'user_score', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
@@ -148,8 +157,14 @@ export async function syncProgressToDs(payload: ProgressPayload): Promise<void> 
   if (payload.endlessBest != null) {
     items.push({ recordKey: 'endlessBest', value: Math.max(0, Math.round(payload.endlessBest)) });
   }
-  if (payload.totalPlayTime != null) {
-    items.push({ recordKey: 'totalPlayTime', value: Math.max(0, Math.round(payload.totalPlayTime)) });
+  if (payload.userTime != null) {
+    items.push({ recordKey: 'user_time', value: Math.max(0, Math.round(payload.userTime)) });
+  }
+  if (payload.userDailyTime != null) {
+    items.push({ recordKey: 'user_daily_time', value: Math.max(0, Math.round(payload.userDailyTime)) });
+  }
+  if (payload.levelDetail != null) {
+    items.push({ recordKey: 'level_detail', value: JSON.stringify(payload.levelDetail) });
   }
   if (payload.partnerCount != null) {
     items.push({ recordKey: 'partnerCount', value: Math.max(0, Math.round(payload.partnerCount)) });

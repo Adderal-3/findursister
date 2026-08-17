@@ -54,8 +54,16 @@ export function Hud({ game }: { game: Game }) {
           type="button"
           onClick={game.requestTimeBoost}
           className="group flex flex-col items-center text-[#744b31] transition active:scale-95"
-          title={game.timeBoostFreeAvailable ? '本关首次免费加时 15 秒' : '前往任务视频流获取加时'}
-          aria-label={game.timeBoostFreeAvailable ? '免费加时15秒' : '任务视频加时15秒'}
+          title={game.timeBoostFreeAvailable
+            ? '本关首次免费加时 30 秒'
+            : game.skillBoosts > 0
+              ? `消耗加时技能（剩余 ${game.skillBoosts} 个），加时 30 秒`
+              : '前往任务视频流获取加时'}
+          aria-label={game.timeBoostFreeAvailable
+            ? '免费加时30秒'
+            : game.skillBoosts > 0
+              ? `加时技能，剩余${game.skillBoosts}个`
+              : '任务视频加时30秒'}
         >
           <span className="qingya-round-button relative flex h-16 w-16 items-center justify-center">
             {game.timeBoostFreeAvailable ? (
@@ -64,11 +72,15 @@ export function Hud({ game }: { game: Game }) {
               <TimerReset className="h-6 w-6" strokeWidth={2.2} />
             )}
             <span className="absolute top-0 right-0 flex h-5 min-w-8 items-center justify-center rounded-full border border-[#fff7d9] bg-[#c56f43] px-1 text-[9px] font-black text-white shadow-sm">
-              +15s
+              {game.timeBoostFreeAvailable || game.skillBoosts <= 0 ? '+30s' : `×${game.skillBoosts}`}
             </span>
           </span>
           <span className="qingya-action-label">
-            {game.timeBoostFreeAvailable ? '首次赠送' : '任务加时'}
+            {game.timeBoostFreeAvailable
+              ? '首次赠送'
+              : game.skillBoosts > 0
+                ? '加时技能'
+                : '任务加时'}
           </span>
         </button>
 
@@ -94,15 +106,18 @@ export function Hud({ game }: { game: Game }) {
       <button
         type="button"
         onClick={game.useHint}
-        disabled={game.hintsLeft <= 0}
-        className={`pointer-events-auto absolute right-3 bottom-[calc(var(--safe-bottom)+0.4rem)] transition active:scale-95 sm:right-5 ${game.hintsLeft > 0 ? 'text-[#744b31]' : 'cursor-not-allowed grayscale opacity-55'}`}
+        disabled={game.hintsLeft <= 0 && game.skillHints <= 0}
+        className={`pointer-events-auto absolute right-3 bottom-[calc(var(--safe-bottom)+0.4rem)] transition active:scale-95 sm:right-5 ${game.hintsLeft > 0 || game.skillHints > 0 ? 'text-[#744b31]' : 'cursor-not-allowed grayscale opacity-55'}`}
         title="提示道具"
-        aria-label={`提示道具，剩余 ${game.hintsLeft} 次`}
+        aria-label={`提示道具，免费剩余 ${game.hintsLeft} 次，技能剩余 ${game.skillHints} 个`}
       >
         <span className="qingya-round-button relative flex h-16 w-16 items-center justify-center">
-          <Lightbulb className={`h-7 w-7 ${game.hintsLeft > 0 ? 'animate-pulse' : ''}`} strokeWidth={2.1} />
+          <Lightbulb
+            className={`h-7 w-7 ${game.hintsLeft > 0 || game.skillHints > 0 ? 'animate-pulse' : ''}`}
+            strokeWidth={2.1}
+          />
           <span className="absolute top-0 right-0 flex h-5 min-w-5 items-center justify-center rounded-full border border-[#fff7d9] bg-[#9a673d] px-1 text-[11px] font-black text-white shadow-sm">
-            {game.hintsLeft}
+            {game.hintsLeft + game.skillHints}
           </span>
         </span>
       </button>
