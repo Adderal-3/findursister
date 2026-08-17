@@ -30,6 +30,7 @@ async function dsInit(): Promise<void> {
   try {
     const me = await window.ds.callHandler('getMyInfo');
     if (me.code === 200 && me.result) Object.assign(userInfo, me.result);
+    else await window.ds.callHandler('openLoginPage');
   } catch (error) {
     console.error('[DS] getMyInfo failed', error);
   }

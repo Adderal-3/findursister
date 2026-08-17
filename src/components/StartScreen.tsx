@@ -379,7 +379,7 @@ export function StartScreen({ game }: { game: Game }) {
         panel={panel}
         game={game}
         onClose={() => setPanel(null)}
-        onStartLevel={(level) => start('levels', level)}
+        onStartLevel={withPrecheck((level) => start('levels', level))}
       />
     </div>
   );
