@@ -102,7 +102,7 @@ var ITEMS = [
   { id: "grapes", name: "\u8461\u8404", emoji: "\u{1F347}", img: asset("grapes"), tags: ["sweet_food", "plant"], objectTags: ["food", "fruit"], visualTags: ["leafy"] },
   { id: "mooncake", name: "\u6708\u997C", emoji: "\u{1F96E}", img: asset("mooncake"), tags: ["sweet_food"], objectTags: ["food"], visualTags: ["round"] },
   { id: "horse", name: "\u9A8F\u9A6C", emoji: "\u{1F40E}", img: asset("horse"), tags: ["vehicle", "animal"], traitTags: ["rideable", "four_legged"] },
-  { id: "bird_ocarina", name: "\u9E1F\u5F62\u9676\u7B1B", emoji: "\u266A", img: asset("bird_ocarina"), tags: ["instrument", "container"], traitTags: ["sound_making"], materialTags: ["ceramic"], visualTags: ["tasseled", "patterned"] },
+  { id: "bird_ocarina", name: "\u9E1F\u5F62\u9676\u7B1B", emoji: "\u266A", img: asset("bird_ocarina"), tags: ["instrument"], traitTags: ["sound_making"], materialTags: ["ceramic"], visualTags: ["tasseled", "patterned"] },
   { id: "peach", name: "\u4ED9\u6843", emoji: "\u{1F351}", img: asset("peach"), tags: ["sweet_food", "plant"], objectTags: ["food", "fruit"], visualTags: ["round", "leafy"] },
   { id: "sedan_chair", name: "\u82B1\u8F7F", emoji: "\u8F7F", img: asset("sedan_chair"), tags: ["vehicle"], traitTags: ["rideable"], materialTags: ["wood"], visualTags: ["wide", "patterned"] },
   { id: "konghou", name: "\u7B9C\u7BCC", emoji: "\u266A", img: asset("konghou"), tags: ["instrument"], traitTags: ["sound_making"], materialTags: ["wood"], visualTags: ["slender"] },
@@ -136,8 +136,8 @@ var ITEMS = [
   { id: "oil_lamp", name: "\u957F\u660E\u706F", emoji: "\u{1FA94}", img: asset("oil_lamp"), tags: ["container", "glowing"], objectTags: ["lighting"], traitTags: ["flaming"], materialTags: ["metal_jewelry"], visualTags: ["handled"] },
   { id: "red_dates", name: "\u7EA2\u67A3", emoji: "\u67A3", img: asset("red_dates"), tags: ["container", "sweet_food", "plant"], objectTags: ["food", "fruit", "bowl_dish"], visualTags: ["round", "leafy"] },
   { id: "inscribed_music_stand", name: "\u9898\u5B57\u7434\u67B6", emoji: "\u6587", img: asset("inscribed_music_stand"), tags: ["written"] },
-  { id: "dandelion", name: "\u84B2\u516C\u82F1", emoji: "\u{1F33C}", img: asset("dandelion"), tags: ["flying"], objectTags: ["flower"], visualTags: ["leafy"] },
-  { id: "vinegar_jar", name: "\u918B\u575B", emoji: "\u918B", img: asset("vinegar_jar"), tags: ["written"], objectTags: ["bottle_jar"], materialTags: ["ceramic"], visualTags: ["patterned"] },
+  { id: "dandelion", name: "\u84B2\u516C\u82F1", emoji: "\u{1F33C}", img: asset("dandelion"), tags: ["flying", "plant"], objectTags: ["flower"], visualTags: ["leafy"] },
+  { id: "vinegar_jar", name: "\u918B\u575B", emoji: "\u918B", img: asset("vinegar_jar"), tags: ["written", "container"], objectTags: ["bottle_jar"], materialTags: ["ceramic"], visualTags: ["patterned"] },
   { id: "lucky_raccoon", name: "\u62DB\u8D22\u72F8", emoji: "\u{1F99D}", img: asset("lucky_raccoon"), tags: ["animal"], traitTags: ["four_legged"] },
   { id: "rattle_drum", name: "\u62E8\u6D6A\u9F13", emoji: "\u{1F941}", img: asset("rattle_drum"), tags: ["instrument"], traitTags: ["sound_making"], materialTags: ["wood"], visualTags: ["slender", "handled", "patterned"] },
   { id: "wooden_pipa", name: "\u6728\u7435\u7436", emoji: "\u266A", img: asset("wooden_pipa"), tags: ["instrument"], traitTags: ["sound_making"], materialTags: ["wood"], visualTags: ["slender", "patterned"] },
@@ -165,7 +165,7 @@ var ITEMS = [
   { id: "floral_hairpin", name: "\u82B1\u7C2A", emoji: "\u7C2A", img: asset("floral_hairpin"), tags: ["sharp"], objectTags: ["wearable", "accessory", "headwear"], materialTags: ["metal_jewelry", "gemstone"], visualTags: ["slender", "tasseled", "patterned"] },
   { id: "patterned_vase", name: "\u7F20\u679D\u74F6", emoji: "\u74F6", img: asset("patterned_vase"), tags: ["container"], objectTags: ["bottle_jar"], materialTags: ["ceramic"], visualTags: ["patterned"] },
   { id: "jewelry_box", name: "\u9996\u9970\u5323", emoji: "\u5323", img: asset("jewelry_box"), tags: ["container"], visualTags: ["patterned"] },
-  { id: "medicine_bottle", name: "\u836F\u74F6", emoji: "\u836F", img: asset("medicine_bottle"), tags: ["written"], objectTags: ["bottle_jar"], materialTags: ["ceramic"] },
+  { id: "medicine_bottle", name: "\u836F\u74F6", emoji: "\u836F", img: asset("medicine_bottle"), tags: ["written", "container"], objectTags: ["bottle_jar"], materialTags: ["ceramic"] },
   { id: "carriage", name: "\u9A6C\u8F66", emoji: "\u8F66", img: asset("carriage"), tags: ["vehicle"], traitTags: ["rideable"], materialTags: ["wood"], visualTags: ["wide"] },
   { id: "butterfly", name: "\u8774\u8776", emoji: "\u{1F98B}", img: asset("butterfly"), tags: ["flying"], objectTags: ["insect"], traitTags: ["winged"] },
   { id: "sword", name: "\u5B9D\u5251", emoji: "\u{1F5E1}\uFE0F", img: asset("sword"), tags: ["sharp"], objectTags: ["weapon"], materialTags: ["metal_jewelry"], visualTags: ["slender"] },
@@ -367,7 +367,7 @@ var BASE_X_PERCENT = SCENE_ITEM_FRACTION / SCENE_SCALE.w * 100;
 var BASE_Y_PERCENT = SCENE_ITEM_FRACTION * 100;
 var EDGE_SAFE_X = 1.4;
 var EDGE_SAFE_Y = 1.3;
-var HUD_SAFE_TOP = 22;
+var HUD_SAFE_TOP = 5;
 var ACTION_SAFE_BOTTOM = 13;
 var GAP_X = 0.04;
 var GAP_Y = 0.06;

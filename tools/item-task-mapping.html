@@ -1,0 +1,2745 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>任务规则 ↔ 物品图片对照表</title>
+<style>
+:root{color-scheme:light;--ink:#4f382d;--jade:#3d776e;--orange:#c77847;--paper:#fffaf0;--line:#dcc9aa;--muted:#8c7766}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.55 "Microsoft YaHei","PingFang SC",sans-serif;background:#eee5d2}
+.page{width:min(1480px,calc(100% - 24px));margin:0 auto 48px}
+header{padding:28px 12px 18px;text-align:center}h1{margin:0;font:900 clamp(26px,4vw,44px)/1.2 STKaiti,KaiTi,serif;letter-spacing:.12em}
+header p{margin:8px auto 0;max-width:860px;color:var(--muted)}
+h2{font:900 26px/1.3 STKaiti,KaiTi,serif;margin:32px 8px 12px;color:var(--ink)}
+.note{margin:0 8px 16px;color:var(--muted);font-size:13px}
+.task{background:#fff8;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px;box-shadow:0 4px 14px #6d513012}
+.task-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.task-title{font:900 18px/1.2 STKaiti,KaiTi,serif;color:var(--jade)}
+.task-meta{color:var(--muted);font-size:12px}
+.task-warn{color:#b45309;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.card{background:#fffdf7;border:1px solid #e6d8bf;border-radius:12px;padding:8px 4px;text-align:center}
+.card img{width:64px;height:64px;object-fit:contain;display:block;margin:0 auto;filter:drop-shadow(0 3px 3px #47362530)}
+.card-name{font-size:12px;font-weight:700;margin-top:4px}
+.suspect{background:#fff3e0;border:1px solid #e6b484;border-radius:18px;padding:14px 16px;margin:0 0 12px}
+.suspect-row{display:flex;gap:14px;align-items:center}
+.suspect-row img{width:84px;height:84px;object-fit:contain;flex-shrink:0}
+.suspect-name{font:900 20px/1.2 STKaiti,KaiTi,serif}
+.suspect-tag{display:inline-block;background:#fde4c8;border-radius:99px;padding:2px 10px;margin:2px 4px 2px 0;font-size:12px;font-weight:700}
+.suspect-tag.missing{background:#dbeafe}
+.suspect-tag.conf{background:#e5e0d8;color:#7a6a5a;font-weight:400}
+.suspect-reason{color:#8c5a2b;font-size:13px;margin-top:6px}
+.chips{margin-top:6px}.chip{display:inline-block;background:#eef2ec;border-radius:8px;padding:1px 7px;margin:2px 3px 2px 0;font-size:11px;color:#4f6b58}
+table{width:100%;border-collapse:collapse;background:#fffdf7;border-radius:14px;overflow:hidden}
+th,td{padding:8px 10px;border-bottom:1px solid #eee2cc;text-align:left;font-size:13px;vertical-align:top}
+th{background:#f4ead7;position:sticky;top:0}
+tr:hover{background:#fff8}
+td img{width:48px;height:48px;object-fit:contain}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:0 8px 12px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <h1>任务规则 ↔ 物品图片对照表</h1>
+  <p>数据来源：src/game/items.ts（123 件）+ tasks.ts（30 条任务规则）。生成于本次回归。玩家实际体验就是「任务 → 哪些图片算对」，此表即该映射。</p>
+</header>
+
+<h2>① 可疑分类（审计候选，共 6 项）</h2>
+<p class="note">规则：按名称启发式比对标签。「缺」= 名称暗示应有但标签没有；「多」= 名称明显不符合但标签有。图片可直接目检确认。</p>
+
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div style="flex:1">
+      <div class="suspect-name">翠玉簪 <code style="font-size:12px;color:var(--muted)">jade_hairpin</code></div>
+      <div class="chips">现有标签：<span class="chip">尖锐</span><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag extra">多</span><span class="suspect-tag conf">中置信</span>簪子算尖锐物偏勉强</div></div>
+    </div>
+  </div>
+</div>
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/shuriken.webp" alt="飞镖" />
+    <div style="flex:1">
+      <div class="suspect-name">飞镖 <code style="font-size:12px;color:var(--muted)">shuriken</code></div>
+      <div class="chips">现有标签：<span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag missing">缺</span><span class="suspect-tag conf">低置信</span>「飞镖」的飞是否算会飞，看设计意图</div></div>
+    </div>
+  </div>
+</div>
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/inscribed_music_stand.webp" alt="题字琴架" />
+    <div style="flex:1">
+      <div class="suspect-name">题字琴架 <code style="font-size:12px;color:var(--muted)">inscribed_music_stand</code></div>
+      <div class="chips">现有标签：<span class="chip">有字</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag missing">缺</span><span class="suspect-tag conf">低置信</span>琴架本身是家具而非乐器——确认是否有意排除出「找乐器」</div></div>
+    </div>
+  </div>
+</div>
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div style="flex:1">
+      <div class="suspect-name">风火轮 <code style="font-size:12px;color:var(--muted)">fire_wheels</code></div>
+      <div class="chips">现有标签：<span class="chip">载具/坐骑</span><span class="chip">兵器</span><span class="chip">有火焰</span><span class="chip">可骑乘</span><span class="chip">圆形</span><span class="chip">宽大</span><span class="chip">成对</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag missing">缺</span><span class="suspect-tag conf">低置信</span>有火焰意象但未算发光；「找发光」任务玩家可能点它</div></div>
+    </div>
+  </div>
+</div>
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div style="flex:1">
+      <div class="suspect-name">花簪 <code style="font-size:12px;color:var(--muted)">floral_hairpin</code></div>
+      <div class="chips">现有标签：<span class="chip">尖锐</span><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag extra">多</span><span class="suspect-tag conf">中置信</span>同上</div></div>
+    </div>
+  </div>
+</div>
+<div class="suspect">
+  <div class="suspect-row">
+    <img src="../src/assets/items/ancient/feather.webp" alt="羽毛" />
+    <div style="flex:1">
+      <div class="suspect-name">羽毛 <code style="font-size:12px;color:var(--muted)">feather</code></div>
+      <div class="chips">现有标签：<span class="chip">会飞</span><span class="chip">细长</span></div>
+      <div><div class="suspect-reason"><span class="suspect-tag extra">多</span><span class="suspect-tag conf">低置信</span>羽毛「会飞」语义偏弱</div></div>
+    </div>
+  </div>
+</div>
+
+<h2>② 任务规则 → 匹配图片（30 条）</h2>
+<p class="note">「命中池」= 该任务下所有会被判为正确的物品图片。任务目标数 = 关卡要求找到的件数。</p>
+
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有乐器</span>
+    <span class="task-meta">命中池 <strong>10</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_pipa.webp" alt="金纹琵琶" />
+    <div class="card-name">金纹琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bird_ocarina.webp" alt="鸟形陶笛" />
+    <div class="card-name">鸟形陶笛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/konghou.webp" alt="箜篌" />
+    <div class="card-name">箜篌</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bronze_gong.webp" alt="铜锣" />
+    <div class="card-name">铜锣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/waist_drum.webp" alt="腰鼓" />
+    <div class="card-name">腰鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="拨浪鼓" />
+    <div class="card-name">拨浪鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_pipa.webp" alt="木琵琶" />
+    <div class="card-name">木琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hulusi.webp" alt="葫芦丝" />
+    <div class="card-name">葫芦丝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/guqin.webp" alt="古琴" />
+    <div class="card-name">古琴</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hand_drum.webp" alt="手鼓" />
+    <div class="card-name">手鼓</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有文字物品</span>
+    <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/inscribed_music_stand.webp" alt="题字琴架" />
+    <div class="card-name">题字琴架</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="醋坛" />
+    <div class="card-name">醋坛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/inscribed_papers.webp" alt="题字纸页" />
+    <div class="card-name">题字纸页</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ancient_book.webp" alt="古籍" />
+    <div class="card-name">古籍</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/medicine_bottle.webp" alt="药瓶" />
+    <div class="card-name">药瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/blue_book.webp" alt="蓝皮古籍" />
+    <div class="card-name">蓝皮古籍</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有会飞的物品</span>
+    <span class="task-meta">命中池 <strong>11</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_sky_lantern.webp" alt="朱红孔明灯" />
+    <div class="card-name">朱红孔明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/firefly.webp" alt="萤火虫" />
+    <div class="card-name">萤火虫</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dandelion.webp" alt="蒲公英" />
+    <div class="card-name">蒲公英</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/swallow.webp" alt="春燕" />
+    <div class="card-name">春燕</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/phoenix.webp" alt="金羽凤凰" />
+    <div class="card-name">金羽凤凰</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragonfly.webp" alt="蜻蜓" />
+    <div class="card-name">蜻蜓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange_sky_lantern.webp" alt="橙色孔明灯" />
+    <div class="card-name">橙色孔明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/butterfly.webp" alt="蝴蝶" />
+    <div class="card-name">蝴蝶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kite.webp" alt="纸鸢" />
+    <div class="card-name">纸鸢</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/feather.webp" alt="羽毛" />
+    <div class="card-name">羽毛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/paper_crane.webp" alt="纸鹤" />
+    <div class="card-name">纸鹤</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有会发光的物品</span>
+    <span class="task-meta">命中池 <strong>7</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_sky_lantern.webp" alt="朱红孔明灯" />
+    <div class="card-name">朱红孔明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/campfire.webp" alt="篝火" />
+    <div class="card-name">篝火</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/torch.webp" alt="火把" />
+    <div class="card-name">火把</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/firefly.webp" alt="萤火虫" />
+    <div class="card-name">萤火虫</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/oil_lamp.webp" alt="长明灯" />
+    <div class="card-name">长明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange_sky_lantern.webp" alt="橙色孔明灯" />
+    <div class="card-name">橙色孔明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/candle.webp" alt="蜡烛" />
+    <div class="card-name">蜡烛</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有尖锐物品</span>
+    <span class="task-meta">命中池 <strong>12</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fish_hook.webp" alt="鱼钩" />
+    <div class="card-name">鱼钩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/arrow.webp" alt="羽箭" />
+    <div class="card-name">羽箭</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/needle.webp" alt="银针" />
+    <div class="card-name">银针</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/spike_trap.webp" alt="地刺" />
+    <div class="card-name">地刺</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/beast_fang.webp" alt="兽牙" />
+    <div class="card-name">兽牙</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="奇门匕首" />
+    <div class="card-name">奇门匕首</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/shuriken.webp" alt="飞镖" />
+    <div class="card-name">飞镖</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/icicle.webp" alt="冰锥" />
+    <div class="card-name">冰锥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/crossed_swords.webp" alt="双剑" />
+    <div class="card-name">双剑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sword.webp" alt="宝剑" />
+    <div class="card-name">宝剑</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有甜食</span>
+    <span class="task-meta">命中池 <strong>20</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mooncake.webp" alt="月饼" />
+    <div class="card-name">月饼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/candied_hawthorn.webp" alt="糖葫芦" />
+    <div class="card-name">糖葫芦</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/osmanthus_cake.webp" alt="桂花糕" />
+    <div class="card-name">桂花糕</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="汤圆" />
+    <div class="card-name">汤圆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/zongzi.webp" alt="粽子" />
+    <div class="card-name">粽子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有载具与坐骑</span>
+    <span class="task-meta">命中池 <strong>8</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/camel.webp" alt="骆驼" />
+    <div class="card-name">骆驼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/horse.webp" alt="骏马" />
+    <div class="card-name">骏马</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="花轿" />
+    <div class="card-name">花轿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/flying_fish.webp" alt="飞鱼坐骑" />
+    <div class="card-name">飞鱼坐骑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/nine_tailed_fox.webp" alt="九尾狐" />
+    <div class="card-name">九尾狐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div class="card-name">风火轮</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/carriage.webp" alt="马车" />
+    <div class="card-name">马车</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/treasure_ship.webp" alt="楼船" />
+    <div class="card-name">楼船</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有食物</span>
+    <span class="task-meta">命中池 <strong>29</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="辣椒" />
+    <div class="card-name">辣椒</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mooncake.webp" alt="月饼" />
+    <div class="card-name">月饼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/candied_hawthorn.webp" alt="糖葫芦" />
+    <div class="card-name">糖葫芦</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/osmanthus_cake.webp" alt="桂花糕" />
+    <div class="card-name">桂花糕</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="汤圆" />
+    <div class="card-name">汤圆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="茄子" />
+    <div class="card-name">茄子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/zongzi.webp" alt="粽子" />
+    <div class="card-name">粽子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="香菜" />
+    <div class="card-name">香菜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="苦瓜" />
+    <div class="card-name">苦瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="西兰花" />
+    <div class="card-name">西兰花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="毛豆" />
+    <div class="card-name">毛豆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有动物</span>
+    <span class="task-meta">命中池 <strong>10</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/camel.webp" alt="骆驼" />
+    <div class="card-name">骆驼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/horse.webp" alt="骏马" />
+    <div class="card-name">骏马</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/cat.webp" alt="狸花猫" />
+    <div class="card-name">狸花猫</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/flying_fish.webp" alt="飞鱼坐骑" />
+    <div class="card-name">飞鱼坐骑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/deer.webp" alt="梅花鹿" />
+    <div class="card-name">梅花鹿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/nine_tailed_fox.webp" alt="九尾狐" />
+    <div class="card-name">九尾狐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lucky_raccoon.webp" alt="招财狸" />
+    <div class="card-name">招财狸</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/penguin.webp" alt="企鹅" />
+    <div class="card-name">企鹅</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dog.webp" alt="柴犬" />
+    <div class="card-name">柴犬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rabbit.webp" alt="玉兔" />
+    <div class="card-name">玉兔</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出能装东西的容器</span>
+    <span class="task-meta">命中池 <strong>20</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_ewer.webp" alt="鎏金执壶" />
+    <div class="card-name">鎏金执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/white_porcelain_vase.webp" alt="白瓷瓶" />
+    <div class="card-name">白瓷瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_jar.webp" alt="彩陶罐" />
+    <div class="card-name">彩陶罐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/black_pitcher.webp" alt="玄纹壶" />
+    <div class="card-name">玄纹壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lotus_ewer.webp" alt="莲花执壶" />
+    <div class="card-name">莲花执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/black_bottle.webp" alt="玄铁瓶" />
+    <div class="card-name">玄铁瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/oil_lamp.webp" alt="长明灯" />
+    <div class="card-name">长明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="醋坛" />
+    <div class="card-name">醋坛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_vase.webp" alt="彩绘花瓶" />
+    <div class="card-name">彩绘花瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="汤圆" />
+    <div class="card-name">汤圆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_bowl.webp" alt="鎏金钵" />
+    <div class="card-name">鎏金钵</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/incense_burner.webp" alt="香炉" />
+    <div class="card-name">香炉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/patterned_vase.webp" alt="缠枝瓶" />
+    <div class="card-name">缠枝瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jewelry_box.webp" alt="首饰匣" />
+    <div class="card-name">首饰匣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/medicine_bottle.webp" alt="药瓶" />
+    <div class="card-name">药瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/clay_jar.webp" alt="陶罐" />
+    <div class="card-name">陶罐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lidded_bowl.webp" alt="金盖碗" />
+    <div class="card-name">金盖碗</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/partitioned_cauldron.webp" alt="九格铜鼎" />
+    <div class="card-name">九格铜鼎</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/cabinet.webp" alt="百宝柜" />
+    <div class="card-name">百宝柜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出属于植物的物品</span>
+    <span class="task-meta">命中池 <strong>28</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="辣椒" />
+    <div class="card-name">辣椒</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dandelion.webp" alt="蒲公英" />
+    <div class="card-name">蒲公英</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chrysanthemum.webp" alt="金菊" />
+    <div class="card-name">金菊</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/cotton.webp" alt="棉花" />
+    <div class="card-name">棉花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="茄子" />
+    <div class="card-name">茄子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peony.webp" alt="牡丹" />
+    <div class="card-name">牡丹</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="香菜" />
+    <div class="card-name">香菜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="苦瓜" />
+    <div class="card-name">苦瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="西兰花" />
+    <div class="card-name">西兰花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="毛豆" />
+    <div class="card-name">毛豆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有水果</span>
+    <span class="task-meta">命中池 <strong>16</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有蔬菜</span>
+    <span class="task-meta">命中池 <strong>8</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="辣椒" />
+    <div class="card-name">辣椒</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="茄子" />
+    <div class="card-name">茄子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="香菜" />
+    <div class="card-name">香菜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="苦瓜" />
+    <div class="card-name">苦瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="西兰花" />
+    <div class="card-name">西兰花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="毛豆" />
+    <div class="card-name">毛豆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有穿戴物</span>
+    <span class="task-meta">命中池 <strong>12</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jeweled_belt.webp" alt="宝石腰饰" />
+    <div class="card-name">宝石腰饰</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/silver_armor.webp" alt="银纹铠甲" />
+    <div class="card-name">银纹铠甲</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_tunic.webp" alt="赤纹上衣" />
+    <div class="card-name">赤纹上衣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tasseled_shawl.webp" alt="流苏披肩" />
+    <div class="card-name">流苏披肩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/phoenix_crown.webp" alt="凤纹头冠" />
+    <div class="card-name">凤纹头冠</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/embroidered_trousers.webp" alt="绣花裤装" />
+    <div class="card-name">绣花裤装</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_earrings.webp" alt="玉坠耳环" />
+    <div class="card-name">玉坠耳环</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fox_mask.webp" alt="狐狸面具" />
+    <div class="card-name">狐狸面具</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/gauze_veil.webp" alt="轻纱面帘" />
+    <div class="card-name">轻纱面帘</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bamboo_hat.webp" alt="竹编斗笠" />
+    <div class="card-name">竹编斗笠</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出所有兵器</span>
+    <span class="task-meta">命中池 <strong>7</strong> 件 · 任务目标 5 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/arrow.webp" alt="羽箭" />
+    <div class="card-name">羽箭</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/spike_trap.webp" alt="地刺" />
+    <div class="card-name">地刺</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="奇门匕首" />
+    <div class="card-name">奇门匕首</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/shuriken.webp" alt="飞镖" />
+    <div class="card-name">飞镖</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div class="card-name">风火轮</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/crossed_swords.webp" alt="双剑" />
+    <div class="card-name">双剑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sword.webp" alt="宝剑" />
+    <div class="card-name">宝剑</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出木制物品</span>
+    <span class="task-meta">命中池 <strong>19</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="花轿" />
+    <div class="card-name">花轿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/konghou.webp" alt="箜篌" />
+    <div class="card-name">箜篌</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/campfire.webp" alt="篝火" />
+    <div class="card-name">篝火</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/torch.webp" alt="火把" />
+    <div class="card-name">火把</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/arrow.webp" alt="羽箭" />
+    <div class="card-name">羽箭</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/waist_drum.webp" alt="腰鼓" />
+    <div class="card-name">腰鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="拨浪鼓" />
+    <div class="card-name">拨浪鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_pipa.webp" alt="木琵琶" />
+    <div class="card-name">木琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/guqin.webp" alt="古琴" />
+    <div class="card-name">古琴</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hand_drum.webp" alt="手鼓" />
+    <div class="card-name">手鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/carriage.webp" alt="马车" />
+    <div class="card-name">马车</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/treasure_ship.webp" alt="楼船" />
+    <div class="card-name">楼船</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/cabinet.webp" alt="百宝柜" />
+    <div class="card-name">百宝柜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_arch_bridge.webp" alt="木拱桥" />
+    <div class="card-name">木拱桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/covered_bridge.webp" alt="风雨廊桥" />
+    <div class="card-name">风雨廊桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floating_dock.webp" alt="浮木码头" />
+    <div class="card-name">浮木码头</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lotus_boardwalk.webp" alt="荷塘栈道" />
+    <div class="card-name">荷塘栈道</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rope_bridge.webp" alt="吊索桥" />
+    <div class="card-name">吊索桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_arch_bridge.webp" alt="朱漆拱桥" />
+    <div class="card-name">朱漆拱桥</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出陶瓷物品</span>
+    <span class="task-meta">命中池 <strong>10</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bird_ocarina.webp" alt="鸟形陶笛" />
+    <div class="card-name">鸟形陶笛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/white_porcelain_vase.webp" alt="白瓷瓶" />
+    <div class="card-name">白瓷瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_jar.webp" alt="彩陶罐" />
+    <div class="card-name">彩陶罐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/black_pitcher.webp" alt="玄纹壶" />
+    <div class="card-name">玄纹壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="醋坛" />
+    <div class="card-name">醋坛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_vase.webp" alt="彩绘花瓶" />
+    <div class="card-name">彩绘花瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="汤圆" />
+    <div class="card-name">汤圆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/patterned_vase.webp" alt="缠枝瓶" />
+    <div class="card-name">缠枝瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/medicine_bottle.webp" alt="药瓶" />
+    <div class="card-name">药瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/clay_jar.webp" alt="陶罐" />
+    <div class="card-name">陶罐</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出金属或珠宝物品</span>
+    <span class="task-meta">命中池 <strong>19</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_ewer.webp" alt="鎏金执壶" />
+    <div class="card-name">鎏金执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bronze_gong.webp" alt="铜锣" />
+    <div class="card-name">铜锣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fish_hook.webp" alt="鱼钩" />
+    <div class="card-name">鱼钩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/needle.webp" alt="银针" />
+    <div class="card-name">银针</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lotus_ewer.webp" alt="莲花执壶" />
+    <div class="card-name">莲花执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/spike_trap.webp" alt="地刺" />
+    <div class="card-name">地刺</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="奇门匕首" />
+    <div class="card-name">奇门匕首</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/shuriken.webp" alt="飞镖" />
+    <div class="card-name">飞镖</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/oil_lamp.webp" alt="长明灯" />
+    <div class="card-name">长明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_bowl.webp" alt="鎏金钵" />
+    <div class="card-name">鎏金钵</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/crossed_swords.webp" alt="双剑" />
+    <div class="card-name">双剑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sword.webp" alt="宝剑" />
+    <div class="card-name">宝剑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/partitioned_cauldron.webp" alt="九格铜鼎" />
+    <div class="card-name">九格铜鼎</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jeweled_belt.webp" alt="宝石腰饰" />
+    <div class="card-name">宝石腰饰</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/silver_armor.webp" alt="银纹铠甲" />
+    <div class="card-name">银纹铠甲</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/phoenix_crown.webp" alt="凤纹头冠" />
+    <div class="card-name">凤纹头冠</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_earrings.webp" alt="玉坠耳环" />
+    <div class="card-name">玉坠耳环</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出圆形轮廓的物品</span>
+    <span class="task-meta">命中池 <strong>15</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mooncake.webp" alt="月饼" />
+    <div class="card-name">月饼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bronze_gong.webp" alt="铜锣" />
+    <div class="card-name">铜锣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div class="card-name">风火轮</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="汤圆" />
+    <div class="card-name">汤圆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_bowl.webp" alt="鎏金钵" />
+    <div class="card-name">鎏金钵</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lidded_bowl.webp" alt="金盖碗" />
+    <div class="card-name">金盖碗</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/partitioned_cauldron.webp" alt="九格铜鼎" />
+    <div class="card-name">九格铜鼎</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出细长轮廓的物品</span>
+    <span class="task-meta">命中池 <strong>23</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_pipa.webp" alt="金纹琵琶" />
+    <div class="card-name">金纹琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/konghou.webp" alt="箜篌" />
+    <div class="card-name">箜篌</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/white_porcelain_vase.webp" alt="白瓷瓶" />
+    <div class="card-name">白瓷瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/black_pitcher.webp" alt="玄纹壶" />
+    <div class="card-name">玄纹壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fish_hook.webp" alt="鱼钩" />
+    <div class="card-name">鱼钩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/torch.webp" alt="火把" />
+    <div class="card-name">火把</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/arrow.webp" alt="羽箭" />
+    <div class="card-name">羽箭</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/needle.webp" alt="银针" />
+    <div class="card-name">银针</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/beast_fang.webp" alt="兽牙" />
+    <div class="card-name">兽牙</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="奇门匕首" />
+    <div class="card-name">奇门匕首</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="拨浪鼓" />
+    <div class="card-name">拨浪鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_pipa.webp" alt="木琵琶" />
+    <div class="card-name">木琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragonfly.webp" alt="蜻蜓" />
+    <div class="card-name">蜻蜓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hulusi.webp" alt="葫芦丝" />
+    <div class="card-name">葫芦丝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/icicle.webp" alt="冰锥" />
+    <div class="card-name">冰锥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/guqin.webp" alt="古琴" />
+    <div class="card-name">古琴</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sword.webp" alt="宝剑" />
+    <div class="card-name">宝剑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/candle.webp" alt="蜡烛" />
+    <div class="card-name">蜡烛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/feather.webp" alt="羽毛" />
+    <div class="card-name">羽毛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出纹样明显的物品</span>
+    <span class="task-meta">命中池 <strong>34</strong> 件 · 任务目标 7 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_pipa.webp" alt="金纹琵琶" />
+    <div class="card-name">金纹琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bird_ocarina.webp" alt="鸟形陶笛" />
+    <div class="card-name">鸟形陶笛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="花轿" />
+    <div class="card-name">花轿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_ewer.webp" alt="鎏金执壶" />
+    <div class="card-name">鎏金执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_jar.webp" alt="彩陶罐" />
+    <div class="card-name">彩陶罐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/black_pitcher.webp" alt="玄纹壶" />
+    <div class="card-name">玄纹壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lotus_ewer.webp" alt="莲花执壶" />
+    <div class="card-name">莲花执壶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/waist_drum.webp" alt="腰鼓" />
+    <div class="card-name">腰鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="奇门匕首" />
+    <div class="card-name">奇门匕首</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="醋坛" />
+    <div class="card-name">醋坛</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="拨浪鼓" />
+    <div class="card-name">拨浪鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_pipa.webp" alt="木琵琶" />
+    <div class="card-name">木琵琶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/painted_vase.webp" alt="彩绘花瓶" />
+    <div class="card-name">彩绘花瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hulusi.webp" alt="葫芦丝" />
+    <div class="card-name">葫芦丝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/golden_bowl.webp" alt="鎏金钵" />
+    <div class="card-name">鎏金钵</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/ancient_book.webp" alt="古籍" />
+    <div class="card-name">古籍</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/guqin.webp" alt="古琴" />
+    <div class="card-name">古琴</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/incense_burner.webp" alt="香炉" />
+    <div class="card-name">香炉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/hand_drum.webp" alt="手鼓" />
+    <div class="card-name">手鼓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/patterned_vase.webp" alt="缠枝瓶" />
+    <div class="card-name">缠枝瓶</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jewelry_box.webp" alt="首饰匣" />
+    <div class="card-name">首饰匣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/blue_book.webp" alt="蓝皮古籍" />
+    <div class="card-name">蓝皮古籍</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/partitioned_cauldron.webp" alt="九格铜鼎" />
+    <div class="card-name">九格铜鼎</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jeweled_belt.webp" alt="宝石腰饰" />
+    <div class="card-name">宝石腰饰</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/silver_armor.webp" alt="银纹铠甲" />
+    <div class="card-name">银纹铠甲</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_tunic.webp" alt="赤纹上衣" />
+    <div class="card-name">赤纹上衣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/tasseled_shawl.webp" alt="流苏披肩" />
+    <div class="card-name">流苏披肩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/phoenix_crown.webp" alt="凤纹头冠" />
+    <div class="card-name">凤纹头冠</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/embroidered_trousers.webp" alt="绣花裤装" />
+    <div class="card-name">绣花裤装</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_earrings.webp" alt="玉坠耳环" />
+    <div class="card-name">玉坠耳环</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fox_mask.webp" alt="狐狸面具" />
+    <div class="card-name">狐狸面具</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/gauze_veil.webp" alt="轻纱面帘" />
+    <div class="card-name">轻纱面帘</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出既是植物又是甜食的物品</span>
+    <span class="task-meta">命中池 <strong>15</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出木制的桥</span>
+    <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 5 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/wooden_arch_bridge.webp" alt="木拱桥" />
+    <div class="card-name">木拱桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/covered_bridge.webp" alt="风雨廊桥" />
+    <div class="card-name">风雨廊桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floating_dock.webp" alt="浮木码头" />
+    <div class="card-name">浮木码头</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lotus_boardwalk.webp" alt="荷塘栈道" />
+    <div class="card-name">荷塘栈道</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rope_bridge.webp" alt="吊索桥" />
+    <div class="card-name">吊索桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_arch_bridge.webp" alt="朱漆拱桥" />
+    <div class="card-name">朱漆拱桥</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出金属或珠宝制的穿戴物</span>
+    <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 5 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jeweled_belt.webp" alt="宝石腰饰" />
+    <div class="card-name">宝石腰饰</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/silver_armor.webp" alt="银纹铠甲" />
+    <div class="card-name">银纹铠甲</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/phoenix_crown.webp" alt="凤纹头冠" />
+    <div class="card-name">凤纹头冠</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_earrings.webp" alt="玉坠耳环" />
+    <div class="card-name">玉坠耳环</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出会飞又会发光的物品</span>
+    <span class="task-meta">命中池 <strong>3</strong> 件 · 任务目标 3 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_sky_lantern.webp" alt="朱红孔明灯" />
+    <div class="card-name">朱红孔明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/firefly.webp" alt="萤火虫" />
+    <div class="card-name">萤火虫</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange_sky_lantern.webp" alt="橙色孔明灯" />
+    <div class="card-name">橙色孔明灯</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出水果或蔬菜</span>
+    <span class="task-meta">命中池 <strong>24</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="辣椒" />
+    <div class="card-name">辣椒</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="葡萄" />
+    <div class="card-name">葡萄</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="仙桃" />
+    <div class="card-name">仙桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="荔枝" />
+    <div class="card-name">荔枝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="红枣" />
+    <div class="card-name">红枣</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="西瓜" />
+    <div class="card-name">西瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="茄子" />
+    <div class="card-name">茄子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="苹果" />
+    <div class="card-name">苹果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="香蕉" />
+    <div class="card-name">香蕉</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="橙子" />
+    <div class="card-name">橙子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="草莓" />
+    <div class="card-name">草莓</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="芒果" />
+    <div class="card-name">芒果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="梨" />
+    <div class="card-name">梨</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="菠萝" />
+    <div class="card-name">菠萝</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="猕猴桃" />
+    <div class="card-name">猕猴桃</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="甜瓜" />
+    <div class="card-name">甜瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="火龙果" />
+    <div class="card-name">火龙果</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="香菜" />
+    <div class="card-name">香菜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="苦瓜" />
+    <div class="card-name">苦瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="西兰花" />
+    <div class="card-name">西兰花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="毛豆" />
+    <div class="card-name">毛豆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出动物或坐骑</span>
+    <span class="task-meta">命中池 <strong>14</strong> 件 · 任务目标 8 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/camel.webp" alt="骆驼" />
+    <div class="card-name">骆驼</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/horse.webp" alt="骏马" />
+    <div class="card-name">骏马</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="花轿" />
+    <div class="card-name">花轿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/cat.webp" alt="狸花猫" />
+    <div class="card-name">狸花猫</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/flying_fish.webp" alt="飞鱼坐骑" />
+    <div class="card-name">飞鱼坐骑</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/deer.webp" alt="梅花鹿" />
+    <div class="card-name">梅花鹿</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/nine_tailed_fox.webp" alt="九尾狐" />
+    <div class="card-name">九尾狐</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lucky_raccoon.webp" alt="招财狸" />
+    <div class="card-name">招财狸</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div class="card-name">风火轮</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/penguin.webp" alt="企鹅" />
+    <div class="card-name">企鹅</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/carriage.webp" alt="马车" />
+    <div class="card-name">马车</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/treasure_ship.webp" alt="楼船" />
+    <div class="card-name">楼船</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/dog.webp" alt="柴犬" />
+    <div class="card-name">柴犬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/rabbit.webp" alt="玉兔" />
+    <div class="card-name">玉兔</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出食物，但不要点甜食</span>
+    <span class="task-meta">命中池 <strong>9</strong> 件 · 任务目标 6 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="辣椒" />
+    <div class="card-name">辣椒</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="茄子" />
+    <div class="card-name">茄子</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="柠檬" />
+    <div class="card-name">柠檬</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="香菜" />
+    <div class="card-name">香菜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="青葱" />
+    <div class="card-name">青葱</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="苦瓜" />
+    <div class="card-name">苦瓜</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="西兰花" />
+    <div class="card-name">西兰花</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="毛豆" />
+    <div class="card-name">毛豆</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="芹菜" />
+    <div class="card-name">芹菜</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出尖锐但不是兵器的物品</span>
+    <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 5 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fish_hook.webp" alt="鱼钩" />
+    <div class="card-name">鱼钩</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/needle.webp" alt="银针" />
+    <div class="card-name">银针</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/beast_fang.webp" alt="兽牙" />
+    <div class="card-name">兽牙</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="翠玉簪" />
+    <div class="card-name">翠玉簪</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/icicle.webp" alt="冰锥" />
+    <div class="card-name">冰锥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="花簪" />
+    <div class="card-name">花簪</div>
+  </div></div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <span class="task-title">找出不是木制的桥</span>
+    <span class="task-meta">命中池 <strong>3</strong> 件 · 任务目标 3 件</span>
+    
+  </div>
+  <div class="grid">
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/plain_stone_arch_bridge.webp" alt="素面石拱桥" />
+    <div class="card-name">素面石拱桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/stone_water_bridge.webp" alt="石拱水桥" />
+    <div class="card-name">石拱水桥</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/stone_slab_bridge.webp" alt="石板桥" />
+    <div class="card-name">石板桥</div>
+  </div></div>
+</div>
+
+<h2>③ 全物件总表（123 件 → 所属任务）</h2>
+<table>
+<thead><tr><th>图片</th><th>名称 / id</th><th>全部标签</th><th>命中任务</th></tr></thead>
+<tbody>
+
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/camel.webp" alt="" /></td>
+  <td><strong>骆驼</strong><br><code>camel</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
+  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="" /></td>
+  <td><strong>辣椒</strong><br><code>chili_pepper</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/golden_pipa.webp" alt="" /></td>
+  <td><strong>金纹琵琶</strong><br><code>golden_pipa</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/grapes.webp" alt="" /></td>
+  <td><strong>葡萄</strong><br><code>grapes</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/mooncake.webp" alt="" /></td>
+  <td><strong>月饼</strong><br><code>mooncake</code></td>
+  <td><span class="chip">甜食</span><span class="chip">食物</span><span class="chip">圆形</span></td>
+  <td>找出所有甜食；找出所有食物；找出圆形轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/horse.webp" alt="" /></td>
+  <td><strong>骏马</strong><br><code>horse</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
+  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/bird_ocarina.webp" alt="" /></td>
+  <td><strong>鸟形陶笛</strong><br><code>bird_ocarina</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">陶瓷</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出陶瓷物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/peach.webp" alt="" /></td>
+  <td><strong>仙桃</strong><br><code>peach</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="" /></td>
+  <td><strong>花轿</strong><br><code>sedan_chair</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">木制</span><span class="chip">宽大</span><span class="chip">有纹样</span></td>
+  <td>找出所有载具与坐骑；找出木制物品；找出纹样明显的物品；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/konghou.webp" alt="" /></td>
+  <td><strong>箜篌</strong><br><code>konghou</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">细长</span></td>
+  <td>找出所有乐器；找出木制物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/golden_ewer.webp" alt="" /></td>
+  <td><strong>鎏金执壶</strong><br><code>golden_ewer</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">金属/珠宝</span><span class="chip">有把手</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出金属或珠宝物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/cat.webp" alt="" /></td>
+  <td><strong>狸花猫</strong><br><code>cat</code></td>
+  <td><span class="chip">动物</span><span class="chip">四足</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/red_sky_lantern.webp" alt="" /></td>
+  <td><strong>朱红孔明灯</strong><br><code>red_sky_lantern</code></td>
+  <td><span class="chip">会飞</span><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">纸制</span><span class="chip">有流苏</span></td>
+  <td>找出所有会飞的物品；找出所有会发光的物品；找出会飞又会发光的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/white_porcelain_vase.webp" alt="" /></td>
+  <td><strong>白瓷瓶</strong><br><code>white_porcelain_vase</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">细长</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lychee.webp" alt="" /></td>
+  <td><strong>荔枝</strong><br><code>lychee</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/painted_jar.webp" alt="" /></td>
+  <td><strong>彩陶罐</strong><br><code>painted_jar</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/black_pitcher.webp" alt="" /></td>
+  <td><strong>玄纹壶</strong><br><code>black_pitcher</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">细长</span><span class="chip">有把手</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/campfire.webp" alt="" /></td>
+  <td><strong>篝火</strong><br><code>campfire</code></td>
+  <td><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出所有会发光的物品；找出木制物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/bronze_gong.webp" alt="" /></td>
+  <td><strong>铜锣</strong><br><code>bronze_gong</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">金属/珠宝</span><span class="chip">圆形</span></td>
+  <td>找出所有乐器；找出金属或珠宝物品；找出圆形轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/fish_hook.webp" alt="" /></td>
+  <td><strong>鱼钩</strong><br><code>fish_hook</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">金属/珠宝</span><span class="chip">细长</span><span class="chip">有把手</span></td>
+  <td>找出所有尖锐物品；找出金属或珠宝物品；找出细长轮廓的物品；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/torch.webp" alt="" /></td>
+  <td><strong>火把</strong><br><code>torch</code></td>
+  <td><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">木制</span><span class="chip">细长</span><span class="chip">有把手</span></td>
+  <td>找出所有会发光的物品；找出木制物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/arrow.webp" alt="" /></td>
+  <td><strong>羽箭</strong><br><code>arrow</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">木制</span><span class="chip">细长</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出木制物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/needle.webp" alt="" /></td>
+  <td><strong>银针</strong><br><code>needle</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">金属/珠宝</span><span class="chip">细长</span></td>
+  <td>找出所有尖锐物品；找出金属或珠宝物品；找出细长轮廓的物品；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/flying_fish.webp" alt="" /></td>
+  <td><strong>飞鱼坐骑</strong><br><code>flying_fish</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span></td>
+  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/candied_hawthorn.webp" alt="" /></td>
+  <td><strong>糖葫芦</strong><br><code>candied_hawthorn</code></td>
+  <td><span class="chip">甜食</span><span class="chip">食物</span></td>
+  <td>找出所有甜食；找出所有食物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lotus_ewer.webp" alt="" /></td>
+  <td><strong>莲花执壶</strong><br><code>lotus_ewer</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">金属/珠宝</span><span class="chip">有把手</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出金属或珠宝物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/spike_trap.webp" alt="" /></td>
+  <td><strong>地刺</strong><br><code>spike_trap</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出金属或珠宝物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/osmanthus_cake.webp" alt="" /></td>
+  <td><strong>桂花糕</strong><br><code>osmanthus_cake</code></td>
+  <td><span class="chip">甜食</span><span class="chip">食物</span></td>
+  <td>找出所有甜食；找出所有食物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/deer.webp" alt="" /></td>
+  <td><strong>梅花鹿</strong><br><code>deer</code></td>
+  <td><span class="chip">动物</span><span class="chip">四足</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/beast_fang.webp" alt="" /></td>
+  <td><strong>兽牙</strong><br><code>beast_fang</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">细长</span></td>
+  <td>找出所有尖锐物品；找出细长轮廓的物品；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/waist_drum.webp" alt="" /></td>
+  <td><strong>腰鼓</strong><br><code>waist_drum</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出木制物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/jade_hairpin.webp" alt="" /></td>
+  <td><strong>翠玉簪</strong><br><code>jade_hairpin</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有尖锐物品；找出所有穿戴物；找出金属或珠宝物品；找出细长轮廓的物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/black_bottle.webp" alt="" /></td>
+  <td><strong>玄铁瓶</strong><br><code>black_bottle</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span></td>
+  <td>找出能装东西的容器</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/nine_tailed_fox.webp" alt="" /></td>
+  <td><strong>九尾狐</strong><br><code>nine_tailed_fox</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
+  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="" /></td>
+  <td><strong>奇门匕首</strong><br><code>ornate_dagger</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span><span class="chip">细长</span><span class="chip">有纹样</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出金属或珠宝物品；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/firefly.webp" alt="" /></td>
+  <td><strong>萤火虫</strong><br><code>firefly</code></td>
+  <td><span class="chip">会飞</span><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">昆虫</span><span class="chip">有翅膀</span></td>
+  <td>找出所有会飞的物品；找出所有会发光的物品；找出会飞又会发光的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/shuriken.webp" alt="" /></td>
+  <td><strong>飞镖</strong><br><code>shuriken</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出金属或珠宝物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/oil_lamp.webp" alt="" /></td>
+  <td><strong>长明灯</strong><br><code>oil_lamp</code></td>
+  <td><span class="chip">容器</span><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">金属/珠宝</span><span class="chip">有把手</span></td>
+  <td>找出所有会发光的物品；找出能装东西的容器；找出金属或珠宝物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/red_dates.webp" alt="" /></td>
+  <td><strong>红枣</strong><br><code>red_dates</code></td>
+  <td><span class="chip">容器</span><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">碗/盘</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出能装东西的容器；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/inscribed_music_stand.webp" alt="" /></td>
+  <td><strong>题字琴架</strong><br><code>inscribed_music_stand</code></td>
+  <td><span class="chip">有字</span></td>
+  <td>找出所有文字物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/dandelion.webp" alt="" /></td>
+  <td><strong>蒲公英</strong><br><code>dandelion</code></td>
+  <td><span class="chip">会飞</span><span class="chip">植物</span><span class="chip">花卉</span><span class="chip">有叶片</span></td>
+  <td>找出所有会飞的物品；找出属于植物的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="" /></td>
+  <td><strong>醋坛</strong><br><code>vinegar_jar</code></td>
+  <td><span class="chip">有字</span><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">有纹样</span></td>
+  <td>找出所有文字物品；找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lucky_raccoon.webp" alt="" /></td>
+  <td><strong>招财狸</strong><br><code>lucky_raccoon</code></td>
+  <td><span class="chip">动物</span><span class="chip">四足</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="" /></td>
+  <td><strong>拨浪鼓</strong><br><code>rattle_drum</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">细长</span><span class="chip">有把手</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出木制物品；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/wooden_pipa.webp" alt="" /></td>
+  <td><strong>木琵琶</strong><br><code>wooden_pipa</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">细长</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出木制物品；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/swallow.webp" alt="" /></td>
+  <td><strong>春燕</strong><br><code>swallow</code></td>
+  <td><span class="chip">会飞</span><span class="chip">有翅膀</span></td>
+  <td>找出所有会飞的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/painted_vase.webp" alt="" /></td>
+  <td><strong>彩绘花瓶</strong><br><code>painted_vase</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/phoenix.webp" alt="" /></td>
+  <td><strong>金羽凤凰</strong><br><code>phoenix</code></td>
+  <td><span class="chip">会飞</span><span class="chip">有翅膀</span></td>
+  <td>找出所有会飞的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/dragonfly.webp" alt="" /></td>
+  <td><strong>蜻蜓</strong><br><code>dragonfly</code></td>
+  <td><span class="chip">会飞</span><span class="chip">昆虫</span><span class="chip">有翅膀</span><span class="chip">细长</span></td>
+  <td>找出所有会飞的物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="" /></td>
+  <td><strong>风火轮</strong><br><code>fire_wheels</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">兵器</span><span class="chip">有火焰</span><span class="chip">可骑乘</span><span class="chip">圆形</span><span class="chip">宽大</span><span class="chip">成对</span></td>
+  <td>找出所有载具与坐骑；找出所有兵器；找出圆形轮廓的物品；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/chrysanthemum.webp" alt="" /></td>
+  <td><strong>金菊</strong><br><code>chrysanthemum</code></td>
+  <td><span class="chip">植物</span><span class="chip">花卉</span><span class="chip">有叶片</span></td>
+  <td>找出属于植物的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/tangyuan.webp" alt="" /></td>
+  <td><strong>汤圆</strong><br><code>tangyuan</code></td>
+  <td><span class="chip">容器</span><span class="chip">甜食</span><span class="chip">食物</span><span class="chip">碗/盘</span><span class="chip">陶瓷</span><span class="chip">圆形</span></td>
+  <td>找出所有甜食；找出所有食物；找出能装东西的容器；找出陶瓷物品；找出圆形轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/hulusi.webp" alt="" /></td>
+  <td><strong>葫芦丝</strong><br><code>hulusi</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">细长</span><span class="chip">有把手</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/inscribed_papers.webp" alt="" /></td>
+  <td><strong>题字纸页</strong><br><code>inscribed_papers</code></td>
+  <td><span class="chip">有字</span><span class="chip">纸制</span></td>
+  <td>找出所有文字物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/icicle.webp" alt="" /></td>
+  <td><strong>冰锥</strong><br><code>icicle</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">细长</span></td>
+  <td>找出所有尖锐物品；找出细长轮廓的物品；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/golden_bowl.webp" alt="" /></td>
+  <td><strong>鎏金钵</strong><br><code>golden_bowl</code></td>
+  <td><span class="chip">容器</span><span class="chip">碗/盘</span><span class="chip">金属/珠宝</span><span class="chip">圆形</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出金属或珠宝物品；找出圆形轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/ancient_book.webp" alt="" /></td>
+  <td><strong>古籍</strong><br><code>ancient_book</code></td>
+  <td><span class="chip">有字</span><span class="chip">纸制</span><span class="chip">有纹样</span></td>
+  <td>找出所有文字物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="" /></td>
+  <td><strong>西瓜</strong><br><code>watermelon</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/guqin.webp" alt="" /></td>
+  <td><strong>古琴</strong><br><code>guqin</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出木制物品；找出细长轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/orange_sky_lantern.webp" alt="" /></td>
+  <td><strong>橙色孔明灯</strong><br><code>orange_sky_lantern</code></td>
+  <td><span class="chip">会飞</span><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">纸制</span><span class="chip">有流苏</span></td>
+  <td>找出所有会飞的物品；找出所有会发光的物品；找出会飞又会发光的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/penguin.webp" alt="" /></td>
+  <td><strong>企鹅</strong><br><code>penguin</code></td>
+  <td><span class="chip">动物</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/incense_burner.webp" alt="" /></td>
+  <td><strong>香炉</strong><br><code>incense_burner</code></td>
+  <td><span class="chip">容器</span><span class="chip">碗/盘</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/cotton.webp" alt="" /></td>
+  <td><strong>棉花</strong><br><code>cotton</code></td>
+  <td><span class="chip">植物</span><span class="chip">花卉</span><span class="chip">有叶片</span></td>
+  <td>找出属于植物的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/eggplant.webp" alt="" /></td>
+  <td><strong>茄子</strong><br><code>eggplant</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/crossed_swords.webp" alt="" /></td>
+  <td><strong>双剑</strong><br><code>crossed_swords</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span><span class="chip">宽大</span><span class="chip">成对</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出金属或珠宝物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/hand_drum.webp" alt="" /></td>
+  <td><strong>手鼓</strong><br><code>hand_drum</code></td>
+  <td><span class="chip">乐器</span><span class="chip">可发声</span><span class="chip">木制</span><span class="chip">有纹样</span></td>
+  <td>找出所有乐器；找出木制物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/floral_hairpin.webp" alt="" /></td>
+  <td><strong>花簪</strong><br><code>floral_hairpin</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">细长</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有尖锐物品；找出所有穿戴物；找出金属或珠宝物品；找出细长轮廓的物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物；找出尖锐但不是兵器的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/patterned_vase.webp" alt="" /></td>
+  <td><strong>缠枝瓶</strong><br><code>patterned_vase</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/jewelry_box.webp" alt="" /></td>
+  <td><strong>首饰匣</strong><br><code>jewelry_box</code></td>
+  <td><span class="chip">容器</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/medicine_bottle.webp" alt="" /></td>
+  <td><strong>药瓶</strong><br><code>medicine_bottle</code></td>
+  <td><span class="chip">有字</span><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span></td>
+  <td>找出所有文字物品；找出能装东西的容器；找出陶瓷物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/carriage.webp" alt="" /></td>
+  <td><strong>马车</strong><br><code>carriage</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出所有载具与坐骑；找出木制物品；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/butterfly.webp" alt="" /></td>
+  <td><strong>蝴蝶</strong><br><code>butterfly</code></td>
+  <td><span class="chip">会飞</span><span class="chip">昆虫</span><span class="chip">有翅膀</span></td>
+  <td>找出所有会飞的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/sword.webp" alt="" /></td>
+  <td><strong>宝剑</strong><br><code>sword</code></td>
+  <td><span class="chip">尖锐</span><span class="chip">兵器</span><span class="chip">金属/珠宝</span><span class="chip">细长</span></td>
+  <td>找出所有尖锐物品；找出所有兵器；找出金属或珠宝物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/clay_jar.webp" alt="" /></td>
+  <td><strong>陶罐</strong><br><code>clay_jar</code></td>
+  <td><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span></td>
+  <td>找出能装东西的容器；找出陶瓷物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/candle.webp" alt="" /></td>
+  <td><strong>蜡烛</strong><br><code>candle</code></td>
+  <td><span class="chip">发光</span><span class="chip">照明物</span><span class="chip">有火焰</span><span class="chip">细长</span></td>
+  <td>找出所有会发光的物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/treasure_ship.webp" alt="" /></td>
+  <td><strong>楼船</strong><br><code>treasure_ship</code></td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出所有载具与坐骑；找出木制物品；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lidded_bowl.webp" alt="" /></td>
+  <td><strong>金盖碗</strong><br><code>lidded_bowl</code></td>
+  <td><span class="chip">容器</span><span class="chip">碗/盘</span><span class="chip">圆形</span></td>
+  <td>找出能装东西的容器；找出圆形轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/dog.webp" alt="" /></td>
+  <td><strong>柴犬</strong><br><code>dog</code></td>
+  <td><span class="chip">动物</span><span class="chip">四足</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/rabbit.webp" alt="" /></td>
+  <td><strong>玉兔</strong><br><code>rabbit</code></td>
+  <td><span class="chip">动物</span><span class="chip">四足</span></td>
+  <td>找出所有动物；找出动物或坐骑</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/blue_book.webp" alt="" /></td>
+  <td><strong>蓝皮古籍</strong><br><code>blue_book</code></td>
+  <td><span class="chip">有字</span><span class="chip">纸制</span><span class="chip">有纹样</span></td>
+  <td>找出所有文字物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/zongzi.webp" alt="" /></td>
+  <td><strong>粽子</strong><br><code>zongzi</code></td>
+  <td><span class="chip">甜食</span><span class="chip">食物</span></td>
+  <td>找出所有甜食；找出所有食物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/kite.webp" alt="" /></td>
+  <td><strong>纸鸢</strong><br><code>kite</code></td>
+  <td><span class="chip">会飞</span><span class="chip">纸制</span></td>
+  <td>找出所有会飞的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/partitioned_cauldron.webp" alt="" /></td>
+  <td><strong>九格铜鼎</strong><br><code>partitioned_cauldron</code></td>
+  <td><span class="chip">容器</span><span class="chip">碗/盘</span><span class="chip">金属/珠宝</span><span class="chip">圆形</span><span class="chip">有纹样</span></td>
+  <td>找出能装东西的容器；找出金属或珠宝物品；找出圆形轮廓的物品；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/peony.webp" alt="" /></td>
+  <td><strong>牡丹</strong><br><code>peony</code></td>
+  <td><span class="chip">植物</span><span class="chip">花卉</span><span class="chip">有叶片</span></td>
+  <td>找出属于植物的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/cabinet.webp" alt="" /></td>
+  <td><strong>百宝柜</strong><br><code>cabinet</code></td>
+  <td><span class="chip">容器</span><span class="chip">木制</span></td>
+  <td>找出能装东西的容器；找出木制物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/feather.webp" alt="" /></td>
+  <td><strong>羽毛</strong><br><code>feather</code></td>
+  <td><span class="chip">会飞</span><span class="chip">细长</span></td>
+  <td>找出所有会飞的物品；找出细长轮廓的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/paper_crane.webp" alt="" /></td>
+  <td><strong>纸鹤</strong><br><code>paper_crane</code></td>
+  <td><span class="chip">会飞</span><span class="chip">有翅膀</span><span class="chip">纸制</span></td>
+  <td>找出所有会飞的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/apple.webp" alt="" /></td>
+  <td><strong>苹果</strong><br><code>apple</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/banana.webp" alt="" /></td>
+  <td><strong>香蕉</strong><br><code>banana</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/orange.webp" alt="" /></td>
+  <td><strong>橙子</strong><br><code>orange</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/strawberry.webp" alt="" /></td>
+  <td><strong>草莓</strong><br><code>strawberry</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/mango.webp" alt="" /></td>
+  <td><strong>芒果</strong><br><code>mango</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/pear.webp" alt="" /></td>
+  <td><strong>梨</strong><br><code>pear</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/pineapple.webp" alt="" /></td>
+  <td><strong>菠萝</strong><br><code>pineapple</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/kiwi.webp" alt="" /></td>
+  <td><strong>猕猴桃</strong><br><code>kiwi</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lemon.webp" alt="" /></td>
+  <td><strong>柠檬</strong><br><code>lemon</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/melon.webp" alt="" /></td>
+  <td><strong>甜瓜</strong><br><code>melon</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">圆形</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出圆形轮廓的物品；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/dragon_fruit.webp" alt="" /></td>
+  <td><strong>火龙果</strong><br><code>dragon_fruit</code></td>
+  <td><span class="chip">甜食</span><span class="chip">植物</span><span class="chip">食物</span><span class="chip">水果</span><span class="chip">有叶片</span></td>
+  <td>找出所有甜食；找出所有食物；找出属于植物的物品；找出所有水果；找出既是植物又是甜食的物品；找出水果或蔬菜</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/coriander.webp" alt="" /></td>
+  <td><strong>香菜</strong><br><code>coriander</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/scallion.webp" alt="" /></td>
+  <td><strong>青葱</strong><br><code>scallion</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">细长</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出细长轮廓的物品；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/bitter_melon.webp" alt="" /></td>
+  <td><strong>苦瓜</strong><br><code>bitter_melon</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/broccoli.webp" alt="" /></td>
+  <td><strong>西兰花</strong><br><code>broccoli</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/edamame.webp" alt="" /></td>
+  <td><strong>毛豆</strong><br><code>edamame</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/celery.webp" alt="" /></td>
+  <td><strong>芹菜</strong><br><code>celery</code></td>
+  <td><span class="chip">植物</span><span class="chip">食物</span><span class="chip">蔬菜</span><span class="chip">细长</span><span class="chip">有叶片</span></td>
+  <td>找出所有食物；找出属于植物的物品；找出所有蔬菜；找出细长轮廓的物品；找出水果或蔬菜；找出食物，但不要点甜食</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/jeweled_belt.webp" alt="" /></td>
+  <td><strong>宝石腰饰</strong><br><code>jeweled_belt</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">宽大</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出金属或珠宝物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/silver_armor.webp" alt="" /></td>
+  <td><strong>银纹铠甲</strong><br><code>silver_armor</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">衣物</span><span class="chip">金属/珠宝</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出金属或珠宝物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/red_tunic.webp" alt="" /></td>
+  <td><strong>赤纹上衣</strong><br><code>red_tunic</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">衣物</span><span class="chip">布料</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/tasseled_shawl.webp" alt="" /></td>
+  <td><strong>流苏披肩</strong><br><code>tasseled_shawl</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">衣物</span><span class="chip">布料</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/phoenix_crown.webp" alt="" /></td>
+  <td><strong>凤纹头冠</strong><br><code>phoenix_crown</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出金属或珠宝物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/embroidered_trousers.webp" alt="" /></td>
+  <td><strong>绣花裤装</strong><br><code>embroidered_trousers</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">衣物</span><span class="chip">布料</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/jade_earrings.webp" alt="" /></td>
+  <td><strong>玉坠耳环</strong><br><code>jade_earrings</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">金属/珠宝</span><span class="chip">宝石</span><span class="chip">成对</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出金属或珠宝物品；找出纹样明显的物品；找出金属或珠宝制的穿戴物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/fox_mask.webp" alt="" /></td>
+  <td><strong>狐狸面具</strong><br><code>fox_mask</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/gauze_veil.webp" alt="" /></td>
+  <td><strong>轻纱面帘</strong><br><code>gauze_veil</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">衣物</span><span class="chip">配饰</span><span class="chip">头饰</span><span class="chip">布料</span><span class="chip">有流苏</span><span class="chip">有纹样</span></td>
+  <td>找出所有穿戴物；找出纹样明显的物品</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/bamboo_hat.webp" alt="" /></td>
+  <td><strong>竹编斗笠</strong><br><code>bamboo_hat</code></td>
+  <td><span class="chip">穿戴物</span><span class="chip">配饰</span><span class="chip">头饰</span></td>
+  <td>找出所有穿戴物</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/plain_stone_arch_bridge.webp" alt="" /></td>
+  <td><strong>素面石拱桥</strong><br><code>plain_stone_arch_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">石制</span><span class="chip">宽大</span></td>
+  <td>找出不是木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/wooden_arch_bridge.webp" alt="" /></td>
+  <td><strong>木拱桥</strong><br><code>wooden_arch_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/covered_bridge.webp" alt="" /></td>
+  <td><strong>风雨廊桥</strong><br><code>covered_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/floating_dock.webp" alt="" /></td>
+  <td><strong>浮木码头</strong><br><code>floating_dock</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/lotus_boardwalk.webp" alt="" /></td>
+  <td><strong>荷塘栈道</strong><br><code>lotus_boardwalk</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/stone_water_bridge.webp" alt="" /></td>
+  <td><strong>石拱水桥</strong><br><code>stone_water_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">石制</span><span class="chip">宽大</span></td>
+  <td>找出不是木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/stone_slab_bridge.webp" alt="" /></td>
+  <td><strong>石板桥</strong><br><code>stone_slab_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">石制</span><span class="chip">宽大</span></td>
+  <td>找出不是木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/rope_bridge.webp" alt="" /></td>
+  <td><strong>吊索桥</strong><br><code>rope_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+<tr>
+  <td><img loading="lazy" src="../src/assets/items/ancient/red_arch_bridge.webp" alt="" /></td>
+  <td><strong>朱漆拱桥</strong><br><code>red_arch_bridge</code></td>
+  <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
+  <td>找出木制物品；找出木制的桥</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

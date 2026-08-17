@@ -179,6 +179,25 @@ async function ensureRng(cdp) {
 }
 
 /**
+ * 存档命名空间前缀（znm.<appKey>.<uid>.，2026-08-17 起存档分桶）。
+ * 每次加载后探测一次，浏览器环境恒为 guest 桶。
+ */
+let keyPrefix = 'znm.';
+async function detectKeyPrefix(cdp) {
+  const found = await evalv(cdp, `(() => {
+    const key = Object.keys(localStorage).find((k) => k.endsWith('stamina.v1'));
+    return key ? key.slice(0, -'stamina.v1'.length) : null;
+  })()`);
+  if (found) keyPrefix = found;
+  return keyPrefix;
+}
+
+/** 拼出完整存档 key 的页面表达式片段（如 key('stamina.v1')）。 */
+function keyExpr(suffix) {
+  return `${JSON.stringify(keyPrefix)} + ${JSON.stringify(suffix)}`;
+}
+
+/**
  * 清空存档并重载。必须用「新文档脚本」清理：旧页面 pagehide 会把内存存档
  * 回写覆盖 localStorage，直接 clear + reload 无效。每次重载后 __rng.calls 归零。
  */
@@ -197,6 +216,7 @@ async function freshLoad(cdp) {
   await waitFor(cdp, `document.readyState === 'complete'`, 15000);
   await ensureRng(cdp);
   await waitFor(cdp, `!!document.querySelector('[aria-label^="眼力值"]')`, 15000);
+  await detectKeyPrefix(cdp);
   await sleep(600);
 }
 
@@ -229,202 +249,152 @@ const ITEM_SNAPSHOT_JS = `(() => {
 })()`;
 
 /**
- * 计算点击第 idx 个场景物件的屏幕坐标。
- * 与游戏命中判定完全同构：候选点取「目标自身蒙版上最靠近中心的不透明像素」，
- * 同时避开会被上层物件（y 更大或同 y 且排更前）抢走的重叠区，保证点中目标。
+ * 页内命中模型：与 GameField.tsx 的轻点判定逐行对齐 ——
+ * 同款 64×64 透明蒙版（阈值 22）、同款 TOUCH_PADDING_PX=6 外扩、
+ * 同款「最小蒙版距离优先，同距取 y 大者」裁决；蒙版缺失时退化为紧凑几何盒。
+ * 旧实现用「目标像素不被他物遮盖」的近似避让，细长目标（燕/鸢/簪类）经常点偏；
+ * 现在直接回答「游戏在这个像素上会选中谁」，并返回余量最大的必胜点。
  */
-function clickPointForIdxJs(idx, xPct, yPct, scale, rot) {
+function gameHitFinderJs(targetExpr) {
   return `(async () => {
+    const HIT_MASK_SIZE = 64, HIT_ALPHA_THRESHOLD = 22, TOUCH_PADDING_PX = 6;
+    const alphaHitDistance = (alpha, u, v, paddingPx) => {
+      const centerX = Math.round(u * (HIT_MASK_SIZE - 1));
+      const centerY = Math.round(v * (HIT_MASK_SIZE - 1));
+      const radius = Math.max(0, Math.ceil(paddingPx));
+      let best = Number.POSITIVE_INFINITY;
+      for (let y = Math.max(0, centerY - radius); y <= Math.min(HIT_MASK_SIZE - 1, centerY + radius); y += 1) {
+        for (let x = Math.max(0, centerX - radius); x <= Math.min(HIT_MASK_SIZE - 1, centerX + radius); x += 1) {
+          const distance = Math.hypot(x - centerX, y - centerY);
+          if (distance > radius || distance >= best) continue;
+          if (alpha[y * HIT_MASK_SIZE + x] >= HIT_ALPHA_THRESHOLD) best = distance;
+        }
+      }
+      return Number.isFinite(best) ? best : null;
+    };
+    const num = (s) => { const n = Number(s); return Number.isFinite(n) ? n : 0; };
+
     const field = document.querySelector('[class*="touch-none"]');
     const scene = [...document.querySelectorAll('div')].find((d) => d.style.width === '150%');
     if (!field || !scene) return null;
-    const buttons = [...scene.querySelectorAll('button[tabindex="-1"]')];
     const fr = field.getBoundingClientRect();
     const worldW = scene.clientWidth, worldH = scene.clientHeight;
-    const pan = /translate3d\\(([-\\d.]+)px/.exec(scene.style.transform ?? '');
-    const panX = pan ? Number(pan[1]) : 0;
+    const tfScene = scene.style.transform ?? '';
+    const panX = tfScene.startsWith('translate3d(') ? num(tfScene.slice(12).split('px')[0]) : 0;
     const baseSize = Math.max(50, Math.min(146, field.clientWidth * 0.19, field.clientHeight * 0.19));
-    const size = baseSize * ${scale};
-    const cx = fr.left + panX + (${xPct} / 100) * worldW;
-    const cy = fr.top + (${yPct} / 100) * worldH;
 
-    // 加载全部物件的蒙版与几何（缓存复用）
-    window.__masks ??= {};
+    window.__hitMasks ??= {};
+    const buttons = [...scene.querySelectorAll('button[tabindex="-1"]')];
     const items = [];
     for (let i = 0; i < buttons.length; i += 1) {
       const btn = buttons[i];
       const img = btn.querySelector('img');
       if (!img) continue;
       const name = btn.getAttribute('aria-label');
-      if (!window.__masks[name]) {
-        window.__masks[name] = await new Promise((resolve) => {
+      if (!window.__hitMasks[name]) {
+        window.__hitMasks[name] = await new Promise((resolve) => {
           const image = new Image();
           image.crossOrigin = 'anonymous';
           image.onload = () => {
             const canvas = document.createElement('canvas');
-            canvas.width = 64; canvas.height = 64;
+            canvas.width = HIT_MASK_SIZE; canvas.height = HIT_MASK_SIZE;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            ctx.drawImage(image, 0, 0, 64, 64);
-            try { resolve(new Uint8ClampedArray(ctx.getImageData(0, 0, 64, 64).data)); }
-            catch { resolve(null); }
+            ctx.drawImage(image, 0, 0, HIT_MASK_SIZE, HIT_MASK_SIZE);
+            try {
+              const px = ctx.getImageData(0, 0, HIT_MASK_SIZE, HIT_MASK_SIZE).data;
+              const alpha = new Uint8ClampedArray(HIT_MASK_SIZE * HIT_MASK_SIZE);
+              for (let k = 0; k < alpha.length; k += 1) alpha[k] = px[k * 4 + 3];
+              resolve(alpha);
+            } catch { resolve(null); }
           };
           image.onerror = () => resolve(null);
           image.src = img.src;
         });
       }
-      if (!window.__masks[name]) continue;
       const wrap = btn.parentElement;
-      const rotMatch = /rotate\\((-?[\\d.]+)deg/.exec(btn.getAttribute('style') ?? '');
-      const imgW = Number(img.style.width.replace('px', ''));
+      const tf = btn.style.transform ?? '';
+      const ri = tf.indexOf('rotate(');
+      const imgW = num(img.style.width.replace('px', ''));
       items.push({
         i,
-        mask: window.__masks[name],
+        name,
+        alpha: window.__hitMasks[name] ?? null,
         x: parseFloat(wrap.style.left),
         y: parseFloat(wrap.style.top),
-        rot: rotMatch ? Number(rotMatch[1]) : 0,
-        imgSize: imgW > 0 ? imgW : baseSize,
+        rot: ri >= 0 ? num(tf.slice(ri + 7).split('deg')[0]) : 0,
+        size: imgW > 0 ? imgW : baseSize,
+        // 游戏对已找到物件直接跳过；DOM 里它们动画收敛到 opacity 0，依此剔除
+        found: num(getComputedStyle(btn).opacity) < 0.05,
       });
     }
-    if (!items[${idx}]) return { x: cx, y: cy };
 
-    const alphaAt = (mask, u, v) => {
-      const uu = Math.round(u * 63), vv = Math.round(v * 63);
-      if (uu < 0 || uu > 63 || vv < 0 || vv > 63) return 0;
-      return mask[(vv * 64 + uu) * 4 + 3];
-    };
-    const target = items[${idx}];
-    const rad = (${rot} * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
-    const others = items.filter((it) => it.i !== ${idx});
-
-    let best = null, bestDist = Infinity, fallback = null, fallbackDist = Infinity;
-    for (let v = 6; v < 58; v += 1) {
-      for (let u = 6; u < 58; u += 1) {
-        if (alphaAt(target.mask, u / 64, v / 64) < 22) continue;
-        const localX = (u / 64 - 0.5) * size;
-        const localY = (v / 64 - 0.5) * size;
-        const wx = cx + localX * cos - localY * sin;
-        const wy = cy + localX * sin + localY * cos;
-        const d = Math.hypot(u - 32, v - 32) / 64;
-        if (d < fallbackDist) { fallback = { x: wx, y: wy }; fallbackDist = d; }
-
-        // 同距离时游戏取 y 最大（或同 y 且更早遍历）的物件，这里反向排除会输掉的点。
-        let stolen = false;
-        for (const other of others) {
-          const orad = (other.rot * Math.PI) / 180, ocos = Math.cos(orad), osin = Math.sin(orad);
-          const dx = wx - (fr.left + panX + (other.x / 100) * worldW);
-          const dy = wy - (fr.top + (other.y / 100) * worldH);
-          const lx = dx * ocos + dy * osin;
-          const ly = -dx * osin + dy * ocos;
-          const uu = lx / other.imgSize + 0.5;
-          const vv = ly / other.imgSize + 0.5;
-          if (uu < -0.12 || uu > 1.12 || vv < -0.12 || vv > 1.12) continue;
-          if (alphaAt(other.mask, uu, vv) < 22) continue;
-          if (other.y > target.y || (other.y === target.y && other.i < target.i)) { stolen = true; break; }
+    // 游戏 handleTap 的忠实复刻：返回游戏在该世界坐标会选中的物件与距离（含次优距离）
+    const pickAt = (wx, wy) => {
+      let hit = null, hitDistance = Number.POSITIVE_INFINITY, second = Number.POSITIVE_INFINITY;
+      for (const item of items) {
+        if (item.found) continue;
+        const ix = (item.x / 100) * worldW, iy = (item.y / 100) * worldH;
+        const rad = (item.rot * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+        const dx = wx - ix, dy = wy - iy;
+        const localX = dx * cos + dy * sin, localY = -dx * sin + dy * cos;
+        const u = localX / item.size + 0.5, v = localY / item.size + 0.5;
+        const padding = Math.min(TOUCH_PADDING_PX, item.size * 0.1);
+        let distance = null;
+        if (item.alpha && u >= -0.12 && u <= 1.12 && v >= -0.12 && v <= 1.12) {
+          distance = alphaHitDistance(item.alpha, u, v, (padding / item.size) * HIT_MASK_SIZE);
+        } else if (!item.alpha) {
+          // 蒙版缺失兜底：与游戏同款默认几何（预览环境蒙版总能加载，此分支保底不触发）
+          const halfX = (item.size * 0.875) / 2 + padding;
+          const halfY = (item.size * 0.875) / 2 + padding;
+          if (Math.abs(localX) <= halfX && Math.abs(localY) <= halfY) {
+            distance = Math.hypot(localX / halfX, localY / halfY) + 1;
+          }
         }
-        if (!stolen && d < bestDist) { best = { x: wx, y: wy }; bestDist = d; }
+        if (distance == null) continue;
+        if (distance < hitDistance || (distance === hitDistance && hit && item.y > hit.y)) {
+          if (hit) second = Math.min(second, hitDistance);
+          hit = item; hitDistance = distance;
+        } else {
+          second = Math.min(second, distance);
+        }
+      }
+      return hit ? { i: hit.i, distance: hitDistance, second } : null;
+    };
+
+    const target = ${targetExpr};
+    if (!target || !target.alpha) return null;
+    const trad = (target.rot * Math.PI) / 180, tcos = Math.cos(trad), tsin = Math.sin(trad);
+    const tcx = (target.x / 100) * worldW, tcy = (target.y / 100) * worldH;
+    let best = null;
+    for (let v = 2; v < HIT_MASK_SIZE - 2; v += 1) {
+      for (let u = 2; u < HIT_MASK_SIZE - 2; u += 1) {
+        if (target.alpha[v * HIT_MASK_SIZE + u] < HIT_ALPHA_THRESHOLD) continue;
+        const localX = (u / (HIT_MASK_SIZE - 1) - 0.5) * target.size;
+        const localY = (v / (HIT_MASK_SIZE - 1) - 0.5) * target.size;
+        const wx = tcx + localX * tcos - localY * tsin;
+        const wy = tcy + localX * tsin + localY * tcos;
+        const pick = pickAt(wx, wy);
+        if (!pick || pick.i !== target.i) continue;
+        // 余量 = 次优者距离 - 目标距离，越大越不容易被邻近物件抢走；同余量取靠近蒙版中心
+        const margin = pick.second - pick.distance;
+        const centrality = Math.hypot(u - (HIT_MASK_SIZE - 1) / 2, v - (HIT_MASK_SIZE - 1) / 2);
+        if (!best || margin > best.margin + 1e-9 || (Math.abs(margin - best.margin) <= 1e-9 && centrality < best.centrality)) {
+          best = { margin, centrality, x: fr.left + panX + wx, y: fr.top + wy };
+        }
       }
     }
-    return best ?? fallback;
+    return best ? { x: best.x, y: best.y } : null;
   })()`;
 }
 
-/**
- * DOM 驱动命中点计算（无需 Node 复刻数据）：按物件名称在场景里找到按钮，
- * 位置/旋转/尺寸全部取自 DOM，蒙版与避让逻辑与 clickPointForIdxJs 相同。
- */
-function clickPointForDomJs(name, xPct, yPct) {
-  return `(async () => {
-    const field = document.querySelector('[class*="touch-none"]');
-    const scene = [...document.querySelectorAll('div')].find((d) => d.style.width === '150%');
-    if (!field || !scene) return null;
-    const buttons = [...scene.querySelectorAll('button[tabindex="-1"]')];
-    const btnIdx = buttons.findIndex((b) => b.getAttribute('aria-label') === ${JSON.stringify(name)});
-    if (btnIdx < 0) return null;
-    const fr = field.getBoundingClientRect();
-    const worldW = scene.clientWidth, worldH = scene.clientHeight;
-    const pan = /translate3d\\(([-\\d.]+)px/.exec(scene.style.transform ?? '');
-    const panX = pan ? Number(pan[1]) : 0;
-    const baseSize = Math.max(50, Math.min(146, field.clientWidth * 0.19, field.clientHeight * 0.19));
-    const cx = fr.left + panX + (${xPct} / 100) * worldW;
-    const cy = fr.top + (${yPct} / 100) * worldH;
+/** 点击第 idx 个场景物件（Node 复刻与 DOM 顺序已逐件比对一致后使用）。 */
+function clickPointForIdxJs(idx) {
+  return gameHitFinderJs(`items[${idx}]`);
+}
 
-    window.__masks ??= {};
-    const items = [];
-    for (let i = 0; i < buttons.length; i += 1) {
-      const btn = buttons[i];
-      const img = btn.querySelector('img');
-      if (!img) continue;
-      const nm = btn.getAttribute('aria-label');
-      if (!window.__masks[nm]) {
-        window.__masks[nm] = await new Promise((resolve) => {
-          const image = new Image();
-          image.crossOrigin = 'anonymous';
-          image.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 64; canvas.height = 64;
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            ctx.drawImage(image, 0, 0, 64, 64);
-            try { resolve(new Uint8ClampedArray(ctx.getImageData(0, 0, 64, 64).data)); }
-            catch { resolve(null); }
-          };
-          image.onerror = () => resolve(null);
-          image.src = img.src;
-        });
-      }
-      if (!window.__masks[nm]) continue;
-      const wrap = btn.parentElement;
-      const rotMatch = /rotate\\((-?[\\d.]+)deg/.exec(btn.getAttribute('style') ?? '');
-      const imgW = Number(img.style.width.replace('px', ''));
-      items.push({
-        i,
-        mask: window.__masks[nm],
-        x: parseFloat(wrap.style.left),
-        y: parseFloat(wrap.style.top),
-        rot: rotMatch ? Number(rotMatch[1]) : 0,
-        imgSize: imgW > 0 ? imgW : baseSize,
-      });
-    }
-    if (!items[btnIdx]) return { x: cx, y: cy };
-
-    const alphaAt = (mask, u, v) => {
-      const uu = Math.round(u * 63), vv = Math.round(v * 63);
-      if (uu < 0 || uu > 63 || vv < 0 || vv > 63) return 0;
-      return mask[(vv * 64 + uu) * 4 + 3];
-    };
-    const target = items[btnIdx];
-    const size = target.imgSize;
-    const rad = (target.rot * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
-    const others = items.filter((it) => it.i !== btnIdx);
-
-    let best = null, bestDist = Infinity, fallback = null, fallbackDist = Infinity;
-    for (let v = 6; v < 58; v += 1) {
-      for (let u = 6; u < 58; u += 1) {
-        if (alphaAt(target.mask, u / 64, v / 64) < 22) continue;
-        const localX = (u / 64 - 0.5) * size;
-        const localY = (v / 64 - 0.5) * size;
-        const wx = cx + localX * cos - localY * sin;
-        const wy = cy + localX * sin + localY * cos;
-        const d = Math.hypot(u - 32, v - 32) / 64;
-        if (d < fallbackDist) { fallback = { x: wx, y: wy }; fallbackDist = d; }
-
-        let stolen = false;
-        for (const other of others) {
-          const orad = (other.rot * Math.PI) / 180, ocos = Math.cos(orad), osin = Math.sin(orad);
-          const dx = wx - (fr.left + panX + (other.x / 100) * worldW);
-          const dy = wy - (fr.top + (other.y / 100) * worldH);
-          const lx = dx * ocos + dy * osin;
-          const ly = -dx * osin + dy * ocos;
-          const uu = lx / other.imgSize + 0.5;
-          const vv = ly / other.imgSize + 0.5;
-          if (uu < -0.12 || uu > 1.12 || vv < -0.12 || vv > 1.12) continue;
-          if (alphaAt(other.mask, uu, vv) < 22) continue;
-          if (other.y > target.y || (other.y === target.y && other.i < target.i)) { stolen = true; break; }
-        }
-        if (!stolen && d < bestDist) { best = { x: wx, y: wy }; bestDist = d; }
-      }
-    }
-    return best ?? fallback;
-  })()`;
+/** 点击指定名称的场景物件（DOM 驱动兜底：复刻未命中时按任务规则名匹配）。 */
+function clickPointForDomJs(name) {
+  return gameHitFinderJs(`items.find((it) => !it.found && it.name === ${JSON.stringify(name)})`);
 }
 
 /** 读取 HUD 关卡牌上的「本关 X 分」（纯数字，避免计时器文本干扰）。 */
@@ -617,23 +587,24 @@ const hudPlaques1 = await evalv(cdp, READ_PLAQUE_JS);
 const hud1Text = hudPlaques1.join(' | ');
 check('第 1 关开始（HUD 计时 + 体力扣 1）',
   /第1关/.test(hud1Text) && /\d{2}:\d{2}/.test(hud1Text), hud1Text);
-const staminaAfterStart = await evalv(cdp, `JSON.parse(localStorage.getItem('znm.stamina.v1') ?? '{}').value`);
+const staminaAfterStart = await evalv(cdp, `JSON.parse(localStorage.getItem(${keyExpr('stamina.v1')}) ?? '{}').value`);
 check('体力 20 → 19', staminaAfterStart === 19, `stamina=${staminaAfterStart}`);
 
 // 依次点击 3 个目标
 for (let i = 0; i < targets1.length; i += 1) {
   const target = targets1[i];
   const idx = scene1.items.indexOf(target);
-  const expr = clickPointForIdxJs(idx, target.x, target.y, target.scale, target.rot);
+  const expr = clickPointForIdxJs(idx);
   const point = await evalv(cdp, expr);
   check(`第 1 关目标 ${i + 1} 命中点计算（${bundleName(target.itemId)}）`,
     Boolean(point && point.x > 0), JSON.stringify(point));
+  if (!point) { await sleep(600); continue; }
   const before = await evalv(cdp, READ_SCORE_JS);
   await mouseClick(cdp, point.x, point.y);
   const scoreChanged = await waitFor(cdp, scoreChangedExpr(before), 3500, 60)
     .then((v) => v, () => null);
   check(`第 1 关目标 ${i + 1} 命中成功（分数上涨）`, Boolean(scoreChanged), scoreChanged ?? '分数未变');
-  await sleep(300);
+  await sleep(600);
 }
 const score1 = await evalv(cdp, READ_SCORE_JS);
 check('第 1 关得分 > 0', Number(score1) > 0, `score=${score1}`);
@@ -715,15 +686,19 @@ check('第 2 关目标定位（复刻或规则匹配）', l2Targets.length === 3
 
 for (let i = 0; i < l2Targets.length; i += 1) {
   const target = l2Targets[i];
-  const point = target.scale != null
-    ? await evalv(cdp, clickPointForIdxJs(target.idx, target.x, target.y, target.scale, target.rot))
-    : await evalv(cdp, clickPointForDomJs(target.name, target.x, target.y));
+  const point = target.idx != null
+    ? await evalv(cdp, clickPointForIdxJs(target.idx))
+    : await evalv(cdp, clickPointForDomJs(target.name));
+  if (!point) {
+    check(`第 2 关目标 ${i + 1} 命中成功（${target.name}）`, false, '游戏视角下无可点击像素');
+    continue;
+  }
   const before = await evalv(cdp, READ_SCORE_JS);
   await mouseClick(cdp, point.x, point.y);
   const scoreChanged = await waitFor(cdp, scoreChangedExpr(before), 3500, 60)
     .then((v) => v, () => null);
   check(`第 2 关目标 ${i + 1} 命中成功（${target.name}）`, Boolean(scoreChanged), scoreChanged ?? '分数未变');
-  await sleep(300);
+  await sleep(600);
 }
 
 // 第 2 关完成 → 自动进第 3 关（顺带验证连续体力扣减）
@@ -743,15 +718,15 @@ const continueAfter = await evalv(cdp, `document.querySelector('[aria-label^="�
 check('返回主菜单后继续按钮指向第 3 关', continueAfter === '继续第3关，消耗1点体力', continueAfter);
 
 const storageAfter = await evalv(cdp, `(() => {
-  const get = (k) => localStorage.getItem(k);
-  const scores = JSON.parse(get('znm.best.levelScores.v3') ?? '{}');
-  const stars = JSON.parse(get('znm.best.levelStars') ?? '{}');
+  const get = (k) => localStorage.getItem(${JSON.stringify(keyPrefix)} + k);
+  const scores = JSON.parse(get('best.levelScores.v3') ?? '{}');
+  const stars = JSON.parse(get('best.levelStars') ?? '{}');
   return {
     level1: scores[1], level2: scores[2],
     star1: stars[1], star2: stars[2],
-    maxLevel: get('znm.best.maxLevel.v3'),
-    bestLevels: get('znm.best.levels.v3'),
-    stamina: JSON.parse(get('znm.stamina.v1') ?? '{}').value,
+    maxLevel: get('best.maxLevel.v3'),
+    bestLevels: get('best.levels.v3'),
+    stamina: JSON.parse(get('stamina.v1') ?? '{}').value,
   };
 })()`);
 check('存档落库：1/2 关得分与星级', storageAfter.level1 > 0 && storageAfter.level2 > 0 && storageAfter.star1 >= 1 && storageAfter.star2 >= 1,
@@ -770,7 +745,7 @@ const endlessOk = await waitFor(cdp, `(() => {
   return /第 1 波/.test(plaques) && /01:15/.test(plaques) ? plaques : null;
 })()`, 8000).then((v) => v, () => null);
 check('无尽模式第 1 波开始（时间 01:15）', Boolean(endlessOk), endlessOk ?? '');
-const endlessStamina = await evalv(cdp, `JSON.parse(localStorage.getItem('znm.stamina.v1') ?? '{}').value`);
+const endlessStamina = await evalv(cdp, `JSON.parse(localStorage.getItem(${keyExpr('stamina.v1')}) ?? '{}').value`);
 check('无尽体力扣 5（17 → 12）', endlessStamina === 12, `stamina=${endlessStamina}`);
 await screenshot(cdp, 'd-endless');
 await clickSelector(cdp, '[aria-label="暂停游戏"]');
@@ -787,8 +762,11 @@ await dismissTutorialIfAny(cdp);
 
 const emptyPoint = await evalv(cdp, `(() => {
   const scene = [...document.querySelectorAll('div')].find((d) => d.style.width === '150%');
-  if (!scene) return null;
-  // 避开场景物品 + 所有按钮（HUD 返回/暂停等）+ 顶底操作区
+  const field = document.querySelector('[class*="touch-none"]');
+  if (!scene || !field) return null;
+  const fr = field.getBoundingClientRect();
+  // 扫描范围限定在棋盘视口内（页眉任务相框已与棋盘分离，不是可点区域）；
+  // 避开场景物品 + 所有按钮（返回/暂停/底部加时、提示、静音）
   const blocked = [];
   for (const btn of [...document.querySelectorAll('button')]) {
     const r = btn.getBoundingClientRect();
@@ -800,8 +778,8 @@ const emptyPoint = await evalv(cdp, `(() => {
   }
   const inBlocked = (x, y) => blocked.some((b) => x >= b.x0 && x <= b.x1 && y >= b.y0 && y <= b.y1);
   let best = null, bestDist = -Infinity;
-  for (let gy = 100; gy < 500; gy += 12) {
-    for (let gx = 20; gx < 780; gx += 12) {
+  for (let gy = Math.ceil(fr.top + 8); gy < fr.bottom - 8; gy += 12) {
+    for (let gx = Math.ceil(fr.left + 8); gx < fr.right - 8; gx += 12) {
       if (inBlocked(gx, gy)) continue;
       const d = Math.min(...blocked.map((b) => Math.hypot(gx - (b.x0 + b.x1) / 2, gy - (b.y0 + b.y1) / 2) - Math.max(b.x1 - b.x0, b.y1 - b.y0) / 2 - 20));
       if (d > bestDist) { bestDist = d; best = { x: gx, y: gy }; }
@@ -877,7 +855,7 @@ const staminaInject = async (value) => {
     source: `(() => {
       if (!location.protocol.startsWith('http')) return; // about:blank 无 localStorage
       const key = new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
-      localStorage.setItem('znm.stamina.v1', JSON.stringify({ value: ${value}, onlineProgressMs: 0, lastSeenAt: Date.now(), dailyRefillKey: key }));
+      localStorage.setItem(${JSON.stringify(keyPrefix + 'stamina.v1')}, JSON.stringify({ value: ${value}, onlineProgressMs: 0, lastSeenAt: Date.now(), dailyRefillKey: key }));
     })();`,
   });
   await cdp.send('Page.navigate', { url: 'about:blank' });
@@ -887,6 +865,7 @@ const staminaInject = async (value) => {
   await waitFor(cdp, `document.readyState === 'complete'`, 15000);
   await ensureRng(cdp);
   await waitFor(cdp, `!!document.querySelector('[aria-label^="眼力值"]')`, 15000);
+  await detectKeyPrefix(cdp);
 };
 await staminaInject(0);
 const zeroLabel = await evalv(cdp, `document.querySelector('[aria-label^="眼力值"]')?.getAttribute('aria-label')`);
@@ -956,7 +935,7 @@ await staminaInject(17);
 const afterReload = await evalv(cdp, `(() => {
   const btn = document.querySelector('[aria-label^="继续第"]')?.getAttribute('aria-label');
   const badge = document.querySelector('[aria-label="伙伴"]')?.textContent ?? '';
-  const scores = JSON.parse(localStorage.getItem('znm.best.levelScores.v3') ?? '{}');
+  const scores = JSON.parse(localStorage.getItem(${keyExpr('best.levelScores.v3')}) ?? '{}');
   return { btn, badge, scoreCount: Object.keys(scores).length };
 })()`);
 check('刷新后继续第 3 关（进度持久化）', afterReload.btn === '继续第3关，消耗1点体力', afterReload.btn);
