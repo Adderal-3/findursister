@@ -19,8 +19,8 @@ const BASE_X_PERCENT = (SCENE_ITEM_FRACTION / SCENE_SCALE.w) * 100;
 const BASE_Y_PERCENT = SCENE_ITEM_FRACTION * 100;
 const EDGE_SAFE_X = 1.4;
 const EDGE_SAFE_Y = 1.3;
-/** 顶部关卡牌 + 任务条占位，物件不得侵入，否则会被 HUD 遮挡。 */
-const HUD_SAFE_TOP = 22;
+/** 棋盘顶部呼吸边距（HUD 已与棋盘分离、不再遮挡，仅留少量留白避免贴边）。 */
+const HUD_SAFE_TOP = 5;
 /** 底部三枚圆钮 + 文字标签占位，避免物件躲到按钮后面。 */
 const ACTION_SAFE_BOTTOM = 13;
 const GAP_X = 0.04;

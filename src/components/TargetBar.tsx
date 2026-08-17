@@ -33,18 +33,18 @@ export function TargetBar({
 
   return (
     <div className="relative mx-auto w-full max-w-[46rem]">
-      <div className="qingya-mission-frame pointer-events-none relative h-[4.15rem] w-full sm:h-[4.55rem]">
+      <div className="qingya-mission-frame pointer-events-none relative h-[3.2rem] w-full sm:h-[3.5rem]">
         <img
           src={imgMissionFrameWarm}
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-fill"
         />
-        <div className="absolute inset-[9%_4%_11%] flex items-center gap-2 sm:gap-3">
-          <div className="qingya-round-button flex h-10 w-10 shrink-0 items-center justify-center text-[#795035] sm:h-11 sm:w-11">
+        <div className="absolute inset-[10%_4%_13%] flex items-center gap-2 sm:gap-3">
+          <div className="qingya-round-button flex h-8 w-8 shrink-0 items-center justify-center text-[#795035] sm:h-9 sm:w-9">
             {done
-              ? <Check className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
-              : <ScanSearch className="h-4.5 w-4.5 sm:h-5 sm:w-5" strokeWidth={2.2} />}
+              ? <Check className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
+              : <ScanSearch className="h-4 w-4 sm:h-4.5 sm:w-4.5" strokeWidth={2.2} />}
           </div>
           <div className="flex min-w-0 flex-1 items-center gap-1">
             {targets.map((target, index) => {
@@ -59,7 +59,7 @@ export function TargetBar({
                     <ChevronRight className="h-3 w-3 shrink-0 text-[#a98964]/70" strokeWidth={2.5} />
                   )}
                   <div
-                    className={`relative min-w-0 flex-1 overflow-hidden rounded-lg border px-1.5 py-1 ${
+                    className={`relative min-w-0 flex-1 overflow-hidden rounded-lg border px-1.5 py-0.5 ${
                       active
                         ? 'border-[#ba7b49]/55 bg-[#fff6e1]'
                         : targetDone

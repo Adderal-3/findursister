@@ -43,12 +43,12 @@ const allTags = new Set(Object.values(tagDomains).flat());
 const expectedCategoryCounts = {
   instrument: 10,
   written: 6,
-  container: 19,
+  container: 20,
   flying: 11,
   glowing: 7,
   sharp: 12,
   sweet_food: 20,
-  plant: 27,
+  plant: 28,
   vehicle: 8,
   animal: 10,
 };
