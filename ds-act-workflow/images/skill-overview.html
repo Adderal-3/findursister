@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ds-act-workflow · 整体技能流程</title>
+<style>
+  :root{
+    --bg:#f6f8fc; --bg2:#eef2f9;
+    --card:#ffffff; --card2:#f8fafc;
+    --line:#e2e8f2; --line2:#d4dceb;
+    --txt:#1e293b; --sub:#64748b; --sub2:#94a3b8;
+    --code:#3b6fb5;
+    --ink:#0f172a;
+    --blue:#2563eb; --blue-d:#1d4ed8; --blue-l:#dbeafe;
+    --cyan:#0891b2; --cyan-l:#cffafe;
+    --green:#059669; --green-l:#d1fae5;
+    --purple:#7c3aed; --purple-l:#ede9fe;
+    --orange:#ea580c; --orange-l:#fed7aa;
+    --slate:#475569; --slate-l:#e2e8f0;
+    --amber:#b45309; --amber-l:#fef3c7;
+    --red:#b91c1c; --red-l:#fee2e2;
+    --mono:'SF Mono','Cascadia Code',Consolas,ui-monospace,monospace;
+    --sans:'Inter','Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--txt); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;
+    min-height:100vh; padding:48px 24px 64px;
+  }
+  .wrap{max-width:1480px; margin:0 auto;}
+  header.head{ text-align:center; margin-bottom:40px; }
+  .kicker{ display:inline-block; padding:4px 14px; border:1px solid var(--line2); border-radius:4px;
+    color:var(--sub); font-size:11px; letter-spacing:.14em; text-transform:uppercase; background:var(--card);}
+  h1{ font-size:30px; font-weight:700; margin:16px 0 6px; letter-spacing:-.01em; color:var(--ink);}
+  .sub{ color:var(--sub); font-size:14px;}
+
+  /* 层级 */
+  .layer{ margin:0 auto 14px; position:relative;}
+  .layer-tag{ display:flex; align-items:center; justify-content:center; gap:14px;
+    color:var(--sub2); font-size:11px; letter-spacing:.18em; text-transform:uppercase; margin:28px 0 14px;}
+  .layer-tag::before,.layer-tag::after{ content:""; flex:0 0 90px; height:1px; background:linear-gradient(90deg,transparent,var(--line2),transparent);}
+  .layer-tag b{ color:var(--ink); font-weight:600; letter-spacing:.04em; text-transform:none; font-size:13px;}
+
+  /* 连接器 */
+  .conn{ display:flex; align-items:center; justify-content:center; gap:8px; margin:6px 0 10px;
+    color:var(--sub2); font-size:11.5px;}
+  .conn .arrow{ width:1px; height:16px; background:var(--line2);}
+  .conn .pill{ padding:3px 12px; border:1px solid var(--line2); border-radius:4px; background:var(--card); color:var(--sub);}
+
+  /* 卡片 */
+  .grid{ display:grid; gap:12px;}
+  .g2{ grid-template-columns:repeat(2,1fr);}
+  .g3{ grid-template-columns:repeat(3,1fr);}
+  .g5{ grid-template-columns:repeat(5,1fr);}
+  .g-cap{ grid-template-columns:repeat(5,1fr);}
+
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 14px 12px;
+    position:relative; box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .card .title{ display:flex; align-items:center; gap:8px; font-weight:600; font-size:13.5px; margin-bottom:4px; color:var(--ink);}
+  .badge{ display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px;
+    padding:0 6px; border-radius:4px; font-family:var(--mono); font-size:11px; font-weight:700;
+    color:#fff; letter-spacing:0;}
+  .card ul{ margin:6px 0 0; padding:0; list-style:none; font-size:12.5px; color:#475569;}
+  .card li{ padding:3px 0 3px 12px; position:relative; line-height:1.5;}
+  .card li::before{ content:""; position:absolute; left:2px; top:10px; width:4px; height:4px; border-radius:50%; background:var(--line2);}
+  .card .ref{ margin-top:8px; font-family:var(--mono); font-size:11px; color:var(--code);
+    background:var(--bg2); border:1px solid var(--line); border-radius:4px; padding:2px 6px; display:inline-block;}
+  .card .foot{ margin-top:8px; font-size:11px; color:var(--sub2); border-top:1px solid var(--line); padding-top:6px; line-height:1.45;}
+  code{ font-family:var(--mono); font-size:11.5px; color:var(--code); background:var(--bg2); padding:1px 4px; border-radius:3px;}
+
+  /* 颜色变体（蓝白为主，淡边框 + 同色徽章） */
+  .v-blue{ border-color:#bfdbfe;} .v-blue .badge{ background:var(--blue);}
+  .v-cyan{ border-color:#a5f3fc;} .v-cyan .badge{ background:var(--cyan);}
+  .v-green{ border-color:#bbf7d0;} .v-green .badge{ background:var(--green);}
+  .v-purple{ border-color:#ddd6fe;} .v-purple .badge{ background:var(--purple);}
+  .v-orange{ border-color:#fed7aa;} .v-orange .badge{ background:var(--orange);}
+  .v-slate{ border-color:#e2e8f0;} .v-slate .badge{ background:var(--slate);}
+  .v-amber{ border-color:#fde68a;} .v-amber .badge{ background:var(--amber);}
+  .v-red{ border-color:#fecaca;} .v-red .badge{ background:var(--red);}
+
+  /* 入口 */
+  .hero{ max-width:680px; margin:0 auto; border:1px solid #bfdbfe; background:linear-gradient(180deg,#fff,#f8fbff);}
+  .hero .title{ font-size:15px; justify-content:center;}
+  .hero .meta{ text-align:center; color:var(--sub); font-size:12px; margin-top:4px;}
+  .stacks{ display:flex; gap:6px; justify-content:center; margin-top:10px;}
+  .stacks span{ padding:2px 10px; border:1px solid var(--line2); border-radius:3px; font-family:var(--mono); font-size:10.5px; color:#475569; background:var(--bg2);}
+
+  /* 菜单 */
+  .menu{ border:1px solid #bfdbfe; background:linear-gradient(180deg,#fff,#f8fbff); border-radius:8px; padding:16px 18px; box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .menu h3{ margin:0 0 12px; font-size:13px; color:var(--ink); display:flex; align-items:center; gap:8px; font-weight:600;}
+  .menu-cols{ display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .menu-cols .col h4{ margin:0 0 8px; font-size:11px; color:var(--sub2); letter-spacing:.1em; text-transform:uppercase; font-weight:600;}
+  .menu-cols .row{ display:flex; align-items:center; gap:8px; padding:6px 0; font-size:12.5px; border-bottom:1px dashed var(--line);}
+  .menu-cols .row:last-child{ border-bottom:0;}
+  .menu-cols .row .badge{ flex:0 0 auto;}
+  .menu-cols .row .desc{ color:#334155;}
+  .menu-cols .row .opt{ margin-left:auto; font-size:10px; color:var(--sub2); border:1px solid var(--line2); border-radius:3px; padding:1px 5px;}
+  .path{ margin-top:14px; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--blue-d); background:var(--blue-l); border:1px solid #bfdbfe; border-radius:4px; padding:6px 10px;}
+
+  /* 持久化 */
+  .triptych .card{ padding:12px 14px 10px;}
+  .steps{ margin:6px 0 0; padding:0; list-style:none; font-size:11.5px; color:#475569;}
+  .steps li{ padding:3px 0 3px 24px; position:relative; line-height:1.5;}
+  .steps li .n{ position:absolute; left:0; top:3px; font-family:var(--mono); font-size:10.5px;
+    border:1px solid var(--line2); border-radius:3px; padding:0 4px; color:var(--sub); background:var(--card);}
+  .steps li.key{ color:var(--blue-d); font-weight:500;}
+  .steps li.key .n{ color:var(--blue-d); border-color:#bfdbfe; background:var(--blue-l);}
+
+  /* 关联 / 资源池 */
+  .links .card{ padding:11px 14px;}
+  .links .card .title{ font-size:13px; margin-bottom:3px;}
+  .links .card .desc{ font-size:11.5px; color:var(--sub); line-height:1.45;}
+  .pool .card{ padding:11px 12px 9px;}
+  .pool .card .title{ font-size:12.5px; margin-bottom:2px;}
+  .pool .card .ref{ font-size:10.5px; margin-top:4px;}
+  .pool .card .desc{ font-size:11px; color:var(--sub); margin-top:4px; line-height:1.45;}
+
+  /* 图例 */
+  .legend{ margin-top:36px; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--card);}
+  .legend .row{ display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center;}
+  .legend .it{ display:flex; align-items:center; gap:6px; font-size:11px; color:var(--sub);}
+  .legend .dot{ width:10px; height:10px; border-radius:3px;}
+
+  .chip{ display:inline-block; padding:1px 6px; border-radius:3px; font-family:var(--mono); font-size:10px;
+    border:1px solid var(--line2); color:#475569; background:var(--bg2);}
+  .chip.k{ color:var(--blue-d); border-color:#bfdbfe; background:var(--blue-l);}
+
+  @media (max-width:1100px){
+    .g5,.g-cap{ grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:760px){
+    .g2,.g3,.g5,.g-cap,.menu-cols{ grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <span class="kicker">Capability-Contract Architecture · v2026.08</span>
+    <h1>ds-act-workflow · 整体技能流程</h1>
+    <div class="sub">网易大神 H5 运营活动 · 业务注入 / 审查 / 打包 · 完整工作流概览</div>
+  </header>
+
+  <!-- 1. 入口 -->
+  <div class="layer">
+    <div class="card hero v-blue">
+      <div class="title">用户触发 /ds-act-workflow</div>
+      <div class="meta">项目根目录 · 能力契约式架构：SKILL.md = 路由器（依赖检测 + 前置扫描 + 注册表 + 路由规则）</div>
+      <div class="stacks">
+        <span>HTML</span><span>React</span><span>Vue</span><span>Cocos web-mobile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 跨切机制 -->
+  <div class="layer-tag"><span>STEP</span><b>跨切机制 · 路由器级（透明 · 不可跳过）</b></div>
+  <div class="grid g3">
+    <div class="card v-amber">
+      <div class="title"><span class="badge">G1</span> 用户级规范注入</div>
+      <div class="ref">references/capabilities/user-context-injection.md</div>
+      <ul>
+        <li>检查 <code>~/.agents/AGENTS.md</code> 是否有 ds-act-workflow guardrails marker 块</li>
+        <li>无 → 注入；有 → 幂等更新（不破坏用户原有内容）</li>
+        <li>规范真源：<code>templates/guardrails.md</code></li>
+        <li>目的：运营用任何 agent 写 H5 代码都能读到规范</li>
+      </ul>
+    </div>
+    <div class="card v-blue">
+      <div class="title"><span class="badge">G2</span> 依赖技能检测（含缓存）</div>
+      <div class="ref">references/dep-check.md</div>
+      <ul>
+        <li>3 个软必需技能：<code>appkey-naming</code> / <code>dsjssdk</code> / <code>html-security-scan</code></li>
+        <li>命中 <code>.skill-cache.json</code> → 静默跳过</li>
+        <li>verified 列表完全一致 → 跳过；否则完整检测并写缓存</li>
+        <li>缺失 → 删缓存 + 禁用依赖 capability，不阻断 skill</li>
+      </ul>
+      <div class="foot">依赖映射：appkey-naming → inject · dsjssdk + html-security-scan → audit</div>
+    </div>
+    <div class="card v-blue">
+      <div class="title"><span class="badge">G3</span> 前置扫描（只报告不执行）</div>
+      <div class="ref">references/prescan.md</div>
+      <ul>
+        <li><b>1a Cocos web-mobile 检测</b>：cocos2d-js*.js + <code>_CCSettings</code> 同存</li>
+        <li><b>1b H5 结构扫描</b>：内嵌 <code>&lt;style&gt;</code> / 业务 <code>&lt;script&gt;</code> 内嵌</li>
+        <li>Cocos 启动块豁免：含 <code>_CCSettings</code>/<code>window.boot</code> 的内嵌块不计业务脚本</li>
+      </ul>
+      <div class="foot">命中 Cocos → 推 [C] · 内嵌未分离 → 推 [0] · 均未命中 → 静默</div>
+    </div>
+  </div>
+
+  <div class="conn"><span class="arrow"></span><span class="pill">检测通过 · 进入能力路由</span><span class="arrow"></span></div>
+
+  <!-- 3. 能力菜单 -->
+  <div class="layer-tag"><span>STEP</span><b>能力注册表 · 路由规则（编号 = 快捷方式，意图驱动自主选择）</b></div>
+  <div class="menu">
+    <h3>能力菜单（首次触发 / 意图不明确时展示；明确意图或编号直达则跳过）</h3>
+    <div class="menu-cols">
+      <div class="col">
+        <h4>主流程能力</h4>
+        <div class="row"><span class="badge" style="background:#475569">0</span><span class="desc">规范目录</span><span class="opt">可选</span></div>
+        <div class="row"><span class="badge" style="background:#0891b2">C</span><span class="desc">Cocos Vite 集成</span><span class="opt">可选</span></div>
+        <div class="row"><span class="badge" style="background:#2563eb">1</span><span class="desc">注入大神（ds.js）</span></div>
+        <div class="row"><span class="badge" style="background:#7c3aed">2</span><span class="desc">审查现有代码</span></div>
+        <div class="row"><span class="badge" style="background:#2563eb">3</span><span class="desc">构建并打包</span></div>
+      </div>
+      <div class="col">
+        <h4>扩展能力</h4>
+        <div class="row"><span class="badge" style="background:#ea580c">4</span><span class="desc">游戏行为埋点</span></div>
+        <div class="row"><span class="badge" style="background:#7c3aed">5</span><span class="desc">游戏数据持久化</span></div>
+        <div class="row"><span class="badge" style="background:#7c3aed">6</span><span class="desc">大神活动 SDK</span></div>
+        <div class="row"><span class="badge" style="background:#2563eb">7</span><span class="desc">启动开发环境</span></div>
+        <div class="row"><span class="badge" style="background:#ea580c">8</span><span class="desc">互动广告预览</span></div>
+        <div class="row"><span class="badge" style="background:#059669">9</span><span class="desc">资源优化</span></div>
+      </div>
+    </div>
+    <div class="path">推荐路径：[0/C] → [1] → [扩展 4/5/6/8/9] → [2] → [3]</div>
+  </div>
+
+  <!-- 4. Git 门禁 -->
+  <div class="layer">
+    <div class="card v-red">
+      <div class="title"><span class="badge">GATE</span> Git 管理门禁 · 跨切（改源码能力 0/C/1/4/5/6/8/9 自动包裹）</div>
+      <div class="ref">references/capabilities/git-gate.md</div>
+      <ul style="columns:2; column-gap:32px;">
+        <li>无 .git → auto-init + .gitignore + 基线提交</li>
+        <li>.git 在根 + 脏 → 复用 + 未提交改动提交为基线</li>
+        <li>.git 在根 + 干净 → HEAD 即基线，跳过</li>
+        <li>.git 在祖先 → 门禁不介入，能力照常跑</li>
+        <li>能力提交 scope：<code>(ds-act-workflow)</code> · 可 git log --grep 追溯</li>
+        <li>只读 / gitignored 产物能力（2/3/7）不触发门禁</li>
+        <li>幂等重入无改动 → 跳过提交（不产空 commit）</li>
+        <li>中途失败 → partial 提交 + [中断] 标注，不自动回退</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conn"><span class="arrow"></span><span class="pill">选定能力后读取对应 references/capabilities/*.md 执行</span><span class="arrow"></span></div>
+
+  <!-- 5. 能力详情 -->
+  <div class="layer-tag"><span>STEP</span><b>能力详情 · 执行区</b></div>
+  <div class="grid g-cap">
+
+    <div class="card v-slate">
+      <div class="title"><span class="badge">0</span> 规范目录</div>
+      <div class="ref">structure.md</div>
+      <ul>
+        <li>读 HTML · 提取内联 <code>&lt;style&gt;</code>/<code>&lt;script&gt;</code></li>
+        <li>生成 <code>src/*.css</code> + <code>src/*.js</code></li>
+        <li>window 桥接块 + 生成 CLAUDE.md</li>
+      </ul>
+      <div class="foot">依赖：无 · 出参：src/ 结构</div>
+    </div>
+
+    <div class="card v-cyan">
+      <div class="title"><span class="badge">C</span> Cocos Vite</div>
+      <div class="ref">cocos-vite.md</div>
+      <ul>
+        <li>失效远程文件 · 生成 <code>entry.js</code>（url import）</li>
+        <li>改写 <code>index.html</code> + <code>package.json</code></li>
+        <li>逻辑钩子挂 <code>public/</code> · vite build + CDN hash</li>
+      </ul>
+      <div class="foot">依赖：无 · 出参：entry.js + 改写产物</div>
+    </div>
+
+    <div class="card v-blue">
+      <div class="title"><span class="badge">1</span> 注入大神</div>
+      <div class="ref">inject.md</div>
+      <ul>
+        <li>探测项目 · 海报业务信息</li>
+        <li>NS 日志 / uid / 登录 / 分享 / ulink / 小组件</li>
+        <li>导航 / 红包 · 生成 <code>ds.js</code></li>
+        <li>SDK-LOADER + 第三方依赖 + 点击修复</li>
+      </ul>
+      <div class="foot">依赖：structure（推荐）· 出参：ds.js + SDK-LOADER</div>
+    </div>
+
+    <div class="card v-purple">
+      <div class="title"><span class="badge">2</span> 审查</div>
+      <div class="ref">audit.md → audits/index.md</div>
+      <ul>
+        <li>确定审查范围 · DS Marker 校验</li>
+        <li>JSSDK 深度校验（调 /dsjssdk）</li>
+        <li>HTML 安全（调 /html-security-scan）</li>
+        <li>点击风险 · 输出分级报告</li>
+      </ul>
+      <div class="foot">依赖：inject（必须）· 19 个审查规则模块</div>
+    </div>
+
+    <div class="card v-blue">
+      <div class="title"><span class="badge">3</span> 部署</div>
+      <div class="ref">deploy.md</div>
+      <ul>
+        <li>可选审查 · 检测 package.json</li>
+        <li>有 build → <code>npm run build</code></li>
+        <li>无 → 直接打包 · 输出 <code>deploy.zip</code></li>
+      </ul>
+      <div class="foot">依赖：audit（推荐）· 出参：deploy.zip</div>
+    </div>
+
+    <div class="card v-orange">
+      <div class="title"><span class="badge">4</span> 埋点</div>
+      <div class="ref">game-log.md</div>
+      <ul>
+        <li>扫描业务代码 · 语义探 4 类节点</li>
+        <li>交易 / 流程 / 用户 / 成败</li>
+        <li>生成 <code>trackEvent</code> 调用</li>
+      </ul>
+      <div class="foot">依赖：inject（必须）· 出参：trackEvent 调用</div>
+    </div>
+
+    <div class="card v-purple">
+      <div class="title"><span class="badge">5</span> 持久化</div>
+      <div class="ref">game-storage.md</div>
+      <ul>
+        <li>triage 选 A/B/C 三方案</li>
+        <li>A 本地存档 / B 服务端 6 步 / C 公共表 8 步</li>
+        <li>见下方子流程明细</li>
+      </ul>
+      <div class="foot">依赖：本地无 · 服务端+公共表需 [1]</div>
+    </div>
+
+    <div class="card v-purple">
+      <div class="title"><span class="badge">6</span> 活动 SDK</div>
+      <div class="ref">ds-act-sdk.md</div>
+      <ul>
+        <li>五子能力 A→E 依次执行</li>
+        <li>A 角色 / B 任务 / C 回流检测</li>
+        <li>D CPS 底部栏 / E 心易会员流失召回</li>
+        <li><code>configure</code> + <code>evoke</code> + HTML 容器</li>
+      </ul>
+      <div class="foot">依赖：inject（必须）· 子模块 ds-act-sdk/</div>
+    </div>
+
+    <div class="card v-blue">
+      <div class="title"><span class="badge">7</span> 开发服务器</div>
+      <div class="ref">dev-server.md</div>
+      <ul>
+        <li>检查 Node ≥ 18 · mkcert</li>
+        <li>HTTPS 静态服务 · 配置 hosts</li>
+        <li>终端输出调试二维码</li>
+      </ul>
+      <div class="foot">依赖：无 · 出参：运行中的 server</div>
+    </div>
+
+    <div class="card v-orange">
+      <div class="title"><span class="badge">8</span> 广告预览</div>
+      <div class="ref">ad-preview.md（仅 HTML）</div>
+      <ul>
+        <li>A 添加遮罩（上 94 / 下 220）</li>
+        <li>R 移除遮罩 · K 检查残留</li>
+        <li>L 注入广告点击日志（生产）</li>
+      </ul>
+      <div class="foot">依赖：L 需 inject（必须）· A/R/K 无依赖</div>
+    </div>
+
+    <div class="card v-green">
+      <div class="title"><span class="badge">9</span> 资源优化</div>
+      <div class="ref">resource-optimization.md</div>
+      <ul>
+        <li>sharp quality 80 · 保格式不 resize</li>
+        <li>>300KB 图片 · 内容 hash 去重</li>
+        <li><code>.compress-cache.json</code> · vite build 验证</li>
+      </ul>
+      <div class="foot">依赖：无 · 出参：压缩图 + cache</div>
+    </div>
+
+  </div>
+
+  <div class="conn"><span class="arrow"></span><span class="pill">模式 5 持久化 · 子流程明细</span><span class="arrow"></span></div>
+
+  <!-- 6. 持久化三方案 -->
+  <div class="layer">
+    <div class="grid g3 triptych">
+      <div class="card v-green">
+        <div class="title"><span class="badge">5-A</span> 本地存档</div>
+        <div class="ref">game-storage.md（本地路径）</div>
+        <ul class="steps">
+          <li><span class="n">1</span> 选字段 · <code>00-intake</code></li>
+          <li><span class="n">2</span> 同步策略 · <code>01-sync-strategy</code></li>
+          <li><span class="n">2.5</span> 类型 · <code>02.5-storage-keys-d.ts</code></li>
+          <li class="key"><span class="n">★</span> 代码生成 <code>game-storage.js</code></li>
+          <li><span class="n">3</span> localStorage · AES-GCM 加密 · 零依赖</li>
+        </ul>
+        <div class="foot">数据存取设备 localStorage</div>
+      </div>
+      <div class="card v-purple">
+        <div class="title"><span class="badge">5-B</span> 服务端存储（6 步）</div>
+        <div class="ref">references/server-storage/</div>
+        <ul class="steps">
+          <li><span class="n">1</span> 字段确定 · <code>00-intake</code></li>
+          <li><span class="n">2</span> 同步策略 · <code>01-sync-strategy</code></li>
+          <li><span class="n">2.5</span> 类型 · <code>02.5-storage-keys-d.ts</code></li>
+          <li><span class="n">3</span> 代码生成 · <code>02-best-practices</code></li>
+          <li><span class="n">4</span> 排行榜（条件）· <code>03-leaderboard</code></li>
+          <li class="key"><span class="n">5</span> CMS 注册 · <code>04-cms-register</code></li>
+          <li class="key"><span class="n">6</span> 审查 → <code>audits/server-storage.md</code></li>
+        </ul>
+        <div class="foot">数值任务依赖 ds-act-sdk（A 档阻断）</div>
+      </div>
+      <div class="card v-orange">
+        <div class="title"><span class="badge">5-C</span> 公共表 datahub-table（8 步）</div>
+        <div class="ref">references/server-storage/common-table/</div>
+        <ul class="steps">
+          <li><span class="n">1</span> triage 识别 + 预检查</li>
+          <li><span class="n">2</span> 表设计</li>
+          <li><span class="n">3</span> 索引匹配（IndexMatchChecker）</li>
+          <li class="key"><span class="n">4</span> 生成 JSON · <code>validate.cjs</code> + <code>table.d.ts</code></li>
+          <li><span class="n">5</span> 代码生成 · <code>game-common-table.js</code></li>
+          <li class="key"><span class="n">6</span> CMS 注册</li>
+          <li><span class="n">7</span> 审查 → <code>audits/common-table.md</code></li>
+          <li class="key"><span class="n">8</span> TableConfig JSON → god-cms 一键导入</li>
+        </ul>
+        <div class="foot">多人共写共读 · 帖吧/投稿墙/点赞墙</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"><span class="arrow"></span><span class="pill">模式间调用关系 · 依赖与触发链</span><span class="arrow"></span></div>
+
+  <!-- 7. 关联矩阵 -->
+  <div class="layer">
+    <div class="grid g-cap links">
+      <div class="card v-blue">
+        <div class="title">[1] → 自动触发 [2]</div>
+        <div class="desc">ds.js 生成后立即审查，确保无违规</div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">[3] → 可选触发 [2]</div>
+        <div class="desc">打包前询问是否先审查，过审再打包</div>
+      </div>
+      <div class="card v-orange">
+        <div class="title">[4] → 依赖 [1]</div>
+        <div class="desc">需 ds.js 的 <code>trackEvent</code>，未接入提示先 [1]</div>
+      </div>
+      <div class="card v-purple">
+        <div class="title">[5-B] 过审 → triage [5-C]</div>
+        <div class="desc">识别公共表数据形态自动转 5-C 路径</div>
+      </div>
+      <div class="card v-purple">
+        <div class="title">[6] / [5] 完成 → 推 [2]/[3]/[7]</div>
+        <div class="desc">接入完成后可审查 / 打包 / 开发环境测试</div>
+      </div>
+      <div class="card v-orange">
+        <div class="title">[8] 调试 → [2]/[3] 阻断</div>
+        <div class="desc">遮罩残留阻断部署 · 上线前必 [R] 移除</div>
+      </div>
+      <div class="card v-green">
+        <div class="title">[9] deploy 软门禁</div>
+        <div class="desc">检测大图引导 [9]，不自动压缩 · 与 [3] 衔接</div>
+      </div>
+      <div class="card v-slate">
+        <div class="title">多模式共用 audits</div>
+        <div class="desc">[1]/[2]/[5-B]/[5-C] 均校验 audits/index.md 19 条规则</div>
+      </div>
+      <div class="card v-amber">
+        <div class="title">跨切：G1 规范注入</div>
+        <div class="desc">任何能力调用前自动检查 marker · 预防违规产出</div>
+      </div>
+      <div class="card v-red">
+        <div class="title">跨切：Git 门禁</div>
+        <div class="desc">改源码能力前后自动包裹（基线 + 能力提交）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"><span class="arrow"></span><span class="pill">公共引用资源 · contracts / primitives / templates</span><span class="arrow"></span></div>
+
+  <!-- 8. 资源池 -->
+  <div class="layer">
+    <div class="grid g5 pool">
+      <div class="card v-slate">
+        <div class="title">primitives/</div>
+        <div class="ref">无状态原语</div>
+        <div class="desc">scan-html · detect-framework<br>返回原始结构化数据，不做 Marker 语义</div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">contracts/ds-js-markers</div>
+        <div class="ref">ds-js-markers.md</div>
+        <div class="desc">9 个标准 Marker 块定义 / 占位符 / 不变量</div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">contracts/sdk-loader</div>
+        <div class="ref">sdk-loader.md</div>
+        <div class="desc">SDK-LOADER 模板 · SEO 标签 · <code>{IS_COCOS}</code></div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">contracts/ds-act-sdk-api</div>
+        <div class="ref">ds-act-sdk-api.md</div>
+        <div class="desc">configure / evoke / TaskChecker · Provider 启动流程</div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">contracts/framework-diffs</div>
+        <div class="ref">framework-diffs.md</div>
+        <div class="desc">HTML / React / Vue 三栈框架适配指引</div>
+      </div>
+      <div class="card v-blue">
+        <div class="title">contracts/miniapp</div>
+        <div class="ref">miniapp.md</div>
+        <div class="desc">微信小程序改造与联登接入原理</div>
+      </div>
+      <div class="card v-green">
+        <div class="title">templates/ds-js</div>
+        <div class="ref">ds-js-template.js</div>
+        <div class="desc">ds.js 代码真源（可 lint）</div>
+      </div>
+      <div class="card v-green">
+        <div class="title">templates/sdk-loader</div>
+        <div class="ref">sdk-loader-template.html</div>
+        <div class="desc">SDK-LOADER HTML 模板真源</div>
+      </div>
+      <div class="card v-green">
+        <div class="title">templates/nav-bar · react-hooks</div>
+        <div class="ref">ds-nav-bar-template.js · ds-react-hooks-template.ts</div>
+        <div class="desc">导航栏 / React hooks 代码真源</div>
+      </div>
+      <div class="card v-amber">
+        <div class="title">templates/guardrails</div>
+        <div class="ref">templates/guardrails.md</div>
+        <div class="desc">用户级规范内容真源（G1 注入源）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 审查规则 -->
+  <div class="layer">
+    <div class="card v-purple">
+      <div class="title"><span class="badge">AUDIT</span> 审查规则加载清单 · audits/index.md（19 模块）</div>
+      <div class="ref">references/audits/</div>
+      <ul style="columns:3; column-gap:24px;">
+        <li><span class="chip">1</span> SDK-LOADER 块 <span class="chip">始终</span></li>
+        <li><span class="chip">2</span> CONFIG 块 <span class="chip">始终</span></li>
+        <li><span class="chip">3</span> JSSDK 块 <span class="chip">始终</span> + /dsjssdk</li>
+        <li><span class="chip">4</span> NS 日志块 <span class="chip">始终</span></li>
+        <li><span class="chip">5</span> 分享块 <span class="chip">始终</span></li>
+        <li><span class="chip">6</span> Ulink 块 <span class="chip">始终</span></li>
+        <li><span class="chip">7</span> CLICK-PRECHECK <span class="chip">始终</span></li>
+        <li><span class="chip">8</span> EXPORTS 块 <span class="chip">始终</span></li>
+        <li><span class="chip">9</span> HTML 加载顺序 <span class="chip">始终</span></li>
+        <li><span class="chip k">10</span> 服务端存储专项 <span class="chip">条件</span></li>
+        <li><span class="chip">11</span> HTML 安全 <span class="chip">始终</span> + /html-security-scan</li>
+        <li><span class="chip k">12</span> 小程序支持 <span class="chip">条件</span></li>
+        <li><span class="chip">13</span> wx 调用前置检查 <span class="chip">始终</span></li>
+        <li><span class="chip k">14</span> 导航栏 <span class="chip">条件</span></li>
+        <li><span class="chip k">15</span> DS:ACT-SDK 块 <span class="chip">条件</span></li>
+        <li><span class="chip">16</span> 广告遮罩残留 <span class="chip">始终</span></li>
+        <li><span class="chip k">17</span> 公共表专项 <span class="chip">条件</span></li>
+        <li><span class="chip">18</span> 安卓微信遮罩 <span class="chip">始终</span> 建议项</li>
+        <li><span class="chip">19</span> 动态资源路径 <span class="chip">始终</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 图例 -->
+  <div class="legend">
+    <div class="row">
+      <div class="it"><span class="dot" style="background:#2563eb"></span>入口 / 前置 / 路由</div>
+      <div class="it"><span class="dot" style="background:#0891b2"></span>Cocos / 注入 / 打包 / 开发环境</div>
+      <div class="it"><span class="dot" style="background:#7c3aed"></span>审查 / 持久化 / 活动 SDK</div>
+      <div class="it"><span class="dot" style="background:#ea580c"></span>埋点 / 广告预览</div>
+      <div class="it"><span class="dot" style="background:#059669"></span>资源优化 / 本地存档 / 模板</div>
+      <div class="it"><span class="dot" style="background:#475569"></span>规范目录 / 共用</div>
+      <div class="it"><span class="dot" style="background:#b45309"></span>跨切机制（G1 规范注入）</div>
+      <div class="it"><span class="dot" style="background:#b91c1c"></span>跨切门禁（Git 管理门禁）</div>
+      <div class="it"><span class="chip">始终</span>无条件加载</div>
+      <div class="it"><span class="chip k">条件</span>命中才加载</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,940 @@
+{
+  "scene1": {
+    "items": [
+      {
+        "uid": 1,
+        "itemId": "konghou",
+        "x": 70.13357293212593,
+        "y": 75.89151936175627,
+        "scale": 0.9949094254612694,
+        "rot": 16.015070176217705,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "instrument"
+        ]
+      },
+      {
+        "uid": 2,
+        "itemId": "hulusi",
+        "x": 40.54300210319103,
+        "y": 75.58875057543628,
+        "scale": 0.9505186178598095,
+        "rot": -20.877365698106587,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "instrument"
+        ]
+      },
+      {
+        "uid": 3,
+        "itemId": "wooden_pipa",
+        "x": 71.80032926501927,
+        "y": 26.01901618228294,
+        "scale": 0.9708952112828861,
+        "rot": -5.730572051834315,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "instrument"
+        ]
+      },
+      {
+        "uid": 4,
+        "itemId": "partitioned_cauldron",
+        "x": 49.262636222197955,
+        "y": 45.5067235402838,
+        "scale": 0.9474726015970492,
+        "rot": 23.30032614991069,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 5,
+        "itemId": "jade_hairpin",
+        "x": 9.679376481838425,
+        "y": 30.389682037611866,
+        "scale": 1.104917965853265,
+        "rot": -8.323006390128285,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 6,
+        "itemId": "scallion",
+        "x": 27.977657622500757,
+        "y": 45.74940755270562,
+        "scale": 1.0853110050272814,
+        "rot": -5.802095483522862,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 7,
+        "itemId": "phoenix_crown",
+        "x": 41.97535766518648,
+        "y": 22.043112490093336,
+        "scale": 0.9546436432104994,
+        "rot": -15.85580586688593,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 8,
+        "itemId": "broccoli",
+        "x": 55.484840507948725,
+        "y": 85.89260851196013,
+        "scale": 0.9553655787974872,
+        "rot": -15.256537683308125,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 9,
+        "itemId": "fish_hook",
+        "x": 21.23097976400937,
+        "y": 84.09423332591541,
+        "scale": 1.0642912156485025,
+        "rot": -2.335927844978869,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 10,
+        "itemId": "watermelon",
+        "x": 91.71019434215818,
+        "y": 77.67779439967126,
+        "scale": 0.9545625018762152,
+        "rot": -16.7800247319974,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 11,
+        "itemId": "dog",
+        "x": 14.637938979048096,
+        "y": 65.55655693332665,
+        "scale": 0.8292877968389388,
+        "rot": 21.855573263019323,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 12,
+        "itemId": "kite",
+        "x": 62.8459121678936,
+        "y": 52.249807599466294,
+        "scale": 0.7608485336014503,
+        "rot": 22.883418074343354,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 13,
+        "itemId": "gauze_veil",
+        "x": 85.0352120854344,
+        "y": 56.30339192273095,
+        "scale": 0.8862356304100493,
+        "rot": 16.3585749338381,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 14,
+        "itemId": "black_pitcher",
+        "x": 59.6293586506398,
+        "y": 25.392035679426044,
+        "scale": 0.7939806138428707,
+        "rot": -23.435612255707383,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 15,
+        "itemId": "silver_armor",
+        "x": 25.816464656329302,
+        "y": 64.15979190809193,
+        "scale": 0.8656165810828031,
+        "rot": -11.832558794412762,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 16,
+        "itemId": "painted_jar",
+        "x": 21.637183501511885,
+        "y": 22.925586662488058,
+        "scale": 0.8600757711493054,
+        "rot": -7.068363146390766,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 17,
+        "itemId": "strawberry",
+        "x": 84.78208899921884,
+        "y": 23.303662487771362,
+        "scale": 0.7067780159113646,
+        "rot": -24.899230315349996,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 18,
+        "itemId": "red_sky_lantern",
+        "x": 73.43559473030587,
+        "y": 54.33225356321782,
+        "scale": 0.875943565369352,
+        "rot": 11.947369738481939,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 19,
+        "itemId": "golden_bowl",
+        "x": 13.198762787772608,
+        "y": 47.13705654069781,
+        "scale": 0.9442561712009516,
+        "rot": 13.39817272964865,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 20,
+        "itemId": "pineapple",
+        "x": 91.70258630986525,
+        "y": 39.24064680049196,
+        "scale": 0.8482720673160703,
+        "rot": -24.00260258000344,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 21,
+        "itemId": "grapes",
+        "x": 7.481184305825064,
+        "y": 85.21683524758555,
+        "scale": 0.7741392365754342,
+        "rot": -21.940373280085623,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 22,
+        "itemId": "needle",
+        "x": 80.79476351590635,
+        "y": 73.51771692791954,
+        "scale": 0.9942648837254721,
+        "rot": -2.0992927602492273,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 23,
+        "itemId": "edamame",
+        "x": 82.1234809224444,
+        "y": 38.97724537014961,
+        "scale": 0.9119752797662806,
+        "rot": -1.7569674644619226,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 24,
+        "itemId": "fire_wheels",
+        "x": 52.26758918534898,
+        "y": 68.45095498301089,
+        "scale": 0.8140823488381118,
+        "rot": -23.213328886777163,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 25,
+        "itemId": "embroidered_trousers",
+        "x": 38.457455892643274,
+        "y": 49.64487666302566,
+        "scale": 0.8384844296276414,
+        "rot": 5.818526458460838,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 26,
+        "itemId": "peach",
+        "x": 61.807715508513795,
+        "y": 39.283001199662685,
+        "scale": 0.7379429299930432,
+        "rot": -10.95745547208935,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 27,
+        "itemId": "tangyuan",
+        "x": 30.7879050253283,
+        "y": 28.8951032217592,
+        "scale": 0.6598538174318928,
+        "rot": -21.815883950330317,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 28,
+        "itemId": "pear",
+        "x": 93.28026252227397,
+        "y": 24.131062898552045,
+        "scale": 0.8076696283622206,
+        "rot": -1.770643552299589,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 29,
+        "itemId": "dandelion",
+        "x": 94.20431592721374,
+        "y": 57.44667579117231,
+        "scale": 0.6687335610180425,
+        "rot": 7.454328890889883,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 30,
+        "itemId": "campfire",
+        "x": 72.74743388724374,
+        "y": 40.56265884041787,
+        "scale": 0.6540933142163984,
+        "rot": 11.022673978004605,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 31,
+        "itemId": "rabbit",
+        "x": 5.481989532988527,
+        "y": 71.67884775355458,
+        "scale": 0.6445246631034516,
+        "rot": 9.704158082604408,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 32,
+        "itemId": "fox_mask",
+        "x": 5.441714160728235,
+        "y": 60.18977992102504,
+        "scale": 0.6381653937991949,
+        "rot": 3.6893686978146434,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 33,
+        "itemId": "shuriken",
+        "x": 80.84576302824348,
+        "y": 86.97044041633606,
+        "scale": 0.6738793025799957,
+        "rot": -1.7298582941293716,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 34,
+        "itemId": "lucky_raccoon",
+        "x": 30.715159543407182,
+        "y": 85.39778096869588,
+        "scale": 0.7140568096782378,
+        "rot": -1.843567716423422,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 35,
+        "itemId": "jade_earrings",
+        "x": 51.54176907823392,
+        "y": 27.1001763561368,
+        "scale": 0.7962486334708299,
+        "rot": 1.2167650740593672,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 36,
+        "itemId": "golden_ewer",
+        "x": 60.432864433741884,
+        "y": 69.2595926989615,
+        "scale": 0.6301547339427334,
+        "rot": -14.531459636054933,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 37,
+        "itemId": "osmanthus_cake",
+        "x": 35.44150762525424,
+        "y": 61.25057398885489,
+        "scale": 0.7035473170048685,
+        "rot": -12.736658018548042,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      }
+    ],
+    "targets": [
+      {
+        "taskId": "instrument",
+        "label": "找出所有乐器",
+        "allOf": [
+          "instrument"
+        ],
+        "remaining": 3,
+        "total": 3
+      }
+    ]
+  },
+  "scene2": {
+    "items": [
+      {
+        "uid": 38,
+        "itemId": "feather",
+        "x": 67.39901231419393,
+        "y": 71.75708738309646,
+        "scale": 1.0964287377764383,
+        "rot": 5.872904020361602,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "flying"
+        ]
+      },
+      {
+        "uid": 39,
+        "itemId": "kite",
+        "x": 92.01369882871656,
+        "y": 86.72581277834252,
+        "scale": 0.8956167285158411,
+        "rot": -13.113468862138689,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "flying"
+        ]
+      },
+      {
+        "uid": 40,
+        "itemId": "butterfly",
+        "x": 50.91590478381106,
+        "y": 57.71618415569546,
+        "scale": 0.8668372208966832,
+        "rot": -14.553165319375694,
+        "found": false,
+        "isTarget": true,
+        "targetTaskIds": [
+          "flying"
+        ]
+      },
+      {
+        "uid": 41,
+        "itemId": "konghou",
+        "x": 62.63452275614682,
+        "y": 22.22528231726028,
+        "scale": 1.0740715965657985,
+        "rot": -13.140044885221869,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 42,
+        "itemId": "guqin",
+        "x": 81.06134303953306,
+        "y": 43.996705789351836,
+        "scale": 1.021989204192623,
+        "rot": 10.666046082042158,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 43,
+        "itemId": "melon",
+        "x": 8.97736078120962,
+        "y": 27.652837137351153,
+        "scale": 0.8752725171554998,
+        "rot": 21.539454988669604,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 44,
+        "itemId": "lucky_raccoon",
+        "x": 33.074172770004964,
+        "y": 61.59879677859135,
+        "scale": 0.9387700930805888,
+        "rot": -13.298966095317155,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 45,
+        "itemId": "campfire",
+        "x": 21.695557686360612,
+        "y": 81.29822400561534,
+        "scale": 0.8924746223774535,
+        "rot": -18.15785045037046,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 46,
+        "itemId": "broccoli",
+        "x": 8.845016430004641,
+        "y": 81.81706419144757,
+        "scale": 0.732675060527653,
+        "rot": -23.985379037912935,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 47,
+        "itemId": "golden_bowl",
+        "x": 44.13675409290003,
+        "y": 73.33746034339731,
+        "scale": 0.9154368305639233,
+        "rot": 23.454839689657092,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 48,
+        "itemId": "bitter_melon",
+        "x": 22.94829100888836,
+        "y": 36.37815038836561,
+        "scale": 0.7230963522607939,
+        "rot": 22.24561682669446,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 49,
+        "itemId": "eggplant",
+        "x": 17.48321322838537,
+        "y": 57.37175175617449,
+        "scale": 0.8207376981218374,
+        "rot": -10.476911521982402,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 50,
+        "itemId": "lotus_ewer",
+        "x": 36.50657548767447,
+        "y": 35.72847561724484,
+        "scale": 0.809905387580012,
+        "rot": 19.050041574519128,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 51,
+        "itemId": "wooden_pipa",
+        "x": 78.5143559928356,
+        "y": 74.44356198818423,
+        "scale": 0.8252712477889111,
+        "rot": -14.293933287262917,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 52,
+        "itemId": "sword",
+        "x": 50.12818589437022,
+        "y": 42.17374805250944,
+        "scale": 0.797384192254644,
+        "rot": -21.257062791846693,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 53,
+        "itemId": "osmanthus_cake",
+        "x": 67.8486946442732,
+        "y": 46.5696464413777,
+        "scale": 0.9170259760495588,
+        "rot": 22.071341972332448,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 54,
+        "itemId": "tasseled_shawl",
+        "x": 6.85170173217265,
+        "y": 49.8990135793871,
+        "scale": 0.7939989612776782,
+        "rot": 6.3393160700798035,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 55,
+        "itemId": "vinegar_jar",
+        "x": 46.52714192386665,
+        "y": 24.30164426495321,
+        "scale": 0.7780298199887061,
+        "rot": 8.50455870386213,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 56,
+        "itemId": "strawberry",
+        "x": 93.09543927193221,
+        "y": 24.643626624485478,
+        "scale": 0.8307762289658362,
+        "rot": -5.456520593725145,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 57,
+        "itemId": "waist_drum",
+        "x": 92.35390475369694,
+        "y": 66.68300344888121,
+        "scale": 0.7753112442301691,
+        "rot": 8.917011530138552,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 58,
+        "itemId": "inscribed_papers",
+        "x": 56.23237992353673,
+        "y": 84.95812250231393,
+        "scale": 0.6892858253489788,
+        "rot": -20.21163625176996,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 59,
+        "itemId": "kiwi",
+        "x": 75.61091949018825,
+        "y": 27.79966428806074,
+        "scale": 0.7740541714418736,
+        "rot": -8.008932240772992,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 60,
+        "itemId": "silver_armor",
+        "x": 92.47841995625134,
+        "y": 45.1320003781002,
+        "scale": 0.7429872920684226,
+        "rot": 13.009911437984556,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 61,
+        "itemId": "bamboo_hat",
+        "x": 44.33150930399537,
+        "y": 87,
+        "scale": 0.7768582781503306,
+        "rot": -7.0098031661473215,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 62,
+        "itemId": "spike_trap",
+        "x": 82.5096948765359,
+        "y": 60.08956906781532,
+        "scale": 0.6915289610492151,
+        "rot": 21.0204464267008,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 63,
+        "itemId": "peony",
+        "x": 33.24603742820398,
+        "y": 77.5171579746902,
+        "scale": 0.7266127169012642,
+        "rot": 8.021677064243704,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 64,
+        "itemId": "jeweled_belt",
+        "x": 66.99526823404732,
+        "y": 87,
+        "scale": 0.9296044364293017,
+        "rot": -8.273148722946644,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 65,
+        "itemId": "painted_vase",
+        "x": 84.48130674506034,
+        "y": 24.673415643274783,
+        "scale": 0.6623024954761395,
+        "rot": -21.302493545226753,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 66,
+        "itemId": "watermelon",
+        "x": 20.52768860486985,
+        "y": 22,
+        "scale": 0.8091458163866269,
+        "rot": -4.290996794588864,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 67,
+        "itemId": "cat",
+        "x": 36.60759413302221,
+        "y": 22.15051984027028,
+        "scale": 0.724544824903384,
+        "rot": 8.880924107506871,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 68,
+        "itemId": "jewelry_box",
+        "x": 56.63347883241563,
+        "y": 72.32794094711542,
+        "scale": 0.667142124430426,
+        "rot": -6.973961822222918,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 69,
+        "itemId": "gauze_veil",
+        "x": 6.9452967727972865,
+        "y": 65.48485731636174,
+        "scale": 0.7428132820981206,
+        "rot": -6.101186107844114,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 70,
+        "itemId": "hand_drum",
+        "x": 41.62134033673174,
+        "y": 58.17426931858063,
+        "scale": 0.6494122319600568,
+        "rot": 18.979985790792853,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 71,
+        "itemId": "fire_wheels",
+        "x": 80.69716620076524,
+        "y": 86.99021079421043,
+        "scale": 0.7379109310771703,
+        "rot": -13.445881998632103,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 72,
+        "itemId": "zongzi",
+        "x": 71.33913883468034,
+        "y": 57.18946352019906,
+        "scale": 0.5661056429548031,
+        "rot": -3.991339507047087,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 73,
+        "itemId": "flying_fish",
+        "x": 61.025379053792044,
+        "y": 57.301167078614235,
+        "scale": 0.5692424593302274,
+        "rot": -10.128524620085955,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      },
+      {
+        "uid": 74,
+        "itemId": "candle",
+        "x": 25.410794780055348,
+        "y": 65.70600518748164,
+        "scale": 0.8497010441437622,
+        "rot": -4.415404773317277,
+        "found": false,
+        "isTarget": false,
+        "targetTaskIds": []
+      }
+    ],
+    "targets": [
+      {
+        "taskId": "flying",
+        "label": "找出所有会飞的物品",
+        "allOf": [
+          "flying"
+        ],
+        "remaining": 3,
+        "total": 3
+      }
+    ]
+  },
+  "targets1": [
+    {
+      "uid": 1,
+      "itemId": "konghou",
+      "x": 70.13357293212593,
+      "y": 75.89151936175627,
+      "scale": 0.9949094254612694,
+      "rot": 16.015070176217705,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "instrument"
+      ]
+    },
+    {
+      "uid": 2,
+      "itemId": "hulusi",
+      "x": 40.54300210319103,
+      "y": 75.58875057543628,
+      "scale": 0.9505186178598095,
+      "rot": -20.877365698106587,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "instrument"
+      ]
+    },
+    {
+      "uid": 3,
+      "itemId": "wooden_pipa",
+      "x": 71.80032926501927,
+      "y": 26.01901618228294,
+      "scale": 0.9708952112828861,
+      "rot": -5.730572051834315,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "instrument"
+      ]
+    }
+  ],
+  "targets2": [
+    {
+      "uid": 38,
+      "itemId": "feather",
+      "x": 67.39901231419393,
+      "y": 71.75708738309646,
+      "scale": 1.0964287377764383,
+      "rot": 5.872904020361602,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "flying"
+      ]
+    },
+    {
+      "uid": 39,
+      "itemId": "kite",
+      "x": 92.01369882871656,
+      "y": 86.72581277834252,
+      "scale": 0.8956167285158411,
+      "rot": -13.113468862138689,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "flying"
+      ]
+    },
+    {
+      "uid": 40,
+      "itemId": "butterfly",
+      "x": 50.91590478381106,
+      "y": 57.71618415569546,
+      "scale": 0.8668372208966832,
+      "rot": -14.553165319375694,
+      "found": false,
+      "isTarget": true,
+      "targetTaskIds": [
+        "flying"
+      ]
+    }
+  ]
+}

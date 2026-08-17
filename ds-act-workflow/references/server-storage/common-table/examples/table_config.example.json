@@ -1,0 +1,114 @@
+[
+  {
+    "tableKey": "plaza_like",
+    "displayName": "广场点赞",
+    "description": "投稿广场点赞记录，防重复点赞。uid 用 __create_uid，time 用 __create_time。唯一索引 (post_id, __create_uid) 保证同一用户对同一投稿只能点赞一次。creatorOnlyDelete=true：只有点赞人自己能取消赞。creatorOnlyModify=false：因为不需要修改点赞记录，但保持默认语义不阻塞。",
+    "creatorOnlyRead": false,
+    "creatorOnlyModify": false,
+    "creatorOnlyDelete": true,
+    "fields": [
+      {
+        "fieldKey": "post_id",
+        "fieldType": "STRING",
+        "fieldDisplayName": "投稿ID",
+        "nullable": false
+      }
+    ],
+    "indexes": [
+      {
+        "unique": true,
+        "description": "防重复点赞：同一用户对同一投稿只能一条。查询场景：点前查重 (post_id eq, __create_uid eq) 全 eq 覆盖走缓存。",
+        "fields": [
+          { "fieldKey": "post_id", "direction": "ASC" },
+          { "fieldKey": "__create_uid", "direction": "ASC" }
+        ]
+      }
+    ]
+  },
+  {
+    "tableKey": "plaza_comment",
+    "displayName": "广场评论",
+    "description": "投稿广场评论记录。uid 用 __create_uid，time 用 __create_time，通过 post_id 关联投稿表。查询场景：按投稿查评论并按时间倒序 (post_id eq + __create_time 排序)。",
+    "creatorOnlyRead": false,
+    "creatorOnlyModify": false,
+    "creatorOnlyDelete": false,
+    "fields": [
+      { "fieldKey": "post_id", "fieldType": "STRING", "fieldDisplayName": "投稿ID", "nullable": false },
+      { "fieldKey": "nick", "fieldType": "STRING", "fieldDisplayName": "昵称", "nullable": true },
+      { "fieldKey": "avatar", "fieldType": "STRING", "fieldDisplayName": "头像URL", "nullable": true },
+      {
+        "fieldKey": "text",
+        "fieldType": "STRING",
+        "fieldDisplayName": "评论内容",
+        "nullable": false,
+        "fieldMeta": { "stringRules": { "enabled": true, "minLength": 1, "maxLength": 200, "sensitiveWordFilter": true } }
+      },
+      { "fieldKey": "role_id", "fieldType": "STRING", "fieldDisplayName": "角色ID", "nullable": true }
+    ],
+    "indexes": [
+      {
+        "unique": false,
+        "description": "按投稿ID查评论并按时间倒序。查询场景：post_id eq + __create_time DESC。",
+        "fields": [
+          { "fieldKey": "post_id", "direction": "ASC" },
+          { "fieldKey": "__create_time", "direction": "DESC" }
+        ]
+      }
+    ]
+  },
+  {
+    "tableKey": "submission",
+    "displayName": "职业投稿记录",
+    "description": "揪出捣蛋鬼职业创意征集-投稿记录（兼广场展示）。每条投稿一行，uid 用 __create_uid，time 用 __create_time，like_count 冗余展示点赞数。查询场景：①最新50条 (__create_time DESC)；②点赞最高50条 (like_count DESC)；③我的投稿按时间倒序 (__create_uid eq + __create_time DESC)；④我的投稿按点赞数排序 (__create_uid eq + like_count DESC)。",
+    "creatorOnlyRead": false,
+    "creatorOnlyModify": false,
+    "creatorOnlyDelete": false,
+    "fields": [
+      {
+        "fieldKey": "faction",
+        "fieldType": "ENUM",
+        "fieldDisplayName": "阵营",
+        "nullable": false,
+        "fieldMeta": { "enumRules": { "enabled": true, "allowedValues": ["好蛋", "中立蛋", "坏蛋"] } }
+      },
+      {
+        "fieldKey": "job_name",
+        "fieldType": "STRING",
+        "fieldDisplayName": "职业名",
+        "nullable": false,
+        "fieldMeta": { "stringRules": { "enabled": true, "minLength": 1, "maxLength": 20, "sensitiveWordFilter": true } }
+      },
+      {
+        "fieldKey": "skills",
+        "fieldType": "STRING_LIST",
+        "fieldDisplayName": "技能列表",
+        "nullable": false,
+        "fieldMeta": { "listRules": { "enabled": true, "minItems": 1, "maxItems": 2, "uniqueItems": false } }
+      },
+      {
+        "fieldKey": "job_bg",
+        "fieldType": "STRING",
+        "fieldDisplayName": "职业背景",
+        "nullable": true,
+        "fieldMeta": { "stringRules": { "enabled": true, "maxLength": 300, "sensitiveWordFilter": true } }
+      },
+      { "fieldKey": "role_id", "fieldType": "STRING", "fieldDisplayName": "游戏角色ID", "nullable": false },
+      { "fieldKey": "role_name", "fieldType": "STRING", "fieldDisplayName": "角色名", "nullable": true },
+      { "fieldKey": "nick", "fieldType": "STRING", "fieldDisplayName": "昵称", "nullable": true },
+      { "fieldKey": "avatar", "fieldType": "STRING", "fieldDisplayName": "头像URL", "nullable": true },
+      {
+        "fieldKey": "like_count",
+        "fieldType": "NUMBER",
+        "fieldDisplayName": "点赞数",
+        "nullable": false,
+        "fieldMeta": { "numberRules": { "enabled": true, "min": 0, "step": 1 } }
+      }
+    ],
+    "indexes": [
+      { "unique": false, "description": "最新50条投稿：__create_time DESC，无 condition。", "fields": [ { "fieldKey": "__create_time", "direction": "DESC" } ] },
+      { "unique": false, "description": "点赞最高50条投稿：like_count DESC，无 condition。", "fields": [ { "fieldKey": "like_count", "direction": "DESC" } ] },
+      { "unique": false, "description": "我的投稿按时间倒序：__create_uid eq + __create_time DESC。", "fields": [ { "fieldKey": "__create_uid", "direction": "ASC" }, { "fieldKey": "__create_time", "direction": "DESC" } ] },
+      { "unique": false, "description": "我的投稿按点赞数排序：__create_uid eq + like_count DESC。", "fields": [ { "fieldKey": "__create_uid", "direction": "ASC" }, { "fieldKey": "like_count", "direction": "DESC" } ] }
+    ]
+  }
+]

@@ -1,0 +1,1491 @@
+{
+  "skill_name": "ds-act-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我有一个炉石传说活动页面，是纯 HTML 项目，现在需要接入大神业务代码。EVENT_ACTION 是 fe_act_hs_2024，EVENT_CATEGORY 是 act_hs_2024。游戏叫炉石传说。",
+      "expected_output": "生成完整 SDK-LOADER 注入到 index.html，生成 src/ds.js，CONFIG 块中 EVENT_ACTION/EVENT_CATEGORY 填入用户值，APP_KEY 和 SQUARE_ID 通过 appkey-naming 查询炉石传说后填入。ds.js 末尾有 export { userInfo, godlikeInfo, withPrecheck, openSquareUrl, trackEvent }。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "帮我审查一下这个大神项目代码，我在 src/game.js 里用了 window.ds.getDeviceId() 获取设备ID，另外分享部分只写了 Godlike 分支，还有一行 window.DA_SQUARE_ID = '12345'",
+      "expected_output": "审查报告标记三个阻断项：1) window.ds.getDeviceId() 不存在应用 godlikeInfo['GL-DeviceId']；2) 分享缺非Godlike分支；3) window.DA_SQUARE_ID 赋值禁止（部署平台注入）。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "我们的炉石传说 H5 要在微信小程序里内嵌，需要完整接入：联登（复用小程序登录态）和自定义分享，请帮我接入小程序支持。",
+      "expected_output": "模式1（接入大神功能）默认包含微信小程序支持，无需独立模式4。生成的 ds.js 包含：isWechatMiniProgram 环境检测函数；initLogin 函数（大神App内调 dsInit，小程序/大神App外走 URS Ulogin.hasLoggedIn）；withPrecheck 三分支（大神App内用 checkLogined、小程序检查 userInfo.uid、普通浏览器走 ulink）；initShare 含小程序 wx.miniProgram.postMessage 分支；initUlink 小程序内跳过（直接 return）；initApp 零分支，顺序调用 initShare → initUlink → initLogin。index.html 注入微信 JSSDK（jweixin-1.6.0.js）和 URS 登录组件（universal-login）。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "帮我审查这个项目，index.html 里的 script 标签是这样的：<script src=\"src/ds.js\"></script><script src=\"src/game.js\"></script>",
+      "expected_output": "审查报告标记两个阻断项：1) src/ds.js 的 <script> 缺少 type=\"module\"（核心规则：凡 src 指向相对路径的 script 必须 type=\"module\"），浏览器报语法错误、脚本完全不执行；2) src/game.js 同理。修复方案：分别改为 <script type=\"module\" src=\"src/ds.js\"></script> 和 <script type=\"module\" src=\"src/game.js\"></script>。",
+      "files": []
+    },
+    {
+      "id": 21,
+      "prompt": "帮我审查这个项目，index.html 里的 script 标签是这样的：<script type=\"text/javascript\" src=\"src/ds.js\"></script><script type=\"text/javascript\" src=\"src/game.js\"></script>",
+      "expected_output": "审查报告标记两个阻断项：1) src/ds.js 使用了 type=\"text/javascript\"，但凡 src 指向相对路径的 script 必须使用 type=\"module\"，text/javascript 会导致 export/import 语法报错、脚本完全不执行；2) src/game.js 同理。修复方案：将 type=\"text/javascript\" 改为 type=\"module\"。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "帮我审查这个项目，index.html 里 SDK-LOADER 区域的脚本是这样的：<!-- [DS:SDK-LOADER ...] --><script type=\"module\" src=\"https://ds.res.netease.com/online/pkg/ds-js-sdk/1.0.87/ds-js-sdk.min.js\"></script><!-- [DS:SDK-LOADER-END] -->",
+      "expected_output": "审查报告标记一个阻断项：SDK-LOADER 区域内的脚本使用了 type=\"module\"，但 SDK 为 IIFE 格式，module 作用域会导致平台初始化失败。应改为 type=\"text/javascript\"。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "帮我审查这个项目，index.html 里注入了微信 JSSDK 和 universal-login，标签如下：<script src=\"https://res.wx.qq.com/open/js/jweixin-1.6.0.js\"></script><script src=\"https://g.166.net/pkg/universal-login/2.1.4/index.umd.min.js\"></script>",
+      "expected_output": "审查报告标记两个警告项：1) jweixin-1.6.0.js 的 <script> 缺少 type 属性，应加 type=\"text/javascript\"；2) universal-login index.umd.min.js 的 <script> 缺少 type 属性，应加 type=\"text/javascript\"。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "帮我审查这个项目，index.html 里的脚本加载顺序是：<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.6.0.js\"></script><script type=\"module\" src=\"src/ds.js\"></script><script type=\"text/javascript\" src=\"https://g.166.net/pkg/universal-login/2.1.4/index.umd.min.js\"></script><script type=\"module\" src=\"src/game.js\"></script>",
+      "expected_output": "审查报告标记一个阻断项：universal-login 的 <script> 位于 src/ds.js 之后，第三方库（jweixin/universal-login）必须在 ds.js 之前加载。正确顺序应为：jweixin → universal-login → ds.js → game.js。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "帮我审查这个项目，index.html 里所有 script 标签的 type 都正确：SDK-LOADER 内用 text/javascript，jweixin 和 universal-login 用 text/javascript，ds.js 和 game.js 用 module，顺序也正确（jweixin → universal-login → ds.js → game.js）。",
+      "expected_output": "审查报告中 HTML 加载顺序检查全部通过，无 script type 相关的警告或阻断项（type 属性与加载顺序全通过即算 pass；agent 额外报告的 head/body 位置等范围外项不计入 script type 检查）。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "帮我把这个项目的内联样式和脚本提取出来。index.html 里面有 <style> 块和 <script> 块，我想整理成标准的文件结构。",
+      "expected_output": "创建 src/style.css 和 src/game.js；index.html 中原有 <style> 块被移除、替换为 <link rel=\"stylesheet\" href=\"src/style.css\">；原有内联 <script>（非 SDK-LOADER）被移除、替换为 <script type=\"module\" src=\"src/game.js\">；引用 script 标签必须含 type=\"module\"（因 game.js 含 import/export 语法）。",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "这个项目已经有 src/ds.js 了，EVENT_ACTION 和 EVENT_CATEGORY 需要更新为新活动的值：EVENT_ACTION 改为 fe_act_hs_2025，EVENT_CATEGORY 改为 act_hs_2025。其他配置（APP_KEY、SQUARE_ID 等）不变。",
+      "expected_output": "src/ds.js 中 CONFIG 块的 EVENT_ACTION 更新为 fe_act_hs_2025，EVENT_CATEGORY 更新为 act_hs_2025；APP_KEY、SQUARE_ID、SHARE_TITLE、SHARE_ICON 等保留原有值不被覆盖。输出中有「保留」和「更新」的对比提示。",
+      "files": []
+    },
+    {
+      "id": 11,
+      "prompt": "帮我审查这个项目，src/ds.js 中 JSSDK 初始化部分写了 if (isGodlike)（用的 import 进来的 isGodlike），而不是 if (window.ds.isGodlike)。",
+      "expected_output": "审查报告标记一个阻断项：JSSDK 块中使用了 import 的 isGodlike 变量，应改为 window.ds.isGodlike 判断。原因：ds.ready() 执行前 window.ds 尚未初始化，import 的值为 undefined，判断结果不可靠。",
+      "files": []
+    },
+    {
+      "id": 12,
+      "prompt": "帮我审查这个项目，ds.js 里 openLoginPage 是这样调用的：window.ds.callHandler('openLoginPage', {})，没有用 window.ds.ready() 包裹。",
+      "expected_output": "审查报告标记一个阻断项：openLoginPage 调用未经 window.ds.ready() 包裹，在 SDK 尚未初始化时调用会静默失败。修复方案：window.ds.ready().then(() => window.ds.callHandler('openLoginPage', {}))。",
+      "files": []
+    },
+    {
+      "id": 13,
+      "prompt": "帮我审查这个项目，src/game.js 里有一个按钮的点击事件 drawBtn.addEventListener('click', function() { startDraw(); }) 没有用 withPrecheck 包裹，另外还有 closeBtn.addEventListener('click', function() { closeModal(); }) 也没有包裹。",
+      "expected_output": "审查报告的点击预检检查表格中，drawBtn 标记为🔴建议包裹（是业务操作/需要登录态），closeBtn 标记为🟢可不包裹（是弹窗关闭类纯UI操作）。报告不应把 closeBtn 标记为阻断。",
+      "files": []
+    },
+    {
+      "id": 14,
+      "prompt": "帮我给这个游戏加行为埋点，但是这个项目还没有接入大神功能（没有 src/ds.js）。",
+      "expected_output": "输出报错提示「未找到 ds.js，请先运行模式1完成基础接入后再使用游戏行为埋点功能」，不生成任何代码，不继续执行埋点流程。",
+      "files": []
+    },
+    {
+      "id": 15,
+      "prompt": "帮我给这个游戏加持久化存储，项目里已经有 game-storage.js 文件了。",
+      "expected_output": "输出警告「检测到项目中已存在 game-storage.js，继续将覆盖现有文件。是否继续？(y/n)」，在用户确认之前不生成任何代码。",
+      "files": []
+    },
+    {
+      "id": 16,
+      "prompt": "帮我审查这个项目，src/ds.js 里 Ulink 部分是这样写的：const ulink = new DsUlink({ appKey: APP_KEY }); ulink.initTraceInstall();，没有用 onDsUlinkReady 回调。",
+      "expected_output": "审查报告标记一个阻断项：直接 new DsUlink 而不等 onDsUlinkReady 回调，DsUlink 库尚未加载完成就实例化会导致「DsUlink is not defined」错误。修复方案：使用 window.onDsUlinkReady = function() { ... } 回调模式。",
+      "files": []
+    },
+    {
+      "id": 17,
+      "prompt": "帮我审查这个项目，index.html 里有一行 <script src=\"https://cdn.bootcdn.net/ajax/libs/axios/1.4.0/axios.min.js\"></script>",
+      "expected_output": "审查报告标记一个阻断项：cdn.bootcdn.net 不在白名单域名（*.163.com、*.166.net、*.netease.com、*.16163.com）内，外部资源引用不合规。需改为从白名单域名托管或移除。",
+      "files": []
+    },
+    {
+      "id": 18,
+      "prompt": "帮我审查这个项目，src/ds.js 里 EXPORTS 块之后没有 window 挂载：只有 export { userInfo, godlikeInfo, withPrecheck, openSquareUrl, trackEvent }，但没有 window.withPrecheck = withPrecheck 这样的赋值。",
+      "expected_output": "审查报告标记一个阻断项：缺少 window 挂载（window.withPrecheck、window.openSquareUrl、window.userInfo、window.trackEvent），非模块脚本无法访问这些函数，导致内联事件处理器或非模块业务代码调用失败。",
+      "files": []
+    },
+    {
+      "id": 19,
+      "prompt": "帮我审查这个小程序项目，ds.js 里的 withPrecheck 函数有小程序分支，但是 isWechatMiniProgram() 分支里没有检查 userInfo.uid，直接执行了 callback()。",
+      "expected_output": "审查报告标记一个阻断项（或警告项）：withPrecheck 小程序分支缺少 userInfo.uid 检查，未登录用户直接触发 callback 会导致业务逻辑在未登录态执行。应先判断 userInfo.uid 是否有值，无值则跳转小程序登录页。",
+      "files": []
+    },
+    {
+      "id": 20,
+      "prompt": "帮我审查这个项目，index.html 里有 <script>eval(atob('YWxlcnQoMSk='))</script>",
+      "expected_output": "审查报告标记 HIGH 阻断项：发现 eval( 调用，属于不安全的代码执行模式，必须移除。",
+      "files": []
+    },
+    {
+      "id": 22,
+      "prompt": "帮我给炉石传说的H5活动接入大神功能，EVENT_ACTION 是 fe_act_ld2_test，EVENT_CATEGORY 是 act_ld2_test。",
+      "expected_output": "mode1 注入完成后，生成的 ds.js 默认包含小程序支持：1) ds.js 含 isWechatMiniProgram 函数（DS:MINIAPP-DETECT 块）；2) ds.js 含 initLogin 函数（大神App内走 dsInit，其余走 Ulogin.hasLoggedIn 静默检测）；3) withPrecheck 为 async 函数，使用 checkLogined 检测大神App内登录状态，不依赖 userInfo.uid 魔法数字；4) initApp 顺序调用 initShare/initUlink/initLogin，无环境判断分支；5) index.html 注入微信 JSSDK（res.wx.qq.com/open/js/jweixin-1.6.0.js）和 URS 登录组件（universal-login）。",
+      "files": []
+    },
+    {
+      "id": 23,
+      "prompt": "帮我审查这个项目，ds.js 的 withPrecheck 检查登录状态的方式是：if (!userInfo || !userInfo.uid || userInfo.uid === -9999)，然后调用 window.ds.ready().then(() => window.ds.callHandler('openLoginPage'))。",
+      "expected_output": "审查报告标记一个警告项（或阻断项）：withPrecheck 使用 userInfo.uid === -9999 魔法数字判断登录状态存在时序问题，应改为使用 checkLogined API（ds.callHandler('checkLogined')）直接查询 SDK 登录态，同时应加 await window.ds.ready() 确保 SDK 就绪。",
+      "files": []
+    },
+    {
+      "id": 24,
+      "prompt": "请显示 ds-act-workflow 的模式列表，我需要确认有没有独立的「接入微信小程序」选项。",
+      "expected_output": "模式列表显示 [0]-[5] 共六个选项，不存在独立的「[4] 📱 接入微信小程序」条目；模式1（接入大神功能）的描述包含「小程序支持」；模式4为「🎮 游戏行为埋点」，模式5为「💾 游戏数据持久化」。",
+      "files": []
+    },
+    {
+      "id": 25,
+      "prompt": "我的HTML项目 index.html 里有内嵌的 <style> 块写了一大堆CSS，还有内嵌的 <script> 块写业务逻辑，帮我规范目录结构。游戏是第五人格。",
+      "expected_output": "创建 src/style.css（包含原 <style> 块内容）和 src/game.js（包含原内嵌 <script> 块业务逻辑）；index.html 中 <style> 块被移除、替换为 <link rel=\"stylesheet\" href=\"src/style.css\">；内嵌 <script> 被移除、替换为 <script type=\"module\" src=\"src/game.js\">；引用 script 标签含 type=\"module\"。输出中包含 CLAUDE.md 生成。",
+      "files": [],
+      "tags": [
+        "mode-0",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 26,
+      "prompt": "帮我审查这个项目，index.html 已经有 <link rel=\"stylesheet\" href=\"src/style.css\"> 和 <script type=\"module\" src=\"src/ds.js\"></script>、<script type=\"module\" src=\"src/game.js\"></script>，结构已经规范了。",
+      "expected_output": "审查报告：未检测到 DS Marker（<!-- [DS:SDK-LOADER:START] -->），审查范围为空，提示用户先执行模式 1（注入大神）生成 ds.js + SDK-LOADER 后再重新审查。",
+      "files": [],
+      "tags": [
+        "mode-0",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 27,
+      "prompt": "帮我打包这个H5项目，项目里没有 package.json，就是纯静态HTML。游戏是光遇。",
+      "expected_output": "对所有项目先执行 npx vite build 构建门禁（H1 构建成功 / H2 产物本地 js/css/img 引用全为 hashed URL / H3 public/ 无图片 / H4 preview 静态资源无 404）；纯静态项目无 package.json 时由 npx 自动拉取 vite。门禁通过后，使用 scripts/zip.py 打包项目根目录（非 Cocos 纯静态 → 打包当前目录）。产物为 deploy.zip，包含所有业务文件和目录（index.html、src/ 等），但排除 .git/、node_modules/、.vscode/、CLAUDE.md、deploy.zip 自身以及 .env 机密文件。保留 .env.example 和 .env.sample 不被排除。输出中包含构建门禁步骤的提示（如「npx vite build...」）。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 28,
+      "prompt": "帮我打包这个H5项目，项目有 package.json，里面有 npm run build 脚本，build 之后产物在 dist/ 目录。游戏是第五人格。",
+      "expected_output": "对所有项目先执行 npx vite build 构建门禁（H1 构建成功 / H2 产物本地 js/css/img 引用全为 hashed URL / H3 public/ 无图片 / H4 preview 静态资源无 404）。门禁通过后，对 dist/ 目录调用 scripts/zip.py 打包（非 Cocos + build 脚本 → 打包 dist/）。产物为 deploy.zip。输出中包含构建门禁步骤的提示（如「npx vite build...」）。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 29,
+      "prompt": "帮我打包这个H5项目，但是 npm run build 会报错（package.json 里的 build 脚本是 echo 一个不存在的文件）。",
+      "expected_output": "deploy 的 vite 构建门禁 H1 跑 npx vite build（不是 npm run build）。import 引用不存在模块 → vite build 退出码非 0 → H1 硬门禁 fail → 阻断、不生成 deploy.zip、不打包，输出 vite 错误日志（Failed to resolve import）交还用户手动修复。deploy 不自动修 H1（仅 H2/H3 自动修复+重建），H1 失败属调试范畴。build 脚本（package.json scripts.build）坏掉不影响门禁，门禁不走 npm run build。修复 import 后重跑门禁 H1→H2→H3→H4 全过再打包。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 30,
+      "prompt": "帮我给这个光遇的活动页面加游戏行为埋点，项目已经接入了大神功能（有 src/ds.js），业务代码有一段按钮点击抽卡的操作：cardBtn.addEventListener('click', async () => { await withPrecheck(async () => { const result = await fetchDrawCard(); showResult(result); }); });",
+      "expected_output": "扫描到的抽卡按钮点击被识别为交互节点，插入 trackEvent({ event: 'click_draw_card' }) 调用（单参数对象签名）。抽卡成功后插入奖励类埋点（如 get_card）。埋点分类至少包含 interaction（用户交互）和 reward（奖励发放）两类。trackEvent 调用插在触发行之后。",
+      "files": [],
+      "tags": [
+        "mode-4",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 31,
+      "prompt": "帮我给这个阴阳师的H5小游戏加本地存档持久化，业务代码里有一个 score 变量（let score = 0;）和一个 level 变量（let level = 1;），每次刷新页面都会丢失，希望能存到玩家本地。",
+      "expected_output": "生成 game-storage.js（AES-GCM 加密、Web Crypto API 零依赖）：PBKDF2 从 URL pathname 提取游戏 UUID 派生密钥 + AES-GCM 加密 + Base64 存储；导出 save(state)/load()/clear()（末尾预留 saveRemote/loadRemote TODO）。业务变量 score 和 level 封装到存档对象 { score, level }，init() 中 await load() 恢复初始值、状态变更后 save() 持久化到 localStorage、pagehide 兜底。HTML 引入 <script type=module src=game-storage.js> 置于业务脚本之前。本地存档不依赖 ds.js（与 ds.js 相互独立，不在 ds.js CONFIG 块注入 STORAGE_KEY）。",
+      "files": [],
+      "tags": [
+        "mode-5",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 32,
+      "prompt": "帮我给这个梦幻西游小游戏接入服务端数据存储，需要支持跨设备读写玩家数据和排行榜查询。项目已经有 ds.js。",
+      "expected_output": "接入 mini-game-data-sdk（在 index.html 的 SDK-LOADER 之后注入 mini-game-data-sdk 的 script 标签），生成 game-server-storage.js。文件包含：initServerStorage（初始化 SDK 连接）、saveData（上传玩家数据到服务端）、getData（从服务端拉取数据）、queryRank（查询排行榜前 N 名）。在 ds.js 的 CONFIG 块中补充 GAME_ID 和 SERVER_STORAGE 相关配置。",
+      "files": [],
+      "tags": [
+        "mode-5",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 33,
+      "prompt": "我的光遇H5活动需要接入大神活动SDK，actId 是 act_sky_2025_spring，游戏叫光遇。帮我接入 ds-act-sdk。",
+      "expected_output": "在 index.html 的 <head> 末尾（SDK-LOADER 块之后）注入 ds-act-sdk 的 CSS 和 JS 标签（版本 0.3.1：https://ds.res.netease.com/online/pkg/ds-act-sdk/0.3.1/ds-act-sdk.min.css 和 ds-act-sdk.min.js）。在 ds.js 末尾追加 DS:ACT-SDK 块，调用 window.DsActSdk.configure({ production: { actId: 'act_sky_2025_spring', appKey } })（appKey 通过 appkey-naming 查询光遇后填入，若已有 APP_KEY 则复用）。不使用 dsActSDK.init（已废弃），不使用 IIFE 手动登录检测骨架。configure 只配置 production，不含 staging。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 34,
+      "prompt": "我的光遇H5活动接入了 ds-act-sdk（actId 是 act_sky_2025_spring，appKey 是 sky），现在需要加一个任务弹窗，玩家可以看到当前任务列表和完成进度。",
+      "expected_output": "在 index.html 的 </body> 前注入任务弹窗容器 <div id=\"ds-task-root\"></div>（若选自动按钮模式还需注入 <button id=\"ds-task-entry-btn\">）。在 ds.js 的 DS:ACT-SDK 块中调用 window.DsActSdk.TaskModule.evoke({ container: '#ds-task-root', showRole: true/false })。显隐控制通过 window.DsActSdk.dsActStore.set(window.DsActSdk.taskListPopupState, true) 打开弹窗。不使用 initActTask 封装（已废弃），不使用 IIFE 手动登录检测，evoke 自带 DsActProvider 自动处理登录态和 actInfo 拉取。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "subflow-act-task",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 35,
+      "prompt": "我的光遇H5活动需要在页面底部加一个 CPS 底部栏，引导用户下载大神APP。actId 是 act_sky_2025_spring，appKey 是 sky，frontId 是 6a0c7c2c226c7a38df7fb80c。",
+      "expected_output": "在 index.html 的 </body> 前注入 CPS 底部栏容器 <div id=\"ds-cps-bar-root\"></div>。页面根节点添加 body { padding-bottom: var(--cps-bar-bottom, 0px); }。在 ds.js 的 DS:ACT-SDK 块中调用 window.DsActSdk.CpsUniversalBar.evoke({ container: '#ds-cps-bar-root' })。configure 中 frontId 必填（CpsUniversalBar 依赖 frontConfig 拉取后台配置）。只传 container，所有展示内容通过 frontId 关联的后台配置自动拉取。不使用 cpsBar.init（已废弃），不使用 if(isLoggedIn) 判断登录态。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "subflow-cps-bar",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 36,
+      "prompt": "我的光遇H5活动需要在页面底部加一个 CPS 底部栏用于分发，actId 是 act_sky_2025_spring，frontId 是 6a0c7c2c226c7a38df7fb80c。",
+      "expected_output": "CPS 分发底部栏与 CPS 底部栏是同一个组件（CpsUniversalBar），通过后台 frontConfig 配置区分展示内容。接入方式相同：在 index.html 的 </body> 前注入 <div id=\"ds-cps-bar-root\"></div>，在 ds.js 中调用 window.DsActSdk.CpsUniversalBar.evoke({ container: '#ds-cps-bar-root' })。configure 中 frontId 必填。分发链接、按钮文案等均由后台 frontConfig.cpsUniversalBarConfig.ext 配置，代码侧不硬编码。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "subflow-cps-bar",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 37,
+      "prompt": "我的H5活动需要接入大神活动SDK，但是 actId 我还没定好，能先帮我接吗？",
+      "expected_output": "若用户只接入 CPS 底部栏（功能 D），actId 可跳过；若接入角色绑定/任务弹窗/回流任务检测（A/B/C），actId 必填。输出提示「actId 是角色绑定/任务弹窗/回流任务检测的必要参数，请先确认活动ID后再接入；若只接入 CPS 底部栏可跳过 actId」，等待用户补充 actId 或确认只接入 CPS 底部栏。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 41,
+      "prompt": "我的光遇H5活动接入了 ds-act-sdk（actId 是 act_sky_2025_spring，appKey 是 sky），需要在页面顶部加一个角色选择入口，让用户可以绑定和切换游戏角色。",
+      "expected_output": "在 index.html 的 </body> 前注入角色绑定容器 <div id=\"ds-role-root\"></div>。在 ds.js 的 DS:ACT-SDK 块中调用 window.DsActSdk.Role.evoke({ container: '#ds-role-root' })。Role 组件点击后自动完成登录预检→绑角/换角流程，无需手动检测登录态。若业务逻辑需主动触发绑角（非点击 Role 组件），可使用 window.DsActSdk.evokeRoleSelection({ onBound }) 但必须确保此前已有 UI evoke 挂载 Provider（evokeRoleSelection 依赖 store 已有 actInfo）。不使用 IIFE 骨架，evoke 自带 DsActProvider。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "subflow-act-role",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 42,
+      "prompt": "我的光遇H5活动接入了 ds-act-sdk（actId 是 act_sky_2025_spring，appKey 是 sky），需要检测回流用户任务完成状态，满足条件时弹窗领奖。回流任务 asId 是 6a0455ecf20d41361aa734f3。",
+      "expected_output": "在 ds.js 的 DS:ACT-SDK 块中使用 new window.DsActSdk.TaskChecker(actId, asId) 创建检测器。调用链：await tc.isMatched() 判断命中 → await tc.query() 拉取详情 → tc.isClaimable() 判断可领奖 → await tc.claim() 领奖。isMatched/query/claim 是 async，isCompleted/isClaimable 是 sync。claim() 内部调 actPreCheck 预检，预检失败返回 801/802/803/805 错误码，领奖失败返回 -1/-2/-999。不封装 checkReturnTask 函数（已废弃），不询问触发模式，调用时机由业务方决定。TaskChecker 与 store 隔离，自带 actInfo 拉取，可脱离 Provider 独立使用。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "subflow-act-task-checker",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 38,
+      "prompt": "我有一个 React 项目（Vite 创建），需要接入大神业务代码。游戏是永劫无间，EVENT_ACTION 是 fe_act_naraka_2025，EVENT_CATEGORY 是 act_naraka_2025。",
+      "expected_output": "生成 4 个 hooks（src/hooks/useDsInit.ts、useNsLog.ts、useDsShare.ts、useDsUlink.ts）+ src/ds.d.ts，ES module 格式，遵循 capabilities/inject.md + contracts/framework-diffs.md 的 React 接入模式（导出 hook 供 React 组件使用）。CONFIG 块中 APP_KEY 和 SQUARE_ID 通过 appkey-naming 查询永劫无间后填入。index.html 中注入 SDK-LOADER 区域。输出中提及 React/Vite 项目的适配说明（import 路径、vite.config 无需额外配置，hooks 在 Vite 默认 src/ 扫描范围内）。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-react"
+      ]
+    },
+    {
+      "id": 39,
+      "prompt": "帮我审查这个 React 项目，我在 App.tsx 的 useEffect 里直接调了 withPrecheck(() => { fetchUserData(); })，但是没等 ds.js 初始化完成。另外有个 Button 组件 onClick 里直接调了 window.ds.callHandler('openLoginPage')。",
+      "expected_output": "审查报告标记两个阻断项：1) useEffect 中调用 withPrecheck 需确保 ds.js 已初始化（检查 dsInit/checkLogined 完成状态），建议将业务逻辑包裹在 withPrecheck 内部由 withPrecheck 自己处理登录预检，而非在外层自行调用；2) window.ds.callHandler('openLoginPage') 未经 window.ds.ready() 包裹，修复为 window.ds.ready().then(() => window.ds.callHandler('openLoginPage'))。输出中提及 React 项目的审查额外关注点——useEffect 依赖数组、组件卸载时的清理、ESM import 的正确性。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "framework-react"
+      ]
+    },
+    {
+      "id": 40,
+      "prompt": "我有一个 Vue 3 项目（Vite 创建），需要接入大神业务代码。游戏是阴阳师，EVENT_ACTION 是 fe_act_onmyoji_2025，EVENT_CATEGORY 是 act_onmyoji_2025。",
+      "expected_output": "生成 4 个 composables（src/composables/useDsInit.ts、useNsLog.ts、useDsShare.ts、useDsUlink.ts）+ src/ds.d.ts，ES module 格式，遵循 capabilities/inject.md + contracts/framework-diffs.md 的 Vue 接入模式（导出 composable 供 Vue 组件 setup() 使用）。CONFIG 块中 APP_KEY 和 SQUARE_ID 通过 appkey-naming 查询阴阳师后填入。index.html 中注入 SDK-LOADER 区域。输出中提及 Vue/Vite 项目的适配——composables 在 Vite 的 src/ 目录下、可直接在 .vue 文件的 <script setup> 中 import。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-vue"
+      ]
+    },
+    {
+      "id": 56,
+      "prompt": "帮我审查这个 Vue 3 项目，HelloWorld.vue 的 setup 里直接 import { withPrecheck } from './ds.js' 然后在模板按钮 @click=\"handleClick\" 的 handleClick 函数里调了 withPrecheck(() => { doSomething(); })，但没有先检查 window.ds 是否就绪。另外 share.vue 里用 ref 存了 window.DA_SQUARE_ID。",
+      "expected_output": "审查报告标记两个阻断项：1) .vue 组件中 import 的 withPrecheck 在调用前需确保 ds.js 初始化完成（window.ds.ready() 或内部 checkLogined），否则登录预检可能是空操作。建议在 composable 返回的 precheck 函数中加入 ready 等待逻辑；2) 禁止手动赋值 window.DA_SQUARE_ID（部署平台注入）。输出中提及 Vue 项目的审查额外关注点——ref 响应式变量不应映射 DA_SQUARE_ID 等平台注入值、composable 的副作用管理、SSR 兼容性。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "framework-vue"
+      ]
+    },
+    {
+      "id": 57,
+      "prompt": "我已经有一个接入了大神功能的H5活动（炉石传说），现在需要把它改造成能在微信小程序里内嵌使用。需要接入联登（复用小程序登录态）、自定义分享、并且点击按钮需要经过登录预检。",
+      "expected_output": "完成 H5 → 微信小程序改造，核心变更：1) index.html 注入微信 JSSDK（jweixin-1.6.0.js）和 URS 登录组件（universal-login）；2) ds.js 新增 isWechatMiniProgram 环境检测函数；3) initLogin 含大神App dsInit 分支 / 小程序 Ulogin.hasLoggedIn 静默检测分支 / 普通浏览器 ulink 分支；4) initShare 含小程序 wx.miniProgram.postMessage({ type: 'share', data: {} }) 分支；5) withPrecheck 升级为 async 三分支（大神App checkLogined / 小程序检查 userInfo.uid / 普通浏览器），无环境判断 if/else 包裹分支；6) initUlink 小程序内跳过。所有已有业务逻辑和新代码均不改变原有非小程序功能。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "subflow-miniapp",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 43,
+      "prompt": "帮我给梦幻西游的HTML小游戏接入服务端存储，游戏有 score（当前得分）、level（关卡）、items（道具列表，是对象数组）三个需要持久化的变量，还需要排行榜。项目已经接入了 ds.js，现在走模式5服务端存储流程。",
+      "expected_output": "生成 game-server-storage.js，使用新 SDK API：1) index.html 引入 mini-game-data-sdk 0.2.1 版本（仅 JS，不引入 index.css）；2) req.setGameId({ devMiniGameId: '...', proMiniGameId: '...' }) 对象形式调用；3) items 字段因为是对象数组，type 为 string，在 saveFull 时自动 JSON.stringify，loadFull 时 JSON.parse；4) 批量写入使用 obfuscatedBatchWriteData({ items: [...] })，单批 ≤ 20 条；5) 排行榜使用 BILLBOARD_CONFIG = { devBillboardId, proBillboardId } 对象，getBillboardRank/getUserRank 使用 { ...BILLBOARD_CONFIG } 展开传参；6) 代码生成完成后输出 DataHub 批量导入 JSON，包含 score（NUMBER,0）、level（NUMBER,1）、items_json（STRING,\"[]\"）、last_save（NUMBER,0）四条。",
+      "files": [],
+      "tags": [
+        "mode-5b",
+        "framework-html",
+        "server-storage"
+      ]
+    },
+    {
+      "id": 44,
+      "prompt": "帮我审查这个项目，game-server-storage.js 里的配置如下：const GAME_ID_CONFIG = { devMiniGameId: '__DEV_MINI_GAME_ID__', proMiniGameId: '__PRO_MINI_GAME_ID__' }; const BILLBOARD_CONFIG = { devBillboardId: '__DEV_BILLBOARD_ID__', proBillboardId: '__PRO_BILLBOARD_ID__' };",
+      "expected_output": "审查报告在 A 档标记两个阻断项：1) GAME_ID_CONFIG.devMiniGameId 仍为占位符 __DEV_MINI_GAME_ID__，SDK 无法路由到正确数据表，必须替换为真实测试环境 miniGameId；2) BILLBOARD_CONFIG.devBillboardId 仍为占位符 __DEV_BILLBOARD_ID__，排行榜接口必然报错，必须替换。C 档警告两个上线前必须项：proMiniGameId 和 proBillboardId 为占位符，测试阶段可接受但上线前须替换。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "audit"
+      ]
+    },
+    {
+      "id": 45,
+      "prompt": "帮我审查这个项目，game-server-storage.js 顶部注释里有一行 // __FIELDS_NOT_REGISTERED__ — CMS 字段尚未录入，devMiniGameId 已经填了真实值 abc123。",
+      "expected_output": "审查报告在 A 档标记一个阻断项：检测到 __FIELDS_NOT_REGISTERED__ 标记，CMS 数据字段尚未在后台录入，SDK 调用会静默失败。审查输出中提示用户到 CMS 后台录入字段后方可继续（审查只读、不代为构建 JSON；字段表需来自 inject 产出的 storage-keys 定义）。devMiniGameId 已填真实值这一点不影响字段注册检查。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "audit"
+      ]
+    },
+    {
+      "id": 46,
+      "prompt": "帮我审查这个项目，game-server-storage.js 的 saveFull 函数用了 obfuscatedBatchWriteData，但是一次性传了 25 条 items，代码里写了 items: allFields.slice(0, 25)。",
+      "expected_output": "审查报告在 B 档标记一个警告项：obfuscatedBatchWriteData 单次最多 20 条，当前传入了 25 条，超出限制。autofix 建议将 25 条分两批：第一批 items.slice(0, 20)、第二批 items.slice(20)，分别调用 obfuscatedBatchWriteData。不应标记为 A 档阻断（超限属于 API 使用不当，可修复）。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "audit"
+      ]
+    },
+    {
+      "id": 47,
+      "prompt": "帮我审查这个项目，game-server-storage.js 里用的是旧写法：const req = new MiniGameDataSdk.RequestManager(); req.setGameId('abc123test');",
+      "expected_output": "审查报告标记两个阻断项：1) RequestManager 是静态类，不应使用 new 实例化，应使用 MiniGameDataSdk.RequestManager（直接引用静态类）；2) setGameId 传入单个字符串是旧 API，新 SDK 要求传对象形式 setGameId({ devMiniGameId: '...', proMiniGameId: '...' })，SDK 通过 IS_PRODUCTION 自动选择环境 ID。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "audit"
+      ]
+    },
+    {
+      "id": 48,
+      "prompt": "帮我给这个阴阳师的小游戏接入服务端存储，业务代码已经有 game-server-storage.js 了，我现在想新增一个 achievement_list 字段（成就列表，字符串数组）。",
+      "expected_output": "检测到路径 D（已存在 game-server-storage.js），提示用户当前已接入服务端存储，询问操作类型：新增字段 / 修改同步策略 / 添加排行榜 / 重新生成。用户选新增字段后，在 DEFAULTS 对象中追加 achievement_list: []，在 loadFull/saveFull 中追加对应处理逻辑（STRING_LIST 类型，不需要 JSON.stringify）。代码生成后输出补充字段的 DataHub JSON：[{ key: 'achievement_list', name: '成就列表', type: 'STRING_LIST', defaultValue: [] }]。",
+      "files": [],
+      "tags": [
+        "mode-5b",
+        "framework-html",
+        "server-storage",
+        "path-d"
+      ]
+    },
+    {
+      "id": 49,
+      "prompt": "帮我给这个光遇小游戏接入服务端存储，项目里已经有 game-storage.js（本地存档），有 score 和 unlockedSongs（字符串数组）两个字段，用户已有本地存档需要迁移。",
+      "expected_output": "检测到路径 C（已存在 game-storage.js），询问是否升级到服务端存储并说明变化（换设备不丢档 / 支持排行榜 / 需要 miniGameId）。用户确认升级后：1) 读取 game-storage.js 解析现有字段，生成迁移建议表：score(number ✅直接搬)、unlockedSongs(string[] ✅直接搬 recordKey: unlocked_songs)；2) 生成 game-server-storage.js 包含 migrateFromLocalStorage 迁移函数；3) 输出 DataHub JSON：score（NUMBER,0）、unlocked_songs（STRING_LIST,[]）、last_save（NUMBER,0）；4) game-storage.js 保留（用于迁移函数读取旧数据）。",
+      "files": [],
+      "tags": [
+        "mode-5b",
+        "framework-html",
+        "server-storage",
+        "path-c"
+      ]
+    },
+    {
+      "id": 50,
+      "prompt": "帮我审查这个项目，game-server-storage.js 里 ServerStorage 用了 ES module export：export const ServerStorage = (() => { ... })();",
+      "expected_output": "审查报告标记 A 档阻断项：ServerStorage 不能用 ES module export，必须用 var ServerStorage 挂全局。原因：ES module export 的对象引用在 Object.assign 场景下会失效（新对象替换了旧引用，外部持有的 ServerStorage 还是空壳）。autofix：将 export const ServerStorage 改为 var ServerStorage。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "audit"
+      ]
+    },
+    {
+      "id": 51,
+      "prompt": "我用 Cocos Creator 2.4 导出了一个 web-mobile，目录里有 main.js、cocos2d-js-min.js、physics-min.js、src/settings.js。发布平台用 vite build，现在报错 'Rolldown failed to resolve import'，帮我接入 Vite。",
+      "expected_output": "自动检测到 Cocos 导出特征，执行 Vite 集成流程：1) 先用 ls 确认实际文件名；2) 创建 entry.js（?url 引入四个遗留 JS + CSS import + loadScript async=false）；3) index.html 替换 script 块为 <script type=\"module\" src=\"/entry.js\"></script>，保留 <link> CSS 标签；4) assets/ 复制到 public/；5) 读 jsList 确认插件路径；6) 创建 package.json（vite ^8）和 .gitignore；不修改 vite.config.js。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "auto_detected",
+          "text": "自动检测到 Cocos 项目特征，无需用户手动选择"
+        },
+        {
+          "id": "entry_js_created",
+          "text": "生成了 entry.js，包含 ?url 引入遗留 JS"
+        },
+        {
+          "id": "url_suffix_used",
+          "text": "entry.js 的 import 语句使用了 ?url 后缀"
+        },
+        {
+          "id": "load_script_sequential",
+          "text": "loadScript 使用 async=false 或 await 保证顺序"
+        },
+        {
+          "id": "index_html_module",
+          "text": "index.html 替换为 <script type=\"module\" src=\"/entry.js\"></script>"
+        },
+        {
+          "id": "assets_to_public",
+          "text": "assets/ 复制到 public/"
+        },
+        {
+          "id": "no_vite_config_change",
+          "text": "未要求修改 vite.config.js"
+        }
+      ],
+      "tags": [
+        "cocos",
+        "vite-integration",
+        "auto-detect"
+      ]
+    },
+    {
+      "id": 52,
+      "prompt": "Cocos 导出的 web-mobile 里文件名都带了 hash，比如 main.5f647.js、src/settings.1d21a.js。我需要用 Vite 打包发到 CDN，怎么做？",
+      "expected_output": "识别出带 MD5 后缀的文件名是正常 Cocos 导出形态；先用 ls 确认实际文件名再写 entry.js；entry.js 中使用带后缀的真实文件名（如 main.5f647.js?url）；说明 Vite hash 和 Cocos MD5 Cache 的 CDN hash 分工。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "recognizes_md5_suffix",
+          "text": "明确说明文件名带 MD5 后缀是正常导出形态"
+        },
+        {
+          "id": "ls_check_mentioned",
+          "text": "提示先用 ls 确认实际文件名再写 entry.js"
+        },
+        {
+          "id": "entry_uses_actual_name",
+          "text": "entry.js 使用带后缀的真实文件名或明确标注需替换"
+        },
+        {
+          "id": "url_suffix_used",
+          "text": "entry.js 使用了 ?url 后缀"
+        },
+        {
+          "id": "cdn_hash_strategy",
+          "text": "说明了 Vite hash 和 Cocos MD5 Cache 的分工"
+        }
+      ],
+      "tags": [
+        "cocos",
+        "vite-integration",
+        "md5-filename",
+        "cdn"
+      ]
+    },
+    {
+      "id": 53,
+      "prompt": "我把 Cocos web-mobile 的文件都丢进 public/ 了，build 是成功的，但上 CDN 之后改了代码用户还是看到旧版本，hash 没有变。",
+      "expected_output": "诊断根因：public/ 里的文件 Vite 原样复制不打 hash，文件名不变导致 CDN 永远命中旧缓存。给出 ?url 方案替换 public/ 做法；区分两类资源（settings/main/engine 走 ?url，bundle/jsList 留 public/）；提到 Cocos MD5 Cache 用于 bundle 资源缓存破坏；给出可操作的具体步骤。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "diagnoses_root_cause",
+          "text": "明确指出 public/ 不打 hash 是根本原因"
+        },
+        {
+          "id": "url_solution",
+          "text": "给出用 ?url 引入遗留 JS 的解决方案"
+        },
+        {
+          "id": "distinguishes_two_types",
+          "text": "区分了需要 Vite hash 的资源和应留 public/ 的 bundle 资源"
+        },
+        {
+          "id": "md5_cache_mentioned",
+          "text": "提到 Cocos MD5 Cache 用于 bundle 资源缓存破坏"
+        },
+        {
+          "id": "actionable_steps",
+          "text": "给出可操作的具体步骤"
+        }
+      ],
+      "tags": [
+        "cocos",
+        "vite-integration",
+        "cdn-cache"
+      ]
+    },
+    {
+      "id": 54,
+      "prompt": "我们的炉石传说 H5 活动需要支持在普通浏览器里直接登录大神账号参与活动，不要引导回 App。接入大神功能时 H5 登录选支持。",
+      "expected_output": "模式1步骤3询问 H5 登录支持时选 B（支持），生成的 ds.js CONFIG 块含 H5_LOGIN_ENABLED = true，withPrecheck 分支3（普通浏览器）根据 H5_LOGIN_ENABLED 二分：true 时调用 dsLogin.hasLoggedIn() 查询登录状态，未登录调用 dsLogin.show() 弹 URS 登录框，已登录执行 callback；H5_LOGIN_ENABLED=false 时走 openSquareUrl()。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "h5_login_enabled_true",
+          "text": "CONFIG 块含 H5_LOGIN_ENABLED = true"
+        },
+        {
+          "id": "withprecheck_branch3_bifurcation",
+          "text": "withPrecheck 分支3根据 H5_LOGIN_ENABLED 二分"
+        },
+        {
+          "id": "dslogin_hasloggedin_called",
+          "text": "H5_LOGIN_ENABLED=true 时调用 dsLogin.hasLoggedIn() 查询登录状态"
+        },
+        {
+          "id": "dslogin_show_called",
+          "text": "未登录时调用 dsLogin.show() 弹 URS 登录框"
+        },
+        {
+          "id": "callback_executed_when_logged_in",
+          "text": "已登录时执行 callback(...args)"
+        }
+      ],
+      "tags": [
+        "mode-1",
+        "h5-login",
+        "withprecheck"
+      ]
+    },
+    {
+      "id": 55,
+      "prompt": "帮我审查这个项目，src/ds.js 里 withPrecheck 的普通浏览器分支直接走了 openSquareUrl()，但 CONFIG 块里 H5_LOGIN_ENABLED = true。",
+      "expected_output": "审查报告标记阻断项：H5_LOGIN_ENABLED = true 时分支3应调用 dsLogin.hasLoggedIn() 查询登录状态，未登录调用 dsLogin.show()，而非直接 openSquareUrl()。当前实现忽略了 H5_LOGIN_ENABLED 配置，导致支持模式下未登录用户被错误引导回 App。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "flags_branch3_violation",
+          "text": "标记 H5_LOGIN_ENABLED=true 但分支3走 openSquareUrl() 的问题"
+        },
+        {
+          "id": "correct_behavior_described",
+          "text": "说明正确行为：true 时应走 dsLogin.hasLoggedIn() + dsLogin.show()"
+        }
+      ],
+      "tags": [
+        "mode-2",
+        "h5-login",
+        "audit"
+      ]
+    },
+    {
+      "id": 58,
+      "prompt": "帮我打包这个H5项目，但是 npx vite build 会报错（业务代码里有个 import 引用了不存在的模块）。",
+      "expected_output": "对所有项目先执行 npx vite build 构建门禁，构建返回非零退出码（H1 失败，import 解析失败）。不应生成 deploy.zip，应输出 vite 错误日志，提示用户修复后重跑部署、不打包。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 59,
+      "prompt": "我的光遇H5活动接入了 ds-act-sdk（actId 是 act_sky_2025_spring，appKey 是 sky）。现在活动有个自己的抽奖后端接口 /v1/act/module/myGame/draw，玩家在大神 App 内打开，帮我写调用这个接口的代码。",
+      "expected_output": "使用 window.DsActSdk 透传的 actDsAxios 发请求（站内 App 内走 actDsAxios）。默认带客户端签名：第三参传 { useGlClientSignature: true }，body 用 JSON.stringify(params) 传字符串（无入参也传 JSON.stringify({})）。接口只写相对路径 /v1/act/module/myGame/draw，不写完整域名——baseURL 由 SDK 产物固化。响应已解包，.post() resolve 的直接是返回体，无需再取 res.data。不自己 new axios，不写死域名。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses_actDsAxios",
+          "text": "站内接口使用 window.DsActSdk.actDsAxios（而非自建 axios 或 fetch）"
+        },
+        {
+          "id": "default_signature",
+          "text": "默认带签名：第三参含 { useGlClientSignature: true }"
+        },
+        {
+          "id": "body_stringify",
+          "text": "body 用 JSON.stringify(...) 传字符串，而非直接传对象"
+        },
+        {
+          "id": "relative_path",
+          "text": "接口只写相对路径，不写死完整域名 baseURL"
+        }
+      ],
+      "tags": [
+        "mode-6",
+        "subflow-act-axios",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 60,
+      "prompt": "我给梦幻西游的H5活动做了个「职业创意投稿广场」，玩家可以投稿自创职业、给别人的投稿点赞、还能评论，所有人都能看到全部投稿。项目已经接入了 ds.js 和 game-server-storage.js（个人存档），个人存档审查也通过了。",
+      "expected_output": "识别出「投稿/点赞/评论」属于多人共写共读、非 uid 分片的公共表场景（区别于按 uid 分片的个人存档），触发 references/server-storage/common-table/00-triage.md 开放式识别并询问用户是否接入公共表。用户确认后走 5-C 流程：设计 submission（投稿，含 like_count NUMBER 字段）、plaza_comment（评论，post_id 关联）、plaza_like（点赞，唯一索引 post_id+__create_uid 防重复）三张表；每张表必须建索引且每条查询命中索引前缀，跑 validate.cjs 全绿；生成独立 game-common-table.js（复用 setGameId，type=\"module\"，加载在 game-server-storage.js 之后），点赞用 tableIncrNumber 自增 like_count 且 submission 表 creatorOnlyModify=false；输出 TableConfig JSON 供导入 god-cms「数据表」tab。",
+      "files": [],
+      "tags": [
+        "mode-5c",
+        "common-table",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 61,
+      "prompt": "我的光遇H5活动接入了 ds-act-sdk，有个查询流失角色的站内接口 /v1/mini-game/lost-role/check，没有入参。玩家在大神 App 内访问，帮我写请求代码。",
+      "expected_output": "使用 window.DsActSdk.actDsAxios 发请求。即便是查询类接口，站内默认也带签名：actDsAxios.post('/v1/mini-game/lost-role/check', JSON.stringify({}), { useGlClientSignature: true })。无入参时 body 仍需 JSON.stringify({})。不能因为是查询接口就省略签名直接传对象——除非后端明确说该接口不验签。响应已解包直接是返回体。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "signature_even_for_query",
+          "text": "查询接口也默认带 { useGlClientSignature: true }，不因是读接口而省略签名"
+        },
+        {
+          "id": "empty_body_stringify",
+          "text": "无入参时 body 传 JSON.stringify({}) 而非省略或传空对象字面量"
+        }
+      ],
+      "tags": [
+        "mode-6",
+        "subflow-act-axios",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 62,
+      "prompt": "帮我审查这个项目，game-common-table.js 里点赞是这样写的：req.tableIncrNumber({ tableKey: 'submission', id: postId, fieldKey: 'like_count', delta: 1 })，对应 submission 表的 TableConfig 里 creatorOnlyModify 是 true。另外列表查询用了 req.tableFindList({ tableKey: 'submission', conditions: [{ fieldKey: 'job_name', op: 'eq' }], sorts: [{ fieldKey: 'like_count', direction: 'DESC' }] })，但 submission 表只注册了 [__create_time DESC]、[like_count DESC]、[__create_uid,__create_time]、[__create_uid,like_count] 四个索引。",
+      "expected_output": "公共表专项审查（common-table.md，因存在 game-common-table.js 而加载）标记两个阻断项：1) tableIncrNumber 对 submission.like_count 跨用户自增，但该表 creatorOnlyModify=true，导致非创建者无法自增（别人点不了赞），必须改为 creatorOnlyModify=false 并重新导入数据表；2) tableFindList 查询 conditions=[job_name eq] + sorts=[like_count DESC] 不命中任何已注册索引前缀（无 job_name 开头的索引），运行时后端抛 PARAM_ERROR，查询失败，需新增覆盖该查询的索引或调整查询。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "mode-5c",
+        "common-table",
+        "audit"
+      ]
+    },
+    {
+      "id": 63,
+      "prompt": "我的光遇小游戏接了 ds-act-sdk，活动排行榜接口服务端只发了测试环境（等 QA 验证），还没发正式。玩家在浏览器里打开（站外），排行榜接口是 /v1/act-web/module/myGame/rank。我现在想先联调，怎么让请求打到测试域名？",
+      "expected_output": "站外用 window.DsActSdk.actWebAxios。因为接口只发了测试、还没发正式，需临时把 baseURL 覆盖到站外测试域名 https://inf-act-test.ds.163.com（推荐用 actWebAxios.defaults.baseURL 全局覆盖，集中一处便于回收，或单次请求第三参 { baseURL }）。必须明确提示：这是联调期临时手段，接口发正式后要删除覆盖代码，否则线上会请求测试接口导致故障。不应弹卡片让用户手选域名——域名默认由产物固化走正式，仅此场景临时改。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses_actWebAxios",
+          "text": "站外接口使用 actWebAxios"
+        },
+        {
+          "id": "override_test_domain",
+          "text": "临时覆盖 baseURL 到站外测试域名 inf-act-test.ds.163.com"
+        },
+        {
+          "id": "warn_remove_after_prod",
+          "text": "明确提示接口发正式后必须删除覆盖代码，否则线上故障"
+        }
+      ],
+      "tags": [
+        "mode-6",
+        "subflow-act-axios",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 64,
+      "prompt": "帮我给这个H5小游戏加一个『玩家留言墙』，谁都能发留言、也能看到别人发的所有留言。项目现在只有 index.html 和 game.js，没接过任何数据存储，也没接过 mini-game-data-sdk。",
+      "expected_output": "识别出「留言墙」是多人共写共读、非 uid 分片的公共表场景，走 references/server-storage/common-table/00-triage.md。0.3 基础设施就绪前置发现项目没有 game-server-storage.js（独立接入），因此主动做两件事：1) 向用户索取 miniGameId（devMiniGameId + proMiniGameId），用户拿不到则暂缓；2) 把 mini-game-data-sdk 的 JS 注入含 DS Marker 的 HTML <head>（版本 ≥ 0.2.1，不引入 index.css）。0.4 检查登录态（__create_uid 依赖登录）。用户确认后走 5-C：设计留言表（含内容字段 + __create_uid），建索引且查询命中索引前缀，validate.cjs 全绿；生成 game-common-table.js 时保留顶层 setGameId 兜底段，且 GAME_ID_CONFIG 填入用户提供的真实 miniGameId（不留 __DEV_MINI_GAME_ID__ 占位符）；game-common-table.js 带 type=\"module\"。",
+      "files": [],
+      "tags": [
+        "mode-5c",
+        "common-table",
+        "standalone-entry",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 65,
+      "prompt": "我的光遇活动接了 ds-act-sdk，同一个排行榜功能，玩家在大神 App 内和普通浏览器里都可能打开，我想根据环境自动选对的请求实例，怎么写？",
+      "expected_output": "用 window.DsActSdk.ds.isGodlike() 判断运行环境动态选实例：站内（isGodlike() 为 true）用 actDsAxios，站外用 actWebAxios。注意 ds 是 SDK 导出的命名空间，isGodlike 是函数，必须带括号调用 ds.isGodlike()（不是读属性）。站内走 /v1/act/** 前缀、站外走 /v1/act-web/** 前缀，路径不同需后端同时提供两套。站内分支仍默认带签名（JSON.stringify + useGlClientSignature），站外分支直接传对象。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses_isGodlike_function",
+          "text": "用 ds.isGodlike() 函数调用（带括号）判断环境，而非读 ds.isGodlike 属性"
+        },
+        {
+          "id": "dynamic_instance",
+          "text": "站内选 actDsAxios、站外选 actWebAxios，动态切换"
+        },
+        {
+          "id": "different_path_prefix",
+          "text": "指出站内 /v1/act/** 与站外 /v1/act-web/** 路径前缀不同"
+        }
+      ],
+      "tags": [
+        "mode-6",
+        "subflow-act-axios",
+        "framework-html"
+      ]
+    },
+    {
+      "id": 66,
+      "prompt": "帮我审查这段代码：src/ds.js 里运营自己写了 const myAxios = axios.create({ baseURL: 'https://god-act.gameyw.netease.com' }); 然后用 myAxios.post('/v1/act/module/myGame/draw', { actId }) 调站内抽奖接口。",
+      "expected_output": "审查报告标记问题：不应自己 new axios / axios.create 并写死域名请求活动接口。应改用 window.DsActSdk 透传的 actDsAxios（站内）。自建实例缺少 SDK 内置的签名头（useGlClientHeader、dsRequest 签名），站内接口会因缺签名导致鉴权失败；且写死域名无法随环境切换。正确写法：actDsAxios.post('/v1/act/module/myGame/draw', JSON.stringify({ actId }), { useGlClientSignature: true })，相对路径 + 默认带签名，响应已解包无需取 res.data。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "flags_new_axios",
+          "text": "标记自建 axios.create + 写死域名的反模式"
+        },
+        {
+          "id": "explains_missing_signature",
+          "text": "说明自建实例缺签名头会导致站内接口鉴权失败"
+        },
+        {
+          "id": "suggests_actDsAxios",
+          "text": "给出正确写法：改用 actDsAxios + 相对路径 + 默认带签名"
+        }
+      ],
+      "tags": [
+        "mode-2",
+        "subflow-act-axios",
+        "audit"
+      ]
+    },
+    {
+      "id": 67,
+      "prompt": "我的项目同时用了 React 和 Cocos Creator，package.json 有 react 依赖，但也有 cocos2d-js-min.js 和 _CCSettings。帮我接入大神功能。",
+      "expected_output": "agent 应识别混合框架冲突，询问用户优先级或按 Cocos 优先处理（IS_COCOS=true），不盲目按 React 注入。行为预期：agent 检测到 Cocos 后设置 IS_COCOS=true，跳过微信 JSSDK，不因 react 依赖就走 React 分支。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-cocos",
+        "category-boundary"
+      ]
+    },
+    {
+      "id": 68,
+      "prompt": "我项目里已有 src/ds.js 但好像缺了 NS 日志的块，没有 trackEvent 函数。帮我修复。",
+      "expected_output": "agent 应检测到 ds.js 缺少 [DS:NS-LOG] 块，按 contracts/ds-js-markers.md 契约补全该块，不覆盖已有块。行为预期：幂等性处理——保留已有 CONFIG/JSSDK 等块，仅补全缺失块。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-html",
+        "category-boundary"
+      ]
+    },
+    {
+      "id": 69,
+      "prompt": "我有 index.html 和 page2.html 两个页面，index.html 已经接入过大神（有 SDK-LOADER），page2.html 还没接入。帮我把 page2 也接上。",
+      "expected_output": "agent 应通过 scan-html 检测到 index.html 已含 DS Marker、page2.html 不含，询问用户确认只对 page2.html 注入。行为预期：不重复注入 index.html，对 page2.html 执行注入。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-html",
+        "category-boundary"
+      ]
+    },
+    {
+      "id": 70,
+      "prompt": "我之前在 Cocos 项目里误注入了 mobile-share，现在游戏白屏。帮我查一下并修复。",
+      "expected_output": "agent 应识别 IS_COCOS=true 时 MobileShare 会污染 window.wx 导致引擎误判，指导用户重跑 inject 能力（会自动跳过 MobileShare），或手动删除 mobile-share script 标签。行为预期：识别 Cocos + MobileShare 冲突，提供修复路径。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-cocos",
+        "category-boundary"
+      ]
+    },
+    {
+      "id": 71,
+      "prompt": "我接入服务端存储了，但调用接口报错，game-server-storage.js 里好像没调 setGameId。",
+      "expected_output": "agent 应检测到 game-server-storage.js 缺少 MiniGameDataSdk.RequestManager.setGameId() 调用，指导补全。行为预期：识别 setGameId 缺失，按 contracts 补全初始化调用。",
+      "files": [],
+      "tags": [
+        "mode-5",
+        "framework-html",
+        "category-boundary"
+      ]
+    },
+    {
+      "id": 72,
+      "prompt": "我有个新的炉石传说 H5 活动页面，纯 HTML 项目，从接入大神到打包上线全帮我搞定。",
+      "expected_output": "agent 应自主规划 inject→audit→deploy 链路，不询问用户选编号。行为预期：先执行 inject（收集配置+生成ds.js），再执行 audit（校验），最后 deploy（打包 deploy.zip）。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-html",
+        "category-composition"
+      ]
+    },
+    {
+      "id": 73,
+      "prompt": "我接入大神后分享功能不工作，分享出去没有标题和图标。帮我查一下。",
+      "expected_output": "agent 应自主规划 audit→inject(修复) 链路。行为预期：先 audit 检查分享块问题（如 imgUrl 相对路径、缺非 Godlike 分支），再 inject 修复。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "framework-html",
+        "category-composition"
+      ]
+    },
+    {
+      "id": 74,
+      "prompt": "帮我接入任务弹窗，然后打包上线。",
+      "expected_output": "agent 应自主规划 ds-act-sdk(任务弹窗)→audit→deploy 链路。行为预期：先执行 ds-act-sdk 接入 TaskModule，再 audit，最后 deploy。",
+      "files": [],
+      "tags": [
+        "mode-6",
+        "framework-html",
+        "category-composition"
+      ]
+    },
+    {
+      "id": 75,
+      "prompt": "帮我查一下这个项目能不能过审查，如果有问题就直接帮我修了。",
+      "expected_output": "agent 应自主规划 audit→inject(修复)→audit(复验) 链路。行为预期：先 audit 发现问题，自动调 inject 修复，再 audit 复验。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "framework-html",
+        "category-composition"
+      ]
+    },
+    {
+      "id": 76,
+      "prompt": "帮我接入大神功能，加上游戏埋点，然后打包。",
+      "expected_output": "agent 应自主规划 inject→game-log→deploy 链路。行为预期：先 inject 生成 ds.js，再 game-log 插入 trackEvent，最后 deploy 打包。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-html",
+        "category-composition"
+      ]
+    },
+    {
+      "id": 77,
+      "prompt": "帮我加点击日志。",
+      "expected_output": "agent 应识别歧义：game-log（trackEvent 行为埋点）vs ad-preview（广告点击日志上报）。行为预期：列出两个候选及区分点，询问用户是否互动广告场景。",
+      "files": [],
+      "tags": [
+        "mode-auto",
+        "framework-html",
+        "category-disambiguation"
+      ]
+    },
+    {
+      "id": 78,
+      "prompt": "帮我接入存储功能。",
+      "expected_output": "agent 应识别 game-storage 有两条路径（本地存档 vs 服务端存储）。行为预期：询问用户选择本地还是服务端，说明各自优劣。",
+      "files": [],
+      "tags": [
+        "mode-auto",
+        "framework-html",
+        "category-disambiguation"
+      ]
+    },
+    {
+      "id": 79,
+      "prompt": "帮我检查一下代码。",
+      "expected_output": "agent 应识别歧义：audit（全面审查）vs ad-preview [K]（仅遮罩残留检查）。行为预期：询问用户是全面审查还是只查遮罩残留。",
+      "files": [],
+      "tags": [
+        "mode-auto",
+        "framework-html",
+        "category-disambiguation"
+      ]
+    },
+    {
+      "id": 80,
+      "prompt": "我的项目没有 index.html，入口是 main.html，而且 src 目录下已经有自己写的 ds.js 不是你们工具生成的。",
+      "expected_output": "agent 应根据契约自主推理：scan-html 检测到 main.html 为唯一 HTML、src/ds.js 已存在但无 DS Marker。行为预期：询问用户是否覆盖已有 ds.js，确认 SELECTED_HTML_FILES=[main.html]。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-html",
+        "category-uncovered"
+      ]
+    },
+    {
+      "id": 81,
+      "prompt": "我的项目是 Cocos Creator 导出的，但我用 React 做了 UI 层包裹。这种情况怎么接入大神？",
+      "expected_output": "agent 识别 Cocos+React 混合场景：framework=React + IS_COCOS=true 是两个独立标志（detect-framework 原语同时输出）。React → 用 React hooks 模板（src/hooks/useDs*.ts + src/ds.d.ts），IS_COCOS=true 影响 SDK-LOADER（跳过 jweixin、不加载 mobile-share）与 [DS:SHARE] 浏览器分支降级 no-op，但不改变框架模板选择（不会因 IS_COCOS=true 改用 HTML 模式/不生成 hooks）。framework 与 IS_COCOS 独立处理。",
+      "files": [],
+      "tags": [
+        "mode-1",
+        "framework-cocos",
+        "category-uncovered"
+      ]
+    },
+    {
+      "id": 89,
+      "prompt": "我有一个炉石传说活动页面，纯 HTML 项目，目录还不是 git 仓库。帮我注入大神业务代码。EVENT_ACTION 是 fe_act_hs_2025，游戏叫炉石传说。",
+      "expected_output": "门禁检测到目标目录无 .git：自动 git init 并写入 .gitignore（排除 node_modules/、dist/、deploy.zip、.skill-cache.json、dev-server 证书、.DS_Store/Thumbs.db），随后把当前全部文件提交为基线提交（chore(ds-act-workflow): 基线提交（技能介入前快照））。然后执行 inject。inject 完成后，门禁把 inject 产出提交为能力提交（feat(ds-act-workflow): 注入大神 SDK + 生成 ds.js）。git log 中可见基线提交与能力提交两条，均含 (ds-act-workflow) 标记可追溯。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-gitless"
+      ]
+    },
+    {
+      "id": 90,
+      "prompt": "我的炉石传说 H5 活动已在 git 仓库里，工作区干净（无未提交改动）。帮我注入大神业务代码。",
+      "expected_output": "门禁检测到 .git 在目标根且工作区干净：复用现有仓库，不新建基线提交（HEAD 即基线）。执行 inject 后把改动提交为能力提交 feat(ds-act-workflow): 注入大神 SDK + 生成 ds.js。git log 只新增一条能力提交，无多余基线提交。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-clean-repo"
+      ]
+    },
+    {
+      "id": 91,
+      "prompt": "我的 H5 活动在 git 仓库里，但 index.html 的标题我改了还没提交。帮我注入大神业务代码。",
+      "expected_output": "门禁检测到 .git 在目标根且工作区有未提交改动：先把未提交改动提交为基线提交（chore(ds-act-workflow): 基线提交（技能介入前快照）），使工作区干净。再执行 inject，完成后提交能力提交。git log 新增两条：先基线提交（含用户原有标题改动）、后能力提交（inject 产出）。用户原有改动不丢失、也不与 inject 改动混在一条提交。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-dirty-repo"
+      ]
+    },
+    {
+      "id": 92,
+      "prompt": "我的 H5 活动目录其实是我一个大仓库的子目录（上一层有 .git）。帮我注入大神业务代码。",
+      "expected_output": "门禁检测到 .git 在祖先目录（目标位于父仓库内）：门禁不介入——不创建 .git、不产生任何提交。inject 能力照常执行，不向父仓库写入提交。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-parent-repo"
+      ]
+    },
+    {
+      "id": 93,
+      "prompt": "我的纯 HTML 活动页面，index.html 里有内嵌的 <style> 和 <script> 块，帮我规范化目录结构。",
+      "expected_output": "structure（模式 0）是改源码的 mutating 能力，门禁对其全介入：执行前 ensure+基线（非 git 则 auto-init+基线；已 git 则按工作区状态处理），执行后把提取的 src/style.css、src/game.js、改写后的 index.html、CLAUDE.md 等改动提交为能力提交（refactor(ds-act-workflow): 提取内嵌 CSS/JS 到 src/）。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-mutating"
+      ]
+    },
+    {
+      "id": 94,
+      "prompt": "帮我审查这个已经接入大神的项目。",
+      "expected_output": "audit 是只读能力，门禁不介入：不执行 ensure+基线、不产生能力提交。审查报告照常输出，git 历史无新增提交。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-readonly"
+      ]
+    },
+    {
+      "id": 95,
+      "prompt": "帮我注入大神功能，但注入过程中因某文件无法写入而中断了。",
+      "expected_output": "能力执行中途失败时，门禁把 partial（半成品）状态提交，消息标注中断：chore(ds-act-workflow): [中断] inject 部分执行，保留现场。不自动回退——基线提交让回退始终可用（git reset --hard 到基线），但门禁把选择权交回用户。git log 中可见 [中断] 标注的提交便于识别处理。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-failure"
+      ]
+    },
+    {
+      "id": 96,
+      "prompt": "我已经用 ds-act-workflow 注入过大神了，再跑一次注入（项目没有变化）。",
+      "expected_output": "幂等重入：inject 检测到已注入（DS Marker 已存在），未产生任何改动。门禁检测到能力无改动，跳过提交，不产生空提交。git 历史无新增提交。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-idempotent"
+      ]
+    },
+    {
+      "id": 82,
+      "prompt": "帮我给这个梦幻西游小游戏接入服务端存储，我想做「分数达到 1000 自动完成任务并发奖」的小游戏数值任务。项目有 ds.js，但还没接入 ds-act-sdk 活动。",
+      "expected_output": "门控阶段先询问是否需要小游戏数值任务与奖励发放，用户答需要后确认 ds-act-sdk 接入状态；检测到未接入 ds-act-sdk，中断服务端存储流程，引导用户先走 mode6（ds-act-sdk）接入活动并拿到 actId，完成后再回到服务端存储。期间不生成 game-server-storage.js、不注册字段。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "asks_mission_gate",
+          "text": "流程开头询问是否需要小游戏数值任务与奖励发放"
+        },
+        {
+          "id": "confirms_dsactsdk",
+          "text": "用户答需要后确认是否已接入 ds-act-sdk 活动"
+        },
+        {
+          "id": "blocks_and_guides_mode6",
+          "text": "未接入时中断流程并引导先完成 mode6 ds-act-sdk 接入"
+        },
+        {
+          "id": "no_code_generated",
+          "text": "未接入 ds-act-sdk 前不生成 game-server-storage.js、不注册字段"
+        }
+      ],
+      "tags": [
+        "mode-5b",
+        "server-storage",
+        "mission-module",
+        "ds-act-sdk-gate"
+      ]
+    },
+    {
+      "id": 83,
+      "prompt": "帮我给这个阴阳师小游戏接入服务端存储，就普通的跨设备存档，不需要任务或发奖。项目已有 ds.js。",
+      "expected_output": "门控询问是否需要小游戏数值任务与奖励发放，用户答不需要后，走普通服务端存储流程，不引入数值任务、不依赖 ds-act-sdk 活动接入。字段表不出现「数值任务」列，导出 JSON 不含 missionEnabled，game-server-storage.js 顶部不生成 __MISSION_KEYS__ 标记。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "asks_mission_gate",
+          "text": "流程开头询问是否需要小游戏数值任务与奖励发放"
+        },
+        {
+          "id": "no_dsactsdk_dependency",
+          "text": "答不需要后不依赖 ds-act-sdk 接入"
+        },
+        {
+          "id": "no_mission_column",
+          "text": "字段表不出现数值任务列，导出 JSON 不含 missionEnabled"
+        },
+        {
+          "id": "no_mission_marker",
+          "text": "game-server-storage.js 顶部不生成 __MISSION_KEYS__ 标记"
+        }
+      ],
+      "tags": [
+        "mode-5b",
+        "server-storage",
+        "mission-module"
+      ]
+    },
+    {
+      "id": 84,
+      "prompt": "帮我给梦幻西游小游戏接入服务端存储，已接入 ds-act-sdk（actId 是 act_mhxy_2025）。有 score（分数，NUMBER）、merge_count（合成次数，NUMBER）、role_name（角色名，STRING）。我想把 score 配成数值任务：达到 1000 完成任务发奖。",
+      "expected_output": "门控确认需要数值任务且已接入 ds-act-sdk（记录 actId）。字段确定阶段仅对 NUMBER 字段（score、merge_count）询问是否配数值任务，role_name 不询问。score 标记数值任务后：1) 字段表「数值任务」列 score 为 ✅；2) game-server-storage.js 顶部生成 // __MISSION_KEYS__: [score]；3) 导出 DataHub JSON 中 score 条目携带 missionEnabled: true，其余字段不带；4) 输出图1→图2 CMS 任务模块配置引导。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "only_number_asked",
+          "text": "仅 NUMBER 字段（score、merge_count）被询问数值任务，role_name 不询问"
+        },
+        {
+          "id": "mission_marker_generated",
+          "text": "game-server-storage.js 顶部生成 __MISSION_KEYS__: [score]"
+        },
+        {
+          "id": "json_has_mission_enabled",
+          "text": "导出 JSON 中 score 条目带 missionEnabled: true，其余字段不带"
+        },
+        {
+          "id": "cms_guide_output",
+          "text": "输出图1→图2 的 CMS 任务模块配置引导"
+        }
+      ],
+      "tags": [
+        "mode-5b",
+        "server-storage",
+        "mission-module"
+      ]
+    },
+    {
+      "id": 85,
+      "prompt": "我在配服务端存储数值任务，能不能把 role_name（角色名，字符串）和 is_premium（是否付费，布尔）也配成数值任务？已接入 ds-act-sdk。",
+      "expected_output": "明确拒绝：数值任务仅 NUMBER 类型可配置，role_name（STRING）与 is_premium（BOOLEAN）不可配数值任务、不出现数值任务询问、导出 JSON 不可携带 missionEnabled。原因：任务类型 minigame_common_task_max 语义为单个数值达到阈值 N，只有标量数值字段成立。引导用户改用某个 NUMBER 字段做数值任务。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "rejects_non_number",
+          "text": "拒绝把 STRING/BOOLEAN 字段配为数值任务"
+        },
+        {
+          "id": "explains_reason",
+          "text": "说明仅 NUMBER 适用，任务类型为数值达到阈值 N"
+        },
+        {
+          "id": "no_mission_enabled_on_non_number",
+          "text": "非 NUMBER 字段导出 JSON 不携带 missionEnabled"
+        }
+      ],
+      "tags": [
+        "mode-5b",
+        "server-storage",
+        "mission-module"
+      ]
+    },
+    {
+      "id": 86,
+      "prompt": "我已经把 score 配成数值任务、导出 JSON 也导入后台了，接下来 CMS 任务模块怎么配？已接入 ds-act-sdk，actId 是 act_mhxy_2025。",
+      "expected_output": "输出图1→图2 端到端引导：图1 小游戏侧（活动→小游戏管理→对应 minigameId→数值管理→任务操作）复制「外部(游戏/CC)任务类型」（如 minigame_common_task_max）与「第三方任务扩展字段」（含 gameId、missionId），强调从弹窗直接点复制不要手填。图2 活动侧（全平台活动列表→ds-act-sdk 的 actId 对应活动→管理模块）：无该类型模块则新增模块→基于 uid 的大神用户第三方统计任务→粘贴两项→JSON 格式校验→设阈值 N；已有该类型模块则编辑并确认数据已复制。测试/正式两环境各配一遍。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "step1_copy_from_minigame",
+          "text": "图1 引导从小游戏数值管理任务操作复制外部任务类型与第三方扩展字段"
+        },
+        {
+          "id": "copy_not_handfill",
+          "text": "强调 gameId/扩展字段从弹窗复制，不要手填"
+        },
+        {
+          "id": "step2_activity_module",
+          "text": "图2 引导到 ds-act-sdk 的 actId 对应活动的管理模块"
+        },
+        {
+          "id": "covers_new_and_existing",
+          "text": "覆盖无模块（新增）与已有模块（编辑确认）两条分支，并设阈值 N"
+        }
+      ],
+      "tags": [
+        "mode-5b",
+        "server-storage",
+        "mission-module",
+        "cms-guide"
+      ]
+    },
+    {
+      "id": 87,
+      "prompt": "帮我审查这个项目，game-server-storage.js 里写入是这样：obfuscatedBatchWriteData({ items }).then(() => {}); 写完之后没有刷新页面上展示的分数。",
+      "expected_output": "审查报告在 B 档标记一个警告项（规则 #15）：写入调用成功分支内未见 UI 刷新或本地状态回写，页面可能显示与服务端不一致的旧值，数值任务/发奖场景尤其明显。建议在写入成功回调里用写入回包的数值状态刷新对应 UI。不应标记为 A 档阻断。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "flags_rule15_warning",
+          "text": "标记规则 #15 写入成功后未同步页面的警告"
+        },
+        {
+          "id": "b_grade_not_block",
+          "text": "定为 B 档警告而非 A 档阻断"
+        },
+        {
+          "id": "suggests_refresh_from_response",
+          "text": "建议用写入回包数值状态刷新对应 UI"
+        }
+      ],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "mission-module",
+        "audit"
+      ]
+    },
+    {
+      "id": 88,
+      "prompt": "帮我审查这个项目，game-server-storage.js 顶部注释有 // __MISSION_KEYS__: [score]，但 index.html 的 head 里没有引入 ds-act-sdk.min.js。",
+      "expected_output": "审查报告在 A 档标记一个阻断项：检测到 __MISSION_KEYS__（配置了数值任务）但页面未接入 ds-act-sdk，数值任务的指定活动即 ds-act-sdk 接入的活动，未接入则任务模块无处挂载、数值达标也不会完成任务/发奖。引导用户先走 mode6 接入 ds-act-sdk，再按 04-cms-register.md 5.4.1 完成图1→图2 任务模块配置。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "flags_mission_dep_block",
+          "text": "标记 __MISSION_KEYS__ 存在但未接入 ds-act-sdk 的 A 档阻断"
+        },
+        {
+          "id": "explains_activity_dependency",
+          "text": "说明数值任务的指定活动即 ds-act-sdk 接入的活动"
+        },
+        {
+          "id": "guides_mode6_and_cms",
+          "text": "引导先接入 ds-act-sdk(mode6) 再做 CMS 任务模块配置"
+        }
+      ],
+      "tags": [
+        "mode-2",
+        "mode-5b",
+        "server-storage",
+        "mission-module",
+        "audit"
+      ]
+    },
+    {
+      "id": 97,
+      "prompt": "我是运营，用 agent 写 H5 小游戏，要用图片资源。~/.agents/AGENTS.md 已有 ds-act-workflow 规范。帮我把图片加到项目。",
+      "expected_output": "agent 读规范后，图片用 import 引入（Vite 处理 hash），不 base64 内联，不放 public/。生成的代码含 import 语句引入图片（如 import img from './assets/img.png'），而非 base64 data URI 或 public/ 路径。体现规则1生效：资源经构建工具处理并获得 hash。",
+      "files": [],
+      "tags": [
+        "user-context-injection",
+        "rule-resource-hash"
+      ]
+    },
+    {
+      "id": 98,
+      "prompt": "我是运营，用 agent 写 H5 游戏逻辑 JS。~/.agents/AGENTS.md 已有 ds-act-workflow 规范。帮我写游戏逻辑。",
+      "expected_output": "agent 读规范后，JS 用 ES module（import/export），<script type=\"module\">，拆分到 src/*.js（不单文件巨型化 1-2M）。不用 ES2020+ 特性（可选链 ?.、空值合并 ??、BigInt）。体现规则2生效：ES module 化并合理拆分，最高 ES6 语法。",
+      "files": [],
+      "tags": [
+        "user-context-injection",
+        "rule-es-module"
+      ]
+    },
+    {
+      "id": 99,
+      "prompt": "我是运营，用 agent 写 H5，要动态加载多张图片。~/.agents/AGENTS.md 已有 ds-act-workflow 规范。帮我实现图片加载。",
+      "expected_output": "agent 读规范后，用 import.meta.glob（Vite 静态分析，{ eager: true, query: '?url', import: 'default' }），不运行时拼接路径字符串（'/assets/' + name + '.png'、模板字符串、require(path)）。体现规则3生效：资源路径可静态分析。",
+      "files": [],
+      "tags": [
+        "user-context-injection",
+        "rule-static-path"
+      ]
+    },
+    {
+      "id": 100,
+      "prompt": "我是运营，用 agent 写 H5，有 onclick 内联事件和 <style> 内联样式。~/.agents/AGENTS.md 已有 ds-act-workflow 规范。帮我改。",
+      "expected_output": "agent 读规范后，用 addEventListener 替代 onclick，CSS 拆到 src/*.css（BEM 命名），JS 拆到 src/*.js，不内联 HTML（<style> 块、业务 <script> 块；SDK-LOADER 除外）。体现规则4生效：结构/样式/行为分离。",
+      "files": [],
+      "tags": [
+        "user-context-injection",
+        "rule-separation"
+      ]
+    },
+    {
+      "id": 101,
+      "prompt": "我是运营，用 agent 从零写完整 H5 小游戏。~/.agents/AGENTS.md 已有 ds-act-workflow 规范。帮我写。",
+      "expected_output": "agent 读规范后，生成的 H5 代码同时遵守 4 条规则：1) 资源 import 不 base64/public（有 hash）；2) ES module 化拆分（不单文件巨型化，最高 ES6）；3) 资源路径可静态分析（不动态拼接，用 import/import.meta.glob）；4) 结构样式行为分离（不 onclick/不内联，CSS 用 BEM）。体现规范整体生效，不只内容存在。",
+      "files": [],
+      "tags": [
+        "user-context-injection",
+        "rule-all-combined"
+      ]
+    },
+    {
+      "id": 102,
+      "prompt": "我的电脑没装 git，现在有一个阴阳师活动页面，纯 HTML 项目，目录也不是 git 仓库。帮我注入大神业务代码。EVENT_ACTION 是 fe_act_ys_2026，游戏叫阴阳师。",
+      "expected_output": "门禁在进入检测矩阵前先做 Git 可用性检测（command -v git / where git），发现 git 二进制不可用。门禁不默认安装、不静默跳过，而是主动询问用户是否安装 git，询问时告知安装后能解决的痛点：①回滚——技能改错文件后无基线可 git reset --hard 回退，原地破坏性改动不可逆；②可追溯——无法用 git log --grep 'ds-act-workflow' 区分技能改动与人工改动；③规范——H5 活动不纳入版本管理。同时告知安装后常用自然语言操作（「提交」→git add+commit、「看历史」→git log、「回退到基线」→git reset --hard <基线>、「看我改了什么」→git diff/git status）。在用户回应前不执行注入。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-git-unavailable-ask"
+      ]
+    },
+    {
+      "id": 103,
+      "prompt": "我的电脑没装 git，帮我注入大神。如果你检测到没装 git，我同意你帮我安装。游戏是阴阳师，EVENT_ACTION 是 fe_act_ys_2026。",
+      "expected_output": "门禁 Git 可用性检测发现 git 不可用，询问后用户同意安装。门禁按平台执行安装：Windows 用 winget install Git.Git、macOS 用 brew install git、Debian/Ubuntu 用 sudo apt-get install -y git、RHEL/Fedora 用 sudo dnf install -y git。安装后刷新 PATH（重开终端 / source profile），再次检测确认 git 可用，随后进入检测矩阵。本例目录无 .git 走①：git init + 写 .gitignore + 基线提交全部文件，再执行 inject，完成后能力提交（feat(ds-act-workflow): 注入大神 SDK + 生成 ds.js）。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-git-install"
+      ]
+    },
+    {
+      "id": 104,
+      "prompt": "我的电脑没装 git，也不想装。先帮我审查这个已接入大神的项目，再帮我重新注入大神。",
+      "expected_output": "门禁 Git 可用性检测发现 git 不可用，询问后用户拒绝安装。审查（能力2，只读）不触发门禁，照常执行、输出审查报告、git 历史无新增提交。重新注入（能力1，改源码）触发门禁，但 git 不可用且用户拒绝安装 → 门禁阻断注入，向用户说明「无 git 保护，拒绝原地改动；可先手动安装 git 后重试」。这是环境前置失败而非 opt-out（门禁仍不可跳过）：git 二进制不可用时门禁无法履行职责，仅对需要门禁的改源码能力阻断，只读能力不受影响。",
+      "files": [],
+      "tags": [
+        "git-gate",
+        "gate-git-decline"
+      ]
+    },
+    {
+      "id": 105,
+      "prompt": "我的活动要接入心易会员流失召回，vipActId 是 6a6704f0656e7d745ec78f76，recallAsIds 是 ['6a67103fbd1f770279303146']。帮我配置 ds-act-sdk。",
+      "expected_output": "configure({ production: { actId, appKey, vipRecall: { actId: '6a6704f0656e7d745ec78f76', recallAsIds: ['6a67103fbd1f770279303146'] } } })。说明 vipRecall.actId 是独立 VIP 子活动 ID（和主 actId 不同）。React 项目用 useVipRecall hook（fetchVipInfo 查会员等级、fetchVipActInfo 编排入口：预检→查流失→查礼包、claimGiftPrize 领取，canVipRecallGet 是 {canApply, reason} 对象）。非 React 用 headless service 编排函数（fetchVipInfo/fetchVipActInfo/fetchGiftApplyInfo/claimGiftPrize，getVipRecallState 一次性读全部状态）。",
+      "files": [],
+      "tags": [
+        "ds-act-sdk",
+        "vip-recall",
+        "configure"
+      ]
+    },
+    {
+      "id": 106,
+      "prompt": "我直接调了 ds-act-sdk 的 getUserLossInfo 查流失，但是报错了说没有角色信息。我的代码是 const res = await getUserLossInfo({ appKey, roleId: '', server: '' })。",
+      "expected_output": "指出 getUserLossInfo 依赖角色绑定，roleId 为空是因为没先预检。正确流程：先调 actPreCheck(undefined, undefined, undefined, vipActId) 确保角色已绑定（未绑自动唤起选角），预检通过后再调 getUserLossInfo（从 actRoleInfoState 取 roleId/server）。或直接用 useVipRecall hook 的 fetchVipActInfo（内部已含预检→查流失→查礼包）。",
+      "files": [],
+      "tags": [
+        "ds-act-sdk",
+        "vip-recall",
+        "precheck",
+        "antipattern"
+      ]
+    },
+    {
+      "id": 107,
+      "prompt": "我用 useVipRecall hook 的 fetchVipActInfo，它内部做了什么？需要我手动预检吗？",
+      "expected_output": "fetchVipActInfo 内部编排：actPreCheck(undefined, undefined, undefined, vipRecallConfig.actId) → fetchUserLossInfo → fetchGiftApplyInfo。预检读 vipActInfoState（vip 活动），检查 canOffsiteJoin + 活动起止 + 角色绑定（未绑自动唤起选角 bind 到 vip 活动）。vipActInfo 由 LoginBoot 自动拉取（configure 传 vipRecall.actId 即触发），不在编排内。消费方无需手动预检，直接调 fetchVipActInfo 即可。",
+      "files": [],
+      "tags": [
+        "ds-act-sdk",
+        "vip-recall",
+        "hook",
+        "orchestration"
+      ]
+    },
+    {
+      "id": 109,
+      "prompt": "我有一个光遇的 H5 活动页面，纯 HTML 项目，index.html 里有内嵌 <style> 和 <script> 块。帮我接入大神。",
+      "expected_output": "agent 先展示能力菜单（Markdown 表格含编号/能力/一句话 + 推荐路径行 [0] → [1] → [扩展] → [2] → [3]），等用户选择。菜单中 [1] 注入大神未标 ✅ 已具备（项目无 DS Marker）。用户选 [0] 或 [1] 后执行对应能力。",
+      "files": [],
+      "tags": [
+        "menu-routing",
+        "first-time-menu"
+      ]
+    },
+    {
+      "id": 110,
+      "prompt": "帮我接入大神功能，模式1。游戏是光遇，EVENT_ACTION 是 fe_act_sky_2025，EVENT_CATEGORY 是 act_sky_2025。",
+      "expected_output": "用户明确指定模式1，agent 直接执行注入大神（不强制先弹菜单）。生成 SDK-LOADER 注入 index.html + src/ds.js，CONFIG 填入用户值 + appkey-naming 查询光遇的 APP_KEY/SQUARE_ID。执行完成后重新展示菜单 + 推荐下一步（扩展能力或 [2] 审查）。",
+      "files": [],
+      "tags": [
+        "menu-routing",
+        "explicit-direct"
+      ]
+    },
+    {
+      "id": 111,
+      "prompt": "我刚接入完大神功能（有 src/ds.js 和 DS Marker），现在下一步该做什么？",
+      "expected_output": "agent 重新展示能力菜单，[1] 注入大神标 ✅ 已具备（检测到 DS Marker），其余能力状态留空。推荐下一步为扩展能力（[4] 埋点 / [5] 持久化 / [6] 活动SDK / [8] 广告预览）或直接 [2] 审查。推荐是提示，用户可偏离。",
+      "files": [],
+      "tags": [
+        "menu-routing",
+        "chain-recommend"
+      ]
+    },
+    {
+      "id": 112,
+      "prompt": "帮我打包这个 H5 项目，public/ 目录下放了 background.mp3 背景音乐，代码里 fetch('/background.mp3') 加载。",
+      "expected_output": "deploy vite 构建门禁 H3（媒体资源禁止放 public/）扫到 public/background.mp3 → ❌ 阻断，不打包 deploy.zip。H3 覆盖音频/视频（.mp3/.mp4/.wav/.ogg/.webm），不只图片。提示音频必须移到 src/ 用 import 引用让 Vite 处理 hash。自动修复：移到 src/ + 改 import + 重建。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "deploy-h3-media"
+      ]
+    },
+    {
+      "id": 113,
+      "prompt": "帮我打包这个 H5 项目，构建成功，但 dist/assets/ 里排行榜头图 2.5MB（已 hash）。",
+      "expected_output": "deploy vite 构建门禁 H1-H4 全过，但软门禁资源体积检测扫到 dist/assets/ 图片 > 300KB → ⚠️ 警告（不阻断）。仍生成 deploy.zip（软门禁不阻断），输出体积警告 + 指引：tinypng / 转 webp / 资产管理上传大图。体积阈值：图 300KB / 音 500KB / 视 3MB。阈值可配置，见 resource-optimization.md。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "deploy-volume-warn"
+      ]
+    },
+    {
+      "id": 114,
+      "prompt": "帮我审查这个项目，src/game.js 里有 const audioUrl = '/assets/art/すもち - 日常の過ごし方 35.mp3'; new Audio(audioUrl).play();",
+      "expected_output": "审查规则 19（asset-paths）检测到硬编码完整资源路径字符串（含 / 前缀 + .mp3 扩展名，不在 import 语句内）→ ❌ 阻断并自动修复。修复：改为 import audioUrl from './assets/art/xxx.mp3?url'（必须带 ?url 后缀，Vite hash + ASCII 重命名，消除 CJK/空格等特殊字符）。豁免：已 hash CDN URL / 白名单 SDK 域 / data: URI / .json 路径。",
+      "files": [],
+      "tags": [
+        "mode-2",
+        "audit-asset-paths-hardcoded"
+      ]
+    },
+    {
+      "id": 115,
+      "prompt": "帮我压缩项目里偏大的图片，src/assets/ 下有几张图超过 300KB。",
+      "expected_output": "识别为 mode 9 资源优化。扫描 src/assets/ 下 >300KB 图片，查 .compress-cache.json 去重（新图待压缩）。告知'X 张图将压缩，质量损失不可逆，Git 基线可回退'等确认。确认后 sharp 压缩（quality 80，保格式不 resize），更新 .compress-cache.json，vite build 验证没破坏构建，Git 门禁能力提交。音频/视频超阈只报告不自动处理（压缩参数属产品审美决策，需呈现方案让用户选）。",
+      "files": [],
+      "tags": [
+        "mode-9",
+        "resource-optimization-compress"
+      ]
+    },
+    {
+      "id": 116,
+      "prompt": "我又跑了一次资源优化，之前压缩过的图还会再压吗？",
+      "expected_output": "mode 9 查 .compress-cache.json 内容 hash，已压缩的图（hash 匹配）跳过，不重复压缩（避免累积质量损失）。只压缩新图/换图（hash 不匹配）。幂等性：cache 进 git 团队共享，跨人 clone 不会重压。",
+      "files": [],
+      "tags": [
+        "mode-9",
+        "resource-optimization-skip"
+      ]
+    },
+    {
+      "id": 117,
+      "prompt": "我有个 2.5MB 的排行榜长图，压缩后还是 400KB 超过 300KB，怎么办？",
+      "expected_output": "mode 9 压缩后仍超阈（>300KB）不重压（重压会糊）。告知'该图压完仍超阈，建议拆图/换素材'，继续不阻断。300KB 是软门禁阈值不是硬律，长图超阈是合理场景。能力提交仍执行（已压缩的图 + cache）。",
+      "files": [],
+      "tags": [
+        "mode-9",
+        "resource-optimization-oversized"
+      ]
+    },
+    {
+      "id": 118,
+      "prompt": "帮我打包这个 H5 项目，构建成功，但 dist/assets/ 里有大图超 300KB，软门禁怎么处理？",
+      "expected_output": "deploy 软门禁检测到图片 >300KB → ⚠️ 警告'图片偏大，建议执行 mode 9 资源优化压缩'，不阻断，继续打包生成 deploy.zip。软门禁引导执行 mode 9（A 形态），不自动压缩。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "deploy-volume-guide"
+      ]
+    },
+    {
+      "id": 119,
+      "prompt": "帮我打包这个 H5 项目，game.js 里有 import icon from '../assets/art/icon.png'（不带 ?url），本地 vite build 成功，但部署到平台后浏览器报 MIME type 错误（image/png ≠ JS）。",
+      "expected_output": "诊断：平台构建把不带 ?url 的非 JS 资源 import 当模块加载 → MIME type 不匹配。H2 自动修复：改为 import icon from '../assets/art/icon.png?url'（图片必须带 ?url）；JSON 改 import raw from 'file.json?raw' + JSON.parse()。规则：非 JS 资源 import 一律带 query 后缀——图片/音频 ?url、JSON/文本 ?raw。小文件 inline 不报错，大文件报错——本地测试可能通过但平台失败。",
+      "files": [],
+      "tags": [
+        "mode-3",
+        "deploy-h2-url-suffix"
+      ]
+    },
+    {
+      "id": 120,
+      "prompt": "我的活动要接入抽奖，actId 是 act_eg_2026_summer，appKey 是 egg。moduleList 里已经有一个 asType===2 的抽奖模块，帮我配置 ds-act-sdk。用户点击抽奖按钮后单抽，中奖了播个动画。",
+      "expected_output": "configure({ production: { actId: 'act_eg_2026_summer', appKey: 'egg' } })（configure 仅需 actId/appKey/env，不支持 lottery 字段，抽奖模块从 actInfo.moduleList 按 asType===2 自动派生）。React 项目用 useLuckydraw hook：fetchLuckydrawInfo() 拉信息 + doLuckydraw() 单抽（内部预检/时段校验/选 drawUseType/Toast 错误/成功刷新），res.code===200 时 res.result 是 DrawResult（isWin/winPrize/mustWinPrize/randomNoPrizeBlessing），自行渲染中奖动画。非 React 用 window.DsActSdk.fetchLuckydrawInfo/doLuckydraw。须提示防重复点击（debounce 或锁变量）。",
+      "files": []
+    },
+    {
+      "id": 121,
+      "prompt": "抽奖活动的 moduleList 里没有 asType===2 的模块（要完成任务才解锁），但我已知抽奖模块 asId 是 lot_2026_07。怎么接入？",
+      "expected_output": "SDK 不支持通过 configure 显式指定抽奖模块 asId（configure 无 lottery 字段）。luckydrawModuleAtom 始终从 actInfoState.moduleList 过滤 asType===2 派生模块——moduleList 无 asType===2 模块时返回 null，所有抽奖动作（fetchLuckydrawInfo/doLuckydraw/doLuckydrawMore）被守卫跳过返回 false/null。需确保后台 moduleList 在解锁后包含恰好 1 个 asType===2 模块（多模块也会被守卫拦截）。configure 仅传 { production: { actId, appKey } }，抽奖模块由 actInfo 自动派生。",
+      "files": []
+    },
+    {
+      "id": 122,
+      "prompt": "我用 doLuckydrawMore 做连抽，返回的 result 是什么结构？需要我自己合并多次抽奖结果吗？",
+      "expected_output": "doLuckydrawMore 返回 ApiResult<DrawResultMerged> 或 null。编排函数内部已调 mergeLuckydrawResults 把 multiDraw 接口的 DrawResult[] 合并为 DrawResultMerged（winPrize/mustWinPrize 聚合为数组，randomNoPrizeBlessing 取首个未中的祝福语或默认『欧气满满，大吉大利』）。消费方无需手动合并。连抽数取 luckydrawInfo.multiDrawLimit。若直接调底层 doLuckDrawByChanceMore/doLuckDrawByCurrencyMore 需自行合并。doLuckydrawMore 内部：预检→多模块检测→时段校验→连抽→合并→成功刷新（积分抽奖额外刷新 currencyInfo）。",
+      "files": []
+    },
+    {
+      "id": 123,
+      "prompt": "我的抽奖活动是次数抽奖（消耗抽奖券，不是积分），drawType 不是 4。用户抽完次数后还能抽吗？怎么判断抽奖成功还是失败？",
+      "expected_output": "次数抽奖（drawType≠4）：消耗抽奖券/次数，走 doLuckDrawByChance（单抽）/ doLuckDrawByChanceMore（连抽）。无 currencyType，fetchCurrencyInfo 守卫跳过返回 false（不拉余额）。自动选择：myLeftDrawChance>0 用 'chance'。次数耗尽时若未配置积分抽奖，自动回退 'intergral' 调 doLuckDrawByCurrency 会报错（handleDrawError 提示），可显式传 options.drawUseType:'chance' 严格限定。判断成功用 res&&res.code===200（失败统一返回 null，DrawResult 无 isError 字段）。",
+      "files": []
+    },
+    {
+      "id": 124,
+      "prompt": "抽奖接口返回错误了，SDK 会怎么处理？需要我自己 catch 错误吗？50951 和 971 有什么区别？",
+      "expected_output": "抽奖失败时 SDK 内部 handleDrawError(code,errmsg) 自动处理：971→Dialog.alert（需确认弹窗）；50951→Toast.show('余额不足')（积分抽奖余额不足）；975→Dialog.alert+确认后 window.location.reload()（抽奖暂未开启，刷新）；其他→Toast.show(errmsg)。消费方无需手动处理。预检失败（actPreCheck 非200）和时段校验失败（checkCanDraw.canDraw===false）时直接返回 null 不进抽奖流程，时段失败 Toast.show(reason)。判断失败用 res===null 或 res.code!==200（无 isError 字段）。",
+      "files": []
+    },
+    {
+      "id": 125,
+      "prompt": "抽奖的埋点是怎么发的？我需要自己手动埋点吗？clk_new_2_100_12 和 exposure_new_2_100_13 分别是什么？",
+      "expected_output": "埋点由编排函数内部 sendLuckyLog 自动发送：eventCategory='lottery'；抽奖动作(doLuckydraw/doLuckydrawMore)发 eventAction='clk_new_2_100_12'，action 分别为 draw/draw_more；信息拉取(fetchLuckydrawInfo/fetchCurrencyInfo)发 eventAction='exposure_new_2_100_13'，action 分别为 fetch_info/fetch_currency。result 取 success/fail。eventLabel 含公共字段（system/uid/deviceid/role_id/server/game_code/scene/remain）+action+result。remain 优先取 myLeftDrawChance>0 否则 currencyInfo.balance。消费方无需手动发埋点，经 hook 或直接调 service 均发。",
+      "files": []
+    },
+    {
+      "id": 126,
+      "prompt": "我的抽奖页面只接了抽奖没接其他 ds-act-sdk 组件，调用 fetchLuckydrawInfo 返回 false。另外抽完一次后怎么判断还能不能再抽？",
+      "expected_output": "Provider 挂载前提：F 是 headless 无 evoke()，不自动挂载 DsActProvider。但 luckydrawModuleAtom 依赖 actInfoState（由 DsActProvider 的 LoginBoot 自动拉取）。若页面无其他 UI 组件（A角色/B任务/D CPS底部栏），需确保 Provider 已挂载——React 声明式 <DsActProvider> 包裹，或接入任意 UI 组件 .evoke()，否则 actInfo 未加载、luckydrawModule 为 null、抽奖动作被守卫跳过。canDrawAgain(info,currency) 纯函数判断能否再抽：有免费次数(myLeftDrawChance>0)→true；积分抽奖(drawType===4)且 balance>=everyTimeAmount→true；否则 false。消费方用它控制「再抽一次」按钮态。",
+      "files": []
+    }
+  ]
+}

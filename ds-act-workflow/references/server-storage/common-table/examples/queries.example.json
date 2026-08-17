@@ -1,0 +1,63 @@
+[
+  {
+    "tableKey": "plaza_like",
+    "queries": [
+      {
+        "name": "点前查重-判断是否已赞",
+        "conditions": [
+          { "fieldKey": "post_id", "op": "eq" },
+          { "fieldKey": "__create_uid", "op": "eq" }
+        ],
+        "sorts": []
+      }
+    ]
+  },
+  {
+    "tableKey": "plaza_comment",
+    "queries": [
+      {
+        "name": "查某投稿的评论列表-时间倒序",
+        "conditions": [
+          { "fieldKey": "post_id", "op": "eq" }
+        ],
+        "sorts": [
+          { "fieldKey": "__create_time", "direction": "DESC" }
+        ]
+      }
+    ]
+  },
+  {
+    "tableKey": "submission",
+    "queries": [
+      {
+        "name": "最新50条投稿",
+        "conditions": [],
+        "sorts": [ { "fieldKey": "__create_time", "direction": "DESC" } ]
+      },
+      {
+        "name": "点赞最高50条投稿",
+        "conditions": [],
+        "sorts": [ { "fieldKey": "like_count", "direction": "DESC" } ]
+      },
+      {
+        "name": "我的投稿-时间倒序",
+        "conditions": [ { "fieldKey": "__create_uid", "op": "eq" } ],
+        "sorts": [ { "fieldKey": "__create_time", "direction": "DESC" } ]
+      },
+      {
+        "name": "我的投稿-按点赞数排序",
+        "conditions": [ { "fieldKey": "__create_uid", "op": "eq" } ],
+        "sorts": [ { "fieldKey": "like_count", "direction": "DESC" } ]
+      },
+      {
+        "name": "查我最近7天的投稿(gte时间,不显式排序-区间字段靠索引自然有序)",
+        "conditions": [
+          { "fieldKey": "__create_uid", "op": "eq" },
+          { "fieldKey": "__create_time", "op": "gte" }
+        ],
+        "sorts": [],
+        "limit": 50
+      }
+    ]
+  }
+]
