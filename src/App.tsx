@@ -1,9 +1,9 @@
 import { useGame } from './hooks/useGame';
 import { StartScreen } from './components/StartScreen';
 import { Hud } from './components/Hud';
-import { TargetBar } from './components/TargetBar';
 import { GameField } from './components/GameField';
 import { Overlays } from './components/Overlays';
+import { VideoRewardDialog } from './components/VideoRewardDialog';
 import { StaminaDialog } from './components/StaminaDialog';
 import { TutorialOverlay } from './components/TutorialOverlay';
 import { PartnerRecruitDialog } from './components/PartnerRecruitDialog';
@@ -17,18 +17,16 @@ export default function App() {
       {game.phase === 'menu' ? (
         <StartScreen game={game} />
       ) : (
-        <div className="qingya-shell relative h-dvh overflow-hidden bg-[#efe5cf]">
-          <GameField key={game.round} game={game} />
+        <div className="qingya-shell relative flex h-dvh flex-col overflow-hidden bg-[#efe5cf]">
+          {/* 顶部 HUD（关卡牌 + 任务相框）在正常文档流中占位，见 Hud.tsx */}
           <Hud game={game} />
-          <div className="pointer-events-none absolute inset-x-0 top-[calc(var(--safe-top)+3.85rem)] z-30 mx-auto w-full max-w-3xl px-3 sm:px-5">
-            <TargetBar
-              targets={game.allTargets}
-              activeIndex={game.activeGoalIndex}
-              notice={game.goalNotice}
-              timeBoostToast={game.timeBoostToast}
-            />
+          {/* 棋盘：占据页眉之下的全部剩余空间，与任务相框物理分离、互不遮挡 */}
+          <div className="relative min-h-0 flex-1">
+            <GameField key={game.round} game={game} />
           </div>
           <Overlays game={game} />
+          {/* 任务视频弹窗：对局中加时 / 失败复活共用，覆盖在结算与提示弹窗之上 */}
+          <VideoRewardDialog game={game} />
           <TutorialOverlay game={game} />
         </div>
       )}

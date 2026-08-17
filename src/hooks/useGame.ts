@@ -23,10 +23,10 @@ import {
   settleOfflineStamina, spendStamina, STAMINA_ENDLESS_COST, STAMINA_LEVEL_COST,
   STAMINA_MAX,
 } from '../game/stamina';
-import { openTaskPanel, trackEvent } from '../platform/ds/runtime';
-import { dsTaskPanelEnabled } from '../platform/ds/config';
+import { trackEvent } from '../platform/ds/runtime';
 import { syncProgressToDs } from '../platform/ds/leaderboard';
 import { consumeSkill, getSkillPool, refreshSkillPool } from '../platform/ds/skills';
+import { prefetchVideoRewardSource } from '../game/videoRewards';
 import {
   advancePartnerClock, checkPartnerRecruitments, loadPartnerClock,
   recordPartnerSettlement, savePartnerClock, type PartnerId,
@@ -123,8 +123,8 @@ function loadLevelStars(scores: Record<number, number>): Record<number, number> 
 }
 
 let effectId = 1;
-/** 加时统一 30 秒：每关首次免费 +30s；之后消耗加时技能（function_addtime，CMS 同步）+30s。 */
-const TIME_BOOST_SECONDS = 30;
+/** 加时统一 30 秒：每关首次免费 +30s；加时技能 / 任务视频看满 30s 同样 +30s。 */
+export const TIME_BOOST_SECONDS = 30;
 /** 单关加时上限：在限时时长基础上最多叠加 60 秒，防止技能堆叠破坏关卡节奏。 */
 const TIME_BOOST_CAP_SECONDS = 60;
 
@@ -164,6 +164,10 @@ export function useGame() {
   const [timeBoostTaskAvailable, setTimeBoostTaskAvailable] = useState(true);
   const [timeBoostToast, setTimeBoostToast] = useState<string | null>(null);
   const [timeBoostTaskPrompt, setTimeBoostTaskPrompt] = useState(false);
+  /** 进行中的视频奖励会话：boost=对局中加时，revive=失败复活；null=未打开。id 用于弹窗按会话重挂载。 */
+  const [videoReward, setVideoReward] = useState<{ kind: 'boost' | 'revive'; id: number } | null>(null);
+  /** 看视频复活每局限一次：关卡=每次挑战（含重试/下一关重置），无尽=整局（不随波次重置）。 */
+  const [videoReviveAvailable, setVideoReviveAvailable] = useState(true);
   // 技能池镜像（function_addtime / function_tishi），真源在服务端（CMS / 任务面板发放）。
   const [skillBoosts, setSkillBoosts] = useState(0);
   const [skillHints, setSkillHints] = useState(0);
@@ -206,6 +210,10 @@ export function useGame() {
   const roundBestComboRef = useRef(0);
   const endlessFoundRef = useRef(0);
   const endlessBestComboRef = useRef(0);
+  /** 无尽模式已结算进伙伴累计的发现数（复活续局后 finishGame 会再跑，按增量结算）。 */
+  const endlessSettledFoundRef = useRef(0);
+  /** 本局是否经历过看视频复活（用于判负/结算埋点标注）。 */
+  const revivedRef = useRef(false);
 
   const refreshPartners = useCallback((
     nextCollection = collectionRef.current,
@@ -475,10 +483,14 @@ export function useGame() {
     setLastLeaderboardBaseDelta(0);
     endlessFoundRef.current = 0;
     endlessBestComboRef.current = 0;
+    endlessSettledFoundRef.current = 0;
     setLastGain({ find: 0, bonus: 0 });
     setupRound(nextMode, initialLevel, 0);
     setPaused(false);
     setQuitConfirm(false);
+    setVideoReward(null);
+    setVideoReviveAvailable(true);
+    revivedRef.current = false;
     setPhase('playing');
     // 进局时同步技能余额（加时/提示技能在局内消耗）
     void syncSkillPool();
@@ -505,6 +517,9 @@ export function useGame() {
     setupRound(mode, next, scoreRef.current);
     setPaused(false);
     setQuitConfirm(false);
+    setVideoReward(null);
+    setVideoReviveAvailable(true);
+    revivedRef.current = false;
     setPhase('playing');
     trackEvent({ event: 'level_next', mode, level: next, score: scoreRef.current });
     sfx.click();
@@ -526,10 +541,14 @@ export function useGame() {
       setStats({ found: 0, wrong: 0 });
       endlessFoundRef.current = 0;
       endlessBestComboRef.current = 0;
+      endlessSettledFoundRef.current = 0;
       setupRound(mode, 1, 0);
     }
     setPaused(false);
     setQuitConfirm(false);
+    setVideoReward(null);
+    setVideoReviveAvailable(true);
+    revivedRef.current = false;
     setPhase('playing');
     trackEvent({
       event: mode === 'levels' ? 'level_retry' : 'endless_retry',
@@ -545,6 +564,7 @@ export function useGame() {
     setPhase('menu');
     setPaused(false);
     setQuitConfirm(false);
+    setVideoReward(null);
     sfx.click();
   }, [level, mode, phase]);
 
@@ -561,11 +581,13 @@ export function useGame() {
   const finishGame = useCallback((currentMode: GameMode) => {
     if (currentMode === 'endless') {
       commitEndlessBest(scoreRef.current);
+      // 复活续局会再次走到这里：只结算「上次结算以来」的新增发现，避免重复累计。
       recordPartnerSettlement({
-        found: endlessFoundRef.current,
+        found: endlessFoundRef.current - endlessSettledFoundRef.current,
         baseScore: 0,
         bestCombo: endlessBestComboRef.current,
       });
+      endlessSettledFoundRef.current = endlessFoundRef.current;
       refreshPartners();
     }
     trackEvent({
@@ -575,6 +597,7 @@ export function useGame() {
       category,
       task_id: targets.map((target) => target.taskId).join('|'),
       score: scoreRef.current,
+      revived: revivedRef.current,
     });
     setPhase('gameOver');
     sfx.gameOver();
@@ -802,7 +825,7 @@ export function useGame() {
       })();
       return;
     }
-    // 局内没有加时技能时，走短视频/任务面板获取。
+    // 局内没有加时技能时，走任务视频获取（游戏内视频弹窗，不再依赖 ds 任务面板）。
     if (!timeBoostTaskAvailable) {
       showTimeBoostToast('本关加时机会已用完');
       return;
@@ -811,11 +834,10 @@ export function useGame() {
     setPaused(true);
     setTimeBoostTaskPrompt(true);
     trackEvent({ event: 'time_boost_task_request', mode, level });
-    if (dsTaskPanelEnabled) openTaskPanel();
   }, [adjustTime, level, mode, paused, phase, showTimeBoostToast, skillBoosts,
     timeBoostFreeAvailable, timeBoostTaskAvailable, timeLimit]);
 
-  /** 明日接任务完成回调时只需调用这个入口，计时、暂停与埋点会统一收口。 */
+  /** 视频任务看满 30s 后的发奖收口：计时、暂停与埋点统一在这里处理。 */
   const grantRewardedTimeBoost = useCallback(() => {
     if (!timeBoostTaskAvailable) return;
     adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
@@ -833,9 +855,64 @@ export function useGame() {
     setPaused(false);
   }, []);
 
-  const reopenTimeBoostTask = useCallback(() => {
-    if (dsTaskPanelEnabled) openTaskPanel();
-  }, []);
+  /** 打开任务视频弹窗：boost=对局中加时（从提示弹窗进入）；revive=失败复活（从结算页进入）。 */
+  const openVideoReward = useCallback((kind: 'boost' | 'revive') => {
+    if (kind === 'boost') {
+      if (phase !== 'playing' || !timeBoostTaskAvailable) return;
+    } else if (phase !== 'gameOver' || !videoReviveAvailable) {
+      return;
+    }
+    setVideoReward({ kind, id: effectId++ });
+    trackEvent({ event: 'video_open', mode, level, kind });
+  }, [level, mode, phase, timeBoostTaskAvailable, videoReviveAvailable]);
+
+  /** 关闭视频弹窗：abandon=未看满退出（不发奖）；complete=看满后的兜底关闭。 */
+  const closeVideoReward = useCallback((reason: 'abandon' | 'complete', watchedMs = 0) => {
+    if (!videoReward) return;
+    if (reason === 'abandon') {
+      trackEvent({
+        event: 'video_abandon', mode, level,
+        kind: videoReward.kind, watched_ms: Math.round(watchedMs),
+      });
+    }
+    if (videoReward.kind === 'boost') {
+      // 对局中加时：无论看满与否，关掉弹窗都要恢复局面（看满的发奖在 completeVideoReward 已处理）。
+      setTimeBoostTaskPrompt(false);
+      setPaused(false);
+    }
+    setVideoReward(null);
+  }, [level, mode, videoReward]);
+
+  /** 视频弹窗采样校验满 30s 的回调：按会话类型分发奖励。 */
+  const completeVideoReward = useCallback((watchedMs: number) => {
+    if (!videoReward) return;
+    const { kind } = videoReward;
+    trackEvent({
+      event: 'video_verified', mode, level, kind, watched_ms: Math.round(watchedMs),
+    });
+    if (kind === 'boost') {
+      setVideoReward(null);
+      grantRewardedTimeBoost();
+      return;
+    }
+    setVideoReward(null);
+    if (phase !== 'gameOver' || !videoReviveAvailable) return;
+    // 失败复活：+30 秒原地继续，分数/连击/场景全部保留。
+    setVideoReviveAvailable(false);
+    revivedRef.current = true;
+    setTimeSync(TIME_BOOST_SECONDS);
+    setPaused(false);
+    setPhase('playing');
+    showTimeBoostToast(`复活成功 · +${TIME_BOOST_SECONDS} 秒`);
+    trackEvent({ event: 'video_revive', mode, level, seconds: TIME_BOOST_SECONDS });
+    sfx.hint();
+    haptics.hint();
+  }, [grantRewardedTimeBoost, level, mode, phase, setTimeSync, showTimeBoostToast,
+    videoReward, videoReviveAvailable]);
+
+  const reportVideoRewardError = useCallback(() => {
+    trackEvent({ event: 'video_error', mode, level, kind: videoReward?.kind ?? 'boost' });
+  }, [level, mode, videoReward]);
 
   useEffect(() => {
     if (phase !== 'playing' || paused) return;
@@ -994,6 +1071,11 @@ export function useGame() {
     return () => document.removeEventListener('visibilitychange', onVisible);
   }, [syncSkillPool]);
 
+  // 任务视频预取：前台空闲时先拉一只进 HTTP 缓存，点开弹窗基本秒开。
+  useEffect(() => {
+    prefetchVideoRewardSource();
+  }, []);
+
   useEffect(() => {
     void syncProgressToDs({
       levelsTotalScore: rankingScore,
@@ -1017,8 +1099,9 @@ export function useGame() {
     unlockedMaxLevel, best, partners, partnerNotice, partnerBonusRate,
     rankingScore, dailyRankingScore, dailyLevelCount, muted,
     timeBoostFreeAvailable, timeBoostToast, timeBoostTaskPrompt,
-    timeBoostTaskAvailable: dsTaskPanelEnabled && timeBoostTaskAvailable,
-    timeBoostTaskConfigured: dsTaskPanelEnabled,
+    // 任务视频为游戏内弹窗、自足可用，不再依赖 ds 任务面板配置。
+    timeBoostTaskAvailable,
+    videoReward, videoReviveAvailable,
     skillBoosts, skillHints,
     stamina: {
       value: staminaState.value,
@@ -1031,7 +1114,8 @@ export function useGame() {
     levelInfo: levelConfig(level), levelCount: LEVEL_COUNT,
     startGame, nextLevel, retry, quitToMenu, requestQuit, cancelQuit,
     handleItemClick, handleFieldMiss, useHint, requestTimeBoost, grantRewardedTimeBoost,
-    dismissTimeBoostTaskPrompt, reopenTimeBoostTask, toggleMuted, setPaused,
+    dismissTimeBoostTaskPrompt, openVideoReward, closeVideoReward, completeVideoReward,
+    reportVideoRewardError, toggleMuted, setPaused,
     dismissStaminaNotice: () => setStaminaNotice(null),
     dismissPartnerNotice: () => setPartnerNoticeQueue((current) => current.slice(1)),
   };

@@ -16,6 +16,8 @@ const SKILL_KEYS: Record<SkillKind, string> = {
 };
 
 const pool: Record<SkillKind, number> = { addtime: 0, tishi: 0 };
+/** 进行中的消耗请求：双击/连点时同一技能只能有一个写请求在途，防止一次扣减两次发奖。 */
+const inflight = new Set<SkillKind>();
 
 function toCount(value: unknown): number {
   const num = Number(value);
@@ -50,9 +52,10 @@ export function getSkillPool(): Record<SkillKind, number> {
  * 先扣后用的顺序保证同会话内不会重复使用；多端并发写由服务端值兜底。
  */
 export async function consumeSkill(kind: SkillKind): Promise<boolean> {
-  if (pool[kind] <= 0) return false;
+  if (pool[kind] <= 0 || inflight.has(kind)) return false;
   const manager = dsRequestManager();
   if (!manager) return false;
+  inflight.add(kind);
   const next = pool[kind] - 1;
   try {
     const result = await manager.obfuscatedBatchWriteData({
@@ -64,5 +67,7 @@ export async function consumeSkill(kind: SkillKind): Promise<boolean> {
   } catch (error) {
     console.error('[DS] skill consume failed', error);
     return false;
+  } finally {
+    inflight.delete(kind);
   }
 }

@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import {
   Film, Home, PartyPopper, Pause, Play, RotateCcw, Sparkles, Star, TimerReset,
 } from 'lucide-react';
-import type { Game } from '../hooks/useGame';
+import { TIME_BOOST_SECONDS, type Game } from '../hooks/useGame';
 import { levelConfig } from '../game/levels';
+import { VIDEO_REWARD_WATCH_MS } from '../game/videoRewards';
+
+const VIDEO_WATCH_SECONDS = VIDEO_REWARD_WATCH_MS / 1000;
 
 function Panel({ children }: { children: React.ReactNode }) {
   return (
@@ -82,19 +85,17 @@ export function Overlays({ game }: { game: Game }) {
     return (
       <Panel>
         <TimerReset className="mx-auto mb-2 h-10 w-10 text-[#a86b42]" />
-        <div className="mb-1 font-display text-2xl font-black text-[#5d3b2a]">任务加时 · +15 秒</div>
+        <div className="mb-1 font-display text-2xl font-black text-[#5d3b2a]">
+          任务加时 · +{TIME_BOOST_SECONDS} 秒
+        </div>
         <p className="mb-4 text-sm leading-6 text-[#806f60]">
-          本关首次赠送已经使用。再次加时需要完成任务视频，领取成功后会从任务回调统一发放。
+          本关首次赠送与加时技能都已用完。完整观看 {VIDEO_WATCH_SECONDS} 秒任务视频，
+          即可再得 +{TIME_BOOST_SECONDS} 秒加时（每关限一次）。
         </p>
-        {!game.timeBoostTaskConfigured && (
-          <div className="mb-4 rounded-2xl border border-[#d8b786]/55 bg-[#fff3d8] px-3 py-2 text-xs font-black leading-5 text-[#a15f3c]">
-            任务系统尚未配置；接口位置已预留，明日接入后按钮会直接打开视频流。
-          </div>
-        )}
         <div className="flex justify-center gap-2">
-          {game.timeBoostTaskConfigured && game.timeBoostTaskAvailable && (
-            <Btn onClick={game.reopenTimeBoostTask} className="">
-              <Film className="h-4 w-4" /> 打开任务视频
+          {game.timeBoostTaskAvailable && (
+            <Btn onClick={() => game.openVideoReward('boost')} className="">
+              <Film className="h-4 w-4" /> 观看视频
             </Btn>
           )}
           <Btn onClick={game.dismissTimeBoostTaskPrompt} className="opacity-85">
@@ -257,13 +258,20 @@ export function Overlays({ game }: { game: Game }) {
             <span className="font-bold">{accuracy}%</span>
           </div>
         </div>
-        <div className="flex justify-center gap-2">
-          <Btn onClick={game.retry} className="min-w-[7.25rem]">
-            <RotateCcw className="h-4 w-4" /> 再来一次
-          </Btn>
-          <Btn onClick={game.quitToMenu} className="min-w-[7.25rem]">
-            <Home className="h-4 w-4" /> 主菜单
-          </Btn>
+        <div className="flex flex-col items-center gap-2">
+          {game.videoReviveAvailable && (
+            <Btn onClick={() => game.openVideoReward('revive')} className="w-full">
+              <Film className="h-4 w-4" /> 看视频复活 · +{TIME_BOOST_SECONDS} 秒
+            </Btn>
+          )}
+          <div className="flex justify-center gap-2">
+            <Btn onClick={game.retry} className="min-w-[7.25rem]">
+              <RotateCcw className="h-4 w-4" /> 再来一次
+            </Btn>
+            <Btn onClick={game.quitToMenu} className="min-w-[7.25rem]">
+              <Home className="h-4 w-4" /> 主菜单
+            </Btn>
+          </div>
         </div>
       </Panel>
     );
