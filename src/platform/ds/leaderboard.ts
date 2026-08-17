@@ -79,7 +79,7 @@ export async function loadDsLeaderboard(
   if (!ids.devBillboardId || !ids.proBillboardId) {
     throw new DsLeaderboardError('榜单 ID（billboardId）未配置');
   }
-  // 日榜与总榜是同一个榜单（score_rank）：后台"日榜=是"按东八区日期自动生成快照。
+  // 日榜与总榜是同一个榜单（yanli_rank）：后台"日榜=是"按东八区日期自动生成快照。
   // 总榜不传 date；日榜传当天日期，走后端日榜快照接口。
   const dailyParams = scope === 'daily' ? { date: beijingDateKey() } : {};
   try {
@@ -112,7 +112,7 @@ export async function loadDsLeaderboard(
 }
 
 interface ProgressPayload {
-  /** 排行榜最终分：各关历史最高标准榜分之和 ×（1 + 伙伴加成）。榜单 score_rank 绑定此字段。 */
+  /** 排行榜最终分：各关历史最高标准榜分之和 ×（1 + 伙伴加成）。榜单 yanli_rank 按 user_score 排序，此值写入 user_score。 */
   levelsTotalScore?: number;
   /** 未套伙伴系数的各关历史最高标准榜分之和，用于后台对账。 */
   levelsBaseScore?: number;
@@ -136,7 +136,8 @@ export async function syncProgressToDs(payload: ProgressPayload): Promise<void> 
   if (!manager) return;
   const items: Array<{ recordKey: string; value: number }> = [];
   if (payload.levelsTotalScore != null) {
-    items.push({ recordKey: 'levelsTotalScore', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
+    // 后台榜单 yanli_rank 绑定的排序字段是 user_score，必须与 CMS「Key 配置」一致。
+    items.push({ recordKey: 'user_score', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
   }
   if (payload.levelsBaseScore != null) {
     items.push({

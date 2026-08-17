@@ -1,7 +1,7 @@
 [
   {
-    "key": "levels_total_score",
-    "name": "排行榜最终分",
+    "key": "user_score",
+    "name": "排行榜最终分（榜单 yanli_rank 排序字段）",
     "type": "NUMBER",
     "defaultValue": 0,
     "missionEnabled": true
@@ -11,13 +11,6 @@
     "name": "各关历史最高标准分合计",
     "type": "NUMBER",
     "defaultValue": 0
-  },
-  {
-    "key": "levels_daily_score",
-    "name": "当日每关最高标准分合计",
-    "type": "NUMBER",
-    "defaultValue": 0,
-    "missionEnabled": true
   },
   {
     "key": "partner_bonus_bps",
