@@ -35,8 +35,23 @@ async function dsInit(): Promise<void> {
   }
 }
 
+/** 小程序传角：从 URL 读取 appletSelectRole（AppletSelectRoleObj JSON），合并角色信息进 userInfo。 */
+function applyAppletSelectRole(): void {
+  try {
+    const raw = new URLSearchParams(window.location.search).get('appletSelectRole');
+    if (!raw) return;
+    const role = JSON.parse(raw) as Partial<AppletSelectRole>;
+    if (!role || typeof role !== 'object'
+      || typeof role.roleId !== 'string' || !role.roleId) return;
+    Object.assign(userInfo, role);
+  } catch (error) {
+    console.error('[DS] parse appletSelectRole failed', error);
+  }
+}
+
 export async function initLogin(): Promise<void> {
   if (!dsPlatformEnabled) return;
+  applyAppletSelectRole();
   if (window.ds?.isGodlike) {
     await dsInit();
     return;

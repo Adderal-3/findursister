@@ -4,6 +4,20 @@ declare global {
     result?: Record<string, unknown>;
   };
 
+  /** 小程序传角对象（URL appletSelectRole 参数 JSON 结构）。 */
+  type AppletSelectRole = {
+    appKey: string;
+    icon?: string;
+    nick: string;
+    server: string | number;
+    serverName?: string;
+    roleId: string;
+    level?: string | number;
+    roleLevel?: string | number;
+    roleLevelStr?: string;
+    roleOccup?: string;
+  };
+
   type DsLoginInstance = {
     hasLoggedIn(): Promise<{ user: Record<string, unknown> } | null>;
     show(): void;
