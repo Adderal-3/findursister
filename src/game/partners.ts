@@ -36,6 +36,8 @@ export interface PartnerDefinition {
   image: string;
   metric: PartnerMetric;
   threshold: number;
+  bonusRate: number;
+  taskDriven?: boolean;
   progressLabel: (value: number) => string;
   lockedHint: string;
   recruitMessage: string;
@@ -64,47 +66,57 @@ const clampDisplay = (value: number, max: number) => Math.min(Math.max(0, Math.f
 const minutesLabel = (value: number, maxMinutes: number, prefix: string) => (
   `${prefix} ${clampDisplay(value / 60, maxMinutes)}/${maxMinutes} 分钟`
 );
+const hoursLabel = (value: number, maxHours: number, prefix: string) => {
+  const current = Math.min(Math.max(0, value / 3600), maxHours);
+  const display = current >= maxHours ? String(maxHours) : current.toFixed(1);
+  return `${prefix} ${display}/${maxHours} 小时`;
+};
+const XINGXING_ONLINE_THRESHOLD_SECONDS = 10 * 60 * 60;
 
 export const PARTNERS: PartnerDefinition[] = [
   {
     id: 'afu',
-    name: '叶问舟',
+    name: '同行伙伴',
     image: imgAfu,
     metric: 'online',
     threshold: 1800,
+    bonusRate: 0.0125,
     progressLabel: (value) => minutesLabel(value, 30, '累计在线'),
-    lockedHint: '累计在线30分钟，叶问舟就会加入队伍。',
-    recruitMessage: '叶问舟已加入寻宝队。',
+    lockedHint: '累计在线30分钟即可获得伙伴。',
+    recruitMessage: '新伙伴已加入寻宝队。',
   },
   {
     id: 'xixi',
-    name: '燕无归',
+    name: '同行伙伴',
     image: imgXixi,
     metric: 'dailyPlay',
     threshold: 1200,
+    bonusRate: 0.0125,
     progressLabel: (value) => minutesLabel(value, 20, '今日游玩'),
-    lockedHint: '任意一天累计游玩20分钟，燕无归就会加入队伍。',
-    recruitMessage: '燕无归已加入寻宝队。',
+    lockedHint: '任意一天累计游玩20分钟即可获得伙伴。',
+    recruitMessage: '新伙伴已加入寻宝队。',
   },
   {
     id: 'gugu',
-    name: '叶雪青',
+    name: '同行伙伴',
     image: imgGugu,
     metric: 'natureCollection',
     threshold: 15,
+    bonusRate: 0.0125,
     progressLabel: (value) => `自然发现 ${clampDisplay(value, 15)}/15`,
-    lockedHint: '发现15种植物、动物或飞行生灵，叶雪青就会加入队伍。',
-    recruitMessage: '叶雪青已加入寻宝队。',
+    lockedHint: '发现15种植物、动物或飞行生灵即可获得伙伴。',
+    recruitMessage: '新伙伴已加入寻宝队。',
   },
   {
     id: 'yuanyuan',
-    name: '方承意',
+    name: '同行伙伴',
     image: imgYuanyuan,
     metric: 'threeStarLevels',
     threshold: 10,
+    bonusRate: 0.0125,
     progressLabel: (value) => `三星通关 ${clampDisplay(value, 10)}/10`,
-    lockedHint: '拿下10关三星评价，方承意就会加入队伍。',
-    recruitMessage: '方承意已加入寻宝队。',
+    lockedHint: '拿下10关三星评价即可获得伙伴。',
+    recruitMessage: '新伙伴已加入寻宝队。',
   },
   {
     id: 'paopao',
@@ -112,39 +124,44 @@ export const PARTNERS: PartnerDefinition[] = [
     image: imgPaopao,
     metric: 'totalFound',
     threshold: 500,
+    bonusRate: 0.0125,
     progressLabel: (value) => `累计寻物 ${clampDisplay(value, 500)}/500`,
     lockedHint: '累计找到500件物品，重复找到也会计入。',
     recruitMessage: '阿初已加入寻宝队。',
   },
   {
     id: 'xingxing',
-    name: '花将离',
+    name: '同行伙伴',
     image: imgXingxing,
-    metric: 'bestBaseScore',
-    threshold: 1500,
-    progressLabel: (value) => `单关最高 ${clampDisplay(value, 1500)}/1500`,
-    lockedHint: '单关基础分达到1500分，花将离就会加入队伍。',
-    recruitMessage: '花将离已加入寻宝队。',
+    metric: 'online',
+    threshold: XINGXING_ONLINE_THRESHOLD_SECONDS,
+    bonusRate: 0.0125,
+    progressLabel: (value) => hoursLabel(value, 10, '累计在线'),
+    lockedHint: '累计在线满10小时即可获得伙伴。',
+    recruitMessage: '新伙伴已加入寻宝队。',
   },
   {
     id: 'mimi',
-    name: '无情',
+    name: '同行伙伴',
     image: imgMimi,
     metric: 'bestCombo',
-    threshold: 8,
-    progressLabel: (value) => `最高连击 ${clampDisplay(value, 8)}/8`,
-    lockedHint: '在一局中达成8连击，无情就会加入队伍。',
-    recruitMessage: '无情已加入寻宝队。',
+    threshold: 1,
+    bonusRate: 0.025,
+    taskDriven: true,
+    progressLabel: (value) => value >= 1 ? '大神任务已下发' : '等待大神任务下发',
+    lockedHint: '更新大神 App 至最新版本，完成大神任务后即可获得伙伴。',
+    recruitMessage: '大神任务伙伴已加入寻宝队。',
   },
   {
     id: 'meimei',
-    name: '姬蜜儿',
+    name: '同行伙伴',
     image: imgMeimei,
     metric: 'bond',
     threshold: 7,
+    bonusRate: 0.05,
     progressLabel: (value) => `伙伴集结 ${clampDisplay(value, 7)}/7`,
-    lockedHint: '把其余7位伙伴都找齐，姬蜜儿就会加入队伍。',
-    recruitMessage: '姬蜜儿已加入寻宝队。',
+    lockedHint: '把其余7位伙伴都找齐即可获得最终伙伴。',
+    recruitMessage: '最终伙伴已加入寻宝队。',
   },
 ];
 
@@ -266,13 +283,15 @@ function buildProgress(
   collection: string[],
   levelStars: Record<number, number>,
   recruited: PartnerId[],
+  metrics = metricValues(collection, levelStars),
 ): PartnerProgress[] {
-  const metrics = metricValues(collection, levelStars);
   const recruitedWithoutMeimei = recruited.filter((id) => id !== 'meimei').length;
   return PARTNERS.map((partner) => {
-    const value = partner.metric === 'bond'
-      ? recruitedWithoutMeimei
-      : metrics[partner.metric];
+    const value = partner.taskDriven
+      ? Number(recruited.includes(partner.id))
+      : partner.metric === 'bond'
+        ? recruitedWithoutMeimei
+        : metrics[partner.metric];
     return {
       ...partner,
       value,
@@ -285,14 +304,38 @@ function buildProgress(
 export function checkPartnerRecruitments(
   collection: string[],
   levelStars: Record<number, number>,
+  options: { taskPartnerGranted?: boolean | null } = {},
 ): PartnerCheckResult {
-  const recruited = validRecruited();
-  const progress = buildProgress(collection, levelStars, recruited);
+  const metrics = metricValues(collection, levelStars);
+  const storedRecruited = validRecruited();
+  let recruited = [...storedRecruited];
+  let migratedTimedRecruitment = false;
+  let migratedTaskRecruitment = false;
+  const taskPartnerGranted = options.taskPartnerGranted ?? null;
+
+  // 旧版本中 xingxing 由“单关基础分 1500”解锁。规则切换为累计在线 10 小时后，
+  // 未达到新条件的旧解锁需要撤回；依赖全员集结的最终伙伴也同步恢复锁定。
+  if (recruited.includes('xingxing') && metrics.online < XINGXING_ONLINE_THRESHOLD_SECONDS) {
+    recruited = recruited.filter((id) => id !== 'xingxing' && id !== 'meimei');
+    migratedTimedRecruitment = true;
+  }
+
+  // 任务伙伴只认大神后台字段。未知/失败状态也不进入 UI 和榜分（失败关闭）；
+  // 服务端明确返回 0 时清理旧版“8 连击”产生的本地解锁记录。
+  if (taskPartnerGranted !== true && recruited.includes('mimi')) {
+    recruited = recruited.filter((id) => id !== 'mimi' && id !== 'meimei');
+    if (taskPartnerGranted === false) migratedTaskRecruitment = true;
+  }
+
+  const progress = buildProgress(collection, levelStars, recruited, metrics);
   const newlyRecruited: PartnerId[] = [];
 
   for (const partner of STANDARD_PARTNERS) {
     const current = progress.find((candidate) => candidate.id === partner.id);
-    if (!recruited.includes(partner.id) && current && current.value >= partner.threshold) {
+    const eligible = partner.taskDriven
+      ? taskPartnerGranted === true
+      : Boolean(current && current.value >= partner.threshold);
+    if (!recruited.includes(partner.id) && eligible) {
       recruited.push(partner.id);
       newlyRecruited.push(partner.id);
     }
@@ -304,19 +347,30 @@ export function checkPartnerRecruitments(
     newlyRecruited.push('meimei');
   }
 
-  if (newlyRecruited.length) {
+  if (migratedTimedRecruitment || migratedTaskRecruitment || newlyRecruited.length) {
     gameStorage.set(SAVE_KEYS.partnerRecruited, JSON.stringify(recruited));
     const recruitedAt = loadJson<Record<string, number>>(SAVE_KEYS.partnerRecruitedAt, {});
+    if (migratedTimedRecruitment) {
+      delete recruitedAt.xingxing;
+      delete recruitedAt.meimei;
+    }
+    if (migratedTaskRecruitment) {
+      delete recruitedAt.mimi;
+      delete recruitedAt.meimei;
+    }
     const now = Date.now();
     for (const id of newlyRecruited) recruitedAt[id] = recruitedAt[id] ?? now;
     gameStorage.set(SAVE_KEYS.partnerRecruitedAt, JSON.stringify(recruitedAt));
   }
 
   return {
-    partners: buildProgress(collection, levelStars, recruited),
+    partners: buildProgress(collection, levelStars, recruited, metrics),
     recruited,
     newlyRecruited,
-    bonusRate: recruited.length * 0.0125,
+    bonusRate: recruited.reduce(
+      (sum, id) => sum + (PARTNER_MAP.get(id)?.bonusRate ?? 0),
+      0,
+    ),
   };
 }
 

@@ -7,7 +7,6 @@ export function PartnerRecruitDialog({ game }: { game: Game }) {
   if (!game.partnerNotice) return null;
   const partner = PARTNER_MAP.get(game.partnerNotice);
   if (!partner) return null;
-  const fullTeam = partner.id === 'meimei';
 
   return (
     <motion.div
@@ -45,8 +44,7 @@ export function PartnerRecruitDialog({ game }: { game: Game }) {
         </p>
         <div className="qingya-pill relative mt-4 flex min-h-11 items-center justify-center gap-2 px-4 text-sm font-black text-[#34736c]">
           <UsersRound className="h-4 w-4" />
-          总榜加成 +1.25%
-          {fullTeam && <span className="text-[#cf7043]">· 满员 +10%</span>}
+          总榜加成 +{Math.round(partner.bonusRate * 10_000) / 100}%
         </div>
         <button
           type="button"

@@ -1,0 +1,7862 @@
+{
+  "generatedAt": "2026-08-17T17:04:15.630Z",
+  "summary": {
+    "itemCount": 123,
+    "taskCount": 30,
+    "levelCount": 200,
+    "zeroTaskItemCount": 0,
+    "unknownTaskGoalCount": 0,
+    "insufficientGoalCount": 0,
+    "overlappingGoalCount": 0,
+    "pass": true
+  },
+  "semanticDecisions": [
+    {
+      "item": "风火轮",
+      "decision": "计入「发光」与「载具/坐骑」",
+      "reason": "画面有明确火焰，玩家会自然判断为发光；为避免同一关双目标重叠，相关 16 关已将第三题由「载具」换为「穿戴物」。"
+    },
+    {
+      "item": "动物类题干",
+      "decision": "收紧为「动物伙伴」",
+      "reason": "当前 animal 池是坐骑、萌宠和灵兽，不含飞鸟与昆虫；收紧题干可以避免玩家把春燕、蝴蝶等自然动物误判为目标。"
+    },
+    {
+      "item": "木制桥类题干",
+      "decision": "明确包含桥梁、栈道和码头",
+      "reason": "匹配池包含浮木码头与荷塘栈道，题干已与玩家看到的建筑类型对齐。"
+    },
+    {
+      "item": "翠玉簪、花簪",
+      "decision": "保留「尖锐」",
+      "reason": "素材均有清晰长针，适合「尖锐但不是兵器」。"
+    },
+    {
+      "item": "羽毛",
+      "decision": "保留「会飞」",
+      "reason": "画面语义是飘飞羽毛，玩家把它归入会飞物品的预期较强。"
+    },
+    {
+      "item": "飞镖",
+      "decision": "不计入「会飞」",
+      "reason": "「会飞」按生灵、飞行载具或漂浮物理解；投掷武器只归入尖锐/兵器。"
+    },
+    {
+      "item": "题字琴架",
+      "decision": "不计入「乐器」",
+      "reason": "主体是刻字琴架，不是可演奏乐器；保留文字物品分类。"
+    }
+  ],
+  "taskPools": [
+    {
+      "id": "instrument",
+      "label": "找出所有乐器",
+      "allOf": [
+        "instrument"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 10,
+      "itemIds": [
+        "golden_pipa",
+        "bird_ocarina",
+        "konghou",
+        "bronze_gong",
+        "waist_drum",
+        "rattle_drum",
+        "wooden_pipa",
+        "hulusi",
+        "guqin",
+        "hand_drum"
+      ],
+      "itemNames": [
+        "金纹琵琶",
+        "鸟形陶笛",
+        "箜篌",
+        "铜锣",
+        "腰鼓",
+        "拨浪鼓",
+        "木琵琶",
+        "葫芦丝",
+        "古琴",
+        "手鼓"
+      ],
+      "levelUseCount": 37,
+      "usedInLevels": [
+        1,
+        4,
+        14,
+        21,
+        31,
+        41,
+        49,
+        51,
+        59,
+        61,
+        69,
+        71,
+        79,
+        81,
+        89,
+        91,
+        99,
+        101,
+        109,
+        111,
+        119,
+        121,
+        129,
+        131,
+        139,
+        141,
+        149,
+        151,
+        159,
+        161,
+        169,
+        171,
+        179,
+        181,
+        189,
+        191,
+        199
+      ],
+      "requestedTargetRange": [
+        2,
+        5
+      ]
+    },
+    {
+      "id": "written",
+      "label": "找出所有带字物品",
+      "allOf": [
+        "written"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 6,
+      "poolCount": 6,
+      "itemIds": [
+        "inscribed_music_stand",
+        "vinegar_jar",
+        "inscribed_papers",
+        "ancient_book",
+        "medicine_bottle",
+        "blue_book"
+      ],
+      "itemNames": [
+        "题字琴架",
+        "醋坛",
+        "题字纸页",
+        "古籍",
+        "药瓶",
+        "蓝皮古籍"
+      ],
+      "levelUseCount": 20,
+      "usedInLevels": [
+        5,
+        15,
+        25,
+        35,
+        45,
+        55,
+        65,
+        75,
+        85,
+        95,
+        105,
+        115,
+        125,
+        135,
+        145,
+        155,
+        165,
+        175,
+        185,
+        195
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "flying",
+      "label": "找出所有会飞的物品",
+      "allOf": [
+        "flying"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 11,
+      "itemIds": [
+        "red_sky_lantern",
+        "firefly",
+        "dandelion",
+        "swallow",
+        "phoenix",
+        "dragonfly",
+        "orange_sky_lantern",
+        "butterfly",
+        "kite",
+        "feather",
+        "paper_crane"
+      ],
+      "itemNames": [
+        "朱红孔明灯",
+        "萤火虫",
+        "蒲公英",
+        "春燕",
+        "金羽凤凰",
+        "蜻蜓",
+        "橙色孔明灯",
+        "蝴蝶",
+        "纸鸢",
+        "羽毛",
+        "纸鹤"
+      ],
+      "levelUseCount": 19,
+      "usedInLevels": [
+        2,
+        6,
+        16,
+        43,
+        53,
+        63,
+        73,
+        83,
+        93,
+        103,
+        113,
+        123,
+        133,
+        143,
+        153,
+        163,
+        173,
+        183,
+        193
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "glowing",
+      "label": "找出所有会发光的物品",
+      "allOf": [
+        "glowing"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 8,
+      "itemIds": [
+        "red_sky_lantern",
+        "campfire",
+        "torch",
+        "firefly",
+        "oil_lamp",
+        "fire_wheels",
+        "orange_sky_lantern",
+        "candle"
+      ],
+      "itemNames": [
+        "朱红孔明灯",
+        "篝火",
+        "火把",
+        "萤火虫",
+        "长明灯",
+        "风火轮",
+        "橙色孔明灯",
+        "蜡烛"
+      ],
+      "levelUseCount": 20,
+      "usedInLevels": [
+        7,
+        17,
+        27,
+        37,
+        47,
+        57,
+        67,
+        77,
+        87,
+        97,
+        107,
+        117,
+        127,
+        137,
+        147,
+        157,
+        167,
+        177,
+        187,
+        197
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "sharp",
+      "label": "找出所有尖锐物品",
+      "allOf": [
+        "sharp"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 12,
+      "itemIds": [
+        "fish_hook",
+        "arrow",
+        "needle",
+        "spike_trap",
+        "beast_fang",
+        "jade_hairpin",
+        "ornate_dagger",
+        "shuriken",
+        "icicle",
+        "crossed_swords",
+        "floral_hairpin",
+        "sword"
+      ],
+      "itemNames": [
+        "鱼钩",
+        "羽箭",
+        "银针",
+        "地刺",
+        "兽牙",
+        "翠玉簪",
+        "奇门匕首",
+        "飞镖",
+        "冰锥",
+        "双剑",
+        "花簪",
+        "宝剑"
+      ],
+      "levelUseCount": 2,
+      "usedInLevels": [
+        8,
+        18
+      ],
+      "requestedTargetRange": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "sweet_food",
+      "label": "找出所有甜食",
+      "allOf": [
+        "sweet_food"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 20,
+      "itemIds": [
+        "grapes",
+        "mooncake",
+        "peach",
+        "lychee",
+        "candied_hawthorn",
+        "osmanthus_cake",
+        "red_dates",
+        "tangyuan",
+        "watermelon",
+        "zongzi",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "melon",
+        "dragon_fruit"
+      ],
+      "itemNames": [
+        "葡萄",
+        "月饼",
+        "仙桃",
+        "荔枝",
+        "糖葫芦",
+        "桂花糕",
+        "红枣",
+        "汤圆",
+        "西瓜",
+        "粽子",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "甜瓜",
+        "火龙果"
+      ],
+      "levelUseCount": 3,
+      "usedInLevels": [
+        3,
+        9,
+        19
+      ],
+      "requestedTargetRange": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "vehicle",
+      "label": "找出所有载具与坐骑",
+      "allOf": [
+        "vehicle"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 8,
+      "itemIds": [
+        "camel",
+        "horse",
+        "sedan_chair",
+        "flying_fish",
+        "nine_tailed_fox",
+        "fire_wheels",
+        "carriage",
+        "treasure_ship"
+      ],
+      "itemNames": [
+        "骆驼",
+        "骏马",
+        "花轿",
+        "飞鱼坐骑",
+        "九尾狐",
+        "风火轮",
+        "马车",
+        "楼船"
+      ],
+      "levelUseCount": 2,
+      "usedInLevels": [
+        9,
+        19
+      ],
+      "requestedTargetRange": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "food",
+      "label": "找出所有食物",
+      "allOf": [
+        "food"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 29,
+      "itemIds": [
+        "chili_pepper",
+        "grapes",
+        "mooncake",
+        "peach",
+        "lychee",
+        "candied_hawthorn",
+        "osmanthus_cake",
+        "red_dates",
+        "tangyuan",
+        "watermelon",
+        "eggplant",
+        "zongzi",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "lemon",
+        "melon",
+        "dragon_fruit",
+        "coriander",
+        "scallion",
+        "bitter_melon",
+        "broccoli",
+        "edamame",
+        "celery"
+      ],
+      "itemNames": [
+        "辣椒",
+        "葡萄",
+        "月饼",
+        "仙桃",
+        "荔枝",
+        "糖葫芦",
+        "桂花糕",
+        "红枣",
+        "汤圆",
+        "西瓜",
+        "茄子",
+        "粽子",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "柠檬",
+        "甜瓜",
+        "火龙果",
+        "香菜",
+        "青葱",
+        "苦瓜",
+        "西兰花",
+        "毛豆",
+        "芹菜"
+      ],
+      "levelUseCount": 1,
+      "usedInLevels": [
+        11
+      ],
+      "requestedTargetRange": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "animal",
+      "label": "找出所有动物伙伴",
+      "allOf": [
+        "animal"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 10,
+      "itemIds": [
+        "camel",
+        "horse",
+        "cat",
+        "flying_fish",
+        "deer",
+        "nine_tailed_fox",
+        "lucky_raccoon",
+        "penguin",
+        "dog",
+        "rabbit"
+      ],
+      "itemNames": [
+        "骆驼",
+        "骏马",
+        "狸花猫",
+        "飞鱼坐骑",
+        "梅花鹿",
+        "九尾狐",
+        "招财狸",
+        "企鹅",
+        "柴犬",
+        "玉兔"
+      ],
+      "levelUseCount": 87,
+      "usedInLevels": [
+        5,
+        8,
+        12,
+        15,
+        18,
+        29,
+        39,
+        41,
+        45,
+        48,
+        49,
+        50,
+        51,
+        55,
+        58,
+        59,
+        60,
+        61,
+        65,
+        68,
+        69,
+        70,
+        71,
+        75,
+        78,
+        79,
+        80,
+        81,
+        85,
+        88,
+        89,
+        90,
+        91,
+        95,
+        98,
+        99,
+        100,
+        101,
+        105,
+        108,
+        109,
+        110,
+        111,
+        115,
+        118,
+        119,
+        120,
+        121,
+        125,
+        128,
+        129,
+        130,
+        131,
+        135,
+        138,
+        139,
+        140,
+        141,
+        145,
+        148,
+        149,
+        150,
+        151,
+        155,
+        158,
+        159,
+        160,
+        161,
+        165,
+        168,
+        169,
+        170,
+        171,
+        175,
+        178,
+        179,
+        180,
+        181,
+        185,
+        188,
+        189,
+        190,
+        191,
+        195,
+        198,
+        199,
+        200
+      ],
+      "requestedTargetRange": [
+        2,
+        5
+      ]
+    },
+    {
+      "id": "container",
+      "label": "找出能装东西的容器",
+      "allOf": [
+        "container"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 20,
+      "itemIds": [
+        "golden_ewer",
+        "white_porcelain_vase",
+        "painted_jar",
+        "black_pitcher",
+        "lotus_ewer",
+        "black_bottle",
+        "oil_lamp",
+        "red_dates",
+        "vinegar_jar",
+        "painted_vase",
+        "tangyuan",
+        "golden_bowl",
+        "incense_burner",
+        "patterned_vase",
+        "jewelry_box",
+        "medicine_bottle",
+        "clay_jar",
+        "lidded_bowl",
+        "partitioned_cauldron",
+        "cabinet"
+      ],
+      "itemNames": [
+        "鎏金执壶",
+        "白瓷瓶",
+        "彩陶罐",
+        "玄纹壶",
+        "莲花执壶",
+        "玄铁瓶",
+        "长明灯",
+        "红枣",
+        "醋坛",
+        "彩绘花瓶",
+        "汤圆",
+        "鎏金钵",
+        "香炉",
+        "缠枝瓶",
+        "首饰匣",
+        "药瓶",
+        "陶罐",
+        "金盖碗",
+        "九格铜鼎",
+        "百宝柜"
+      ],
+      "levelUseCount": 20,
+      "usedInLevels": [
+        6,
+        16,
+        24,
+        34,
+        44,
+        54,
+        64,
+        74,
+        84,
+        94,
+        104,
+        114,
+        124,
+        134,
+        144,
+        154,
+        164,
+        174,
+        184,
+        194
+      ],
+      "requestedTargetRange": [
+        2,
+        5
+      ]
+    },
+    {
+      "id": "plant",
+      "label": "找出属于植物的物品",
+      "allOf": [
+        "plant"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 28,
+      "itemIds": [
+        "chili_pepper",
+        "grapes",
+        "peach",
+        "lychee",
+        "red_dates",
+        "dandelion",
+        "chrysanthemum",
+        "watermelon",
+        "cotton",
+        "eggplant",
+        "peony",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "lemon",
+        "melon",
+        "dragon_fruit",
+        "coriander",
+        "scallion",
+        "bitter_melon",
+        "broccoli",
+        "edamame",
+        "celery"
+      ],
+      "itemNames": [
+        "辣椒",
+        "葡萄",
+        "仙桃",
+        "荔枝",
+        "红枣",
+        "蒲公英",
+        "金菊",
+        "西瓜",
+        "棉花",
+        "茄子",
+        "牡丹",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "柠檬",
+        "甜瓜",
+        "火龙果",
+        "香菜",
+        "青葱",
+        "苦瓜",
+        "西兰花",
+        "毛豆",
+        "芹菜"
+      ],
+      "levelUseCount": 36,
+      "usedInLevels": [
+        10,
+        20,
+        28,
+        38,
+        46,
+        48,
+        56,
+        58,
+        66,
+        68,
+        76,
+        78,
+        86,
+        88,
+        96,
+        98,
+        106,
+        108,
+        116,
+        118,
+        126,
+        128,
+        136,
+        138,
+        146,
+        148,
+        156,
+        158,
+        166,
+        168,
+        176,
+        178,
+        186,
+        188,
+        196,
+        198
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "fruit",
+      "label": "找出所有水果",
+      "allOf": [
+        "fruit"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 16,
+      "itemIds": [
+        "grapes",
+        "peach",
+        "lychee",
+        "red_dates",
+        "watermelon",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "lemon",
+        "melon",
+        "dragon_fruit"
+      ],
+      "itemNames": [
+        "葡萄",
+        "仙桃",
+        "荔枝",
+        "红枣",
+        "西瓜",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "柠檬",
+        "甜瓜",
+        "火龙果"
+      ],
+      "levelUseCount": 39,
+      "usedInLevels": [
+        4,
+        13,
+        14,
+        22,
+        30,
+        32,
+        40,
+        42,
+        50,
+        52,
+        60,
+        62,
+        70,
+        72,
+        80,
+        82,
+        90,
+        92,
+        100,
+        102,
+        110,
+        112,
+        120,
+        122,
+        130,
+        132,
+        140,
+        142,
+        150,
+        152,
+        160,
+        162,
+        170,
+        172,
+        180,
+        182,
+        190,
+        192,
+        200
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "vegetable",
+      "label": "找出所有蔬菜",
+      "allOf": [
+        "vegetable"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 6,
+      "poolCount": 8,
+      "itemIds": [
+        "chili_pepper",
+        "eggplant",
+        "coriander",
+        "scallion",
+        "bitter_melon",
+        "broccoli",
+        "edamame",
+        "celery"
+      ],
+      "itemNames": [
+        "辣椒",
+        "茄子",
+        "香菜",
+        "青葱",
+        "苦瓜",
+        "西兰花",
+        "毛豆",
+        "芹菜"
+      ],
+      "levelUseCount": 20,
+      "usedInLevels": [
+        7,
+        17,
+        23,
+        33,
+        43,
+        53,
+        63,
+        73,
+        83,
+        93,
+        103,
+        113,
+        123,
+        133,
+        143,
+        153,
+        163,
+        173,
+        183,
+        193
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "wearable",
+      "label": "找出所有穿戴物",
+      "allOf": [
+        "wearable"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 6,
+      "poolCount": 12,
+      "itemIds": [
+        "jade_hairpin",
+        "floral_hairpin",
+        "jeweled_belt",
+        "silver_armor",
+        "red_tunic",
+        "tasseled_shawl",
+        "phoenix_crown",
+        "embroidered_trousers",
+        "jade_earrings",
+        "fox_mask",
+        "gauze_veil",
+        "bamboo_hat"
+      ],
+      "itemNames": [
+        "翠玉簪",
+        "花簪",
+        "宝石腰饰",
+        "银纹铠甲",
+        "赤纹上衣",
+        "流苏披肩",
+        "凤纹头冠",
+        "绣花裤装",
+        "玉坠耳环",
+        "狐狸面具",
+        "轻纱面帘",
+        "竹编斗笠"
+      ],
+      "levelUseCount": 32,
+      "usedInLevels": [
+        42,
+        47,
+        52,
+        57,
+        62,
+        67,
+        72,
+        77,
+        82,
+        87,
+        92,
+        97,
+        102,
+        107,
+        112,
+        117,
+        122,
+        127,
+        132,
+        137,
+        142,
+        147,
+        152,
+        157,
+        162,
+        167,
+        172,
+        177,
+        182,
+        187,
+        192,
+        197
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "weapon",
+      "label": "找出所有兵器",
+      "allOf": [
+        "weapon"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 5,
+      "poolCount": 7,
+      "itemIds": [
+        "arrow",
+        "spike_trap",
+        "ornate_dagger",
+        "shuriken",
+        "fire_wheels",
+        "crossed_swords",
+        "sword"
+      ],
+      "itemNames": [
+        "羽箭",
+        "地刺",
+        "奇门匕首",
+        "飞镖",
+        "风火轮",
+        "双剑",
+        "宝剑"
+      ],
+      "levelUseCount": 17,
+      "usedInLevels": [
+        11,
+        44,
+        54,
+        64,
+        74,
+        84,
+        94,
+        104,
+        114,
+        124,
+        134,
+        144,
+        154,
+        164,
+        174,
+        184,
+        194
+      ],
+      "requestedTargetRange": [
+        2,
+        5
+      ]
+    },
+    {
+      "id": "wood",
+      "label": "找出木制物品",
+      "allOf": [
+        "wood"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 19,
+      "itemIds": [
+        "sedan_chair",
+        "konghou",
+        "campfire",
+        "torch",
+        "arrow",
+        "waist_drum",
+        "rattle_drum",
+        "wooden_pipa",
+        "guqin",
+        "hand_drum",
+        "carriage",
+        "treasure_ship",
+        "cabinet",
+        "wooden_arch_bridge",
+        "covered_bridge",
+        "floating_dock",
+        "lotus_boardwalk",
+        "rope_bridge",
+        "red_arch_bridge"
+      ],
+      "itemNames": [
+        "花轿",
+        "箜篌",
+        "篝火",
+        "火把",
+        "羽箭",
+        "腰鼓",
+        "拨浪鼓",
+        "木琵琶",
+        "古琴",
+        "手鼓",
+        "马车",
+        "楼船",
+        "百宝柜",
+        "木拱桥",
+        "风雨廊桥",
+        "浮木码头",
+        "荷塘栈道",
+        "吊索桥",
+        "朱漆拱桥"
+      ],
+      "levelUseCount": 0,
+      "usedInLevels": [],
+      "requestedTargetRange": null
+    },
+    {
+      "id": "ceramic",
+      "label": "找出陶瓷物品",
+      "allOf": [
+        "ceramic"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 6,
+      "poolCount": 10,
+      "itemIds": [
+        "bird_ocarina",
+        "white_porcelain_vase",
+        "painted_jar",
+        "black_pitcher",
+        "vinegar_jar",
+        "painted_vase",
+        "tangyuan",
+        "patterned_vase",
+        "medicine_bottle",
+        "clay_jar"
+      ],
+      "itemNames": [
+        "鸟形陶笛",
+        "白瓷瓶",
+        "彩陶罐",
+        "玄纹壶",
+        "醋坛",
+        "彩绘花瓶",
+        "汤圆",
+        "缠枝瓶",
+        "药瓶",
+        "陶罐"
+      ],
+      "levelUseCount": 20,
+      "usedInLevels": [
+        10,
+        20,
+        26,
+        36,
+        46,
+        56,
+        66,
+        76,
+        86,
+        96,
+        106,
+        116,
+        126,
+        136,
+        146,
+        156,
+        166,
+        176,
+        186,
+        196
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "metal_jewelry",
+      "label": "找出金属或珠宝物品",
+      "allOf": [
+        "metal_jewelry"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 19,
+      "itemIds": [
+        "golden_ewer",
+        "bronze_gong",
+        "fish_hook",
+        "needle",
+        "lotus_ewer",
+        "spike_trap",
+        "jade_hairpin",
+        "ornate_dagger",
+        "shuriken",
+        "oil_lamp",
+        "golden_bowl",
+        "crossed_swords",
+        "floral_hairpin",
+        "sword",
+        "partitioned_cauldron",
+        "jeweled_belt",
+        "silver_armor",
+        "phoenix_crown",
+        "jade_earrings"
+      ],
+      "itemNames": [
+        "鎏金执壶",
+        "铜锣",
+        "鱼钩",
+        "银针",
+        "莲花执壶",
+        "地刺",
+        "翠玉簪",
+        "奇门匕首",
+        "飞镖",
+        "长明灯",
+        "鎏金钵",
+        "双剑",
+        "花簪",
+        "宝剑",
+        "九格铜鼎",
+        "宝石腰饰",
+        "银纹铠甲",
+        "凤纹头冠",
+        "玉坠耳环"
+      ],
+      "levelUseCount": 0,
+      "usedInLevels": [],
+      "requestedTargetRange": null
+    },
+    {
+      "id": "round",
+      "label": "找出圆形轮廓的物品",
+      "allOf": [
+        "round"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 15,
+      "itemIds": [
+        "mooncake",
+        "peach",
+        "bronze_gong",
+        "red_dates",
+        "fire_wheels",
+        "tangyuan",
+        "golden_bowl",
+        "watermelon",
+        "lidded_bowl",
+        "partitioned_cauldron",
+        "apple",
+        "orange",
+        "kiwi",
+        "lemon",
+        "melon"
+      ],
+      "itemNames": [
+        "月饼",
+        "仙桃",
+        "铜锣",
+        "红枣",
+        "风火轮",
+        "汤圆",
+        "鎏金钵",
+        "西瓜",
+        "金盖碗",
+        "九格铜鼎",
+        "苹果",
+        "橙子",
+        "猕猴桃",
+        "柠檬",
+        "甜瓜"
+      ],
+      "levelUseCount": 1,
+      "usedInLevels": [
+        12
+      ],
+      "requestedTargetRange": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "slender",
+      "label": "找出细长轮廓的物品",
+      "allOf": [
+        "slender"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 23,
+      "itemIds": [
+        "golden_pipa",
+        "konghou",
+        "white_porcelain_vase",
+        "black_pitcher",
+        "fish_hook",
+        "torch",
+        "arrow",
+        "needle",
+        "beast_fang",
+        "jade_hairpin",
+        "ornate_dagger",
+        "rattle_drum",
+        "wooden_pipa",
+        "dragonfly",
+        "hulusi",
+        "icicle",
+        "guqin",
+        "floral_hairpin",
+        "sword",
+        "candle",
+        "feather",
+        "scallion",
+        "celery"
+      ],
+      "itemNames": [
+        "金纹琵琶",
+        "箜篌",
+        "白瓷瓶",
+        "玄纹壶",
+        "鱼钩",
+        "火把",
+        "羽箭",
+        "银针",
+        "兽牙",
+        "翠玉簪",
+        "奇门匕首",
+        "拨浪鼓",
+        "木琵琶",
+        "蜻蜓",
+        "葫芦丝",
+        "冰锥",
+        "古琴",
+        "花簪",
+        "宝剑",
+        "蜡烛",
+        "羽毛",
+        "青葱",
+        "芹菜"
+      ],
+      "levelUseCount": 1,
+      "usedInLevels": [
+        13
+      ],
+      "requestedTargetRange": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "patterned",
+      "label": "找出纹样明显的物品",
+      "allOf": [
+        "patterned"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 7,
+      "poolCount": 34,
+      "itemIds": [
+        "golden_pipa",
+        "bird_ocarina",
+        "sedan_chair",
+        "golden_ewer",
+        "painted_jar",
+        "black_pitcher",
+        "lotus_ewer",
+        "waist_drum",
+        "jade_hairpin",
+        "ornate_dagger",
+        "vinegar_jar",
+        "rattle_drum",
+        "wooden_pipa",
+        "painted_vase",
+        "hulusi",
+        "golden_bowl",
+        "ancient_book",
+        "guqin",
+        "incense_burner",
+        "hand_drum",
+        "floral_hairpin",
+        "patterned_vase",
+        "jewelry_box",
+        "blue_book",
+        "partitioned_cauldron",
+        "jeweled_belt",
+        "silver_armor",
+        "red_tunic",
+        "tasseled_shawl",
+        "phoenix_crown",
+        "embroidered_trousers",
+        "jade_earrings",
+        "fox_mask",
+        "gauze_veil"
+      ],
+      "itemNames": [
+        "金纹琵琶",
+        "鸟形陶笛",
+        "花轿",
+        "鎏金执壶",
+        "彩陶罐",
+        "玄纹壶",
+        "莲花执壶",
+        "腰鼓",
+        "翠玉簪",
+        "奇门匕首",
+        "醋坛",
+        "拨浪鼓",
+        "木琵琶",
+        "彩绘花瓶",
+        "葫芦丝",
+        "鎏金钵",
+        "古籍",
+        "古琴",
+        "香炉",
+        "手鼓",
+        "花簪",
+        "缠枝瓶",
+        "首饰匣",
+        "蓝皮古籍",
+        "九格铜鼎",
+        "宝石腰饰",
+        "银纹铠甲",
+        "赤纹上衣",
+        "流苏披肩",
+        "凤纹头冠",
+        "绣花裤装",
+        "玉坠耳环",
+        "狐狸面具",
+        "轻纱面帘"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200
+      ],
+      "requestedTargetRange": [
+        2,
+        5
+      ]
+    },
+    {
+      "id": "sweet_plants",
+      "label": "找出既是植物又是甜食的物品",
+      "allOf": [
+        "plant",
+        "sweet_food"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 6,
+      "poolCount": 15,
+      "itemIds": [
+        "grapes",
+        "peach",
+        "lychee",
+        "red_dates",
+        "watermelon",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "melon",
+        "dragon_fruit"
+      ],
+      "itemNames": [
+        "葡萄",
+        "仙桃",
+        "荔枝",
+        "红枣",
+        "西瓜",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "甜瓜",
+        "火龙果"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        21,
+        31,
+        41,
+        51,
+        61,
+        71,
+        81,
+        91,
+        101,
+        111,
+        121,
+        131,
+        141,
+        151,
+        161,
+        171,
+        181,
+        191
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "wooden_bridges",
+      "label": "找出木制桥梁、栈道或码头",
+      "allOf": [
+        "bridge",
+        "wood"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 5,
+      "poolCount": 6,
+      "itemIds": [
+        "wooden_arch_bridge",
+        "covered_bridge",
+        "floating_dock",
+        "lotus_boardwalk",
+        "rope_bridge",
+        "red_arch_bridge"
+      ],
+      "itemNames": [
+        "木拱桥",
+        "风雨廊桥",
+        "浮木码头",
+        "荷塘栈道",
+        "吊索桥",
+        "朱漆拱桥"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        22,
+        32,
+        42,
+        52,
+        62,
+        72,
+        82,
+        92,
+        102,
+        112,
+        122,
+        132,
+        142,
+        152,
+        162,
+        172,
+        182,
+        192
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "metal_wearables",
+      "label": "找出金属或珠宝制的穿戴物",
+      "allOf": [
+        "wearable",
+        "metal_jewelry"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 5,
+      "poolCount": 6,
+      "itemIds": [
+        "jade_hairpin",
+        "floral_hairpin",
+        "jeweled_belt",
+        "silver_armor",
+        "phoenix_crown",
+        "jade_earrings"
+      ],
+      "itemNames": [
+        "翠玉簪",
+        "花簪",
+        "宝石腰饰",
+        "银纹铠甲",
+        "凤纹头冠",
+        "玉坠耳环"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        23,
+        33,
+        43,
+        53,
+        63,
+        73,
+        83,
+        93,
+        103,
+        113,
+        123,
+        133,
+        143,
+        153,
+        163,
+        173,
+        183,
+        193
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "luminous_fliers",
+      "label": "找出会飞又会发光的物品",
+      "allOf": [
+        "flying",
+        "glowing"
+      ],
+      "anyOf": [],
+      "noneOf": [],
+      "defaultTargetCount": 3,
+      "poolCount": 3,
+      "itemIds": [
+        "red_sky_lantern",
+        "firefly",
+        "orange_sky_lantern"
+      ],
+      "itemNames": [
+        "朱红孔明灯",
+        "萤火虫",
+        "橙色孔明灯"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        24,
+        34,
+        44,
+        54,
+        64,
+        74,
+        84,
+        94,
+        104,
+        114,
+        124,
+        134,
+        144,
+        154,
+        164,
+        174,
+        184,
+        194
+      ],
+      "requestedTargetRange": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "fruit_or_vegetable",
+      "label": "找出水果或蔬菜",
+      "allOf": [],
+      "anyOf": [
+        "fruit",
+        "vegetable"
+      ],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 24,
+      "itemIds": [
+        "chili_pepper",
+        "grapes",
+        "peach",
+        "lychee",
+        "red_dates",
+        "watermelon",
+        "eggplant",
+        "apple",
+        "banana",
+        "orange",
+        "strawberry",
+        "mango",
+        "pear",
+        "pineapple",
+        "kiwi",
+        "lemon",
+        "melon",
+        "dragon_fruit",
+        "coriander",
+        "scallion",
+        "bitter_melon",
+        "broccoli",
+        "edamame",
+        "celery"
+      ],
+      "itemNames": [
+        "辣椒",
+        "葡萄",
+        "仙桃",
+        "荔枝",
+        "红枣",
+        "西瓜",
+        "茄子",
+        "苹果",
+        "香蕉",
+        "橙子",
+        "草莓",
+        "芒果",
+        "梨",
+        "菠萝",
+        "猕猴桃",
+        "柠檬",
+        "甜瓜",
+        "火龙果",
+        "香菜",
+        "青葱",
+        "苦瓜",
+        "西兰花",
+        "毛豆",
+        "芹菜"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        25,
+        35,
+        45,
+        55,
+        65,
+        75,
+        85,
+        95,
+        105,
+        115,
+        125,
+        135,
+        145,
+        155,
+        165,
+        175,
+        185,
+        195
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "animal_or_vehicle",
+      "label": "找出动物伙伴、载具或坐骑",
+      "allOf": [],
+      "anyOf": [
+        "animal",
+        "vehicle"
+      ],
+      "noneOf": [],
+      "defaultTargetCount": 8,
+      "poolCount": 14,
+      "itemIds": [
+        "camel",
+        "horse",
+        "sedan_chair",
+        "cat",
+        "flying_fish",
+        "deer",
+        "nine_tailed_fox",
+        "lucky_raccoon",
+        "fire_wheels",
+        "penguin",
+        "carriage",
+        "treasure_ship",
+        "dog",
+        "rabbit"
+      ],
+      "itemNames": [
+        "骆驼",
+        "骏马",
+        "花轿",
+        "狸花猫",
+        "飞鱼坐骑",
+        "梅花鹿",
+        "九尾狐",
+        "招财狸",
+        "风火轮",
+        "企鹅",
+        "马车",
+        "楼船",
+        "柴犬",
+        "玉兔"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        26,
+        36,
+        46,
+        56,
+        66,
+        76,
+        86,
+        96,
+        106,
+        116,
+        126,
+        136,
+        146,
+        156,
+        166,
+        176,
+        186,
+        196
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "food_not_sweet",
+      "label": "找出食物，但不要点甜食",
+      "allOf": [
+        "food"
+      ],
+      "anyOf": [],
+      "noneOf": [
+        "sweet_food"
+      ],
+      "defaultTargetCount": 6,
+      "poolCount": 9,
+      "itemIds": [
+        "chili_pepper",
+        "eggplant",
+        "lemon",
+        "coriander",
+        "scallion",
+        "bitter_melon",
+        "broccoli",
+        "edamame",
+        "celery"
+      ],
+      "itemNames": [
+        "辣椒",
+        "茄子",
+        "柠檬",
+        "香菜",
+        "青葱",
+        "苦瓜",
+        "西兰花",
+        "毛豆",
+        "芹菜"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        27,
+        37,
+        47,
+        57,
+        67,
+        77,
+        87,
+        97,
+        107,
+        117,
+        127,
+        137,
+        147,
+        157,
+        167,
+        177,
+        187,
+        197
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "sharp_not_weapon",
+      "label": "找出尖锐但不是兵器的物品",
+      "allOf": [
+        "sharp"
+      ],
+      "anyOf": [],
+      "noneOf": [
+        "weapon"
+      ],
+      "defaultTargetCount": 5,
+      "poolCount": 6,
+      "itemIds": [
+        "fish_hook",
+        "needle",
+        "beast_fang",
+        "jade_hairpin",
+        "icicle",
+        "floral_hairpin"
+      ],
+      "itemNames": [
+        "鱼钩",
+        "银针",
+        "兽牙",
+        "翠玉簪",
+        "冰锥",
+        "花簪"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        28,
+        38,
+        48,
+        58,
+        68,
+        78,
+        88,
+        98,
+        108,
+        118,
+        128,
+        138,
+        148,
+        158,
+        168,
+        178,
+        188,
+        198
+      ],
+      "requestedTargetRange": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "bridge_not_wood",
+      "label": "找出不是木制的桥",
+      "allOf": [
+        "bridge"
+      ],
+      "anyOf": [],
+      "noneOf": [
+        "wood"
+      ],
+      "defaultTargetCount": 3,
+      "poolCount": 3,
+      "itemIds": [
+        "plain_stone_arch_bridge",
+        "stone_water_bridge",
+        "stone_slab_bridge"
+      ],
+      "itemNames": [
+        "素面石拱桥",
+        "石拱水桥",
+        "石板桥"
+      ],
+      "levelUseCount": 18,
+      "usedInLevels": [
+        29,
+        39,
+        49,
+        59,
+        69,
+        79,
+        89,
+        99,
+        109,
+        119,
+        129,
+        139,
+        149,
+        159,
+        169,
+        179,
+        189,
+        199
+      ],
+      "requestedTargetRange": [
+        2,
+        3
+      ]
+    }
+  ],
+  "itemMappings": [
+    {
+      "id": "camel",
+      "name": "骆驼",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "chili_pepper",
+      "name": "辣椒",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "golden_pipa",
+      "name": "金纹琵琶",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "grapes",
+      "name": "葡萄",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "mooncake",
+      "name": "月饼",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "round"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出圆形轮廓的物品"
+      ]
+    },
+    {
+      "id": "horse",
+      "name": "骏马",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "bird_ocarina",
+      "name": "鸟形陶笛",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "ceramic",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出陶瓷物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "peach",
+      "name": "仙桃",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "sedan_chair",
+      "name": "花轿",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "wood",
+        "patterned",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出木制物品",
+        "找出纹样明显的物品",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "konghou",
+      "name": "箜篌",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "golden_ewer",
+      "name": "鎏金执壶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "metal_jewelry",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "cat",
+      "name": "狸花猫",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "red_sky_lantern",
+      "name": "朱红孔明灯",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "glowing",
+        "luminous_fliers"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出所有会发光的物品",
+        "找出会飞又会发光的物品"
+      ]
+    },
+    {
+      "id": "white_porcelain_vase",
+      "name": "白瓷瓶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "lychee",
+      "name": "荔枝",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "painted_jar",
+      "name": "彩陶罐",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "black_pitcher",
+      "name": "玄纹壶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "campfire",
+      "name": "篝火",
+      "role": "item",
+      "taskIds": [
+        "glowing",
+        "wood"
+      ],
+      "taskLabels": [
+        "找出所有会发光的物品",
+        "找出木制物品"
+      ]
+    },
+    {
+      "id": "bronze_gong",
+      "name": "铜锣",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "metal_jewelry",
+        "round"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出金属或珠宝物品",
+        "找出圆形轮廓的物品"
+      ]
+    },
+    {
+      "id": "fish_hook",
+      "name": "鱼钩",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "metal_jewelry",
+        "slender",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "torch",
+      "name": "火把",
+      "role": "item",
+      "taskIds": [
+        "glowing",
+        "wood",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有会发光的物品",
+        "找出木制物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "arrow",
+      "name": "羽箭",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "wood",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出木制物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "needle",
+      "name": "银针",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "metal_jewelry",
+        "slender",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "flying_fish",
+      "name": "飞鱼坐骑",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "candied_hawthorn",
+      "name": "糖葫芦",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物"
+      ]
+    },
+    {
+      "id": "lotus_ewer",
+      "name": "莲花执壶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "metal_jewelry",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "spike_trap",
+      "name": "地刺",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "metal_jewelry"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出金属或珠宝物品"
+      ]
+    },
+    {
+      "id": "osmanthus_cake",
+      "name": "桂花糕",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物"
+      ]
+    },
+    {
+      "id": "deer",
+      "name": "梅花鹿",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "beast_fang",
+      "name": "兽牙",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "slender",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出细长轮廓的物品",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "waist_drum",
+      "name": "腰鼓",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "jade_hairpin",
+      "name": "翠玉簪",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "wearable",
+        "metal_jewelry",
+        "slender",
+        "patterned",
+        "metal_wearables",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "black_bottle",
+      "name": "玄铁瓶",
+      "role": "item",
+      "taskIds": [
+        "container"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器"
+      ]
+    },
+    {
+      "id": "nine_tailed_fox",
+      "name": "九尾狐",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "ornate_dagger",
+      "name": "奇门匕首",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "metal_jewelry",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "firefly",
+      "name": "萤火虫",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "glowing",
+        "luminous_fliers"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出所有会发光的物品",
+        "找出会飞又会发光的物品"
+      ]
+    },
+    {
+      "id": "shuriken",
+      "name": "飞镖",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "metal_jewelry"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出金属或珠宝物品"
+      ]
+    },
+    {
+      "id": "oil_lamp",
+      "name": "长明灯",
+      "role": "item",
+      "taskIds": [
+        "glowing",
+        "container",
+        "metal_jewelry"
+      ],
+      "taskLabels": [
+        "找出所有会发光的物品",
+        "找出能装东西的容器",
+        "找出金属或珠宝物品"
+      ]
+    },
+    {
+      "id": "red_dates",
+      "name": "红枣",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "container",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出能装东西的容器",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "inscribed_music_stand",
+      "name": "题字琴架",
+      "role": "item",
+      "taskIds": [
+        "written"
+      ],
+      "taskLabels": [
+        "找出所有带字物品"
+      ]
+    },
+    {
+      "id": "dandelion",
+      "name": "蒲公英",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "plant"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出属于植物的物品"
+      ]
+    },
+    {
+      "id": "vinegar_jar",
+      "name": "醋坛",
+      "role": "item",
+      "taskIds": [
+        "written",
+        "container",
+        "ceramic",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有带字物品",
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "lucky_raccoon",
+      "name": "招财狸",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "rattle_drum",
+      "name": "拨浪鼓",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "wooden_pipa",
+      "name": "木琵琶",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "swallow",
+      "name": "春燕",
+      "role": "item",
+      "taskIds": [
+        "flying"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品"
+      ]
+    },
+    {
+      "id": "painted_vase",
+      "name": "彩绘花瓶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "phoenix",
+      "name": "金羽凤凰",
+      "role": "item",
+      "taskIds": [
+        "flying"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品"
+      ]
+    },
+    {
+      "id": "dragonfly",
+      "name": "蜻蜓",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "fire_wheels",
+      "name": "风火轮",
+      "role": "item",
+      "taskIds": [
+        "glowing",
+        "vehicle",
+        "weapon",
+        "round",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有会发光的物品",
+        "找出所有载具与坐骑",
+        "找出所有兵器",
+        "找出圆形轮廓的物品",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "chrysanthemum",
+      "name": "金菊",
+      "role": "item",
+      "taskIds": [
+        "plant"
+      ],
+      "taskLabels": [
+        "找出属于植物的物品"
+      ]
+    },
+    {
+      "id": "tangyuan",
+      "name": "汤圆",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "container",
+        "ceramic",
+        "round"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出圆形轮廓的物品"
+      ]
+    },
+    {
+      "id": "hulusi",
+      "name": "葫芦丝",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "inscribed_papers",
+      "name": "题字纸页",
+      "role": "item",
+      "taskIds": [
+        "written"
+      ],
+      "taskLabels": [
+        "找出所有带字物品"
+      ]
+    },
+    {
+      "id": "icicle",
+      "name": "冰锥",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "slender",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出细长轮廓的物品",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "golden_bowl",
+      "name": "鎏金钵",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "metal_jewelry",
+        "round",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出金属或珠宝物品",
+        "找出圆形轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "ancient_book",
+      "name": "古籍",
+      "role": "item",
+      "taskIds": [
+        "written",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有带字物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "watermelon",
+      "name": "西瓜",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "guqin",
+      "name": "古琴",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "slender",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "orange_sky_lantern",
+      "name": "橙色孔明灯",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "glowing",
+        "luminous_fliers"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出所有会发光的物品",
+        "找出会飞又会发光的物品"
+      ]
+    },
+    {
+      "id": "penguin",
+      "name": "企鹅",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "incense_burner",
+      "name": "香炉",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "cotton",
+      "name": "棉花",
+      "role": "item",
+      "taskIds": [
+        "plant"
+      ],
+      "taskLabels": [
+        "找出属于植物的物品"
+      ]
+    },
+    {
+      "id": "eggplant",
+      "name": "茄子",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "crossed_swords",
+      "name": "双剑",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "metal_jewelry"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出金属或珠宝物品"
+      ]
+    },
+    {
+      "id": "hand_drum",
+      "name": "手鼓",
+      "role": "item",
+      "taskIds": [
+        "instrument",
+        "wood",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有乐器",
+        "找出木制物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "floral_hairpin",
+      "name": "花簪",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "wearable",
+        "metal_jewelry",
+        "slender",
+        "patterned",
+        "metal_wearables",
+        "sharp_not_weapon"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物",
+        "找出尖锐但不是兵器的物品"
+      ]
+    },
+    {
+      "id": "patterned_vase",
+      "name": "缠枝瓶",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "jewelry_box",
+      "name": "首饰匣",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "medicine_bottle",
+      "name": "药瓶",
+      "role": "item",
+      "taskIds": [
+        "written",
+        "container",
+        "ceramic"
+      ],
+      "taskLabels": [
+        "找出所有带字物品",
+        "找出能装东西的容器",
+        "找出陶瓷物品"
+      ]
+    },
+    {
+      "id": "carriage",
+      "name": "马车",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "wood",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出木制物品",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "butterfly",
+      "name": "蝴蝶",
+      "role": "item",
+      "taskIds": [
+        "flying"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品"
+      ]
+    },
+    {
+      "id": "sword",
+      "name": "宝剑",
+      "role": "item",
+      "taskIds": [
+        "sharp",
+        "weapon",
+        "metal_jewelry",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有尖锐物品",
+        "找出所有兵器",
+        "找出金属或珠宝物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "clay_jar",
+      "name": "陶罐",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "ceramic"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出陶瓷物品"
+      ]
+    },
+    {
+      "id": "candle",
+      "name": "蜡烛",
+      "role": "item",
+      "taskIds": [
+        "glowing",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有会发光的物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "treasure_ship",
+      "name": "楼船",
+      "role": "item",
+      "taskIds": [
+        "vehicle",
+        "wood",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有载具与坐骑",
+        "找出木制物品",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "lidded_bowl",
+      "name": "金盖碗",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "round"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出圆形轮廓的物品"
+      ]
+    },
+    {
+      "id": "dog",
+      "name": "柴犬",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "rabbit",
+      "name": "玉兔",
+      "role": "item",
+      "taskIds": [
+        "animal",
+        "animal_or_vehicle"
+      ],
+      "taskLabels": [
+        "找出所有动物伙伴",
+        "找出动物伙伴、载具或坐骑"
+      ]
+    },
+    {
+      "id": "blue_book",
+      "name": "蓝皮古籍",
+      "role": "item",
+      "taskIds": [
+        "written",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有带字物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "zongzi",
+      "name": "粽子",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物"
+      ]
+    },
+    {
+      "id": "kite",
+      "name": "纸鸢",
+      "role": "item",
+      "taskIds": [
+        "flying"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品"
+      ]
+    },
+    {
+      "id": "partitioned_cauldron",
+      "name": "九格铜鼎",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "metal_jewelry",
+        "round",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出金属或珠宝物品",
+        "找出圆形轮廓的物品",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "peony",
+      "name": "牡丹",
+      "role": "item",
+      "taskIds": [
+        "plant"
+      ],
+      "taskLabels": [
+        "找出属于植物的物品"
+      ]
+    },
+    {
+      "id": "cabinet",
+      "name": "百宝柜",
+      "role": "item",
+      "taskIds": [
+        "container",
+        "wood"
+      ],
+      "taskLabels": [
+        "找出能装东西的容器",
+        "找出木制物品"
+      ]
+    },
+    {
+      "id": "feather",
+      "name": "羽毛",
+      "role": "item",
+      "taskIds": [
+        "flying",
+        "slender"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品",
+        "找出细长轮廓的物品"
+      ]
+    },
+    {
+      "id": "paper_crane",
+      "name": "纸鹤",
+      "role": "item",
+      "taskIds": [
+        "flying"
+      ],
+      "taskLabels": [
+        "找出所有会飞的物品"
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "苹果",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "banana",
+      "name": "香蕉",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "orange",
+      "name": "橙子",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "strawberry",
+      "name": "草莓",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "mango",
+      "name": "芒果",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "pear",
+      "name": "梨",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "pineapple",
+      "name": "菠萝",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "kiwi",
+      "name": "猕猴桃",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "lemon",
+      "name": "柠檬",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "melon",
+      "name": "甜瓜",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "round",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出圆形轮廓的物品",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "dragon_fruit",
+      "name": "火龙果",
+      "role": "item",
+      "taskIds": [
+        "sweet_food",
+        "food",
+        "plant",
+        "fruit",
+        "sweet_plants",
+        "fruit_or_vegetable"
+      ],
+      "taskLabels": [
+        "找出所有甜食",
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有水果",
+        "找出既是植物又是甜食的物品",
+        "找出水果或蔬菜"
+      ]
+    },
+    {
+      "id": "coriander",
+      "name": "香菜",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "scallion",
+      "name": "青葱",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "slender",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出细长轮廓的物品",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "bitter_melon",
+      "name": "苦瓜",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "broccoli",
+      "name": "西兰花",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "edamame",
+      "name": "毛豆",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "celery",
+      "name": "芹菜",
+      "role": "item",
+      "taskIds": [
+        "food",
+        "plant",
+        "vegetable",
+        "slender",
+        "fruit_or_vegetable",
+        "food_not_sweet"
+      ],
+      "taskLabels": [
+        "找出所有食物",
+        "找出属于植物的物品",
+        "找出所有蔬菜",
+        "找出细长轮廓的物品",
+        "找出水果或蔬菜",
+        "找出食物，但不要点甜食"
+      ]
+    },
+    {
+      "id": "jeweled_belt",
+      "name": "宝石腰饰",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "metal_jewelry",
+        "patterned",
+        "metal_wearables"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物"
+      ]
+    },
+    {
+      "id": "silver_armor",
+      "name": "银纹铠甲",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "metal_jewelry",
+        "patterned",
+        "metal_wearables"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物"
+      ]
+    },
+    {
+      "id": "red_tunic",
+      "name": "赤纹上衣",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "tasseled_shawl",
+      "name": "流苏披肩",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "phoenix_crown",
+      "name": "凤纹头冠",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "metal_jewelry",
+        "patterned",
+        "metal_wearables"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物"
+      ]
+    },
+    {
+      "id": "embroidered_trousers",
+      "name": "绣花裤装",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "jade_earrings",
+      "name": "玉坠耳环",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "metal_jewelry",
+        "patterned",
+        "metal_wearables"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出金属或珠宝物品",
+        "找出纹样明显的物品",
+        "找出金属或珠宝制的穿戴物"
+      ]
+    },
+    {
+      "id": "fox_mask",
+      "name": "狐狸面具",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "gauze_veil",
+      "name": "轻纱面帘",
+      "role": "item",
+      "taskIds": [
+        "wearable",
+        "patterned"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物",
+        "找出纹样明显的物品"
+      ]
+    },
+    {
+      "id": "bamboo_hat",
+      "name": "竹编斗笠",
+      "role": "item",
+      "taskIds": [
+        "wearable"
+      ],
+      "taskLabels": [
+        "找出所有穿戴物"
+      ]
+    },
+    {
+      "id": "plain_stone_arch_bridge",
+      "name": "素面石拱桥",
+      "role": "landmark",
+      "taskIds": [
+        "bridge_not_wood"
+      ],
+      "taskLabels": [
+        "找出不是木制的桥"
+      ]
+    },
+    {
+      "id": "wooden_arch_bridge",
+      "name": "木拱桥",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    },
+    {
+      "id": "covered_bridge",
+      "name": "风雨廊桥",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    },
+    {
+      "id": "floating_dock",
+      "name": "浮木码头",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    },
+    {
+      "id": "lotus_boardwalk",
+      "name": "荷塘栈道",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    },
+    {
+      "id": "stone_water_bridge",
+      "name": "石拱水桥",
+      "role": "landmark",
+      "taskIds": [
+        "bridge_not_wood"
+      ],
+      "taskLabels": [
+        "找出不是木制的桥"
+      ]
+    },
+    {
+      "id": "stone_slab_bridge",
+      "name": "石板桥",
+      "role": "landmark",
+      "taskIds": [
+        "bridge_not_wood"
+      ],
+      "taskLabels": [
+        "找出不是木制的桥"
+      ]
+    },
+    {
+      "id": "rope_bridge",
+      "name": "吊索桥",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    },
+    {
+      "id": "red_arch_bridge",
+      "name": "朱漆拱桥",
+      "role": "landmark",
+      "taskIds": [
+        "wood",
+        "wooden_bridges"
+      ],
+      "taskLabels": [
+        "找出木制物品",
+        "找出木制桥梁、栈道或码头"
+      ]
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "chapter": 1,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "chapter": 1,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "flying",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "chapter": 1,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_food",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "chapter": 1,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "instrument",
+          "targetCount": 2
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "chapter": 1,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "written",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "chapter": 1,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "container",
+          "targetCount": 2
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "chapter": 1,
+      "category": "vehicle",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "glowing",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "chapter": 1,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "chapter": 1,
+      "category": "glowing",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "sweet_food",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vehicle",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "chapter": 1,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "plant",
+          "targetCount": 2
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "chapter": 1,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "food",
+          "targetCount": 2
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "chapter": 1,
+      "category": "flying",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "round",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "chapter": 1,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "slender",
+          "targetCount": 2
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "chapter": 1,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "instrument",
+          "targetCount": 2
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "chapter": 1,
+      "category": "container",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "written",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "chapter": 1,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "container",
+          "targetCount": 3
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "chapter": 1,
+      "category": "vehicle",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "glowing",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "chapter": 1,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "chapter": 1,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_food",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vehicle",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "chapter": 1,
+      "category": "plant",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 21,
+      "chapter": 2,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 2
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 22,
+      "chapter": 2,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 23,
+      "chapter": 2,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 24,
+      "chapter": 2,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 25,
+      "chapter": 2,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 2
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 26,
+      "chapter": 2,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 27,
+      "chapter": 2,
+      "category": "animal",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 2
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 28,
+      "chapter": 2,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 29,
+      "chapter": 2,
+      "category": "sharp",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 30,
+      "chapter": 2,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 31,
+      "chapter": 2,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 32,
+      "chapter": 2,
+      "category": "glowing",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 33,
+      "chapter": 2,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 3
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 34,
+      "chapter": 2,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 35,
+      "chapter": 2,
+      "category": "flying",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 2
+        },
+        {
+          "taskId": "written",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 36,
+      "chapter": 2,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 37,
+      "chapter": 2,
+      "category": "animal",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 3
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 38,
+      "chapter": 2,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 39,
+      "chapter": 2,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 40,
+      "chapter": 2,
+      "category": "vehicle",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 5
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 41,
+      "chapter": 3,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 2
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 42,
+      "chapter": 3,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 43,
+      "chapter": 3,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 2
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 44,
+      "chapter": 3,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 2
+        },
+        {
+          "taskId": "container",
+          "targetCount": 2
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 45,
+      "chapter": 3,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 46,
+      "chapter": 3,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 2
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 47,
+      "chapter": 3,
+      "category": "instrument",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 2
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 2
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 48,
+      "chapter": 3,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 49,
+      "chapter": 3,
+      "category": "sweet_food",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 50,
+      "chapter": 3,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 51,
+      "chapter": 3,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 52,
+      "chapter": 3,
+      "category": "sharp",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 2
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 53,
+      "chapter": 3,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 3
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 2
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 54,
+      "chapter": 3,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 3
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 55,
+      "chapter": 3,
+      "category": "glowing",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 2
+        },
+        {
+          "taskId": "written",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 56,
+      "chapter": 3,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 2
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 57,
+      "chapter": 3,
+      "category": "instrument",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 3
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 58,
+      "chapter": 3,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 2
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 59,
+      "chapter": 3,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 60,
+      "chapter": 3,
+      "category": "animal",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 61,
+      "chapter": 4,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 2
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 62,
+      "chapter": 4,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 2
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 63,
+      "chapter": 4,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 3
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 64,
+      "chapter": 4,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 3
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 65,
+      "chapter": 4,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 66,
+      "chapter": 4,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 67,
+      "chapter": 4,
+      "category": "written",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 3
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 68,
+      "chapter": 4,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 69,
+      "chapter": 4,
+      "category": "plant",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 70,
+      "chapter": 4,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 71,
+      "chapter": 4,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 72,
+      "chapter": 4,
+      "category": "sweet_food",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 73,
+      "chapter": 4,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 3
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 74,
+      "chapter": 4,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 3
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 75,
+      "chapter": 4,
+      "category": "sharp",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 2
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 2
+        }
+      ]
+    },
+    {
+      "level": 76,
+      "chapter": 4,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 77,
+      "chapter": 4,
+      "category": "written",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 3
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 78,
+      "chapter": 4,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 79,
+      "chapter": 4,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 80,
+      "chapter": 4,
+      "category": "instrument",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 81,
+      "chapter": 5,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 82,
+      "chapter": 5,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 3
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 83,
+      "chapter": 5,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 3
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 84,
+      "chapter": 5,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 85,
+      "chapter": 5,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 86,
+      "chapter": 5,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 3
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 87,
+      "chapter": 5,
+      "category": "container",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 88,
+      "chapter": 5,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 3
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 89,
+      "chapter": 5,
+      "category": "vehicle",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 90,
+      "chapter": 5,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 91,
+      "chapter": 5,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 3
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 92,
+      "chapter": 5,
+      "category": "plant",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 3
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 93,
+      "chapter": 5,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 94,
+      "chapter": 5,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 95,
+      "chapter": 5,
+      "category": "sweet_food",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 96,
+      "chapter": 5,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 97,
+      "chapter": 5,
+      "category": "container",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 3
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 98,
+      "chapter": 5,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 99,
+      "chapter": 5,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 100,
+      "chapter": 5,
+      "category": "written",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 101,
+      "chapter": 6,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 102,
+      "chapter": 6,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 103,
+      "chapter": 6,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 104,
+      "chapter": 6,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 105,
+      "chapter": 6,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 106,
+      "chapter": 6,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 107,
+      "chapter": 6,
+      "category": "flying",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 108,
+      "chapter": 6,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 109,
+      "chapter": 6,
+      "category": "animal",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 110,
+      "chapter": 6,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 111,
+      "chapter": 6,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 112,
+      "chapter": 6,
+      "category": "vehicle",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 113,
+      "chapter": 6,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 114,
+      "chapter": 6,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 115,
+      "chapter": 6,
+      "category": "plant",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 116,
+      "chapter": 6,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 117,
+      "chapter": 6,
+      "category": "flying",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 118,
+      "chapter": 6,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 119,
+      "chapter": 6,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 120,
+      "chapter": 6,
+      "category": "container",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 121,
+      "chapter": 7,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 122,
+      "chapter": 7,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 123,
+      "chapter": 7,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 124,
+      "chapter": 7,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 125,
+      "chapter": 7,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 126,
+      "chapter": 7,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 127,
+      "chapter": 7,
+      "category": "glowing",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 128,
+      "chapter": 7,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 129,
+      "chapter": 7,
+      "category": "instrument",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 130,
+      "chapter": 7,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 131,
+      "chapter": 7,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 132,
+      "chapter": 7,
+      "category": "animal",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 133,
+      "chapter": 7,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 134,
+      "chapter": 7,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 135,
+      "chapter": 7,
+      "category": "vehicle",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 136,
+      "chapter": 7,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 137,
+      "chapter": 7,
+      "category": "glowing",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 138,
+      "chapter": 7,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 139,
+      "chapter": 7,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 140,
+      "chapter": 7,
+      "category": "flying",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 141,
+      "chapter": 8,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 142,
+      "chapter": 8,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 143,
+      "chapter": 8,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 144,
+      "chapter": 8,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 145,
+      "chapter": 8,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 146,
+      "chapter": 8,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 147,
+      "chapter": 8,
+      "category": "sharp",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 148,
+      "chapter": 8,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 149,
+      "chapter": 8,
+      "category": "written",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 150,
+      "chapter": 8,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 151,
+      "chapter": 8,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 152,
+      "chapter": 8,
+      "category": "instrument",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 153,
+      "chapter": 8,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 154,
+      "chapter": 8,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 155,
+      "chapter": 8,
+      "category": "animal",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 156,
+      "chapter": 8,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 157,
+      "chapter": 8,
+      "category": "sharp",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 158,
+      "chapter": 8,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 159,
+      "chapter": 8,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 160,
+      "chapter": 8,
+      "category": "glowing",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 161,
+      "chapter": 9,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 162,
+      "chapter": 9,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 163,
+      "chapter": 9,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 164,
+      "chapter": 9,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 165,
+      "chapter": 9,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 166,
+      "chapter": 9,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 167,
+      "chapter": 9,
+      "category": "sweet_food",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 168,
+      "chapter": 9,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 169,
+      "chapter": 9,
+      "category": "container",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 170,
+      "chapter": 9,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 171,
+      "chapter": 9,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 172,
+      "chapter": 9,
+      "category": "written",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 173,
+      "chapter": 9,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 174,
+      "chapter": 9,
+      "category": "plant",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 175,
+      "chapter": 9,
+      "category": "instrument",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 3
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 176,
+      "chapter": 9,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 177,
+      "chapter": 9,
+      "category": "sweet_food",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 178,
+      "chapter": 9,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 179,
+      "chapter": 9,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 180,
+      "chapter": 9,
+      "category": "sharp",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 181,
+      "chapter": 10,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 182,
+      "chapter": 10,
+      "category": "container",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 183,
+      "chapter": 10,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 184,
+      "chapter": 10,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 5
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 185,
+      "chapter": 10,
+      "category": "written",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 186,
+      "chapter": 10,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 187,
+      "chapter": 10,
+      "category": "plant",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 188,
+      "chapter": 10,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 189,
+      "chapter": 10,
+      "category": "flying",
+      "type": "mist",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 190,
+      "chapter": 10,
+      "category": "sweet_food",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 191,
+      "chapter": 10,
+      "category": "animal",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sweet_plants",
+          "targetCount": 4
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 192,
+      "chapter": 10,
+      "category": "container",
+      "type": "night",
+      "goals": [
+        {
+          "taskId": "wooden_bridges",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 193,
+      "chapter": 10,
+      "category": "sharp",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "metal_wearables",
+          "targetCount": 4
+        },
+        {
+          "taskId": "vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "flying",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 194,
+      "chapter": 10,
+      "category": "vehicle",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "luminous_fliers",
+          "targetCount": 3
+        },
+        {
+          "taskId": "container",
+          "targetCount": 4
+        },
+        {
+          "taskId": "weapon",
+          "targetCount": 5
+        }
+      ]
+    },
+    {
+      "level": 195,
+      "chapter": 10,
+      "category": "written",
+      "type": "speed",
+      "goals": [
+        {
+          "taskId": "fruit_or_vegetable",
+          "targetCount": 4
+        },
+        {
+          "taskId": "written",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 3
+        }
+      ]
+    },
+    {
+      "level": 196,
+      "chapter": 10,
+      "category": "glowing",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "animal_or_vehicle",
+          "targetCount": 4
+        },
+        {
+          "taskId": "ceramic",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 197,
+      "chapter": 10,
+      "category": "plant",
+      "type": "cluster",
+      "goals": [
+        {
+          "taskId": "food_not_sweet",
+          "targetCount": 4
+        },
+        {
+          "taskId": "glowing",
+          "targetCount": 4
+        },
+        {
+          "taskId": "wearable",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 198,
+      "chapter": 10,
+      "category": "instrument",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "sharp_not_weapon",
+          "targetCount": 4
+        },
+        {
+          "taskId": "plant",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 199,
+      "chapter": 10,
+      "category": "flying",
+      "type": "standard",
+      "goals": [
+        {
+          "taskId": "bridge_not_wood",
+          "targetCount": 3
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 5
+        },
+        {
+          "taskId": "instrument",
+          "targetCount": 4
+        }
+      ]
+    },
+    {
+      "level": 200,
+      "chapter": 10,
+      "category": "sweet_food",
+      "type": "boss",
+      "goals": [
+        {
+          "taskId": "patterned",
+          "targetCount": 4
+        },
+        {
+          "taskId": "animal",
+          "targetCount": 4
+        },
+        {
+          "taskId": "fruit",
+          "targetCount": 4
+        }
+      ]
+    }
+  ],
+  "findings": {
+    "unknownTaskGoals": [],
+    "insufficientGoals": [],
+    "overlappingGoals": [],
+    "zeroTaskItems": []
+  }
+}

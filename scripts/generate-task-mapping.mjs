@@ -59,11 +59,11 @@ const CURATED = [
   { id: 'jade_hairpin', type: 'extra', tag: 'sharp', confidence: '中', reason: '簪子算尖锐物偏勉强' },
   { id: 'floral_hairpin', type: 'extra', tag: 'sharp', confidence: '中', reason: '同上' },
   { id: 'feather', type: 'extra', tag: 'flying', confidence: '低', reason: '羽毛「会飞」语义偏弱' },
-  { id: 'fire_wheels', type: 'missing', tag: 'glowing', confidence: '低', reason: '有火焰意象但未算发光；「找发光」任务玩家可能点它' },
   { id: 'shuriken', type: 'missing', tag: 'flying', confidence: '低', reason: '「飞镖」的飞是否算会飞，看设计意图' },
   { id: 'inscribed_music_stand', type: 'missing', tag: 'instrument', confidence: '低', reason: '琴架本身是家具而非乐器——确认是否有意排除出「找乐器」' },
   // 已确认维持现状（从审计中移除）：
-  //   飞鱼坐骑 = 载具+动物（不加会飞）；红枣/汤圆 = 盘/碗装，保留容器；
+  //   风火轮 = 画面有明确火焰，已计入发光；飞鱼坐骑 = 载具+动物（不加会飞）；
+  //   红枣/汤圆 = 盘/碗装，保留容器；
   //   鸟形陶笛 = 已去掉容器；蒲公英 = 已加植物；醋坛/药瓶 = 已加容器。
 ];
 

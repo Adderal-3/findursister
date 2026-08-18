@@ -147,6 +147,17 @@
     filter: drop-shadow(0 8px 12px rgba(100, 70, 46, 0.16));
   }
 
+  /* 透明物件统一做亮边、接地暗边与轻微饱和度校准，让不同来源素材在复杂场景里像同一套资产。 */
+  .game-item-sprite {
+    image-rendering: auto;
+    filter:
+      drop-shadow(0 1px 0 rgba(255, 250, 226, 0.92))
+      drop-shadow(0 3px 2px rgba(64, 43, 28, 0.42))
+      saturate(1.08)
+      contrast(1.045);
+    transform: translateZ(0);
+  }
+
   .qingya-pill {
     border: 1px solid rgba(166, 124, 82, 0.42);
     border-radius: 999px;
@@ -198,7 +209,6 @@
     filter: drop-shadow(0 12px 16px rgba(91, 55, 35, 0.23));
   }
 
-  .home-stamina-card,
   .home-player-badge {
     border: 1px solid rgba(255, 255, 255, 0.78);
     border-radius: 1.15rem;
@@ -216,6 +226,339 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* 大神 TaskModule 会通过 portal 挂到 body。这里保留 SDK 的真实任务、进度和领奖逻辑，
+   只把弹层、角色卡与任务卡统一换成游戏的木雕 / 宣纸 / 玉饰视觉。
+   这组规则不能放在 Tailwind layer 中，否则 SDK 运行时才出现的类名会被构建器裁掉。 */
+.m-gl-popup .adm-mask {
+    background: rgba(48, 35, 26, 0.62) !important;
+    backdrop-filter: blur(8px) saturate(0.82);
+  }
+
+  .m-gl-popup .adm-popup-body.adm-popup-body-position-bottom {
+    left: max(0px, calc(50vw - 230px)) !important;
+    right: auto !important;
+    bottom: 0 !important;
+    margin-left: 0 !important;
+    box-sizing: border-box;
+    width: min(100vw, 460px) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden;
+    border: clamp(6px, 1.7vw, 10px) solid #754126;
+    border-radius: 0 !important;
+    background:
+      radial-gradient(circle at 50% 4%, rgba(255, 255, 255, 0.72), transparent 22%),
+      radial-gradient(circle at 84% 78%, rgba(114, 157, 130, 0.12), transparent 32%),
+      linear-gradient(180deg, #fff9e8 0%, #f8efd4 58%, #f2e4c5 100%) !important;
+    box-shadow:
+      inset 0 0 0 2px rgba(239, 189, 116, 0.72),
+      inset 0 0 0 5px rgba(95, 50, 29, 0.34),
+      0 0 44px rgba(34, 22, 15, 0.36);
+  }
+
+  .m-gl-popup__wrap {
+    box-sizing: border-box;
+    height: 100%;
+    padding: calc(max(16px, env(safe-area-inset-top)) + 12px) 14px max(14px, env(safe-area-inset-bottom)) !important;
+    background:
+      linear-gradient(90deg, transparent 48%, rgba(111, 74, 43, 0.028) 50%, transparent 52%),
+      repeating-linear-gradient(8deg, transparent 0 36px, rgba(87, 57, 32, 0.018) 37px 38px);
+  }
+
+  .m-gl-popup__wrap::before,
+  .m-gl-popup__wrap::after {
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+    content: "";
+  }
+
+  .m-gl-popup__wrap::before {
+    inset: 8px 8px auto;
+    height: 9px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7a4428, #d49658 20%, #78a997 50%, #d49658 80%, #7a4428);
+    box-shadow: 0 2px 4px rgba(80, 47, 28, 0.22);
+  }
+
+  .m-gl-popup__wrap::after {
+    right: -34px;
+    bottom: 7%;
+    width: 130px;
+    height: 130px;
+    border: 1px solid rgba(164, 104, 63, 0.08);
+    border-radius: 50%;
+    box-shadow: 0 0 0 18px rgba(113, 158, 137, 0.035), 0 0 0 38px rgba(174, 104, 66, 0.025);
+  }
+
+  .m-gl-popup__title {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-height: 76px;
+    max-width: 290px;
+    margin: 0 auto;
+    padding: 15px 64px 13px !important;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    background: url('./assets/ui/qingya/level-plaque-warm-v1.png') center / 100% 100% no-repeat;
+    color: #fff4cf !important;
+    font-family: "Noto Serif SC", "STKaiti", "KaiTi", serif;
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.16em !important;
+    line-height: 1 !important;
+    text-indent: 0.16em;
+    filter: drop-shadow(0 7px 9px rgba(91, 56, 35, 0.19));
+    text-shadow: 0 2px 1px rgba(72, 35, 19, 0.68);
+  }
+
+  .m-gl-popup__title::after {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: max-content;
+    content: "完成大神任务 · 领取寻踪助力";
+    transform: translateX(-50%);
+    color: #f3ce98;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-indent: 0;
+  }
+
+  .m-gl-popup__close {
+    top: calc(max(16px, env(safe-area-inset-top)) + 18px) !important;
+    right: 16px !important;
+    z-index: 5 !important;
+    width: 42px !important;
+    height: 42px !important;
+    border: 1px solid rgba(146, 92, 55, 0.45);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fffbed, #f1dfbd) !important;
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.65), 0 5px 12px rgba(91, 55, 35, 0.2);
+  }
+
+  .m-gl-popup__close::before,
+  .m-gl-popup__close::after {
+    position: absolute;
+    left: 12px;
+    top: 19px;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background: #7d4b35;
+    content: "";
+  }
+
+  .m-gl-popup__close::before { transform: rotate(45deg); }
+  .m-gl-popup__close::after { transform: rotate(-45deg); }
+
+  .m-gl-popup__content {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    height: calc(100% - 92px);
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-top: 8px !important;
+    padding: 0 4px max(26px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .m-gl-popup__content::-webkit-scrollbar { display: none; }
+
+  .m-gl-popup .ds-task-module {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 6px 34px !important;
+  }
+
+  .m-gl-popup .ds-role {
+    box-sizing: border-box;
+    min-height: 62px;
+    height: auto !important;
+    margin: 6px 0 14px !important;
+    padding: 9px 14px !important;
+    border: 1px solid rgba(173, 124, 77, 0.4);
+    border-radius: 18px;
+    background: rgba(255, 252, 239, 0.88);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.82), 0 5px 12px rgba(91, 61, 39, 0.1);
+  }
+
+  .m-gl-popup .ds-role--empty:empty { display: none; }
+
+  .m-gl-popup .ds-role__icon {
+    width: 42px !important;
+    height: 42px !important;
+    margin-right: 10px !important;
+    border: 2px solid #d9a76e;
+    box-shadow: 0 2px 6px rgba(85, 53, 34, 0.16);
+  }
+
+  .m-gl-popup .ds-role__name {
+    max-width: calc(100% - 70px) !important;
+    color: #64402d !important;
+    font-family: "Noto Serif SC", "STKaiti", "KaiTi", serif;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+  }
+
+  .m-gl-popup .ds-role__icon--arrow {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .m-gl-popup .ds-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .m-gl-popup .ds-task-item {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-height: 112px;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 16px 14px !important;
+    border: 1px solid rgba(150, 92, 54, 0.38);
+    border-radius: 22px !important;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.34), transparent 45%),
+      #fff8df !important;
+    box-shadow:
+      inset 0 0 0 2px rgba(255, 255, 255, 0.76),
+      inset 0 0 0 4px rgba(202, 151, 91, 0.1),
+      0 6px 13px rgba(90, 55, 34, 0.13);
+  }
+
+  .m-gl-popup .ds-task-item__image {
+    box-sizing: border-box;
+    width: 58px !important;
+    height: 58px !important;
+    margin-right: 10px !important;
+    padding: 8px !important;
+    border: 2px solid #d7a467;
+    background: radial-gradient(circle, #e8f5d9 0%, #a9d2b3 72%, #77a893 100%) !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.62), 0 4px 8px rgba(77, 56, 38, 0.14);
+  }
+
+  .m-gl-popup .ds-task-item__top { margin-bottom: 4px !important; }
+
+  .m-gl-popup .ds-task-item__title,
+  .m-gl-popup .ds-task-item__progress {
+    max-width: min(39vw, 166px) !important;
+    color: #593626 !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    line-height: 19px !important;
+  }
+
+  .m-gl-popup .ds-task-item__progress {
+    color: #a16c4e !important;
+    margin-left: 5px !important;
+  }
+
+  .m-gl-popup .ds-task-item__desc {
+    max-width: min(43vw, 184px) !important;
+    margin-bottom: 6px !important;
+    color: #7c6551 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 16px !important;
+    opacity: 1 !important;
+  }
+
+  .m-gl-popup .ds-task-item__prizes {
+    max-width: min(43vw, 184px) !important;
+  }
+
+  .m-gl-popup .ds-task-item__prizes-item-image {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 4px !important;
+  }
+
+  .m-gl-popup .ds-task-item__prizes-item-name {
+    height: auto !important;
+    margin-right: 7px !important;
+    color: #a45e3a !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 17px !important;
+  }
+
+  .m-gl-popup .ds-task-item__btn {
+    width: 72px !important;
+    height: 34px !important;
+    border: 1px solid rgba(126, 64, 36, 0.62);
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, #e9905d, #c45e36) !important;
+    color: #fff8e7 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    line-height: 34px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 221, 168, 0.28), 0 4px 8px rgba(100, 55, 32, 0.18);
+  }
+
+  .m-gl-popup .ds-task-item__btn.is-uncompleted {
+    background: linear-gradient(180deg, #fffdf2, #ead6b2) !important;
+    color: #80533a !important;
+  }
+
+  .m-gl-popup .ds-task-item__btn.is-already-got {
+    background: linear-gradient(180deg, #91bba4, #628d79) !important;
+    opacity: 0.72 !important;
+  }
+
+  /* 角色选择属于任务链路的一部分，也沿用同一主题。 */
+  .ds-role-popup {
+    box-sizing: border-box;
+    max-width: 460px;
+    border: 6px solid #754126;
+    border-radius: 24px 24px 0 0 !important;
+    background: linear-gradient(180deg, #fff9e8, #f4e5c7) !important;
+    box-shadow: inset 0 0 0 2px rgba(238, 190, 119, 0.64), 0 -12px 42px rgba(40, 25, 17, 0.26);
+  }
+
+  .ds-role-item {
+    border: 1px solid rgba(161, 107, 66, 0.28);
+    background: rgba(255, 252, 239, 0.88) !important;
+  }
+
+  .ds-role-popup__button,
+  .ds-role-popup__buttons-r {
+    background: linear-gradient(180deg, #e98b58, #c25e37) !important;
+  }
+
+@media (max-width: 480px) {
+  .m-gl-popup .adm-popup-body.adm-popup-body-position-bottom {
+    left: 0 !important;
+    width: 100vw !important;
+  }
+
+  .m-gl-popup__wrap {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+}
+
+@media (max-height: 680px) {
+  .m-gl-popup__title {
+    min-height: 66px;
+    max-width: 260px;
+    padding-top: 12px !important;
+  }
+
+  .m-gl-popup__content { height: calc(100% - 80px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

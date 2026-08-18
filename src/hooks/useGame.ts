@@ -18,14 +18,11 @@ import {
 import { COLLECTIBLE_ITEMS } from '../game/items';
 import { haptics, setMuted as setSoundMuted, sfx } from '../game/sound';
 import { gameStorage, SAVE_KEYS } from '../game/storage';
-import {
-  advanceOnlineStamina, loadStamina, saveStamina, secondsToNextStamina,
-  settleOfflineStamina, spendStamina, STAMINA_ENDLESS_COST, STAMINA_LEVEL_COST,
-  STAMINA_MAX,
-} from '../game/stamina';
-import { trackEvent } from '../platform/ds/runtime';
-import { syncProgressToDs } from '../platform/ds/leaderboard';
+import { initDsPlatform, openTaskPanel, trackEvent } from '../platform/ds/runtime';
+import { loadDsProgress, syncProgressToDs } from '../platform/ds/leaderboard';
+import { dsPlatformEnabled } from '../platform/ds/config';
 import { consumeSkill, getSkillPool, refreshSkillPool } from '../platform/ds/skills';
+import { refreshLatestAppPartnerGrant } from '../platform/ds/partnerRewards';
 import { prefetchVideoRewardSource } from '../game/videoRewards';
 import {
   advancePartnerClock, checkPartnerRecruitments, loadPartnerClock,
@@ -64,40 +61,6 @@ function loadCollection(): string[] {
   }
 }
 
-interface DailyLevelScoreState {
-  date: string;
-  scores: Record<number, number>;
-}
-
-function localDateKey(now = new Date()): string {
-  return [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, '0'),
-    String(now.getDate()).padStart(2, '0'),
-  ].join('-');
-}
-
-function loadDailyLevelScores(): DailyLevelScoreState {
-  const today = localDateKey();
-  try {
-    const value: unknown = JSON.parse(gameStorage.get(SAVE_KEYS.dailyLevelScores) ?? '{}');
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return { date: today, scores: {} };
-    const record = value as { date?: unknown; scores?: unknown };
-    if (record.date !== today || !record.scores || typeof record.scores !== 'object' || Array.isArray(record.scores)) {
-      return { date: today, scores: {} };
-    }
-    const scores = Object.fromEntries(
-      Object.entries(record.scores)
-        .map(([key, score]) => [Number(key), Number(score)] as const)
-        .filter(([level, score]) => Number.isInteger(level) && level >= 1
-          && level <= LEVEL_COUNT && Number.isFinite(score) && score > 0),
-    );
-    return { date: today, scores };
-  } catch {
-    return { date: today, scores: {} };
-  }
-}
-
 function loadLevelStars(scores: Record<number, number>): Record<number, number> {
   let stored: Record<number, number> = {};
   try {
@@ -132,7 +95,6 @@ export function useGame() {
   const initialScores = useRef(loadLevelScores()).current;
   const initialStars = useRef(loadLevelStars(initialScores)).current;
   const initialCollection = useRef(loadCollection()).current;
-  const initialDailyScores = useRef(loadDailyLevelScores()).current;
   const initialPartnerCheck = useRef(checkPartnerRecruitments(initialCollection, initialStars)).current;
   const [phase, setPhase] = useState<GamePhase>('menu');
   const [mode, setMode] = useState<GameMode>('levels');
@@ -164,8 +126,12 @@ export function useGame() {
   const [timeBoostTaskAvailable, setTimeBoostTaskAvailable] = useState(true);
   const [timeBoostToast, setTimeBoostToast] = useState<string | null>(null);
   const [timeBoostTaskPrompt, setTimeBoostTaskPrompt] = useState(false);
-  /** 进行中的视频奖励会话：boost=对局中加时，revive=失败复活；null=未打开。id 用于弹窗按会话重挂载。 */
-  const [videoReward, setVideoReward] = useState<{ kind: 'boost' | 'revive'; id: number } | null>(null);
+  /** 进行中的视频奖励会话：rewarded=true 表示 30s 已核验发奖，但视频流继续播放，等待玩家主动关闭。 */
+  const [videoReward, setVideoReward] = useState<{
+    kind: 'boost' | 'revive';
+    id: number;
+    rewarded: boolean;
+  } | null>(null);
   /** 看视频复活每局限一次：关卡=每次挑战（含重试/下一关重置），无尽=整局（不随波次重置）。 */
   const [videoReviveAvailable, setVideoReviveAvailable] = useState(true);
   // 技能池镜像（function_addtime / function_tishi），真源在服务端（CMS / 任务面板发放）。
@@ -177,20 +143,19 @@ export function useGame() {
     nextLabel: string;
   } | null>(null);
   const [levelScores, setLevelScores] = useState<Record<number, number>>(initialScores);
-  const [dailyLevelScores, setDailyLevelScores] = useState<DailyLevelScoreState>(initialDailyScores);
   const [levelStars, setLevelStars] = useState<Record<number, number>>(initialStars);
   const [, setCollection] = useState<string[]>(initialCollection);
   const [partners, setPartners] = useState(initialPartnerCheck.partners);
   const [partnerNoticeQueue, setPartnerNoticeQueue] = useState<PartnerId[]>(
     initialPartnerCheck.newlyRecruited,
   );
-  const [staminaState, setStaminaState] = useState(loadStamina);
-  const [staminaNotice, setStaminaNotice] = useState<{ cost: number; mode: GameMode } | null>(null);
   const [best, setBest] = useState({
     levels: leaderboardBaseScore(initialScores),
     endless: loadNum(SAVE_KEYS.bestEndless),
     maxLevel: Math.min(LEVEL_COUNT, Math.max(1, loadNum(SAVE_KEYS.maxLevel))),
   });
+  /** 大神环境必须先合并服务端历史最大值，完成前禁止把本地初始值回写。 */
+  const [progressHydrated, setProgressHydrated] = useState(!dsPlatformEnabled);
 
   const scoreRef = useRef(0);
   const lastCategoryRef = useRef<CategoryId | null>(null);
@@ -202,10 +167,10 @@ export function useGame() {
   const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const goalNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timeBoostToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const staminaRef = useRef(staminaState);
   const collectionRef = useRef(initialCollection);
   const levelStarsRef = useRef(initialStars);
   const partnerClockRef = useRef(loadPartnerClock());
+  const taskPartnerGrantedRef = useRef<boolean | null>(null);
   const roundFoundRef = useRef(0);
   const roundBestComboRef = useRef(0);
   const endlessFoundRef = useRef(0);
@@ -219,7 +184,9 @@ export function useGame() {
     nextCollection = collectionRef.current,
     nextStars = levelStarsRef.current,
   ) => {
-    const result = checkPartnerRecruitments(nextCollection, nextStars);
+    const result = checkPartnerRecruitments(nextCollection, nextStars, {
+      taskPartnerGranted: taskPartnerGrantedRef.current,
+    });
     setPartners(result.partners);
     if (result.newlyRecruited.length) {
       setPartnerNoticeQueue((current) => [
@@ -235,22 +202,16 @@ export function useGame() {
   const starTotal = countTotalStars(levelStars);
   const unlockedMaxLevel = accessibleMaxLevel(best.maxLevel, starTotal);
   const recruitedCount = partners.filter((partner) => partner.recruited).length;
-  const partnerBonusRate = recruitedCount * 0.0125;
-  const rankingScore = Math.round(best.levels * (1 + partnerBonusRate));
-  const currentDailyScores = dailyLevelScores.date === localDateKey()
-    ? dailyLevelScores.scores
-    : {};
-  const dailyRankingScore = leaderboardBaseScore(currentDailyScores);
-  const dailyLevelCount = Object.keys(currentDailyScores).length;
+  const partnerBonusRate = partners.reduce(
+    (sum, partner) => sum + (partner.recruited ? partner.bonusRate : 0),
+    0,
+  );
+  const rankingScore = Math.round(
+    (best.levels + best.endless) * (1 + partnerBonusRate),
+  );
   const roundScore = mode === 'levels'
     ? Math.max(0, score - scoreAtStartRef.current)
     : score;
-
-  const commitStamina = useCallback((next: typeof staminaState) => {
-    staminaRef.current = next;
-    setStaminaState(next);
-    saveStamina(next);
-  }, []);
 
   /** 拉取服务端技能余额（任务面板/CMS 发放结果），镜像到本地 state。 */
   const syncSkillPool = useCallback(async () => {
@@ -258,6 +219,12 @@ export function useGame() {
     setSkillBoosts(pool.addtime);
     setSkillHints(pool.tishi);
   }, []);
+
+  /** 任务伙伴只读取大神后台下发字段；回到前台时再次拉取任务完成结果。 */
+  const syncTaskPartnerGrant = useCallback(async () => {
+    taskPartnerGrantedRef.current = await refreshLatestAppPartnerGrant();
+    refreshPartners();
+  }, [refreshPartners]);
 
   const toggleMuted = useCallback(() => {
     setMutedState((current) => {
@@ -273,34 +240,6 @@ export function useGame() {
     if (timeBoostToastTimerRef.current) clearTimeout(timeBoostToastTimerRef.current);
     timeBoostToastTimerRef.current = setTimeout(() => setTimeBoostToast(null), 1700);
   }, []);
-
-  const trySpendStamina = useCallback((cost: number, nextMode: GameMode) => {
-    const now = Date.now();
-    const settled = advanceOnlineStamina(staminaRef.current, 0, now);
-    if (settled.value < cost) {
-      commitStamina(settled);
-      setStaminaNotice({ cost, mode: nextMode });
-      trackEvent({
-        event: 'stamina_insufficient',
-        mode: nextMode,
-        stamina: settled.value,
-        cost,
-      });
-      sfx.wrong();
-      return false;
-    }
-
-    const next = spendStamina(settled, cost, now);
-    commitStamina(next);
-    setStaminaNotice(null);
-    trackEvent({
-      event: 'stamina_spend',
-      mode: nextMode,
-      stamina: next.value,
-      cost,
-    });
-    return true;
-  }, [commitStamina]);
 
   const setScoreSync = useCallback((value: number) => {
     scoreRef.current = value;
@@ -353,8 +292,6 @@ export function useGame() {
     setGoalNotice(null);
     setTimeBoostToast(null);
     setTimeBoostTaskPrompt(false);
-    setTimeBoostFreeAvailable(true);
-    setTimeBoostTaskAvailable(true);
     roundFoundRef.current = 0;
     roundBestComboRef.current = 0;
     const preferredTargetIds = new Set(
@@ -402,11 +339,6 @@ export function useGame() {
       setActiveGoalIndex(0);
       setItems(scene.items);
       setTargets(scene.targets);
-      if (roundNumber === 1) {
-        setTimeSync(ENDLESS_START_SEC);
-        setTimeLimit(ENDLESS_START_SEC);
-        setHintsLeft(ENDLESS_HINTS);
-      }
     }
     scoreAtStartRef.current = keepScore;
     setHintUid(null);
@@ -439,19 +371,6 @@ export function useGame() {
     setLevelScores(nextScores);
     levelStarsRef.current = nextStars;
     setLevelStars(nextStars);
-    setDailyLevelScores((current) => {
-      const today = localDateKey();
-      const currentScores = current.date === today ? current.scores : {};
-      const nextDaily = {
-        date: today,
-        scores: {
-          ...currentScores,
-          [clearedLevel]: Math.max(currentScores[clearedLevel] ?? 0, levelScore),
-        },
-      };
-      gameStorage.set(SAVE_KEYS.dailyLevelScores, JSON.stringify(nextDaily));
-      return nextDaily;
-    });
     const maxLevel = Math.min(LEVEL_COUNT, Math.max(best.maxLevel, clearedLevel + 1));
     setBest((current) => ({ ...current, levels: total, maxLevel }));
     recordPartnerSettlement({
@@ -469,8 +388,6 @@ export function useGame() {
   }, [best.maxLevel, levelScores, refreshPartners]);
 
   const startGame = useCallback((nextMode: GameMode, startLevel = 1) => {
-    const cost = nextMode === 'levels' ? STAMINA_LEVEL_COST : STAMINA_ENDLESS_COST;
-    if (!trySpendStamina(cost, nextMode)) return;
     setMode(nextMode);
     const initialLevel = nextMode === 'levels'
       ? Math.min(Math.max(Math.trunc(startLevel), 1), unlockedMaxLevel)
@@ -485,6 +402,13 @@ export function useGame() {
     endlessBestComboRef.current = 0;
     endlessSettledFoundRef.current = 0;
     setLastGain({ find: 0, bonus: 0 });
+    setTimeBoostFreeAvailable(true);
+    setTimeBoostTaskAvailable(true);
+    if (nextMode === 'endless') {
+      setTimeSync(ENDLESS_START_SEC);
+      setTimeLimit(ENDLESS_START_SEC);
+      setHintsLeft(ENDLESS_HINTS);
+    }
     setupRound(nextMode, initialLevel, 0);
     setPaused(false);
     setQuitConfirm(false);
@@ -496,7 +420,7 @@ export function useGame() {
     void syncSkillPool();
     trackEvent({ event: nextMode === 'levels' ? 'level_start' : 'endless_start', mode: nextMode, level: initialLevel });
     sfx.click();
-  }, [setScoreSync, setupRound, trySpendStamina, unlockedMaxLevel, syncSkillPool]);
+  }, [setScoreSync, setTimeSync, setupRound, unlockedMaxLevel, syncSkillPool]);
 
   const nextLevel = useCallback(() => {
     if (level >= LEVEL_COUNT) {
@@ -507,13 +431,11 @@ export function useGame() {
       setPhase('menu');
       return;
     }
-    if (!trySpendStamina(STAMINA_LEVEL_COST, 'levels')) {
-      setPhase('menu');
-      return;
-    }
     const next = level + 1;
     setLevel(next);
     setCombo(0);
+    setTimeBoostFreeAvailable(true);
+    setTimeBoostTaskAvailable(true);
     setupRound(mode, next, scoreRef.current);
     setPaused(false);
     setQuitConfirm(false);
@@ -523,13 +445,11 @@ export function useGame() {
     setPhase('playing');
     trackEvent({ event: 'level_next', mode, level: next, score: scoreRef.current });
     sfx.click();
-  }, [level, mode, setupRound, trySpendStamina, unlockedMaxLevel]);
+  }, [level, mode, setupRound, unlockedMaxLevel]);
 
   const retry = useCallback(() => {
-    if (phase === 'gameOver') {
-      const cost = mode === 'levels' ? STAMINA_LEVEL_COST : STAMINA_ENDLESS_COST;
-      if (!trySpendStamina(cost, mode)) return;
-    }
+    setTimeBoostFreeAvailable(true);
+    setTimeBoostTaskAvailable(true);
     if (mode === 'levels') {
       setScoreSync(scoreAtStartRef.current);
       setCombo(0);
@@ -542,6 +462,9 @@ export function useGame() {
       endlessFoundRef.current = 0;
       endlessBestComboRef.current = 0;
       endlessSettledFoundRef.current = 0;
+      setTimeSync(ENDLESS_START_SEC);
+      setTimeLimit(ENDLESS_START_SEC);
+      setHintsLeft(ENDLESS_HINTS);
       setupRound(mode, 1, 0);
     }
     setPaused(false);
@@ -557,7 +480,7 @@ export function useGame() {
       score: scoreRef.current,
     });
     sfx.click();
-  }, [level, mode, phase, setScoreSync, setupRound, trySpendStamina]);
+  }, [level, mode, setScoreSync, setTimeSync, setupRound]);
 
   const quitToMenu = useCallback(() => {
     trackEvent({ event: 'game_quit', mode, level, phase });
@@ -794,8 +717,11 @@ export function useGame() {
 
   const requestTimeBoost = useCallback(() => {
     if (phase !== 'playing' || paused) return;
+    const boostCap = mode === 'endless'
+      ? ENDLESS_TIME_CAP
+      : timeLimit + TIME_BOOST_CAP_SECONDS;
     if (timeBoostFreeAvailable) {
-      adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
+      adjustTime(TIME_BOOST_SECONDS, boostCap);
       setTimeBoostFreeAvailable(false);
       showTimeBoostToast(`首次加时已到账 · +${TIME_BOOST_SECONDS} 秒`);
       trackEvent({ event: 'time_boost_free', mode, level, seconds: TIME_BOOST_SECONDS });
@@ -804,8 +730,8 @@ export function useGame() {
       return;
     }
     // 已达单关叠加上限时不再消耗技能。
-    if (timeLeftPreciseRef.current >= timeLimit + TIME_BOOST_CAP_SECONDS - 1) {
-      showTimeBoostToast('本关加时已达上限');
+    if (timeLeftPreciseRef.current >= boostCap - 1) {
+      showTimeBoostToast(`${mode === 'endless' ? '本局' : '本关'}加时已达上限`);
       return;
     }
     // 加时技能（function_addtime）：大神任务 / 游戏内任务发放，CMS 全端同步。
@@ -814,7 +740,7 @@ export function useGame() {
         const ok = await consumeSkill('addtime');
         setSkillBoosts(getSkillPool().addtime);
         if (!ok) return;
-        adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
+        adjustTime(TIME_BOOST_SECONDS, boostCap);
         showTimeBoostToast(`加时技能生效 · +${TIME_BOOST_SECONDS} 秒`);
         trackEvent({
           event: 'skill_boost_use', mode, level,
@@ -827,7 +753,7 @@ export function useGame() {
     }
     // 局内没有加时技能时，走任务视频获取（游戏内视频弹窗，不再依赖 ds 任务面板）。
     if (!timeBoostTaskAvailable) {
-      showTimeBoostToast('本关加时机会已用完');
+      showTimeBoostToast(`${mode === 'endless' ? '本局' : '本关'}加时机会已用完`);
       return;
     }
 
@@ -840,15 +766,27 @@ export function useGame() {
   /** 视频任务看满 30s 后的发奖收口：计时、暂停与埋点统一在这里处理。 */
   const grantRewardedTimeBoost = useCallback(() => {
     if (!timeBoostTaskAvailable) return;
-    adjustTime(TIME_BOOST_SECONDS, timeLimit + TIME_BOOST_CAP_SECONDS);
+    const boostCap = mode === 'endless'
+      ? ENDLESS_TIME_CAP
+      : timeLimit + TIME_BOOST_CAP_SECONDS;
+    adjustTime(TIME_BOOST_SECONDS, boostCap);
     setTimeBoostTaskAvailable(false);
     setTimeBoostTaskPrompt(false);
-    setPaused(false);
     showTimeBoostToast(`任务奖励已到账 · +${TIME_BOOST_SECONDS} 秒`);
     trackEvent({ event: 'time_boost_task_reward', mode, level, seconds: TIME_BOOST_SECONDS });
     sfx.hint();
     haptics.hint();
   }, [adjustTime, level, mode, showTimeBoostToast, timeBoostTaskAvailable, timeLimit]);
+
+  const openInGameTaskPanel = useCallback(() => {
+    if (phase !== 'playing') return;
+    setPaused(true);
+    const failReason = openTaskPanel();
+    if (failReason) {
+      setPaused(false);
+      showTimeBoostToast(failReason);
+    }
+  }, [phase, showTimeBoostToast]);
 
   const dismissTimeBoostTaskPrompt = useCallback(() => {
     setTimeBoostTaskPrompt(false);
@@ -862,7 +800,7 @@ export function useGame() {
     } else if (phase !== 'gameOver' || !videoReviveAvailable) {
       return;
     }
-    setVideoReward({ kind, id: effectId++ });
+    setVideoReward({ kind, id: effectId++, rewarded: false });
     trackEvent({ event: 'video_open', mode, level, kind });
   }, [level, mode, phase, timeBoostTaskAvailable, videoReviveAvailable]);
 
@@ -875,8 +813,8 @@ export function useGame() {
         kind: videoReward.kind, watched_ms: Math.round(watchedMs),
       });
     }
-    if (videoReward.kind === 'boost') {
-      // 对局中加时：无论看满与否，关掉弹窗都要恢复局面（看满的发奖在 completeVideoReward 已处理）。
+    if (videoReward.kind === 'boost' || videoReward.rewarded) {
+      // 看满后视频仍会继续连播；只有玩家主动关闭时才恢复局面计时。
       setTimeBoostTaskPrompt(false);
       setPaused(false);
     }
@@ -885,23 +823,24 @@ export function useGame() {
 
   /** 视频弹窗采样校验满 30s 的回调：按会话类型分发奖励。 */
   const completeVideoReward = useCallback((watchedMs: number) => {
-    if (!videoReward) return;
-    const { kind } = videoReward;
+    if (!videoReward || videoReward.rewarded) return;
+    const { kind, id } = videoReward;
     trackEvent({
       event: 'video_verified', mode, level, kind, watched_ms: Math.round(watchedMs),
     });
+    setVideoReward((current) => (
+      current?.id === id ? { ...current, rewarded: true } : current
+    ));
     if (kind === 'boost') {
-      setVideoReward(null);
       grantRewardedTimeBoost();
       return;
     }
-    setVideoReward(null);
     if (phase !== 'gameOver' || !videoReviveAvailable) return;
-    // 失败复活：+30 秒原地继续，分数/连击/场景全部保留。
+    // 失败复活：+30 秒原地继续，视频层仍保持全屏，直到玩家主动关闭才恢复倒计时。
     setVideoReviveAvailable(false);
     revivedRef.current = true;
     setTimeSync(TIME_BOOST_SECONDS);
-    setPaused(false);
+    setPaused(true);
     setPhase('playing');
     showTimeBoostToast(`复活成功 · +${TIME_BOOST_SECONDS} 秒`);
     trackEvent({ event: 'video_revive', mode, level, seconds: TIME_BOOST_SECONDS });
@@ -946,49 +885,63 @@ export function useGame() {
     return () => document.removeEventListener('visibilitychange', onVisibilityChange);
   }, [phase]);
 
+  // 登录完成后先把服务端历史成绩合并进当前 uid 的本地桶，再开放榜分/时长回写。
+  // 所有累计量只取最大值，换设备或清缓存不会让历史成绩倒退。
   useEffect(() => {
-    let lastTick = Date.now();
+    if (!dsPlatformEnabled) return;
+    let cancelled = false;
+    void (async () => {
+      await initDsPlatform();
+      const remote = await loadDsProgress();
+      if (cancelled) return;
+      if (remote) {
+        const localScores = loadLevelScores();
+        const mergedScores = { ...localScores };
+        for (const [levelKey, score] of Object.entries(remote.levelDetail)) {
+          const levelNumber = Number(levelKey);
+          mergedScores[levelNumber] = Math.max(mergedScores[levelNumber] ?? 0, score);
+        }
+        const mergedStars = loadLevelStars(mergedScores);
+        const derivedLevelsBase = leaderboardBaseScore(mergedScores);
+        const levels = Math.max(derivedLevelsBase, remote.levelsBaseScore);
+        const endless = Math.max(loadNum(SAVE_KEYS.bestEndless), remote.endlessBest);
+        const highestCompleted = Math.max(0, ...Object.keys(mergedScores).map(Number));
+        const maxLevel = Math.min(
+          LEVEL_COUNT,
+          Math.max(1, loadNum(SAVE_KEYS.maxLevel), highestCompleted + 1),
+        );
 
-    const persistHiddenAt = (now: number) => {
-      const next = { ...staminaRef.current, lastSeenAt: now };
-      staminaRef.current = next;
-      saveStamina(next);
-    };
+        gameStorage.set(SAVE_KEYS.levelScores, JSON.stringify(mergedScores));
+        gameStorage.set(SAVE_KEYS.levelStars, JSON.stringify(mergedStars));
+        gameStorage.set(SAVE_KEYS.bestLevels, String(levels));
+        gameStorage.set(SAVE_KEYS.bestEndless, String(endless));
+        gameStorage.set(SAVE_KEYS.maxLevel, String(maxLevel));
+        setLevelScores(mergedScores);
+        levelStarsRef.current = mergedStars;
+        setLevelStars(mergedStars);
+        setBest({ levels, endless, maxLevel });
 
-    const tick = () => {
-      const now = Date.now();
-      if (document.hidden) {
-        lastTick = now;
-        return;
+        const clock = loadPartnerClock();
+        partnerClockRef.current = {
+          ...clock,
+          onlineSec: Math.max(clock.onlineSec, remote.userTime),
+          dailyPlaySec: Math.max(clock.dailyPlaySec, remote.userDailyTime),
+        };
+        savePartnerClock(partnerClockRef.current);
+        const totalFound = Math.max(
+          loadNum(SAVE_KEYS.partnerTotalFound),
+          remote.totalItemsFound,
+        );
+        gameStorage.set(SAVE_KEYS.partnerTotalFound, String(totalFound));
+        refreshPartners(collectionRef.current, mergedStars);
       }
-      const next = advanceOnlineStamina(staminaRef.current, now - lastTick, now);
-      lastTick = now;
-      commitStamina(next);
-    };
-
-    const onStaminaVisibilityChange = () => {
-      const now = Date.now();
-      if (document.hidden) {
-        persistHiddenAt(now);
-      } else {
-        lastTick = now;
-        commitStamina(settleOfflineStamina(staminaRef.current, now));
-      }
-    };
-
-    const onPageHide = () => persistHiddenAt(Date.now());
-    const timer = window.setInterval(tick, 1000);
-    document.addEventListener('visibilitychange', onStaminaVisibilityChange);
-    window.addEventListener('pagehide', onPageHide);
-    return () => {
-      window.clearInterval(timer);
-      document.removeEventListener('visibilitychange', onStaminaVisibilityChange);
-      window.removeEventListener('pagehide', onPageHide);
-      persistHiddenAt(Date.now());
-    };
-  }, [commitStamina]);
+      setProgressHydrated(true);
+    })();
+    return () => { cancelled = true; };
+  }, [refreshPartners]);
 
   useEffect(() => {
+    if (!progressHydrated) return;
     let lastTick = Date.now();
     let syncCountdown = 0; // 每 60s（12 × 5s 心跳）上报一次 totalPlayTime
 
@@ -1049,7 +1002,7 @@ export function useGame() {
         userDailyTime: Math.round(partnerClockRef.current.dailyPlaySec),
       });
     };
-  }, [paused, phase, refreshPartners]);
+  }, [paused, phase, progressHydrated, refreshPartners]);
 
   useEffect(() => () => {
     if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
@@ -1061,15 +1014,29 @@ export function useGame() {
     setSoundMuted(muted);
   }, [muted]);
 
-  // 技能余额同步：启动时拉一次，回到前台再拉一次（任务面板发放的技能据此生效）。
+  // 服务端权益同步：启动时拉一次，回到前台再拉一次（任务面板发放结果据此生效）。
   useEffect(() => {
     void syncSkillPool();
+    void syncTaskPartnerGrant();
+    // 大神任务面板是同页弹层，完成/关闭时不一定触发 visibilitychange；
+    // 未领取期间每 15 秒轻量轮询一次，保证下发后无需刷新页面即可到账。
+    const grantTimer = window.setInterval(() => {
+      if (!document.hidden && taskPartnerGrantedRef.current !== true) {
+        void syncTaskPartnerGrant();
+      }
+    }, 15_000);
     const onVisible = () => {
-      if (!document.hidden) void syncSkillPool();
+      if (!document.hidden) {
+        void syncSkillPool();
+        void syncTaskPartnerGrant();
+      }
     };
     document.addEventListener('visibilitychange', onVisible);
-    return () => document.removeEventListener('visibilitychange', onVisible);
-  }, [syncSkillPool]);
+    return () => {
+      window.clearInterval(grantTimer);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [syncSkillPool, syncTaskPartnerGrant]);
 
   // 任务视频预取：前台空闲时先拉一只进 HTTP 缓存，点开弹窗基本秒开。
   useEffect(() => {
@@ -1077,13 +1044,14 @@ export function useGame() {
   }, []);
 
   useEffect(() => {
+    if (!progressHydrated) return;
     void syncProgressToDs({
-      levelsTotalScore: rankingScore,
+      rankingScore,
       levelsBaseScore: best.levels,
       partnerCount: recruitedCount,
       totalItemsFound: loadNum(SAVE_KEYS.partnerTotalFound),
     });
-  }, [best.levels, rankingScore, recruitedCount]);
+  }, [best.endless, best.levels, progressHydrated, rankingScore, recruitedCount]);
 
   const displayedTargets = mode === 'levels'
     ? targets.slice(activeGoalIndex, activeGoalIndex + 1)
@@ -1097,26 +1065,17 @@ export function useGame() {
     stats, lastGain, lastStars, isNewLevelBest, lastLevelPreviousBest,
     lastLeaderboardBaseDelta, levelScores, levelStars, starTotal,
     unlockedMaxLevel, best, partners, partnerNotice, partnerBonusRate,
-    rankingScore, dailyRankingScore, dailyLevelCount, muted,
+    rankingScore, progressHydrated, muted,
     timeBoostFreeAvailable, timeBoostToast, timeBoostTaskPrompt,
     // 任务视频为游戏内弹窗、自足可用，不再依赖 ds 任务面板配置。
     timeBoostTaskAvailable,
     videoReward, videoReviveAvailable,
     skillBoosts, skillHints,
-    stamina: {
-      value: staminaState.value,
-      max: STAMINA_MAX,
-      levelCost: STAMINA_LEVEL_COST,
-      endlessCost: STAMINA_ENDLESS_COST,
-      nextRecoverySec: secondsToNextStamina(staminaState),
-    },
-    staminaNotice,
     levelInfo: levelConfig(level), levelCount: LEVEL_COUNT,
     startGame, nextLevel, retry, quitToMenu, requestQuit, cancelQuit,
     handleItemClick, handleFieldMiss, useHint, requestTimeBoost, grantRewardedTimeBoost,
     dismissTimeBoostTaskPrompt, openVideoReward, closeVideoReward, completeVideoReward,
-    reportVideoRewardError, toggleMuted, setPaused,
-    dismissStaminaNotice: () => setStaminaNotice(null),
+    reportVideoRewardError, openInGameTaskPanel, toggleMuted, setPaused,
     dismissPartnerNotice: () => setPartnerNoticeQueue((current) => current.slice(1)),
   };
 }

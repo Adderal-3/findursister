@@ -3,19 +3,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import bgHomeSpring from '../assets/backgrounds/home-courtyard-spring-v1.webp';
 import imgHomeRoundButton from '../assets/ui/home/home-round-button-v1.png';
 import imgHomeLogo from '../assets/ui/home/home-logo-v1.png';
-import imgHomeTaskTag from '../assets/ui/home/home-task-tag-v1.png';
+import imgHomeTaskIcon from '../assets/ui/home/home-task-icon-v2.png';
+import imgRewardCampaign from '../assets/rewards/reward-campaign-icon-v2.png';
 import {
-  CircleUserRound, ClipboardList, Compass, Eye, Infinity as InfinityIcon,
+  CircleUserRound, Compass, Infinity as InfinityIcon,
   ListOrdered, LoaderCircle, Trophy, UsersRound, X,
 } from 'lucide-react';
 import { unlockAudio } from '../game/sound';
 import type { Game } from '../hooks/useGame';
-import { dsRoleBindingEnabled, dsTaskPanelEnabled } from '../platform/ds/config';
-import {
-  loadDsLeaderboard, type DsLeaderboardSnapshot, type LeaderboardScope,
-} from '../platform/ds/leaderboard';
-import { mountRoleModule, openTaskPanel, trackEvent, withPrecheck } from '../platform/ds/runtime';
+import { dsTaskPanelEnabled } from '../platform/ds/config';
+import { loadDsLeaderboard, type DsLeaderboardSnapshot } from '../platform/ds/leaderboard';
+import { openTaskPanel, trackEvent, withPrecheck } from '../platform/ds/runtime';
 import { HomePanelRouter } from './HomePanels';
+import { RewardCampaignDialog } from './RewardCampaignDialog';
 
 type HomePanel = 'partners' | 'levels' | null;
 
@@ -25,13 +25,12 @@ type RankingState =
   | { status: 'error'; message: string };
 
 function RankingPanel({ onClose }: { onClose: () => void }) {
-  const [scope, setScope] = useState<LeaderboardScope>('daily');
   const [reloadNonce, setReloadNonce] = useState(0);
   const [state, setState] = useState<RankingState>({ status: 'loading' });
 
   useEffect(() => {
     let cancelled = false;
-    loadDsLeaderboard(scope)
+    loadDsLeaderboard()
       .then((data) => { if (!cancelled) setState({ status: 'ok', data }); })
       .catch((error: unknown) => {
         if (cancelled) return;
@@ -39,13 +38,7 @@ function RankingPanel({ onClose }: { onClose: () => void }) {
         setState({ status: 'error', message });
       });
     return () => { cancelled = true; };
-  }, [scope, reloadNonce]);
-
-  const changeScope = (nextScope: LeaderboardScope) => {
-    if (nextScope === scope) return;
-    setState({ status: 'loading' });
-    setScope(nextScope);
-  };
+  }, [reloadNonce]);
 
   const reload = () => {
     setState({ status: 'loading' });
@@ -77,7 +70,7 @@ function RankingPanel({ onClose }: { onClose: () => void }) {
             </span>
             <div>
               <p className="text-[10px] font-black tracking-[0.25em] text-[#d07a47]">
-                {scope === 'daily' ? '今日眼力争锋' : '长期成长记录'}
+                关卡 + 无尽 · 伙伴加成
               </p>
               <h2 id="ranking-title" className="font-display text-2xl font-black text-[#5d3b2a]">
                 寻踪榜
@@ -92,27 +85,6 @@ function RankingPanel({ onClose }: { onClose: () => void }) {
           >
             <X className="h-4 w-4" />
           </button>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-[#eadcc5]/55 p-1.5">
-          {([
-            ['daily', '日榜'],
-            ['total', '总榜'],
-          ] as const).map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => changeScope(value)}
-              className={`min-h-10 rounded-xl font-display text-sm font-black transition ${
-                scope === value
-                  ? 'bg-[#fffaf0] text-[#4d746c] shadow-sm'
-                  : 'text-[#8f745f]'
-              }`}
-              aria-pressed={scope === value}
-            >
-              {label}
-            </button>
-          ))}
         </div>
 
         {state.status === 'loading' ? (
@@ -219,13 +191,9 @@ function HomeRoundAction({
 
 export function StartScreen({ game }: { game: Game }) {
   const [showRanking, setShowRanking] = useState(false);
+  const [showRewardCampaign, setShowRewardCampaign] = useState(false);
   const [panel, setPanel] = useState<HomePanel>(null);
   const [taskToast, setTaskToast] = useState<string | null>(null);
-  const recoveryLabel = game.stamina.nextRecoverySec == null
-    ? '已满'
-    : `${String(Math.floor(game.stamina.nextRecoverySec / 60)).padStart(2, '0')}:${String(game.stamina.nextRecoverySec % 60).padStart(2, '0')}`;
-
-  useEffect(() => mountRoleModule(), []);
 
   useEffect(() => {
     if (!taskToast) return;
@@ -239,6 +207,10 @@ export function StartScreen({ game }: { game: Game }) {
   };
 
   const start = (mode: 'levels' | 'endless', level?: number) => {
+    if (!game.progressHydrated) {
+      setTaskToast('正在同步历史进度，请稍候');
+      return;
+    }
     unlockAudio();
     setPanel(null);
     game.startGame(mode, mode === 'levels' ? level ?? game.unlockedMaxLevel : undefined);
@@ -253,13 +225,7 @@ export function StartScreen({ game }: { game: Game }) {
         backgroundSize: 'cover',
       }}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,250,232,.1)_50%,rgba(250,238,208,.48))]" />
-
-      {dsRoleBindingEnabled && (
-        <div className="absolute left-1/2 z-20 min-w-36 -translate-x-1/2 [top:calc(var(--safe-top)+3.9rem)]">
-          <div id="ds-role-root" className="home-player-badge px-3 py-2 text-center text-xs font-black text-[#67442f]" />
-        </div>
-      )}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_14%,rgba(255,255,255,.34),transparent_28%),linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,250,232,.08)_48%,rgba(250,238,208,.55))]" />
 
       <motion.main
         initial={{ opacity: 0 }}
@@ -267,7 +233,7 @@ export function StartScreen({ game }: { game: Game }) {
         className="relative z-10 mx-auto min-h-dvh w-full max-w-md"
       >
         {/* 定位放在外层，避免 Framer Motion 的 transform 覆盖 translateX(-50%)，导致移动端 Logo 从屏幕中线开始并被裁掉。 */}
-        <div className="pointer-events-none absolute inset-x-4 top-[calc(10.5%+25px)] flex flex-col items-center">
+        <div className="pointer-events-none absolute inset-x-4 top-[calc(10.5%+25px)] flex justify-center">
           <motion.img
             initial={{ y: -10, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
@@ -276,25 +242,6 @@ export function StartScreen({ game }: { game: Game }) {
             alt="忙忙碌碌寻宝藏"
             className="h-auto w-full max-w-[25rem] object-contain drop-shadow-[0_8px_10px_rgba(255,255,255,.85)]"
           />
-          <motion.div
-            initial={{ y: -6, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.14 }}
-            className="home-stamina-card pointer-events-auto mt-1 flex min-h-12 min-w-[7.2rem] items-center gap-2 px-3 py-2"
-            aria-label={`眼力值 ${game.stamina.value} / ${game.stamina.max}`}
-          >
-            <span className="home-icon-disc flex h-8 w-8 items-center justify-center text-[#3f776e]">
-              <Eye className="h-4 w-4" strokeWidth={2.5} />
-            </span>
-            <span>
-              <span className="block text-sm font-black tabular-nums text-[#5b3f32]">
-                {game.stamina.value}<span className="text-[9px] text-[#8f725e]"> / {game.stamina.max}</span>
-              </span>
-              <span className="block text-[8px] font-black text-[#9b765c]">
-                {recoveryLabel === '已满' ? '眼力已满' : `${recoveryLabel} +1`}
-              </span>
-            </span>
-          </motion.div>
         </div>
 
         <motion.button
@@ -302,13 +249,13 @@ export function StartScreen({ game }: { game: Game }) {
           whileHover={{ y: -2, scale: 1.01 }}
           whileTap={{ scale: 0.97 }}
           onClick={withPrecheck(() => start('levels'))}
-          className="home-primary-action absolute inset-x-8 bottom-[calc(max(15px,var(--safe-bottom))+4.45rem+20px)] mx-auto flex min-h-[4.1rem] max-w-[15rem] items-center justify-center px-8 text-center"
-          aria-label={`继续第${game.unlockedMaxLevel}关，消耗${game.stamina.levelCost}点体力`}
+          className="home-primary-action absolute inset-x-5 bottom-[calc(max(15px,var(--safe-bottom))+4.45rem+42px)] mx-auto flex min-h-[4.7rem] max-w-[17.25rem] items-center justify-center px-9 text-center"
+          aria-label={`继续第${game.unlockedMaxLevel}关`}
         >
           <span className="relative z-10">
-            <span className="block font-display text-xl font-black tracking-[0.12em] text-[#59372b]">继续寻踪</span>
-            <span className="mt-0.5 block text-[9px] font-black tracking-wider text-[#a2603e]">
-              第 {game.unlockedMaxLevel} 关 · 消耗 {game.stamina.levelCost} 点眼力
+            <span className="block font-display text-[1.38rem] font-black tracking-[0.12em] text-[#59372b]">继续寻踪</span>
+            <span className="mt-0.5 block text-[10px] font-black tracking-wider text-[#a2603e]">
+              第 {game.unlockedMaxLevel} 关 · 开始寻踪
             </span>
           </span>
         </motion.button>
@@ -338,23 +285,47 @@ export function StartScreen({ game }: { game: Game }) {
         </nav>
 
         {dsTaskPanelEnabled && (
-          <button
+          <motion.button
             type="button"
+            whileHover={{ scale: 1.04, y: -2 }}
+            whileTap={{ scale: 0.94 }}
             onClick={handleOpenTask}
-            className="absolute right-0 top-[31%] flex h-28 w-12 items-center justify-center"
+            className="absolute right-1 top-[40%] flex w-[4.15rem] flex-col items-center"
             aria-label="打开大神任务面板"
           >
             <img
-              src={imgHomeTaskTag}
+              src={imgHomeTaskIcon}
               alt=""
-              className="absolute inset-0 h-full w-full object-fill drop-shadow-lg"
+              decoding="async"
+              className="h-[3.9rem] w-[3.9rem] object-contain drop-shadow-[0_8px_10px_rgba(87,49,28,.24)]"
             />
-            <span className="relative z-10 flex flex-col items-center gap-1 font-display text-xs font-black text-[#704633]">
-              <ClipboardList className="h-4 w-4" />
-              任<br />务
+            <span className="-mt-1 rounded-full border border-[#f6d7a7] bg-[#fff7dc]/95 px-2 py-0.5 font-display text-[9px] font-black tracking-wider text-[#8c3f28] shadow-md">
+              大神任务
             </span>
-          </button>
+          </motion.button>
         )}
+
+        <motion.button
+          type="button"
+          whileHover={{ scale: 1.04, y: -2 }}
+          whileTap={{ scale: 0.94 }}
+          onClick={() => {
+            trackEvent({ event: 'reward_campaign_open' });
+            setShowRewardCampaign(true);
+          }}
+          className="absolute left-1 top-[40%] flex w-[4.15rem] flex-col items-center"
+          aria-label="查看寻宝藏有礼活动"
+        >
+          <img
+            src={imgRewardCampaign}
+            alt=""
+            decoding="async"
+            className="h-[3.9rem] w-[3.9rem] object-contain drop-shadow-[0_8px_10px_rgba(87,49,28,.24)]"
+          />
+          <span className="-mt-1 rounded-full border border-[#f6d7a7] bg-[#fff7dc]/95 px-2 py-0.5 font-display text-[9px] font-black tracking-wider text-[#8c3f28] shadow-md">
+            寻宝有礼
+          </span>
+        </motion.button>
       </motion.main>
 
       <AnimatePresence>
@@ -374,6 +345,11 @@ export function StartScreen({ game }: { game: Game }) {
 
       <AnimatePresence>
         {showRanking && <RankingPanel onClose={() => setShowRanking(false)} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showRewardCampaign && (
+          <RewardCampaignDialog onClose={() => setShowRewardCampaign(false)} />
+        )}
       </AnimatePresence>
       <HomePanelRouter
         panel={panel}

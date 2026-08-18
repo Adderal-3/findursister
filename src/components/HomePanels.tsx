@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Check, Compass, Eye, LockKeyhole, Star, UsersRound, X,
+  Check, ClipboardCheck, Compass, Eye, LockKeyhole, Star, UsersRound, X,
 } from 'lucide-react';
 import { LEVEL_TYPE_LABELS, levelConfig } from '../game/levels';
 import { STORY_CHAPTERS } from '../game/progression';
 import type { Game } from '../hooks/useGame';
+import { openTaskPanel } from '../platform/ds/runtime';
 
 function PanelShell({
   title,
@@ -65,6 +66,17 @@ function PanelShell({
 
 export function PartnersPanel({ game, onClose }: { game: Game; onClose: () => void }) {
   const recruited = game.partners.filter((partner) => partner.recruited).length;
+  const [taskError, setTaskError] = useState<string | null>(null);
+
+  const openPartnerTask = () => {
+    const error = openTaskPanel();
+    if (error) {
+      setTaskError(error);
+      return;
+    }
+    setTaskError(null);
+    onClose();
+  };
 
   return (
     <PanelShell title="伙伴小院" eyebrow="相遇条件与同行加成" icon={UsersRound} onClose={onClose}>
@@ -109,7 +121,9 @@ export function PartnersPanel({ game, onClose }: { game: Game; onClose: () => vo
                       <div className="font-display text-xl font-black text-[#4f3429]">{partner.name}</div>
                     </div>
                   </div>
-                  <div className="mt-2 text-[11px] font-black text-[#735e4e]">已加入 · 总榜 +1.25%</div>
+                  <div className="mt-2 text-[11px] font-black text-[#735e4e]">
+                    已加入 · 总榜 +{Math.round(partner.bonusRate * 10_000) / 100}%
+                  </div>
                 </>
               ) : (
                 <>
@@ -134,11 +148,26 @@ export function PartnersPanel({ game, onClose }: { game: Game; onClose: () => vo
                       className="h-full rounded-full bg-[#e3955e]"
                     />
                   </div>
+                  {partner.taskDriven && (
+                    <button
+                      type="button"
+                      onClick={openPartnerTask}
+                      className="mt-2 flex min-h-8 w-full items-center justify-center gap-1.5 rounded-full bg-[#8f5a3a] px-3 text-[10px] font-black text-[#fff8df] shadow-sm transition active:scale-[0.98]"
+                    >
+                      <ClipboardCheck className="h-3.5 w-3.5" />
+                      前往大神任务
+                    </button>
+                  )}
                 </>
               )}
             </article>
           ))}
         </div>
+        {taskError && (
+          <p className="mt-3 rounded-xl bg-[#fde9df] px-3 py-2 text-center text-[10px] font-black text-[#a95038]">
+            {taskError}
+          </p>
+        )}
       </div>
     </PanelShell>
   );

@@ -1,37 +1,51 @@
-# Design QA
+**Comparison target**
 
-> 最近验证：2026-07-24
-> 基线截图：`审核证据/01-局内改造前.png`、`审核证据/02-伙伴弹窗改造前.png`、`审核证据/03-移动端主页裁切问题.png`、`审核证据/04-移动端局内边缘裁切问题.png`
+- Source visual truth: `C:\Users\Admin\AppData\Local\Temp\codex-clipboard-0efa579b-1764-4d9e-9972-023e076cef0b.png`
+- Rendered implementation: `D:\小游戏\find0721\find0721\find\findursister-github\.codex-temp\design-qa\timer-enhanced-428x939.png`
+- Combined comparison: `D:\小游戏\find0721\find0721\find\findursister-github\.codex-temp\design-qa\timer-comparison-side-by-side.png`
+- Viewport and pixels: source 428 × 939 px; implementation 428 × 939 CSS px and 428 × 939 px at deviceScaleFactor 1. No density normalization was required.
+- State: level 1 actively counting down, target bar visible, gameplay controls visible.
 
-## 本轮审计结论
+**Full-view comparison evidence**
 
-| 问题 | 本轮处理 | 验证状态 |
-|---|---|---|
-| 顶部不平衡、关卡牌偏位 | HUD 改为左右对称、关卡牌独立居中 | 代码与构建通过，待真机截图复验 |
-| 目标不知道做到哪一步 | 全目标轨道 + 完成/当前/后续状态 + 下一项提示 | 代码与构建通过 |
-| 没有加时入口 | 首次免费 +15 秒；二次进入任务视频占位 | 本地流程完成，真实任务回调待接 |
-| 首次正确点击无音效 | 首次用户交互先解锁 AudioContext，再播放命中音效 | 代码通过，待 Safari/安卓真机 |
-| 没有静音 | 局内常驻静音，状态持久化；预留 BGM URL | 代码通过 |
-| 局内物件小、场景空 | 移动端单屏画布、物件放大、完整轮廓装箱 | 代码与内容校验通过，待真机调参 |
-| 移动端 Logo 只显示右半部分 | 把居中定位移到静态外层，避免 Motion transform 覆盖 `translateX` | 代码与构建通过 |
-| 局内左右出现大量半截物件 | 移除 1.28 屏横向世界，全部物件在单屏安全边界内装箱 | 600 局压力测试无目标缺失 |
-| 三个教学关逐关弹窗 | 首次进入一次展示全部规则，并一次性记录已读 | 代码与构建通过 |
-| 伙伴弹窗局部糊 | 去除背景模糊，主按钮改清晰 CSS 边框 | 代码与构建通过 |
-| 锁定伙伴提前泄露 | 锁定态不显示姓名/头像，只显示获得方式与进度 | 代码通过 |
-| 标题偏小 | 主界面 Logo 放大并上移 | 代码通过 |
-| 榜单解释挤占榜单 | 榜单只保留日榜/总榜，公式迁至说明 | 代码通过 |
+- The revised header keeps the same overall footprint and existing plaque/button assets, so the target bar and playable scene are not displaced.
+- The timer is now the first-read element: a centered cream capsule with 18–20 px tabular numerals replaces the previous 10 px mixed metadata line.
+- Level and compact-formatted score share a centered metadata row above the timer, contained inside the plaque's safe interior instead of occupying narrow side columns.
 
-## 自动验证
+**Focused region evidence**
 
-- 内容校验目标：123 件唯一物品、30 条任务规则、200 关、8 位伙伴。
-- ESLint、TypeScript 与 Vite 生产构建统一由 `npm run check` 执行。
-- 本文不声称已经获得“改造后”浏览器截图：当前环境未提供可用的登录态浏览器控制，最终视觉结论需真机或浏览器复验。
+- A separate crop was not needed because the 428 px full-view comparison renders the complete header at legible 1:1 scale.
+- The urgent state was tested at 00:05: the capsule switched to vermilion, retained a pale border, and pulsed without changing layout.
 
-## 发布前视觉门槛
+**Findings**
 
-- 390×844 与 360×640 检查顶部居中、任务轨道换行、加时/静音触控区和底部安全区。
-- iPhone Safari 验证首次音效、BGM 启动、静音持久化和后台切回。
-- 低端安卓检查 100+ 物件场景拖动帧率与误触率。
-- 大神 App 内 WebView 验证任务面板覆盖层不会让倒计时继续。
+- No actionable P0, P1, or P2 issues remain.
+- Fonts and typography: the existing display face is preserved; the timer uses a larger optical weight, tabular numerals, and increased tracking.
+- Spacing and layout rhythm: the plaque stays 48 px high; the stacked layout does not overflow at either 428 px or the supported 320 px minimum width.
+- Colors and visual tokens: the cream/brown timer uses the existing warm Qingya palette; the urgent vermilion state has clear contrast.
+- Image quality and asset fidelity: all existing plaque and round-button assets are preserved without replacement or stretching.
+- Copy and content: level, remaining time, score, and task target copy remain intact.
 
-final result: local implementation passes automated gates; production visual acceptance remains conditional on device and platform integration checks.
+**Comparison history**
+
+- Iteration 1 finding (P2): the countdown was a 10 px fragment inside a combined time-and-score line, so it did not read as a primary gameplay constraint.
+- Fix: separated the countdown into a centered high-contrast capsule, enlarged the numerals, moved level/score to secondary side positions, and added an urgent-state color change.
+- Post-fix evidence: the side-by-side comparison shows the timer as the clearest element in the top plaque while the target bar and game field retain their prior positions.
+- Iteration 2 finding (P2): the left/right metadata columns could encroach on decorative edges as level and score values grew.
+- Fix: moved both metadata values into one centered row above the timer, limited that row to the plaque's safe interior, compact-formatted large scores, and retained truncation as a final guard.
+- Post-fix evidence: at 428 px the metadata stays within a 192 px safe region inside the 288 px plaque; at 320 px the 184 px plaque, 104 px timer, and metadata row all remain inside bounds with no page overflow.
+
+**Implementation checklist**
+
+- [x] Normal countdown state is prominent.
+- [x] Last-10-seconds state is visually distinct.
+- [x] Header remains responsive at the supplied mobile viewport.
+- [x] Start-game interaction works and the countdown updates.
+- [x] Browser logs contain no errors.
+- [x] ESLint and production build pass.
+
+**Follow-up polish**
+
+- No blocking follow-up polish is required for this change.
+
+final result: passed

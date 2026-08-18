@@ -1,8 +1,15 @@
 import {
   ArrowLeft, Clock3, Gift, Lightbulb, Pause, TimerReset, Volume2, VolumeX,
 } from 'lucide-react';
+import imgHomeTaskIcon from '../assets/ui/home/home-task-icon-v2.png';
 import type { Game } from '../hooks/useGame';
+import { dsTaskPanelEnabled } from '../platform/ds/config';
 import { TargetBar } from './TargetBar';
+
+const compactNumberFormatter = new Intl.NumberFormat('zh-CN', {
+  notation: 'compact',
+  maximumFractionDigits: 1,
+});
 
 export function Hud({ game }: { game: Game }) {
   const urgent = game.timeLeft <= 10;
@@ -11,6 +18,7 @@ export function Hud({ game }: { game: Game }) {
   const levelLabel = game.mode === 'levels'
     ? `第${game.level}关`
     : `第${game.level}波`;
+  const scoreLabel = compactNumberFormatter.format(Math.round(game.roundScore));
 
   return (
     <>
@@ -30,18 +38,31 @@ export function Hud({ game }: { game: Game }) {
             <ArrowLeft className="h-5 w-5" strokeWidth={2.4} />
           </button>
 
-          <div className="qingya-level-plaque relative mx-auto flex h-12 w-full max-w-[18rem] min-w-0 flex-col items-center justify-center px-4 text-center">
-            <span className="font-display truncate text-sm font-black leading-none tracking-[0.06em] text-[#fff9dc] drop-shadow-sm sm:text-base">
-              {levelLabel}
-            </span>
-            <span className={`mt-1 flex max-w-full items-center justify-center gap-1.5 truncate text-[10px] font-black leading-none tabular-nums sm:text-[11px] ${
-              urgent ? 'animate-pulse text-[#ffcaad]' : 'text-[#ffe5a8]'
-            }`}>
-              <Clock3 className="h-3 w-3 shrink-0" strokeWidth={2.4} />
-              {timeLabel}
-              <span className="opacity-60">·</span>
-              {game.mode === 'levels' ? '本关' : '本局'} {Math.round(game.roundScore).toLocaleString('zh-CN')} 分
-            </span>
+          <div className="qingya-level-plaque relative mx-auto flex h-12 w-full max-w-[18rem] min-w-0 flex-col items-center justify-center px-12 text-center">
+            <div className="flex w-full min-w-0 items-center justify-center gap-1.5 text-[9px] font-black leading-none text-[#f0d49d] sm:text-[10px]">
+              <span className="max-w-[45%] truncate font-display tracking-[0.06em] text-[#fff1c5] drop-shadow-sm">
+                {levelLabel}
+              </span>
+              <span className="shrink-0 opacity-50">·</span>
+              <span className="max-w-[55%] truncate tabular-nums">
+                {game.mode === 'levels' ? '本关' : '本局'} {scoreLabel} 分
+              </span>
+            </div>
+
+            <time
+              dateTime={`PT${seconds}S`}
+              aria-label={`剩余时间 ${timeLabel}`}
+              className={`mt-0.5 flex min-w-[6.5rem] items-center justify-center gap-1.5 rounded-full border px-3 py-0.5 shadow-[0_2px_8px_rgba(42,22,10,0.28)] ${
+                urgent
+                  ? 'animate-pulse border-[#ffe0a4] bg-[#a94432] text-[#fff8dc]'
+                  : 'border-[#fff4c8] bg-[#fff0bd]/95 text-[#673822]'
+              }`}
+            >
+              <Clock3 className="h-3.5 w-3.5 shrink-0" strokeWidth={2.7} />
+              <span className="font-display text-lg font-black leading-none tracking-[0.06em] tabular-nums sm:text-xl">
+                {timeLabel}
+              </span>
+            </time>
           </div>
 
           <button
@@ -66,6 +87,26 @@ export function Hud({ game }: { game: Game }) {
         </div>
       </header>
 
+      {dsTaskPanelEnabled && game.phase === 'playing' && (
+        <button
+          type="button"
+          onClick={game.openInGameTaskPanel}
+          className="pointer-events-auto absolute right-1 z-40 flex w-[3.6rem] flex-col items-center transition active:scale-95 [top:calc(var(--safe-top)+7.65rem)]"
+          aria-label="暂停并打开大神任务面板"
+          title="大神任务"
+        >
+          <img
+            src={imgHomeTaskIcon}
+            alt=""
+            aria-hidden="true"
+            className="h-[3.35rem] w-[3.35rem] object-contain drop-shadow-[0_7px_9px_rgba(87,49,28,.24)]"
+          />
+          <span className="-mt-1 rounded-full border border-[#f6d7a7] bg-[#fff7dc]/95 px-1.5 py-0.5 font-display text-[8px] font-black tracking-wide text-[#8c3f28] shadow">
+            大神任务
+          </span>
+        </button>
+      )}
+
       {/* 底部操作区：加时 + 提示 居左成组，静音单独钉在最右（悬浮于棋盘底部）。
           三个按钮共用同一容器与同一 label 样式，圆钮与文字基线天然对齐。 */}
       <div className="pointer-events-none absolute inset-x-3 bottom-[calc(var(--safe-bottom)+0.4rem)] z-20 flex items-end justify-between sm:inset-x-5">
@@ -75,7 +116,7 @@ export function Hud({ game }: { game: Game }) {
             onClick={game.requestTimeBoost}
             className="group pointer-events-auto flex flex-col items-center text-[#744b31] transition active:scale-95"
             title={game.timeBoostFreeAvailable
-              ? '本关首次免费加时 30 秒'
+              ? `${game.mode === 'endless' ? '本局' : '本关'}首次免费加时 30 秒`
               : game.skillBoosts > 0
                 ? `消耗加时技能（剩余 ${game.skillBoosts} 个），加时 30 秒`
                 : '前往任务视频流获取加时'}

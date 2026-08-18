@@ -45,7 +45,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 44,3,written,standard,2|2|3,37,89,797.86,438.8,598.4,,luminous_fliers|container|weapon
 45,3,glowing,standard,3|2|2,37,89,797.86,438.8,598.4,,fruit_or_vegetable|written|animal
 46,3,plant,standard,2|3|2,37,89,797.86,438.8,598.4,,animal_or_vehicle|ceramic|plant
-47,3,instrument,cluster,2|2|3,38,85,761.46,418.8,571.1,,food_not_sweet|glowing|vehicle
+47,3,instrument,cluster,2|2|3,38,85,761.46,418.8,571.1,,food_not_sweet|glowing|wearable
 48,3,flying,standard,3|2|2,38,89,797.86,438.8,598.4,,sharp_not_weapon|plant|animal
 49,3,sweet_food,mist,2|3|2,40,82,734.16,403.8,550.6,,bridge_not_wood|animal|instrument
 50,3,animal,standard,2|2|3,38,89,797.86,438.8,598.4,,patterned|animal|fruit
@@ -55,7 +55,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 54,3,written,standard,3|3|2,38,96,1020.00,561.0,765.0,,luminous_fliers|container|weapon
 55,3,glowing,speed,2|2|2,38,53,389.30,214.1,292.0,,fruit_or_vegetable|written|animal
 56,3,plant,standard,3|2|3,38,96,1020.00,561.0,765.0,,animal_or_vehicle|ceramic|plant
-57,3,instrument,cluster,3|3|2,39,91,966.00,531.3,724.5,,food_not_sweet|glowing|vehicle
+57,3,instrument,cluster,3|3|2,39,91,966.00,531.3,724.5,,food_not_sweet|glowing|wearable
 58,3,flying,standard,2|3|3,38,96,1020.00,561.0,765.0,,sharp_not_weapon|plant|animal
 59,3,sweet_food,standard,3|2|3,38,96,1020.00,561.0,765.0,,bridge_not_wood|animal|instrument
 60,3,animal,boss,4|3|3,40,99,1406.10,773.4,1054.6,,patterned|animal|fruit
@@ -65,7 +65,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 64,4,container,standard,3|3|3,39,103,1275.24,701.4,956.4,,luminous_fliers|container|weapon
 65,4,sharp,standard,3|3|3,39,103,1275.24,701.4,956.4,,fruit_or_vegetable|written|animal
 66,4,vehicle,standard,3|3|3,39,103,1275.24,701.4,956.4,,animal_or_vehicle|ceramic|plant
-67,4,written,cluster,3|3|3,40,98,1212.24,666.7,909.2,,food_not_sweet|glowing|vehicle
+67,4,written,cluster,3|3|3,40,98,1212.24,666.7,909.2,,food_not_sweet|glowing|wearable
 68,4,glowing,standard,3|3|3,39,103,1275.24,701.4,956.4,,sharp_not_weapon|plant|animal
 69,4,plant,mist,3|3|3,41,95,1174.44,645.9,880.8,,bridge_not_wood|animal|instrument
 70,4,instrument,standard,3|3|3,39,103,1275.24,701.4,956.4,,patterned|animal|fruit
@@ -75,7 +75,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 74,4,container,standard,3|3|3,39,103,1275.24,701.4,956.4,,luminous_fliers|container|weapon
 75,4,sharp,speed,3|2|2,40,58,515.76,283.7,386.8,,fruit_or_vegetable|written|animal
 76,4,vehicle,standard,3|4|3,40,110,1565.60,861.1,1174.2,,animal_or_vehicle|ceramic|plant
-77,4,written,cluster,3|3|4,41,104,1478.60,813.2,1108.9,,food_not_sweet|glowing|vehicle
+77,4,written,cluster,3|3|4,41,104,1478.60,813.2,1108.9,,food_not_sweet|glowing|wearable
 78,4,glowing,standard,4|3|3,40,110,1565.60,861.1,1174.2,,sharp_not_weapon|plant|animal
 79,4,plant,standard,3|4|3,40,110,1565.60,861.1,1174.2,,bridge_not_wood|animal|instrument
 80,4,instrument,boss,4|4|4,42,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -85,7 +85,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 84,5,flying,standard,3|4|3,40,110,1565.60,861.1,1174.2,,luminous_fliers|container|weapon
 85,5,sweet_food,standard,3|4|3,40,110,1565.60,861.1,1174.2,,fruit_or_vegetable|written|animal
 86,5,animal,standard,3|3|4,40,110,1565.60,861.1,1174.2,,animal_or_vehicle|ceramic|plant
-87,5,container,cluster,4|3|3,41,104,1478.60,813.2,1108.9,,food_not_sweet|glowing|vehicle
+87,5,container,cluster,4|3|3,41,104,1478.60,813.2,1108.9,,food_not_sweet|glowing|wearable
 88,5,sharp,standard,3|4|4,41,117,1881.80,1035.0,1411.3,,sharp_not_weapon|plant|animal
 89,5,vehicle,mist,3|4|4,43,108,1734.20,953.8,1300.7,,bridge_not_wood|animal|instrument
 90,5,written,standard,4|4|3,41,117,1881.80,1035.0,1411.3,,patterned|animal|fruit
@@ -95,7 +95,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 94,5,flying,standard,3|4|4,41,117,1881.80,1035.0,1411.3,,luminous_fliers|container|weapon
 95,5,sweet_food,speed,3|3|3,41,67,821.64,451.9,616.2,,fruit_or_vegetable|written|animal
 96,5,animal,standard,4|4|3,41,117,1881.80,1035.0,1411.3,,animal_or_vehicle|ceramic|plant
-97,5,container,cluster,3|4|4,42,111,1783.40,980.9,1337.6,,food_not_sweet|glowing|vehicle
+97,5,container,cluster,3|4|4,42,111,1783.40,980.9,1337.6,,food_not_sweet|glowing|wearable
 98,5,sharp,standard,4|3|4,41,117,1881.80,1035.0,1411.3,,sharp_not_weapon|plant|animal
 99,5,vehicle,standard,3|4|4,41,117,1881.80,1035.0,1411.3,,bridge_not_wood|animal|instrument
 100,5,written,boss,4|4|4,43,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -105,7 +105,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 104,6,glowing,standard,3|4|5,42,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 105,6,plant,standard,4|4|4,42,124,2223.84,1223.1,1667.9,,fruit_or_vegetable|written|animal
 106,6,instrument,standard,4|4|4,42,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-107,6,flying,cluster,4|4|4,43,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+107,6,flying,cluster,4|4|4,43,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 108,6,sweet_food,standard,4|4|4,42,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 109,6,animal,mist,3|5|4,44,114,2040.84,1122.5,1530.6,,bridge_not_wood|animal|instrument
 110,6,container,standard,4|4|4,42,124,2223.84,1223.1,1667.9,,patterned|animal|fruit
@@ -115,7 +115,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 114,6,glowing,standard,3|5|4,42,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 115,6,plant,speed,3|4|3,43,72,1014.60,558.0,761.0,,fruit_or_vegetable|written|animal
 116,6,instrument,standard,4|4|4,43,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-117,6,flying,cluster,4|4|4,44,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+117,6,flying,cluster,4|4|4,44,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 118,6,sweet_food,standard,4|4|4,43,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 119,6,animal,standard,3|4|5,43,124,2223.84,1223.1,1667.9,,bridge_not_wood|animal|instrument
 120,6,container,boss,4|4|4,45,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -125,7 +125,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 124,7,sharp,standard,3|5|4,43,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 125,7,vehicle,standard,4|4|4,43,124,2223.84,1223.1,1667.9,,fruit_or_vegetable|written|animal
 126,7,written,standard,4|4|4,43,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-127,7,glowing,cluster,4|4|4,44,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+127,7,glowing,cluster,4|4|4,44,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 128,7,plant,standard,4|4|4,44,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 129,7,instrument,mist,3|5|4,46,114,2040.84,1122.5,1530.6,,bridge_not_wood|animal|instrument
 130,7,flying,standard,4|4|4,44,124,2223.84,1223.1,1667.9,,patterned|animal|fruit
@@ -135,7 +135,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 134,7,sharp,standard,3|4|5,44,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 135,7,vehicle,speed,4|3|3,44,72,1014.60,558.0,761.0,,fruit_or_vegetable|written|animal
 136,7,written,standard,4|4|4,44,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-137,7,glowing,cluster,4|4|4,45,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+137,7,glowing,cluster,4|4|4,45,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 138,7,plant,standard,4|4|4,44,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 139,7,instrument,standard,3|5|4,44,124,2223.84,1223.1,1667.9,,bridge_not_wood|animal|instrument
 140,7,flying,boss,4|4|4,46,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -145,7 +145,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 144,8,sweet_food,standard,3|5|4,45,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 145,8,animal,standard,4|4|4,45,124,2223.84,1223.1,1667.9,,fruit_or_vegetable|written|animal
 146,8,container,standard,4|4|4,45,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-147,8,sharp,cluster,4|4|4,46,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+147,8,sharp,cluster,4|4|4,46,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 148,8,vehicle,standard,4|4|4,45,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 149,8,written,mist,3|4|5,47,114,2040.84,1122.5,1530.6,,bridge_not_wood|animal|instrument
 150,8,glowing,standard,4|4|4,45,124,2223.84,1223.1,1667.9,,patterned|animal|fruit
@@ -155,7 +155,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 154,8,sweet_food,standard,3|5|4,45,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 155,8,animal,speed,3|3|4,46,72,1014.60,558.0,761.0,,fruit_or_vegetable|written|animal
 156,8,container,standard,4|4|4,46,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-157,8,sharp,cluster,4|4|4,47,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+157,8,sharp,cluster,4|4|4,47,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 158,8,vehicle,standard,4|4|4,46,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 159,8,written,standard,3|5|4,46,124,2223.84,1223.1,1667.9,,bridge_not_wood|animal|instrument
 160,8,glowing,boss,4|4|4,48,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -165,7 +165,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 164,9,plant,standard,3|4|5,46,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 165,9,instrument,standard,4|4|4,46,124,2223.84,1223.1,1667.9,,fruit_or_vegetable|written|animal
 166,9,flying,standard,4|4|4,46,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-167,9,sweet_food,cluster,4|4|4,47,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+167,9,sweet_food,cluster,4|4|4,47,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 168,9,animal,standard,4|4|4,47,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 169,9,container,mist,3|5|4,48,114,2040.84,1122.5,1530.6,,bridge_not_wood|animal|instrument
 170,9,sharp,standard,4|4|4,47,124,2223.84,1223.1,1667.9,,patterned|animal|fruit
@@ -175,7 +175,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 174,9,plant,standard,3|5|4,47,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 175,9,instrument,speed,3|4|3,47,72,1014.60,558.0,761.0,,fruit_or_vegetable|written|animal
 176,9,flying,standard,4|4|4,47,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-177,9,sweet_food,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+177,9,sweet_food,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 178,9,animal,standard,4|4|4,47,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 179,9,container,standard,3|4|5,47,124,2223.84,1223.1,1667.9,,bridge_not_wood|animal|instrument
 180,9,sharp,boss,4|4|4,48,112,2004.24,1102.3,1503.2,,patterned|animal|fruit
@@ -185,7 +185,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 184,10,vehicle,standard,3|5|4,48,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 185,10,written,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,fruit_or_vegetable|written|animal
 186,10,glowing,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-187,10,plant,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+187,10,plant,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 188,10,instrument,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 189,10,flying,mist,3|5|4,48,114,2040.84,1122.5,1530.6,,bridge_not_wood|animal|instrument
 190,10,sweet_food,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,patterned|animal|fruit
@@ -195,7 +195,7 @@ level,chapter,category,type,targetCounts,distractors,timeLimitSec,starBase,star2
 194,10,vehicle,standard,3|4|5,48,124,2223.84,1223.1,1667.9,,luminous_fliers|container|weapon
 195,10,written,speed,4|3|3,48,72,1014.60,558.0,761.0,,fruit_or_vegetable|written|animal
 196,10,glowing,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,animal_or_vehicle|ceramic|plant
-197,10,plant,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|vehicle
+197,10,plant,cluster,4|4|4,48,118,2114.04,1162.7,1585.5,,food_not_sweet|glowing|wearable
 198,10,instrument,standard,4|4|4,48,124,2223.84,1223.1,1667.9,,sharp_not_weapon|plant|animal
 199,10,flying,standard,3|5|4,48,124,2223.84,1223.1,1667.9,,bridge_not_wood|animal|instrument
 200,10,sweet_food,boss,4|4|4,48,112,2004.24,1102.3,1503.2,,patterned|animal|fruit

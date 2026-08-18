@@ -137,7 +137,7 @@ export const ITEMS: ItemDef[] = [
   { id: 'painted_vase', name: '彩绘花瓶', emoji: '瓶', img: asset('painted_vase'), tags: ['container'], objectTags: ['bottle_jar'], materialTags: ['ceramic'], visualTags: ['patterned'] },
   { id: 'phoenix', name: '金羽凤凰', emoji: '凤', img: asset('phoenix'), tags: ['flying'], traitTags: ['winged'] },
   { id: 'dragonfly', name: '蜻蜓', emoji: '虫', img: asset('dragonfly'), tags: ['flying'], objectTags: ['insect'], traitTags: ['winged'], visualTags: ['slender'] },
-  { id: 'fire_wheels', name: '风火轮', emoji: '轮', img: asset('fire_wheels'), tags: ['vehicle'], objectTags: ['weapon'], traitTags: ['flaming', 'rideable'], visualTags: ['round', 'wide', 'paired'] },
+  { id: 'fire_wheels', name: '风火轮', emoji: '轮', img: asset('fire_wheels'), tags: ['vehicle', 'glowing'], objectTags: ['weapon'], traitTags: ['flaming', 'rideable'], visualTags: ['round', 'wide', 'paired'] },
   { id: 'chrysanthemum', name: '金菊', emoji: '🌼', img: asset('chrysanthemum'), tags: ['plant'], objectTags: ['flower'], visualTags: ['leafy'] },
   { id: 'tangyuan', name: '汤圆', emoji: '🥣', img: asset('tangyuan'), tags: ['container', 'sweet_food'], objectTags: ['food', 'bowl_dish'], materialTags: ['ceramic'], visualTags: ['round'] },
   { id: 'hulusi', name: '葫芦丝', emoji: '♪', img: asset('hulusi'), tags: ['instrument'], traitTags: ['sound_making'], visualTags: ['slender', 'handled', 'patterned'] },

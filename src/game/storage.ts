@@ -20,7 +20,6 @@ export const SAVE_KEYS = {
   levelScores: 'best.levelScores.v3',
   levelStars: 'best.levelStars',
   collection: 'collection.items.v1',
-  stamina: 'stamina.v1',
   // v2 将原来的三关分段教学合并为一次性总览，旧用户也只需重新看这一次。
   tutorial: 'tutorial.seen.v2',
   partnerRecruited: 'partner.recruited',
@@ -32,7 +31,6 @@ export const SAVE_KEYS = {
   partnerBestBaseScore: 'prog.bestBaseScore',
   partnerBestCombo: 'prog.bestCombo',
   muted: 'settings.muted.v1',
-  dailyLevelScores: 'ranking.dailyLevelScores.v1',
 } as const;
 
 type NamespaceListener = (namespace: string) => void;

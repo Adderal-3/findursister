@@ -4,7 +4,6 @@ import { Hud } from './components/Hud';
 import { GameField } from './components/GameField';
 import { Overlays } from './components/Overlays';
 import { VideoRewardDialog } from './components/VideoRewardDialog';
-import { StaminaDialog } from './components/StaminaDialog';
 import { TutorialOverlay } from './components/TutorialOverlay';
 import { PartnerRecruitDialog } from './components/PartnerRecruitDialog';
 import { OutsideAppMask } from './components/OutsideAppMask';
@@ -30,7 +29,6 @@ export default function App() {
           <TutorialOverlay game={game} />
         </div>
       )}
-      <StaminaDialog game={game} />
       <PartnerRecruitDialog game={game} />
       {/* 站外拦截：不在大神 App 内时全屏遮罩，点任意处唤端。必须最后渲染以覆盖一切。 */}
       <OutsideAppMask />

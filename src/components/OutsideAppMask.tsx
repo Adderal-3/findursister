@@ -48,7 +48,7 @@ export function OutsideAppMask() {
             忙忙碌碌寻宝藏
           </p>
           <p className="mt-1.5 text-sm font-bold text-[#9a7558]">
-            挑战眼力值，寻找汴京珍宝
+            挑战寻宝关卡，寻找汴京珍宝
           </p>
 
           <div className="mt-5 rounded-2xl bg-[#c86c3a] px-7 py-3.5 shadow-md active:scale-95">

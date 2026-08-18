@@ -14,21 +14,18 @@ export interface DsLeaderboardSnapshot {
   self: DsLeaderboardRecord | null;
 }
 
-export type LeaderboardScope = 'daily' | 'total';
+export interface DsProgressSnapshot {
+  rankingScore: number;
+  levelsBaseScore: number;
+  endlessBest: number;
+  userTime: number;
+  userDailyTime: number;
+  levelDetail: Record<number, number>;
+  partnerCount: number;
+  totalItemsFound: number;
+}
 
 let requestManagerInitialized = false;
-
-/**
- * 东八区今日日期 YYYY-MM-DD。
- * 后台日榜"按东八区日期隔离"，玩家设备时区不一定是 +8，因此强制换算。
- */
-function beijingDateKey(now = Date.now()): string {
-  const beijing = new Date(now + 8 * 60 * 60 * 1000);
-  const year = beijing.getUTCFullYear();
-  const month = String(beijing.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(beijing.getUTCDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
 
 function requestManager() {
   if (!dsPlatformEnabled || !dsLeaderboardEnabled || !window.MiniGameDataSdk) return null;
@@ -48,6 +45,57 @@ export function dsRequestManager() {
   return requestManager();
 }
 
+function nonNegativeNumber(value: unknown): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+function parseLevelDetail(value: unknown): Record<number, number> {
+  if (typeof value !== 'string' || !value.trim()) return {};
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+    return Object.fromEntries(
+      Object.entries(parsed)
+        .map(([level, score]) => [Number(level), Number(score)] as const)
+        .filter(([level, score]) => Number.isInteger(level) && level > 0
+          && Number.isFinite(score) && score > 0),
+    );
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * 启动时读取服务端历史进度。调用方必须先做“本地与服务端逐项取最大值”再允许回写，
+ * 防止换设备 / 清缓存后用本地 0 覆盖已有榜分。
+ */
+export async function loadDsProgress(): Promise<DsProgressSnapshot | null> {
+  const manager = requestManager();
+  if (!manager) return null;
+  const keys = [
+    'user_score', 'levelsBaseScore', 'endlessBest', 'user_time', 'user_daily_time',
+    'level_detail', 'partnerCount', 'totalItemsFound',
+  ];
+  try {
+    const result = await manager.batchReadData({ keys });
+    const values = new Map(result.records.map((record) => [record.recordKey, record.value]));
+    return {
+      rankingScore: nonNegativeNumber(values.get('user_score')),
+      levelsBaseScore: nonNegativeNumber(values.get('levelsBaseScore')),
+      endlessBest: nonNegativeNumber(values.get('endlessBest')),
+      userTime: nonNegativeNumber(values.get('user_time')),
+      userDailyTime: nonNegativeNumber(values.get('user_daily_time')),
+      levelDetail: parseLevelDetail(values.get('level_detail')),
+      partnerCount: Math.floor(nonNegativeNumber(values.get('partnerCount'))),
+      totalItemsFound: Math.floor(nonNegativeNumber(values.get('totalItemsFound'))),
+    };
+  } catch (error) {
+    console.error('[DS] progress hydration failed', error);
+    return null;
+  }
+}
+
 /** 榜单读取失败时抛出，带可展示给用户的原因，界面据此显示真实错误而非兜底。 */
 export class DsLeaderboardError extends Error {
   constructor(message: string) {
@@ -61,7 +109,6 @@ export class DsLeaderboardError extends Error {
  * 由界面显示真实错误信息，便于确认线上接口是否真的通。
  */
 export async function loadDsLeaderboard(
-  scope: LeaderboardScope = 'total',
   pageSize = 10,
 ): Promise<DsLeaderboardSnapshot> {
   if (!dsPlatformEnabled) {
@@ -84,13 +131,10 @@ export async function loadDsLeaderboard(
   if (!ids.devBillboardId || !ids.proBillboardId) {
     throw new DsLeaderboardError('榜单 ID（billboardId）未配置');
   }
-  // 日榜与总榜是同一个榜单（yanli_rank）：后台"日榜=是"按东八区日期自动生成快照。
-  // 总榜不传 date；日榜传当天日期，走后端日榜快照接口。
-  const dailyParams = scope === 'daily' ? { date: beijingDateKey() } : {};
   try {
     const [ranking, self] = await Promise.all([
-      manager.getBillboardRank({ ...ids, ...dailyParams, page: 1, pageSize }),
-      manager.getUserRank({ ...ids, ...dailyParams }),
+      manager.getBillboardRank({ ...ids, page: 1, pageSize }),
+      manager.getUserRank(ids),
     ]);
     return {
       total: ranking.total,
@@ -117,8 +161,8 @@ export async function loadDsLeaderboard(
 }
 
 interface ProgressPayload {
-  /** 排行榜最终分：各关历史最高标准榜分之和 ×（1 + 伙伴加成）。榜单 yanli_rank 按 user_score 排序，此值写入 user_score。 */
-  levelsTotalScore?: number;
+  /** 排行榜最终分：（关卡历史最佳标准分 + 无尽历史最高分）×（1 + 伙伴加成）。 */
+  rankingScore?: number;
   /** 未套伙伴系数的各关历史最高标准榜分之和，用于后台对账。 */
   levelsBaseScore?: number;
   /** 无尽模式最高分。 */
@@ -144,9 +188,9 @@ export async function syncProgressToDs(payload: ProgressPayload): Promise<void> 
   const manager = requestManager();
   if (!manager) return;
   const items: Array<{ recordKey: string; value: number | string }> = [];
-  if (payload.levelsTotalScore != null) {
+  if (payload.rankingScore != null) {
     // 后台榜单 yanli_rank 绑定的排序字段是 user_score，必须与 CMS「Key 配置」一致。
-    items.push({ recordKey: 'user_score', value: Math.max(0, Math.round(payload.levelsTotalScore)) });
+    items.push({ recordKey: 'user_score', value: Math.max(0, Math.round(payload.rankingScore)) });
   }
   if (payload.levelsBaseScore != null) {
     items.push({

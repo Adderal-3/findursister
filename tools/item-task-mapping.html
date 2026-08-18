@@ -47,7 +47,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <p>数据来源：src/game/items.ts（123 件）+ tasks.ts（30 条任务规则）。生成于本次回归。玩家实际体验就是「任务 → 哪些图片算对」，此表即该映射。</p>
 </header>
 
-<h2>① 可疑分类（审计候选，共 6 项）</h2>
+<h2>① 可疑分类（审计候选，共 5 项）</h2>
 <p class="note">规则：按名称启发式比对标签。「缺」= 名称暗示应有但标签没有；「多」= 名称明显不符合但标签有。图片可直接目检确认。</p>
 
 <div class="suspect">
@@ -77,16 +77,6 @@ td img{width:48px;height:48px;object-fit:contain}
       <div class="suspect-name">题字琴架 <code style="font-size:12px;color:var(--muted)">inscribed_music_stand</code></div>
       <div class="chips">现有标签：<span class="chip">有字</span></div>
       <div><div class="suspect-reason"><span class="suspect-tag missing">缺</span><span class="suspect-tag conf">低置信</span>琴架本身是家具而非乐器——确认是否有意排除出「找乐器」</div></div>
-    </div>
-  </div>
-</div>
-<div class="suspect">
-  <div class="suspect-row">
-    <img src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
-    <div style="flex:1">
-      <div class="suspect-name">风火轮 <code style="font-size:12px;color:var(--muted)">fire_wheels</code></div>
-      <div class="chips">现有标签：<span class="chip">载具/坐骑</span><span class="chip">兵器</span><span class="chip">有火焰</span><span class="chip">可骑乘</span><span class="chip">圆形</span><span class="chip">宽大</span><span class="chip">成对</span></div>
-      <div><div class="suspect-reason"><span class="suspect-tag missing">缺</span><span class="suspect-tag conf">低置信</span>有火焰意象但未算发光；「找发光」任务玩家可能点它</div></div>
     </div>
   </div>
 </div>
@@ -164,7 +154,7 @@ td img{width:48px;height:48px;object-fit:contain}
 </div>
 <div class="task">
   <div class="task-head">
-    <span class="task-title">找出所有文字物品</span>
+    <span class="task-title">找出所有带字物品</span>
     <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 6 件</span>
     
   </div>
@@ -249,7 +239,7 @@ td img{width:48px;height:48px;object-fit:contain}
 <div class="task">
   <div class="task-head">
     <span class="task-title">找出所有会发光的物品</span>
-    <span class="task-meta">命中池 <strong>7</strong> 件 · 任务目标 7 件</span>
+    <span class="task-meta">命中池 <strong>8</strong> 件 · 任务目标 7 件</span>
     
   </div>
   <div class="grid">
@@ -272,6 +262,10 @@ td img{width:48px;height:48px;object-fit:contain}
   <div class="card">
     <img loading="lazy" src="../src/assets/items/ancient/oil_lamp.webp" alt="长明灯" />
     <div class="card-name">长明灯</div>
+  </div>
+  <div class="card">
+    <img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="风火轮" />
+    <div class="card-name">风火轮</div>
   </div>
   <div class="card">
     <img loading="lazy" src="../src/assets/items/ancient/orange_sky_lantern.webp" alt="橙色孔明灯" />
@@ -592,7 +586,7 @@ td img{width:48px;height:48px;object-fit:contain}
 </div>
 <div class="task">
   <div class="task-head">
-    <span class="task-title">找出所有动物</span>
+    <span class="task-title">找出所有动物伙伴</span>
     <span class="task-meta">命中池 <strong>10</strong> 件 · 任务目标 7 件</span>
     
   </div>
@@ -1648,7 +1642,7 @@ td img{width:48px;height:48px;object-fit:contain}
 </div>
 <div class="task">
   <div class="task-head">
-    <span class="task-title">找出木制的桥</span>
+    <span class="task-title">找出木制桥梁、栈道或码头</span>
     <span class="task-meta">命中池 <strong>6</strong> 件 · 任务目标 5 件</span>
     
   </div>
@@ -1836,7 +1830,7 @@ td img{width:48px;height:48px;object-fit:contain}
 </div>
 <div class="task">
   <div class="task-head">
-    <span class="task-title">找出动物或坐骑</span>
+    <span class="task-title">找出动物伙伴、载具或坐骑</span>
     <span class="task-meta">命中池 <strong>14</strong> 件 · 任务目标 8 件</span>
     
   </div>
@@ -2004,7 +1998,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/camel.webp" alt="" /></td>
   <td><strong>骆驼</strong><br><code>camel</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
-  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/chili_pepper.webp" alt="" /></td>
@@ -2034,7 +2028,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/horse.webp" alt="" /></td>
   <td><strong>骏马</strong><br><code>horse</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
-  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/bird_ocarina.webp" alt="" /></td>
@@ -2052,7 +2046,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/sedan_chair.webp" alt="" /></td>
   <td><strong>花轿</strong><br><code>sedan_chair</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">木制</span><span class="chip">宽大</span><span class="chip">有纹样</span></td>
-  <td>找出所有载具与坐骑；找出木制物品；找出纹样明显的物品；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出木制物品；找出纹样明显的物品；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/konghou.webp" alt="" /></td>
@@ -2070,7 +2064,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/cat.webp" alt="" /></td>
   <td><strong>狸花猫</strong><br><code>cat</code></td>
   <td><span class="chip">动物</span><span class="chip">四足</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/red_sky_lantern.webp" alt="" /></td>
@@ -2142,7 +2136,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/flying_fish.webp" alt="" /></td>
   <td><strong>飞鱼坐骑</strong><br><code>flying_fish</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span></td>
-  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/candied_hawthorn.webp" alt="" /></td>
@@ -2172,7 +2166,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/deer.webp" alt="" /></td>
   <td><strong>梅花鹿</strong><br><code>deer</code></td>
   <td><span class="chip">动物</span><span class="chip">四足</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/beast_fang.webp" alt="" /></td>
@@ -2202,7 +2196,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/nine_tailed_fox.webp" alt="" /></td>
   <td><strong>九尾狐</strong><br><code>nine_tailed_fox</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">动物</span><span class="chip">可骑乘</span><span class="chip">四足</span></td>
-  <td>找出所有载具与坐骑；找出所有动物；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/ornate_dagger.webp" alt="" /></td>
@@ -2238,7 +2232,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/inscribed_music_stand.webp" alt="" /></td>
   <td><strong>题字琴架</strong><br><code>inscribed_music_stand</code></td>
   <td><span class="chip">有字</span></td>
-  <td>找出所有文字物品</td>
+  <td>找出所有带字物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/dandelion.webp" alt="" /></td>
@@ -2250,13 +2244,13 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/vinegar_jar.webp" alt="" /></td>
   <td><strong>醋坛</strong><br><code>vinegar_jar</code></td>
   <td><span class="chip">有字</span><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span><span class="chip">有纹样</span></td>
-  <td>找出所有文字物品；找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
+  <td>找出所有带字物品；找出能装东西的容器；找出陶瓷物品；找出纹样明显的物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/lucky_raccoon.webp" alt="" /></td>
   <td><strong>招财狸</strong><br><code>lucky_raccoon</code></td>
   <td><span class="chip">动物</span><span class="chip">四足</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/rattle_drum.webp" alt="" /></td>
@@ -2297,8 +2291,8 @@ td img{width:48px;height:48px;object-fit:contain}
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/fire_wheels.webp" alt="" /></td>
   <td><strong>风火轮</strong><br><code>fire_wheels</code></td>
-  <td><span class="chip">载具/坐骑</span><span class="chip">兵器</span><span class="chip">有火焰</span><span class="chip">可骑乘</span><span class="chip">圆形</span><span class="chip">宽大</span><span class="chip">成对</span></td>
-  <td>找出所有载具与坐骑；找出所有兵器；找出圆形轮廓的物品；找出动物或坐骑</td>
+  <td><span class="chip">载具/坐骑</span><span class="chip">发光</span><span class="chip">兵器</span><span class="chip">有火焰</span><span class="chip">可骑乘</span><span class="chip">圆形</span><span class="chip">宽大</span><span class="chip">成对</span></td>
+  <td>找出所有会发光的物品；找出所有载具与坐骑；找出所有兵器；找出圆形轮廓的物品；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/chrysanthemum.webp" alt="" /></td>
@@ -2322,7 +2316,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/inscribed_papers.webp" alt="" /></td>
   <td><strong>题字纸页</strong><br><code>inscribed_papers</code></td>
   <td><span class="chip">有字</span><span class="chip">纸制</span></td>
-  <td>找出所有文字物品</td>
+  <td>找出所有带字物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/icicle.webp" alt="" /></td>
@@ -2340,7 +2334,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/ancient_book.webp" alt="" /></td>
   <td><strong>古籍</strong><br><code>ancient_book</code></td>
   <td><span class="chip">有字</span><span class="chip">纸制</span><span class="chip">有纹样</span></td>
-  <td>找出所有文字物品；找出纹样明显的物品</td>
+  <td>找出所有带字物品；找出纹样明显的物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/watermelon.webp" alt="" /></td>
@@ -2364,7 +2358,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/penguin.webp" alt="" /></td>
   <td><strong>企鹅</strong><br><code>penguin</code></td>
   <td><span class="chip">动物</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/incense_burner.webp" alt="" /></td>
@@ -2418,13 +2412,13 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/medicine_bottle.webp" alt="" /></td>
   <td><strong>药瓶</strong><br><code>medicine_bottle</code></td>
   <td><span class="chip">有字</span><span class="chip">容器</span><span class="chip">瓶/罐</span><span class="chip">陶瓷</span></td>
-  <td>找出所有文字物品；找出能装东西的容器；找出陶瓷物品</td>
+  <td>找出所有带字物品；找出能装东西的容器；找出陶瓷物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/carriage.webp" alt="" /></td>
   <td><strong>马车</strong><br><code>carriage</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出所有载具与坐骑；找出木制物品；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出木制物品；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/butterfly.webp" alt="" /></td>
@@ -2454,7 +2448,7 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/treasure_ship.webp" alt="" /></td>
   <td><strong>楼船</strong><br><code>treasure_ship</code></td>
   <td><span class="chip">载具/坐骑</span><span class="chip">可骑乘</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出所有载具与坐骑；找出木制物品；找出动物或坐骑</td>
+  <td>找出所有载具与坐骑；找出木制物品；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/lidded_bowl.webp" alt="" /></td>
@@ -2466,19 +2460,19 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/dog.webp" alt="" /></td>
   <td><strong>柴犬</strong><br><code>dog</code></td>
   <td><span class="chip">动物</span><span class="chip">四足</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/rabbit.webp" alt="" /></td>
   <td><strong>玉兔</strong><br><code>rabbit</code></td>
   <td><span class="chip">动物</span><span class="chip">四足</span></td>
-  <td>找出所有动物；找出动物或坐骑</td>
+  <td>找出所有动物伙伴；找出动物伙伴、载具或坐骑</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/blue_book.webp" alt="" /></td>
   <td><strong>蓝皮古籍</strong><br><code>blue_book</code></td>
   <td><span class="chip">有字</span><span class="chip">纸制</span><span class="chip">有纹样</span></td>
-  <td>找出所有文字物品；找出纹样明显的物品</td>
+  <td>找出所有带字物品；找出纹样明显的物品</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/zongzi.webp" alt="" /></td>
@@ -2694,25 +2688,25 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/wooden_arch_bridge.webp" alt="" /></td>
   <td><strong>木拱桥</strong><br><code>wooden_arch_bridge</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/covered_bridge.webp" alt="" /></td>
   <td><strong>风雨廊桥</strong><br><code>covered_bridge</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/floating_dock.webp" alt="" /></td>
   <td><strong>浮木码头</strong><br><code>floating_dock</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/lotus_boardwalk.webp" alt="" /></td>
   <td><strong>荷塘栈道</strong><br><code>lotus_boardwalk</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/stone_water_bridge.webp" alt="" /></td>
@@ -2730,13 +2724,13 @@ td img{width:48px;height:48px;object-fit:contain}
   <td><img loading="lazy" src="../src/assets/items/ancient/rope_bridge.webp" alt="" /></td>
   <td><strong>吊索桥</strong><br><code>rope_bridge</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 <tr>
   <td><img loading="lazy" src="../src/assets/items/ancient/red_arch_bridge.webp" alt="" /></td>
   <td><strong>朱漆拱桥</strong><br><code>red_arch_bridge</code></td>
   <td><span class="chip">桥梁</span><span class="chip">可渡水</span><span class="chip">木制</span><span class="chip">宽大</span></td>
-  <td>找出木制物品；找出木制的桥</td>
+  <td>找出木制物品；找出木制桥梁、栈道或码头</td>
 </tr>
 </tbody>
 </table>

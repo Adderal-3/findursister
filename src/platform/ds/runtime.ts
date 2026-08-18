@@ -1,5 +1,5 @@
 import {
-  dsConfig, dsPlatformEnabled, dsRoleBindingEnabled, dsTaskPanelEnabled,
+  dsConfig, dsPlatformEnabled, dsTaskPanelEnabled,
 } from './config';
 import { setStorageIdentity } from '../../game/storage';
 
@@ -266,7 +266,6 @@ export function applyNavTheme(theme: 'white' | 'black'): void {
 /* ========== DS:ACT-SDK BEGIN ========== */
 let actSdkConfigured = false;
 let taskModuleMounted = false;
-let roleModuleUnmount: (() => void) | null = null;
 
 function configureActSdk(): boolean {
   if (!window.DsActSdk || !dsConfig.actId) return false;
@@ -290,28 +289,11 @@ export function initTaskModule(): boolean {
   if (!document.querySelector('#ds-task-root')) return false;
   window.DsActSdk.TaskModule.evoke({
     container: '#ds-task-root',
-    title: '全部任务',
+    title: '寻宝任务',
     showRole: dsConfig.task.showRole,
   });
   taskModuleMounted = true;
   return true;
-}
-
-/** 菜单挂载后接入角色选择；离开菜单时卸载，返回菜单可重新挂载。 */
-export function mountRoleModule(): () => void {
-  if (!dsRoleBindingEnabled || roleModuleUnmount || !configureActSdk() || !window.DsActSdk) {
-    return () => undefined;
-  }
-  const handle = window.DsActSdk.Role.evoke({
-    container: '#ds-role-root',
-    placeholder: '请选择角色',
-    onClick: () => trackEvent({ event: 'role_binding_open' }),
-  });
-  roleModuleUnmount = () => {
-    handle.unmount();
-    roleModuleUnmount = null;
-  };
-  return roleModuleUnmount;
 }
 
 /** 打开任务面板。返回 null 表示成功，否则返回可展示给用户的失败原因。 */

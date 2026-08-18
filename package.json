@@ -10,6 +10,7 @@
     "ui:warm": "python scripts/recolor_ui_warm.py",
     "catalog": "node scripts/generate-item-relations.mjs",
     "catalog:review": "node scripts/generate-classification-review.mjs",
+    "audit:content-mapping": "node tools/regression/build-scene-bundle.mjs && node scripts/generate-task-mapping.mjs && node scripts/generate-content-audit.mjs",
     "levels": "python scripts/upgrade_levels.py",
     "verify:content": "node scripts/validate-content.mjs",
     "check": "npm run verify:content && npm run lint && npm run build",

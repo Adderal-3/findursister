@@ -123,7 +123,8 @@ const FieldItem = memo(function FieldItem({
             src={def.img}
             alt={def.name}
             draggable={false}
-            className="block object-contain"
+            decoding="async"
+            className="game-item-sprite block object-contain"
             style={{ width: size, height: size }}
           />
         ) : (

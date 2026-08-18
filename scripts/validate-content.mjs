@@ -45,7 +45,7 @@ const expectedCategoryCounts = {
   written: 6,
   container: 20,
   flying: 11,
-  glowing: 7,
+  glowing: 8,
   sharp: 12,
   sweet_food: 20,
   plant: 28,
@@ -169,6 +169,7 @@ const homeUiAssets = {
   'home-round-button-v1.png': [509, 512],
   'home-stamina-badge-v1.png': [794, 340],
   'home-task-tag-v1.png': [201, 720],
+  'home-task-icon-v2.png': [1254, 1254],
 };
 for (const [name, [expectedWidth, expectedHeight]] of Object.entries(homeUiAssets)) {
   const file = path.join(assetRoot, 'ui', 'home', name);
@@ -191,14 +192,14 @@ assert(
 );
 
 const partnerAssets = {
-  afu: ['叶问舟', 'ship_npc_head_icon_yewenzhou-1x.png.png'],
-  xixi: ['燕无归', 'ship_npc_head_icon_yanwugui-1x.png.png'],
-  gugu: ['叶雪青', 'ship_npc_head_icon_yexueqing-1x.png.png'],
-  yuanyuan: ['方承意', 'ship_npc_head_icon_fangchengyi-1x.png.png'],
+  afu: ['同行伙伴', 'ship_npc_head_icon_yewenzhou-1x.png.png'],
+  xixi: ['同行伙伴', 'ship_npc_head_icon_yanwugui-1x.png.png'],
+  gugu: ['同行伙伴', 'ship_npc_head_icon_yexueqing-1x.png.png'],
+  yuanyuan: ['同行伙伴', 'ship_npc_head_icon_fangchengyi-1x.png.png'],
   paopao: ['阿初', 'ship_npc_head_icon_achu-1x.png.png'],
-  xingxing: ['花将离', 'ship_npc_head_icon_huajiangli-1x.png.png'],
-  mimi: ['无情', 'ship_npc_head_icon_wuqing-1x.png.png'],
-  meimei: ['姬蜜儿', 'ship_npc_head_icon_jimier-1x.png.png'],
+  xingxing: ['同行伙伴', 'ship_npc_head_icon_huajiangli-1x.png.png'],
+  mimi: ['同行伙伴', 'ship_npc_head_icon_wuqing-1x.png.png'],
+  meimei: ['同行伙伴', 'ship_npc_head_icon_jimier-1x.png.png'],
 };
 const partnerIds = Object.keys(partnerAssets);
 for (const [id, [displayName, sourceName]] of Object.entries(partnerAssets)) {

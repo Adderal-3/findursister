@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Film, RotateCcw, VolumeX, X } from 'lucide-react';
+import { CheckCircle2, Film, RotateCcw, Volume2, VolumeX, X } from 'lucide-react';
 import { TIME_BOOST_SECONDS, type Game } from '../hooks/useGame';
 import {
   VIDEO_REWARD_WATCH_MS,
@@ -40,6 +40,7 @@ function VideoRewardSession({ game, kind }: { game: Game; kind: VideoRewardKind 
   const [error, setError] = useState(false);
   const [exitConfirm, setExitConfirm] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const completeRewardRef = useRef(game.completeVideoReward);
   const reportErrorRef = useRef(game.reportVideoRewardError);
@@ -85,17 +86,18 @@ function VideoRewardSession({ game, kind }: { game: Game; kind: VideoRewardKind 
       setWatchedSec((current) => (current === sec ? current : sec));
       if (watchedRef.current >= VIDEO_REWARD_WATCH_MS) {
         verifiedRef.current = true;
+        setVerified(true);
         completeRewardRef.current(watchedRef.current);
       }
     }, SAMPLE_MS);
     return () => window.clearInterval(timer);
   }, [error]);
 
-  // 切后台不计时并暂停播放；回前台且未看满、未确认退出时继续播。
+  // 切后台始终暂停；回前台且未确认退出时继续播。30s 发奖后也遵循该规则，避免后台持续播放声音。
   useEffect(() => {
     const onVisibilityChange = () => {
       const video = videoRef.current;
-      if (!video || verifiedRef.current) return;
+      if (!video) return;
       if (document.hidden) {
         video.pause();
       } else if (!exitConfirm && !error) {
@@ -113,7 +115,7 @@ function VideoRewardSession({ game, kind }: { game: Game; kind: VideoRewardKind 
 
   const remainingSec = Math.max(0, TOTAL_SEC - watchedSec);
   const progress = Math.min(1, watchedSec / TOTAL_SEC);
-  const title = kind === 'revive' ? '看视频 · 原地复活' : '看视频 · 任务加时';
+  const title = kind === 'revive' ? '视频连播 · 原地复活' : '视频连播 · 任务加时';
 
   const switchSource = () => {
     setError(false);
@@ -142,117 +144,134 @@ function VideoRewardSession({ game, kind }: { game: Game; kind: VideoRewardKind 
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="absolute inset-0 z-[1600] flex items-center justify-center bg-[#2b1b13]/78 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-[2000] overflow-hidden bg-black"
       role="dialog"
       aria-label={title}
     >
-      <motion.div
-        initial={{ scale: 0.9, y: 24, opacity: 0 }}
-        animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-        className="qingya-menu-panel relative w-full max-w-sm overflow-hidden p-4 text-center shadow-2xl"
-      >
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 font-display text-lg font-black text-[#5d3b2a]">
-            <Film className="h-5 w-5 text-[#a86b42]" /> {title}
+      <video
+        ref={videoRef}
+        src={source}
+        className="absolute inset-0 h-full w-full object-cover"
+        playsInline
+        disablePictureInPicture
+        controlsList="nodownload nofullscreen noremoteplayback"
+        onContextMenu={(event) => event.preventDefault()}
+        onEnded={switchSource}
+        onError={() => {
+          setError(true);
+          reportErrorRef.current();
+        }}
+        onRateChange={() => {
+          const video = videoRef.current;
+          if (video && video.playbackRate !== 1) video.playbackRate = 1;
+        }}
+      />
+
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/82 via-black/36 to-transparent" />
+      <header className="absolute inset-x-0 top-0 flex items-center justify-between gap-3 px-4 pt-[calc(env(safe-area-inset-top)+14px)]">
+        <div className="flex min-w-0 items-center gap-2 text-white drop-shadow-lg">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/18 bg-black/38 backdrop-blur-md">
+            <Film className="h-4 w-4" />
+          </span>
+          <div className="min-w-0">
+            <p className="truncate font-display text-sm font-black tracking-wide">{title}</p>
+            <p className="text-[10px] font-bold text-white/72">播完自动切换下一条</p>
           </div>
+        </div>
+        <button
+          type="button"
+          onClick={requestClose}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/18 bg-black/42 text-white shadow-lg backdrop-blur-md transition active:scale-95"
+          aria-label="关闭视频"
+        >
+          <X className="h-5 w-5" strokeWidth={2.6} />
+        </button>
+      </header>
+
+      {muted && !error && (
+        <button
+          type="button"
+          onClick={() => {
+            const video = videoRef.current;
+            if (!video) return;
+            video.muted = false;
+            setMuted(false);
+          }}
+          className="absolute right-4 bottom-[calc(env(safe-area-inset-bottom)+8.5rem)] flex h-11 items-center gap-2 rounded-full border border-white/18 bg-black/48 px-4 text-xs font-black text-white shadow-lg backdrop-blur-md transition active:scale-95"
+          aria-label="开启声音"
+        >
+          <VolumeX className="h-4 w-4" strokeWidth={2.4} /> 开启声音
+        </button>
+      )}
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/92 via-black/62 to-transparent" />
+      <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+18px)] rounded-2xl border border-white/14 bg-black/46 px-4 py-3 text-white shadow-2xl backdrop-blur-md">
+        <div className="h-2 overflow-hidden rounded-full bg-white/18">
+          <div
+            className={`h-full rounded-full transition-[width] duration-200 ${verified ? 'bg-[#8ed9a7]' : 'bg-[#f0b36b]'}`}
+            style={{ width: `${Math.round(progress * 100)}%` }}
+          />
+        </div>
+        <div className="mt-2 flex items-center gap-2">
+          {verified ? (
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#9de4b2]" />
+          ) : (
+            <Volume2 className="h-5 w-5 shrink-0 text-[#f5c384]" />
+          )}
+          <div className="min-w-0">
+            <p className="text-xs font-black">
+              {error
+                ? '网络不给力，可换一个视频，观看进度会保留'
+                : verified
+                  ? `奖励已到账 · +${TIME_BOOST_SECONDS} 秒${kind === 'revive' ? '复活' : '加时'}`
+                  : `再有效观看 ${remainingSec} 秒，即可获得 +${TIME_BOOST_SECONDS} 秒${kind === 'revive' ? '复活' : '加时'}`}
+            </p>
+            <p className="mt-0.5 text-[10px] leading-4 text-white/62">
+              {verified
+                ? '视频将继续连播，你可以随时关闭返回游戏'
+                : '切出页面、暂停或拖动进度都不计时'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {error && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/82 p-8 text-center backdrop-blur-sm">
+          <div className="text-base font-black text-[#ffd9a8]">视频加载失败</div>
           <button
             type="button"
-            onClick={requestClose}
-            className="qingya-round-button flex h-8 w-8 items-center justify-center text-[#744b31] transition active:scale-95"
-            aria-label="关闭视频"
+            onClick={switchSource}
+            className="qingya-crisp-action flex min-h-11 items-center justify-center gap-2 px-6 py-2 font-display text-sm font-black text-[#fff9dc]"
           >
-            <X className="h-4 w-4" strokeWidth={2.6} />
+            <RotateCcw className="h-4 w-4" /> 换一个视频重试
           </button>
         </div>
+      )}
 
-        <div className="relative overflow-hidden rounded-2xl bg-black shadow-inner">
-          <video
-            ref={videoRef}
-            src={source}
-            className="aspect-video w-full"
-            playsInline
-            disablePictureInPicture
-            controlsList="nodownload nofullscreen noremoteplayback"
-            onContextMenu={(event) => event.preventDefault()}
-            onEnded={switchSource}
-            onError={() => {
-              setError(true);
-              reportErrorRef.current();
-            }}
-            onRateChange={() => {
-              const video = videoRef.current;
-              if (video && video.playbackRate !== 1) video.playbackRate = 1;
-            }}
-          />
-          {muted && !error && (
+      {exitConfirm && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/82 p-5 backdrop-blur-md">
+          <div className="qingya-menu-panel qingya-menu-panel--solid w-full max-w-sm p-5 text-center shadow-2xl">
+            <div className="font-display text-xl font-black text-[#6e402d]">现在退出拿不到奖励</div>
+            <div className="mt-2 text-sm leading-6 text-[#806f60]">
+              已有效观看 {watchedSec} 秒，再看 {remainingSec} 秒即可领奖。
+            </div>
             <button
               type="button"
-              onClick={() => {
-                const video = videoRef.current;
-                if (!video) return;
-                video.muted = false;
-                setMuted(false);
-              }}
-              className="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white transition active:scale-95"
-              aria-label="开启声音"
+              onClick={resumeWatching}
+              className="qingya-crisp-action mt-4 flex min-h-11 w-full items-center justify-center px-5 py-2 font-display text-sm font-black text-[#fff9dc]"
             >
-              <VolumeX className="h-4 w-4" strokeWidth={2.4} />
+              继续观看
             </button>
-          )}
-          {error && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#2b1b13]/85 p-4">
-              <div className="text-sm font-bold text-[#ffd9a8]">视频加载失败</div>
-              <button
-                type="button"
-                onClick={switchSource}
-                className="qingya-crisp-action flex min-h-10 items-center justify-center gap-1.5 px-5 py-2 font-display text-sm font-black text-[#fff9dc]"
-              >
-                <RotateCcw className="h-4 w-4" /> 换一个视频重试
-              </button>
-            </div>
-          )}
-          {exitConfirm && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#2b1b13]/88 p-4">
-              <div className="text-sm font-black text-[#ffd9a8]">现在退出拿不到奖励</div>
-              <div className="mb-1 text-xs leading-5 text-[#e8d5bd]">
-                已有效观看 {watchedSec} 秒，再看 {remainingSec} 秒即可领奖。
-              </div>
-              <button
-                type="button"
-                onClick={resumeWatching}
-                className="qingya-crisp-action flex min-h-10 w-full items-center justify-center gap-1.5 px-5 py-2 font-display text-sm font-black text-[#fff9dc]"
-              >
-                继续观看
-              </button>
-              <button
-                type="button"
-                onClick={abandon}
-                className="min-h-9 px-4 py-1.5 text-xs font-bold text-[#d8c0a8] transition active:scale-95"
-              >
-                放弃奖励并退出
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-3">
-          <div className="h-2 overflow-hidden rounded-full bg-[#e3d3ba]">
-            <div
-              className="h-full rounded-full bg-[#c27a49] transition-[width] duration-200"
-              style={{ width: `${Math.round(progress * 100)}%` }}
-            />
-          </div>
-          <div className="mt-1.5 text-xs font-black text-[#8b7562]">
-            {error
-              ? '网络不给力，可换一只视频，进度保留'
-              : `再有效观看 ${remainingSec} 秒，即可获得 +${TIME_BOOST_SECONDS} 秒${kind === 'revive' ? ' 复活' : ' 加时'}`}
-          </div>
-          <div className="mt-0.5 text-[10px] leading-4 text-[#a5907a]">
-            切出页面、暂停或拖动进度都不计时
+            <button
+              type="button"
+              onClick={abandon}
+              className="mt-2 min-h-10 px-4 py-2 text-xs font-bold text-[#9a7f67] transition active:scale-95"
+            >
+              放弃奖励并退出
+            </button>
           </div>
         </div>
-      </motion.div>
+      )}
     </motion.div>
   );
 }

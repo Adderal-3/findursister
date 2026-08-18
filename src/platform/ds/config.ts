@@ -18,7 +18,7 @@ export const dsConfig = {
   h5LoginEnabled: envFlag(import.meta.env.VITE_DS_H5_LOGIN_ENABLED, true),
   share: {
     title: import.meta.env.VITE_DS_SHARE_TITLE?.trim() || '忙忙碌碌寻宝藏',
-    description: import.meta.env.VITE_DS_SHARE_DESC?.trim() || '挑战眼力值，寻找汴京珍宝',
+    description: import.meta.env.VITE_DS_SHARE_DESC?.trim() || '挑战寻宝关卡，寻找汴京珍宝',
     image: import.meta.env.VITE_DS_SHARE_ICON?.trim()
       || 'https://img.166.net/gameyw-misc/opd/squash/20260630/101947-goc2wybfsi.png',
   },
@@ -33,7 +33,7 @@ export const dsConfig = {
   data: {
     devMiniGameId: import.meta.env.VITE_DS_DEV_MINI_GAME_ID?.trim() ?? '',
     proMiniGameId: import.meta.env.VITE_DS_PRO_MINI_GAME_ID?.trim() ?? '',
-    // 日榜与总榜共用同一榜单 ID；日榜靠 loadDsLeaderboard 传东八区日期查快照。
+    // 关卡分 + 无尽分共用一个总榜 yanli_rank。
     devBillboardId: import.meta.env.VITE_DS_DEV_BILLBOARD_ID?.trim() ?? '',
     proBillboardId: import.meta.env.VITE_DS_PRO_BILLBOARD_ID?.trim() ?? '',
   },
@@ -51,10 +51,7 @@ export const dsPlatformEnabled = Boolean(dsConfig.appKey && dsConfig.squareId &&
  */
 export const dsTaskPanelEnabled = Boolean(dsConfig.appKey && dsConfig.actId);
 
-/** 首页独立角色条仍只在真实平台环境展示；任务弹窗内的角色入口由 showRole 控制。 */
-export const dsRoleBindingEnabled = Boolean(dsPlatformEnabled && dsConfig.actId);
-
-/** 先具备测试/正式小游戏 ID；日榜与总榜 ID 在读取对应榜单时分别校验。 */
+/** 测试/正式小游戏 ID 均配置后启用服务端数据能力。 */
 export const dsLeaderboardEnabled = Boolean(
   dsConfig.data.devMiniGameId
   && dsConfig.data.proMiniGameId
